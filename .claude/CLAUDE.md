@@ -43,8 +43,8 @@
 | RFP 분석 | `korean-public-rfp` |
 | 본문 작성 | `proposal-korean-style` + `dabeeo-profile` |
 | PPT 구성 | `ppt-presentation-structure` |
-| `.docx` 생성 | 공식 `docx` skill (5/15 이후 통합 예정) |
-| `.pptx` 생성 | 공식 `pptx` skill (5/15 이후 통합 예정) |
+| `.docx` 생성 | 공식 `docx` skill (Anthropic 제공) |
+| `.pptx` 생성 | 공식 `pptx` skill (Anthropic 제공) |
 
 ### KB (지식베이스)
 

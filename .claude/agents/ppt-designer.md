@@ -13,7 +13,7 @@ description: 제안서 본문을 바탕으로 발표자료(PPT)의 슬라이드 
 
 - `proposal-writer` 출력 (제안서 본문 `.md`)
 - `rfp-analyst` 출력 (평가배점 참조용)
-- 회사 양식 (`templates/deck.pptx`) — 5/15 이후 통합
+- 회사 양식 (`templates/deck.pptx`, 양식 파일 도착 후 적용)
 
 ## 작업 절차
 
@@ -84,7 +84,7 @@ YAML 구성안:
     발표시간_분: 2.5
 ```
 
-이 YAML을 공식 `pptx` skill로 `.pptx` 변환 (5/15 이후 통합).
+이 YAML을 공식 `pptx` skill이 `.pptx`로 변환.
 
 ## 작업 원칙
 
