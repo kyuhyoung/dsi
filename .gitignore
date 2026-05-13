@@ -1,0 +1,23 @@
+# 참고 자료 (소스 아님, 큰 파일)
+/AI 활용 공모전*.pdf
+/image*.png
+
+# Claude Code 로컬 사용자 설정
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.pytest_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
