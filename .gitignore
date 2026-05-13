@@ -22,3 +22,6 @@ Thumbs.db
 .idea/
 *.swp
 install.log
+
+# 생성된 산출물 (재현 가능, 추적 불필요)
+/output/
