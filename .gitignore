@@ -25,3 +25,12 @@ install.log
 
 # 생성된 산출물 (재현 가능, 추적 불필요)
 /output/
+
+# Node
+/node_modules/
+
+# 빌드/실행 캐시
+/.cache/
+
+# LibreOffice/Office 임시 잠금 파일
+.~lock.*#

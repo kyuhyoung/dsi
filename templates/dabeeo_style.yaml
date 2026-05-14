@@ -1,0 +1,102 @@
+# 다비오 PPT 스타일 정의 (HVE 패턴)
+# yaml_to_pptx.py가 시작 시 로드하여 색·폰트·레이아웃을 결정.
+# 다른 회사 템플릿 사용 시 이 파일을 교체하거나 새 style.yaml 작성.
+
+template:
+  path: 'templates/Dabeeo_presentation_Template_2022_v1.pptx'
+  slide_size:
+    width_in: 13.333
+    height_in: 7.5
+  # yaml의 슬라이드 "종류" → 견본 슬라이드 1-기준 인덱스
+  layouts:
+    표지: 1
+    목차: 2
+    간지: 3
+    회사소개: 7
+    본문: 13
+    결론: 13
+    부록: 13
+    감사: 10
+  # 본문 영역 (1_본문2 레이아웃 기준)
+  body_area:
+    left: 1.05
+    top: 1.10
+    width: 11.20
+    height: 5.60
+
+# 색상 (다비오 톤 추정 — 실제 CI 매뉴얼 확보 시 갱신 필요)
+colors:
+  navy: '#1F365C'         # 메인 네이비
+  light_navy: '#4A6C9D'   # 보조 블루
+  gold: '#C89B3C'         # 강조 골드
+  light_gold: '#E6C47A'   # 보조 골드
+  grey: '#707070'         # 중성 그레이
+  light_grey: '#E8E8E8'   # 배경 그레이
+  dark: '#222222'         # 본문 텍스트
+  white: '#FFFFFF'
+
+fonts:
+  body: '맑은 고딕'
+
+# 표지 슬라이드 제목 폰트 자동 fit (텍스트 길이 기반)
+cover:
+  title_fit:
+    - max_chars: 10
+      pt: 54
+    - max_chars: 18
+      pt: 42
+    - max_chars: 28
+      pt: 32
+    - max_chars: 40
+      pt: 26
+    - max_chars: 999
+      pt: 22
+  title_box:
+    top: 3.0
+    height: 2.7
+
+# 본문 슬라이드 메시지 영역 (시각요소 있을 때 상단)
+content:
+  messages_height_with_visuals: 1.4
+  visuals_top_gap: 0.2
+  # 견본의 본문 textbox anchor 위치 (find_shape_by_pos 기준)
+  body_textbox_anchor:
+    left: 1.05
+    top: 1.17
+
+# 회사소개 견본의 anchor 위치
+company_intro:
+  headline_anchor:
+    left: 1.06
+    top: 1.10
+  sub_anchor:
+    left: 1.64
+    top: 2.00
+
+# 슬라이드 종류별 placeholder 인덱스 매핑
+# (회사 템플릿마다 placeholder idx 의미가 다를 수 있어 분리)
+placeholder_idx:
+  표지:
+    title: 0
+    sub1: 1
+    sub2: 2
+  목차:
+    title: 0
+    nums_left: 1
+    nums_right: 2
+    titles_left: 3
+    titles_right: 4
+  본문:
+    title: 0
+    chap_no: 1
+    chap_name: 2
+  간지:
+    title: 0
+    chap_no: 1
+  감사:
+    title: 0
+    footer: 11
+
+# 카피라이트 영역 보호 (이 영역은 침범 금지)
+footer:
+  top: 6.91
