@@ -1,0 +1,132 @@
+# 시각 검증 체크리스트 (시스템 자산)
+#
+# 빌드된 .pptx → PDF → PNG 추출 후 LLM (visual-validator agent)이 *각 슬라이드 PNG를 보고*
+# 이 체크리스트로 검증한다. 발견된 문제는 *체계화*해서 yaml 또는 style.yaml 수정으로 연결.
+#
+# 검증 단계는 /proposal·/rfp 흐름의 *마지막*에 자동 실행.
+
+categories:
+  # 1. 텍스트 겹침 (가장 흔하고 치명적인 시각 오류)
+  text_overlap:
+    description: 두 개 이상의 텍스트가 *같은 영역*에 겹쳐 표시됨
+    check: |
+      - 제목과 본문 텍스트가 같은 위치에 겹쳐 있는가?
+      - 라벨 (좌상단·우상단 chap 번호/이름)이 다른 라벨이나 콘텐츠와 겹치는가?
+      - 시각요소 (차트·이미지·flow_arrow)와 텍스트가 겹치는가?
+    severity: critical
+    fix_action: yaml 수정 또는 빌더 코드 디버그
+
+  # 2. 텍스트 잘림
+  text_truncation:
+    description: 텍스트가 박스를 벗어나 *잘려서* 일부만 보임
+    check: |
+      - 제목·본문·라벨이 가장자리에서 잘렸는가?
+      - 우상단/좌상단 라벨이 *부분 표시* (예: "01 회" 처럼 끝이 잘림)?
+      - 표·차트 cell 내용이 잘렸는가?
+    severity: high
+    fix_action: 박스 width 확장 또는 폰트 자동 축소
+
+  # 3. 챕터 라벨 정확성
+  chapter_labels:
+    description: 챕터 번호·이름이 *콘텐츠 챕터와 일치*하는가
+    check: |
+      - 우상단/좌상단 라벨의 번호가 *해당 슬라이드의 장번호*와 일치?
+      - 라벨의 챕터 이름이 *해당 슬라이드의 장이름*과 일치?
+      - 회사소개·표지·감사 슬라이드에 *불필요한 라벨* 그려지지 않았는가?
+      - "00" 같이 *장번호 없는 슬라이드에 0이 표시*되었는가?
+    severity: high
+    fix_action: chapter_labels yaml의 enabled_for_kinds, format 조정
+
+  # 4. 간지 슬라이드 디자인
+  section_divider:
+    description: 간지 슬라이드가 *원본 견본 디자인*을 따라가는가
+    check: |
+      - 챕터 번호와 이름이 통합 디자인 (예: "02.\\n시장 현황")으로 표시되는가?
+      - 번호와 이름이 *어색하게 분리*되어 있지 않은가?
+      - 견본의 *큰 폰트·디자인 도형*이 손상되지 않았는가?
+    severity: high
+    fix_action: section_divider.unified_title_format 또는 slot_finders.간지 좌표 조정
+
+  # 5. 시각요소 렌더링
+  visual_elements:
+    description: 시각요소가 *정상 렌더링*되는가
+    check: |
+      - flow_arrow의 단계 박스·화살표가 모두 보이는가?
+      - matrix_2x2의 4분면이 정상?
+      - bar_chart의 막대·라벨이 보이는가?
+      - timeline의 점·선·라벨 정상?
+      - callout_cards의 카드 박스·텍스트 정상?
+      - image가 *깨지지 않고* 표시되는가?
+    severity: high
+    fix_action: yaml의 시각요소 키 확인 (visual_element_schema.yaml), 빌더 디버그
+
+  # 6. 가독성
+  readability:
+    description: 텍스트가 *18pt 이상*이고 *읽기 좋은 색*인가
+    check: |
+      - 본문 텍스트가 발표장 뒷자리에서 읽힐 정도 (≥18pt)?
+      - 배경과 *충분한 대비*?
+      - 한 슬라이드에 *너무 많은 텍스트* (≥7줄)?
+    severity: medium
+    fix_action: ppt-designer가 텍스트 분량 줄이거나 슬라이드 분리
+
+  # 7. 일관성
+  consistency:
+    description: 모든 슬라이드의 디자인이 *일관*된가
+    check: |
+      - 같은 종류 슬라이드끼리 폰트·색·여백이 일관?
+      - 라벨 위치·크기 일관?
+      - 색상이 회사 CI 일치 (빨강 회피)?
+    severity: medium
+    fix_action: style.yaml 보정
+
+  # 8. 콘텐츠 누락
+  content_completeness:
+    description: yaml의 모든 콘텐츠가 *슬라이드에 표시*되는가
+    check: |
+      - 핵심메시지·시각요소가 *빠짐없이* 표시?
+      - 빌드 시 *경고* (해당 요소 미표시) 발생했는가?
+    severity: critical
+    fix_action: 빌더 디버그 또는 yaml 키 확인
+
+  # 9. 수치 일관성 (콘텐츠 정합성)
+  content_consistency:
+    description: 슬라이드 안의 *수치들이 서로 일치*하는가
+    check: |
+      - 차트의 데이터 합 == 제목·핵심메시지의 총액?
+      - 단위 변환 (억원·백만원) 정확?
+      - 핵심메시지의 백분율 (예: "인건비 50%") == 차트의 막대 비율?
+      - 핵심메시지의 개수 (예: "Trial 6건") == 시각요소의 개수?
+      - 시계열 (timeline 연도) 이 본문 흐름과 일치?
+    severity: high
+    fix_action: ppt-designer가 yaml 수정 (수치 재계산·일치). proposal-writer 본문 검증 필요할 수도.
+
+  # 10. 시각 강조 일관성
+  visual_emphasis:
+    description: 핵심메시지에 "~가 핵심" 표현하면 시각요소에서도 *시각적으로 강조*되는가
+    check: |
+      - 핵심메시지에서 강조한 항목이 *차트에서 다른 색·다른 위치*로 부각?
+      - bar_chart에 highlight_indices/highlight_categories 명시되어 *강조 색*으로 그려졌나?
+      - 청중이 *5초 안에* 핵심 항목을 시각만으로 파악 가능?
+    severity: medium
+    fix_action: yaml의 시각요소에 highlight 옵션 추가 (visual_element_schema.yaml 참조)
+
+# 보고 형식
+report_format: |
+  슬라이드 N: [category 이름] [severity] 문제 설명
+  → 권장 수정: <action>
+
+  예:
+  슬라이드 5: text_overlap [critical] 제목 "시장 110조원"과 본문 "글로벌 팜오일..."이 위에 겹침
+    → 권장 수정: fill_content에서 title bottom 아래로 body top 자동 조정
+
+# 검증 후 처리 정책
+on_critical_issues:
+  action: stop_and_ask  # stop_and_ask | auto_retry | report_only
+  # critical 문제 발견 시 사용자에게 보여주고 수정 후 재빌드 권유
+
+on_high_issues:
+  action: report_only   # high 문제는 보고만 + 사용자 결정
+
+on_medium_issues:
+  action: report_only

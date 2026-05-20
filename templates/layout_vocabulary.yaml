@@ -1,0 +1,124 @@
+# 레이아웃 vocabulary 비율·파라미터 (시스템-wide 공유)
+#
+# yaml_to_pptx.py 의 _layout_* 함수들이 로드해서 사용.
+# 회사 디자인 가이드에 따라 split 비율 등 조정 가능.
+
+layouts:
+  image-focus:
+    # 상단 메시지 영역 height (inch)
+    message_height: 0.75
+    # 메시지 영역과 이미지 영역 사이 gap
+    image_gap: 0.15
+
+  split-image-text:
+    # 좌 이미지 width / 우 텍스트 width 비율 (합이 1.0)
+    image_width_ratio: 0.55
+    text_width_ratio: 0.45
+    # 좌우 사이 gap (inch)
+    gap: 0.25
+
+  split-text-image:
+    text_width_ratio: 0.45
+    image_width_ratio: 0.55
+    gap: 0.25
+
+  image-grid-2:
+    # 상단 짧은 메시지 영역 height (메시지 있을 때)
+    message_height: 0.65
+    image_gap: 0.15
+    # 이미지 좌우 사이 gap
+    grid_gap: 0.25
+
+  visual-only:
+    message_height: 0.65
+    visual_gap: 0.15
+
+# 이미지 N장 자동 그리드 패턴 (rows, cols)
+image_grid_patterns:
+  1: [1, 1]
+  2: [1, 2]
+  3: [1, 3]
+  4: [2, 2]
+  5: [2, 3]
+  6: [2, 3]
+
+# ─────────────────────────────────────────
+# 시각요소 (visual element) 렌더링 파라미터
+# yaml_to_pptx.py 의 draw_* 함수가 사용. 회사 CI에 맞춰 조정 가능.
+# ─────────────────────────────────────────
+
+visuals:
+  # 메시지 영역 ↔ 시각요소 사이 gap (render_visuals)
+  gap_between: 0.15
+  # 시각요소 혼재 시 (비-이미지 + 이미지): 상단 비-이미지 영역 비율
+  mixed_upper_ratio: 0.4
+
+flow_arrow:
+  # 단계 간 간격
+  gap: 0.2
+  # 박스 높이 = min(height * box_height_ratio, box_height_max_inch)
+  box_height_ratio: 0.6
+  box_height_max_inch: 1.3
+  # 화살표 형태 치수 (head_length, neck_width, head_width inch)
+  arrow_head_length: 0.24
+  arrow_neck_width: 0.02
+  arrow_head_width: 0.12
+
+matrix_2x2:
+  # x/y 축 라벨 padding (inch)
+  label_pad_left: 0.4
+  label_pad_bottom: 0.35
+  # 칸 테두리 굵기 (pt)
+  border_width_pt: 2
+  # y축 라벨 박스 좌측 여백 보정 (pad_left - this_value)
+  y_axis_label_offset: 0.05
+  y_axis_label_width: 0.4
+
+timeline:
+  # 좌우 padding (inch)
+  pad_x: 0.4
+  # 가로 선 굵기 (inch)
+  line_height: 0.04
+  # 각 시점 점(dot) 크기 (inch)
+  dot_size_inch: 0.36
+
+image_grid:
+  # 이미지 사이 gap (inch)
+  gap: 0.25
+
+# 차트 강조 색 (bar_chart의 highlight_indices 막대 색)
+bar_chart:
+  highlight_color: gold   # style.yaml colors 키 이름 (gold/light_navy/navy 등)
+
+callout_cards:
+  # 카드 좌우 마진 (inch)
+  h_margin: 0.12
+  # 카드 상하 마진 (inch)
+  v_margin: 0.20
+  # 상단 강조 막대 두께 (inch)
+  bar_thickness: 0.06
+  # 카드 콘텐츠 추정 높이 (overflow 방지 estimation)
+  estimated_content_height: 1.2
+
+# ─────────────────────────────────────────
+# 본문 변종 선택 정책
+# 슬라이드의 시각요소 종류 → 적합한 본문 견본 변종 우선순위 매핑.
+# 빌더는 yaml 위에서 아래로 순회하면서 *매칭되는 첫 변종* 선택.
+# ─────────────────────────────────────────
+content_variant_priority:
+  # 시각요소 타입(또는 특수 조건) → 후보 변종 태그
+  - if_visual_type: image
+    variant: 이미지
+  - if_visual_type: bar_chart
+    variant: 차트
+  - if_callout_card_items: 2     # callout_cards 의 items 수가 정확히 2
+    variant: 이단
+  - if_content_has_left_right: true   # 내용 dict에 '좌' 또는 '우' 키
+    variant: 이단
+  - if_visual_type: matrix_2x2
+    variant: 매트릭스
+  - if_visual_type: timeline
+    variant: 타임라인
+  # 항상 마지막에 fallback
+  - always: true
+    variant: 기본

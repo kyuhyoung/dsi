@@ -1,0 +1,19 @@
+# DSI Python 의존성
+# 설치: pip install -r requirements.txt
+
+# 핵심 — 문서 생성
+python-docx>=1.1
+python-pptx>=1.0,<2.0
+
+# 핵심 — YAML 파싱
+PyYAML>=6.0
+
+# 이미지 처리 (이미지 삽입 시 비율 계산)
+Pillow>=10.0
+
+# HWP 파싱 (한국 RFP가 .hwp 형식인 경우)
+pyhwp>=0.1b15
+olefile>=0.47
+
+# XML 파싱 (python-pptx 의존성, 명시적으로 선언)
+lxml>=5.0

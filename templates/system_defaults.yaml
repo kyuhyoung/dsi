@@ -1,0 +1,308 @@
+# DSI 시스템 전체 기본값 (시스템 파일, 항상 git에 포함)
+#
+# 모든 데이터는 *이 yaml*에 정의됨. PY는 빈 dict로 시작해 이 yaml로 채움.
+# 회사별 override는 templates/<name>.style.yaml.
+#
+# *이 파일을 지우면 시스템이 작동하지 않습니다.*
+
+# 시스템 default 라벨 (한국어 발표 기준)
+defaults:
+  toc_title: '목차'
+  thanks_message: '감사합니다.'
+  chap_name_body: '본문'
+  chap_name_company_intro: '회사소개'
+
+# 빈 큰 도형 제거 임계 (clear_non_placeholder_text)
+empty_box_min:
+  width: 1.5    # inch
+  height: 1.5
+
+# 분석기 자동 추론 임계값 (analyze_template.py)
+analyzer:
+  # 본문 변종 클러스터링 최소 점수 — 미달 시 배제법 fallback 사용
+  body_variant_min_score: 3
+  # 회사소개 견본 과적합 판정 — 견본의 non-placeholder shape 수가 이 값 초과면 본문 견본으로 폴백
+  # (실콘텐츠 슬라이드는 timeline·icon·도형 무더기 → 새 콘텐츠 위에 디자인이 겹쳐 가려짐)
+  company_intro_overfit_shape_count: 15
+  # 회사소개 견본에 GROUP shape이 있으면 과적합 판정 (그룹 안에 콘텐츠 군집)
+  company_intro_overfit_on_group: true
+  # detect_sample_clone_needed: 비-placeholder textbox에 이 길이 이상 텍스트 존재 시 clear 활성화
+  sample_clone_text_min_chars: 3
+
+  # 표지 검출 임계값
+  cover_font_strong_pt: 50      # 이 값 이상 폰트 = 매우 강한 표지 후보
+  cover_font_weak_pt: 40        # 이 값 이상 폰트 = 약한 표지 후보
+  cover_slide_max_idx: 3        # 이 인덱스 이하 슬라이드 = 표지 후보 가점
+  cover_text_box_min: 1
+  cover_text_box_max: 4
+
+  # 감사 슬라이드 검출
+  thanks_text_box_max: 4        # 짧은 텍스트만 있어야 감사 슬라이드
+
+  # 간지 검출 임계값
+  section_divider_title_font_pt: 28
+  section_divider_max_text_count: 5
+  section_divider_chap_no_min_font_pt: 40
+  section_divider_chap_no_max_width: 3.0
+
+  # 목차 검출 임계값
+  toc_min_text_boxes: 5
+
+  # 본문 title placeholder 폰트 범위
+  body_title_font_min_pt: 18
+  body_title_font_max_pt: 36
+  # 본문 콘텐츠 영역 최소 크기 (inch)
+  body_content_area_min_width: 6.0
+  body_content_area_min_height: 0.5
+
+  # 슬롯 분류 시 상단 영역 relative position 임계
+  slot_top_strong_threshold: 0.10
+  slot_top_weak_threshold: 0.15
+  slot_top_middle_threshold: 0.30
+
+  # chap_no 자동 감지 치수 (좌상단 작은 박스 + 짧은 텍스트)
+  chap_no_max_x: 1.5
+  chap_no_max_y: 1.5
+  chap_no_max_w: 1.5
+  chap_no_max_h: 1.0
+  chap_no_max_text_len: 5
+
+  # top_right_label 우상단 영역 (slide_width * ratio 이상이 left, top 임계)
+  top_right_label_min_left_ratio: 0.7
+  top_right_label_min_top_inch: 1.0
+
+  # callout_cards 특수 케이스 (2개 카드일 때 변경된 처리)
+  callout_special_count: 2
+
+# Shape 찾기 tolerance (find_shape_by_pos) — inch
+shape_finding:
+  default_tolerance: 0.3
+  body_tolerance: 0.5
+  company_intro_tolerance: 0.4
+
+# Shape 안전 영역 임계 (safe_area_for_shape)
+shape_safety:
+  # 다른 shape이 이 비율 이상 겹치면 안전영역 침범
+  overlap_threshold: 0.2
+  min_safe_height: 0.3
+  min_safe_width: 0.5
+  # box 폭이 이 값보다 크면 확장 허용
+  width_expand_threshold: 1.0
+
+# 시각요소 영역의 견본 잔재 정리 정책 — _clear_shapes_in_area
+# *시각요소 (차트·이미지) 그리기 전*에 해당 영역의 견본 디자인 잔재 (line·작은 picture 등) 제거.
+visual_area_cleanup:
+  # 보존할 shape type (큰 콘텐츠 자산). 이 타입은 *영역에 겹쳐도 제거 안 함*.
+  preserve_shape_types: [CHART, TABLE, MEDIA, GROUP, LINKED_OLE_OBJECT, EMBEDDED_OLE_OBJECT]
+  # PICTURE는 *크기로 판단*. 이 임계 이상이면 콘텐츠 이미지로 간주, 보존.
+  picture_preserve_min_width: 1.5
+  picture_preserve_min_height: 1.5
+
+# 장식 그림 (decorative picture) 감지 임계
+shape_detection:
+  # 점·dot (작은 정사각형) — w * h < area_max 또는 w < dim_max & h < dim_max
+  dot_area_max: 0.25
+  dot_dim_max: 0.6
+  # 가로 막대 (좁고 긴 사각형)
+  hbar_max_height: 0.5
+  hbar_min_width: 7.0
+  # 세로 막대 (좁고 긴 사각형)
+  vbar_max_width: 0.5
+  vbar_min_height: 5.0
+
+# 본문 텍스트 라인 수 → 폰트 pt 매핑 (sorted ascending)
+body_text_font_by_lines:
+  - { max_lines: 8, font_pt: 18 }
+  - { max_lines: 14, font_pt: 14 }
+  - { max_lines: 9999, font_pt: 11 }
+
+# 표지 텍스트박스 fit 폰트 범위
+cover_typography:
+  title_max_pt: 22
+  sub_max_pt: 18
+  org_default_pt: 14
+  date_default_pt: 12
+  sub_fit_max_pt: 22
+  sub_fit_min_pt: 12
+  sub_fit_min_readable_pt: 14
+
+# 간지 fallback 박스·폰트
+section_divider:
+  fallback_title_box:
+    left: 1.05
+    top: 3.5
+    width: 11.20
+    height: 1.5
+  fallback_number_box:
+    left: 1.05
+    top: 2.5
+    width: 11.20
+    height: 1.0
+  fallback_title_font_pt: 36
+  fallback_number_font_pt: 48
+  # 견본의 title slot에 박을 *통합 텍스트* 포맷. 견본이 "01.\n회사 소개" 같은
+  # 통합 디자인이면 이 포맷 사용. 빌더가 title slot 한 곳에 박음.
+  # 비우면 title에 chap_name만 박고 chap_no는 별도 slot 사용.
+  unified_title_format: ''
+  # chap_no slot 못 찾을 때 fallback box 그릴지 여부.
+  # false면 fallback box 안 그림 (통합 title에 chap_no 포함된 경우).
+  draw_chap_no_fallback: true
+
+# 감사 fallback 박스·폰트
+thanks:
+  fallback_box:
+    left: 0.5
+    top: 3.0
+    width: 12.33
+    height: 1.5
+  fallback_max_font_pt: 40
+
+# 목차 슬라이드 코드 렌더링 (style.yaml 견본 없을 때)
+toc:
+  title_box:
+    left: 0.6
+    top: 0.4
+    width_from_right: 1.2     # slide_w - this
+    height: 0.7
+  accent_line:
+    left: 0.6
+    top: 1.15
+    width: 2.0
+    height: 0.05
+  body_top: 1.7
+  body_bottom_from_bottom: 0.7  # slide_h - this
+  column_width_offset: 1.5      # (slide_w - this) / 2 = column width
+  section_number_box:
+    width: 0.9
+    height: 0.6
+  section_title_box:
+    left_offset: 1.0
+    top_offset: 0.08
+    height: 0.55
+  right_column_x_offset: 0.3
+
+# top_right_label padding
+top_right_label_padding: 0.05
+
+# 슬라이드 종류 자동 재분류 룰
+# 빌더가 yaml의 *종류* 값을 그대로 쓰지 않고, *제목*에 특정 키워드 있으면 다른 종류로 재분류.
+# 예: '결론' 슬라이드 제목에 '감사' 들어가면 *감사 슬라이드*로 취급.
+kind_remapping:
+  - from_kind: 결론
+    title_contains_any: ['감사', 'Thank', 'thank']
+    to_kind: 감사
+
+# 분석기 색깔 자동 추출 정책 (analyze_template.py)
+# theme.xml accent 색에서 회사 CI 색을 추출. 빨강 계열은 *오류·경고* 색으로 회피.
+color_selection:
+  # 빨강 판정 임계 (이 RGB 조건 충족하면 빨강 — accent 풀에서 제외)
+  red_filter:
+    r_min: 180
+    g_max: 110
+    b_max: 110
+  # navy fallback (theme의 dk2도 accent도 없으면 사용)
+  navy_fallback: '#1F365C'
+  # light_navy fallback
+  light_navy_fallback: '#4A6C9D'
+  # gold 전략 — 'use_light_navy' = light_navy와 같은 색 (회사 의도 안 맞는 노랑/빨강 회피)
+  gold_strategy: use_light_navy
+  # grey / light_grey / dark fallback
+  grey_fallback: '#707070'
+  light_grey_fallback: '#E8E8E8'
+  dark_fallback: '#222222'
+
+# 텍스트박스 기본 margin (set_run_text 등)
+textbox_margin:
+  left: 0.05
+  right: 0.05
+  top: 0.02
+  bottom: 0.02
+
+# fit_font_to_box 기본 폰트 범위
+fit_font_box:
+  max_pt: 60
+  min_pt: 12
+
+# _placeholder_fit_text 호출별 max_fallback_pt — 슬롯 종류에 따라
+placeholder_fit_max_pt:
+  default: 40       # 일반 placeholder
+  chap_no: 28       # 챕터 번호 (좌상단 작은 박스)
+  thanks_title: 60  # 감사 슬라이드 큰 제목
+
+# 본문 영역 기본 좌표 (style.yaml의 template.body_area에서 override 가능)
+body_area:
+  left: 1.05
+  top: 1.10
+  width: 11.20
+  height: 5.60
+
+# 본문 textbox anchor (style.yaml의 content.body_textbox_anchor에서 override)
+body_textbox_anchor:
+  left: 1.05
+  top: 1.17
+
+# 회사소개 슬라이드 headline·sub anchor (style.yaml의 company_intro.*_anchor에서 override)
+company_intro_anchors:
+  headline:
+    left: 1.06
+    top: 1.10
+  sub:
+    left: 1.64
+    top: 2.00
+
+# 본문 영역 메시지 높이 공식 (시각요소 유무에 따라)
+content_layout:
+  # title shape 바로 아래로 body 영역 시작할 때 두는 여백 (inch).
+  # title.bottom + title_gap > body_top 이면 body_top을 title.bottom + title_gap으로 자동 조정.
+  title_gap: 0.15
+  # 시각요소 있을 때: min(cap_with_visuals, base + per_line * total_msg)
+  with_visuals:
+    cap_inch: 1.4
+    base_inch: 0.4
+    per_line_inch: 0.25
+  # 시각요소 없을 때
+  no_visuals:
+    cap_inch: 2.2
+    base_inch: 0.4
+    per_line_inch: 0.4
+  # 메시지·시각요소 사이 gap
+  gap_to_visuals: 0.2
+
+# 텍스트 폭·줄높이 추정 계수 (fit_font_to_box 용)
+typography_factors:
+  char_width: 0.9
+  line_height: 1.25
+
+# 본문 폰트 (한국어 default)
+font_body: '맑은 고딕'
+
+# visual element typography (font size pt)
+# 회사 폰트 가이드 따라 templates/<name>.style.yaml의 typography 섹션에서 override.
+typography:
+  # draw_messages_box
+  body_message_pt: 18
+  content_pt: 14
+  sub_item_pt: 12
+  # draw_callout_cards
+  callout_number_pt: 24
+  callout_title_pt: 15
+  callout_body_pt: 11
+  # draw_bar_chart
+  chart_label_pt: 14
+  # draw_matrix_2x2
+  matrix_axis_pt: 15
+  matrix_title_pt: 12
+  matrix_text_pt: 11
+  # draw_flow_arrow
+  flow_label_pt: 14
+  # draw_timeline
+  timeline_label_pt: 12
+  timeline_content_pt: 11
+  # draw_image caption
+  caption_pt: 10
+  # draw_top_right_label (별도 top_right_label.font_pt 우선)
+  chapter_label_pt: 11
+  # draw_toc_slide 코드 fallback
+  toc_title_pt: 24
+  toc_section_num_pt: 15
+  toc_section_title_pt: 11

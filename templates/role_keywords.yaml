@@ -1,0 +1,53 @@
+# 템플릿 슬라이드 분류용 키워드 사전 (시스템-wide 공유)
+#
+# analyze_template.py 가 로드해서 견본 슬라이드의 종류 판별에 사용.
+# 다른 언어 회사 (영문·일본어 등) 추가 시 각 종류의 keyword 리스트에 추가.
+#
+# 구조:
+#   roles.<종류>.layout_name: 슬라이드 layout name에 매칭될 키워드 (대소문자 무관)
+#   roles.<종류>.text:         슬라이드 텍스트(text_blob)에 매칭될 키워드
+#   roles.<종류>.negative:     이 키워드가 있으면 강한 감점 (-10)
+#   thresholds.<종류>:         이 점수 이상이어야 매핑 (미만이면 코드 fallback)
+
+roles:
+  표지:
+    layout_name: [title slide, cover, 표지, front]
+    text: []
+    negative: [thank, 감사, 회사 소개, 회사소개, chapter]
+
+  목차:
+    layout_name: [toc, contents, agenda, 목차, index]
+    text: [목차, table of, content]
+    negative: []
+
+  간지:
+    layout_name: [section, divider, chapter, 간지]
+    text: [chapter name, '##.', section divider]
+    negative: []
+
+  회사소개:
+    layout_name: [company, intro, about, 회사, overview]
+    text: [회사소개, company, overview, 회사 개요, 회사개요, about us]
+    negative: []
+
+  본문:
+    layout_name: [body, content, main, 본문, 샘플, sample, 왼쪽, 오른쪽, left, right]
+    text: [head message, description, 본문, 작성 요령, subtitle]
+    negative: [thank, 감사합니다]
+
+  감사:
+    layout_name: [closing, thank, 감사, end, 마무리]
+    text: [thank you., thank you, thanks, 감사합니다, 감사 합니다]
+    negative: []
+
+# 종류별 점수 임계 (이 점수 미만은 매핑 없이 코드 fallback)
+thresholds:
+  표지: 4
+  목차: 4
+  간지: 3
+  회사소개: 4
+  본문: 3
+  감사: 4
+
+# top_right_label 감지용 키워드 (layout shapes에서 우상단 텍스트박스 찾기)
+top_right_label_keywords: [chapter, section, title, category, category name, page]

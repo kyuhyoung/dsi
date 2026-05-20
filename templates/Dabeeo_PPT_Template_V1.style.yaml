@@ -1,0 +1,4000 @@
+_generated_by: scripts/analyze_template.py (자동 추론. 사람 검토 권장)
+_template_source: templates/Dabeeo_PPT_Template_V1.pptx
+_auto_mapping_scores:
+  표지:
+    slide_1: 6
+    slide_2: 4
+    slide_3: 9
+    slide_4: -3
+    slide_5: -10
+    slide_6: -10
+    slide_7: -3
+    slide_8: 0
+    slide_9: 0
+    slide_10: 0
+    slide_11: 0
+    slide_12: 0
+    slide_13: 2
+    slide_14: 0
+    slide_15: 0
+    slide_16: 0
+    slide_17: 0
+    slide_18: 0
+  목차:
+    slide_1: 0
+    slide_2: 0
+    slide_3: 0
+    slide_4: 0
+    slide_5: 3
+    slide_6: 3
+    slide_7: 0
+    slide_8: 1
+    slide_9: 1
+    slide_10: 1
+    slide_11: 1
+    slide_12: 1
+    slide_13: 0
+    slide_14: 1
+    slide_15: 1
+    slide_16: 1
+    slide_17: 1
+    slide_18: 1
+  간지:
+    slide_1: 0
+    slide_2: 0
+    slide_3: 0
+    slide_4: 14
+    slide_5: 8
+    slide_6: 8
+    slide_7: 4
+    slide_8: 0
+    slide_9: 0
+    slide_10: 0
+    slide_11: 0
+    slide_12: 0
+    slide_13: 0
+    slide_14: 0
+    slide_15: 0
+    slide_16: 0
+    slide_17: 0
+    slide_18: 0
+  회사소개:
+    slide_1: 0
+    slide_2: 0
+    slide_3: 3
+    slide_4: 0
+    slide_5: 0
+    slide_6: 0
+    slide_7: 3
+    slide_8: 0
+    slide_9: 5
+    slide_10: 0
+    slide_11: 3
+    slide_12: 7
+    slide_13: 0
+    slide_14: 0
+    slide_15: 0
+    slide_16: 0
+    slide_17: 0
+    slide_18: 0
+  본문:
+    slide_1: 1
+    slide_2: 0
+    slide_3: -1
+    slide_4: 1
+    slide_5: 9
+    slide_6: 9
+    slide_7: 1
+    slide_8: 7
+    slide_9: 7
+    slide_10: 7
+    slide_11: 7
+    slide_12: 1
+    slide_13: 7
+    slide_14: 6
+    slide_15: 6
+    slide_16: 6
+    slide_17: 6
+    slide_18: 6
+  감사:
+    slide_1: 2
+    slide_2: 2
+    slide_3: 2
+    slide_4: 2
+    slide_5: 0
+    slide_6: 0
+    slide_7: 2
+    slide_8: 0
+    slide_9: 0
+    slide_10: 0
+    slide_11: 0
+    slide_12: 0
+    slide_13: 2
+    slide_14: 0
+    slide_15: 0
+    slide_16: 0
+    slide_17: 0
+    slide_18: 0
+template:
+  path: templates/Dabeeo_PPT_Template_V1.pptx
+  slide_size:
+    width_in: 13.333
+    height_in: 7.5
+  layouts:
+    표지: 3
+    목차: null
+    간지: 4
+    회사소개: 12
+    본문: &id001
+      기본: 6
+      표: 8
+      이미지: 9
+    감사: null
+    결론: *id001
+    부록: *id001
+  body_area:
+    left: 1.05
+    top: 1.64
+    width: 11.23
+    height: 5.17
+sample_clone:
+  clear_non_placeholder_text: true
+  preserve_keywords:
+  - ©
+  - Strictly
+  - STRICTLY
+  - Confidential
+  - CONFIDENTIAL
+  - 보안 문서
+  - All rights reserved
+  remove_decorative_pictures:
+  - left: 1.312
+    top: 2.088
+    width: 0
+    height: 1.375
+  - left: 1.809
+    top: 2.7
+    width: 0
+    height: 0.763
+  - left: 2.404
+    top: 2.249
+    width: 0
+    height: 1.214
+  - left: 2.923
+    top: 2.798
+    width: 0
+    height: 0.665
+  - left: 3.662
+    top: 1.869
+    width: 0
+    height: 1.594
+  - left: 7.721
+    top: 2.347
+    width: 0
+    height: 1.116
+  - left: 9.406
+    top: 2.035
+    width: 0
+    height: 1.428
+  - left: 7.011
+    top: 2.035
+    width: 0
+    height: 1.428
+  - left: 5.179
+    top: 1.841
+    width: 0
+    height: 1.622
+  - left: 5.912
+    top: 3.963
+    width: 0
+    height: 1.121
+  - left: 6.685
+    top: 4.051
+    width: 0.003
+    height: 2.461
+  - left: 8.389
+    top: 4.055
+    width: 0
+    height: 2.508
+  - left: 4.1
+    top: 2.798
+    width: 0
+    height: 0.665
+  - left: 1.085
+    top: 3.68
+    width: 11.514
+    height: 0.375
+  - left: 4.825
+    top: -0.07
+    width: 0.375
+    height: 7.875
+  - left: 1.226
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 1.726
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 2.306
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 2.853
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 3.581
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 4.38
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 5.109
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 5.841
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 6.626
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 8.299
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 10.209
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - left: 10.29
+    top: 4.033
+    width: 0
+    height: 1.052
+  dummy_texts:
+  - 'DABEEO
+
+    INTELLIGENCE'
+  - 주식회사 다비오
+  - 'Date :'
+  - '##.
+
+    Chapter name'
+  - Keep all contents within the boundary
+  - "AI로 지구를 읽고 미래를 예측하여\v국가·산업의 핵심 의사결정을 지원하는\v글로벌 인텔리전스 기업으로 도약합니다."
+  - 다중센서 데이터를 실시간으로 이해하는 End-to-End Data Intelligence Platform
+  - End-to-End 인텔리전스
+  - 미래 예측 기반 의사결정
+  - 멀티 Vertical 확장성
+  - Physical AI 진화
+  - '도시·국가·산업의 변화를 분석해 미래 시나리오 기반 결정 지원
+
+    (생성-분석-예측-제어)'
+  - 국방·환경·인프라·농업 등 다양한 분야로 전략 파트너십 확대
+  - AI가 공간을 읽고 판단하는 Spatial OS 기반 완전 지능형 기술로 발전
+  - BUSINESS KEY EVENT
+  - COMPANY KEY EVENT
+  - ㈜다비오 설립
+  - "Seed\n      투자유치"
+  - Series A 투자유치
+  - "기술혁신형 \n      이노비즈\n      인증"
+  - Series A2 투자유치
+  - "다비오 X DGIST \v 인공지능 랩 오픈"
+  - "과기부  ICT분야 \v미래 유니콘 기업 선정"
+  - CES 2022 혁신상 수상
+  - 미국법인 설립
+  - 인도네시아 법인설립
+  - 산업통산자원부 항공우주 부문 절충교역(Offset) 추천품목
+  - LIG 넥스원 전략적투자
+  - 중소벤처기업부•중소벤처기업진흥공단 절충교역사업 추천기업 선정
+  - 인공지능 신뢰성·품질 대상 수상 (과기부 장관상)
+  - 코린도 전략적투자
+  - "베트남\n      법인설립"
+  - '2012'
+  - '2015'
+  - '2017'
+  - '2018'
+  - '2019'
+  - '2021'
+  - '2022'
+  - '2023'
+  - '2024'
+  - '2025'
+  - '2026'
+  - "인공지능 \v신뢰성·품질 대상"
+  - 'Eartheye, 신뢰성 인증       최고상 수상
+
+    초해상화·객체탐지·3D 복원·변화감지 등 AI 핵심 기술력 공식 인정'
+  - 방산혁신기업 100
+  - '전장 변화 반영 3D 모델링·지능형 분석 기술력 인정
+
+    국방 신산업 분야 국가 인증 혁신기업'
+  - '과학기술정보통신부
+
+    장관상(대상)'
+  - '방위사업청·KRIT
+
+    (국가기술진흥연구소)'
+  gradient_white_masks:
+  - left: 2.486
+    top: 0.0
+    width: 7.3
+    height: 5.944
+    solid_color:
+      type: schemeClr
+      val: bg1
+colors:
+  navy: '#434C61'
+  light_navy: '#34A8FD'
+  gold: '#34A8FD'
+  light_gold: '#34A8FD'
+  grey: '#E7E6E6'
+  light_grey: '#E8E8E8'
+  dark: '#000000'
+  white: '#FFFFFF'
+fonts:
+  body: Pretendard
+cover:
+  title_fit:
+  - max_chars: 10
+    pt: 54
+  - max_chars: 18
+    pt: 44
+  - max_chars: 30
+    pt: 34
+  - max_chars: 50
+    pt: 26
+  - max_chars: 80
+    pt: 20
+  - max_chars: 999
+    pt: 16
+  auto_fit: true
+  title_box:
+    left: 0.756
+    top: 1.73
+    width: 5.861
+    height: 2.221
+  sub1_box:
+    left: 0.756
+    top: 3.858
+    width: 5.231
+    height: 0.463
+  sub2_box:
+    left: 0.815
+    top: 6.812
+    width: 1.454
+    height: 0.253
+content:
+  messages_height_with_visuals: 1.4
+  visuals_top_gap: 0.2
+  body_textbox_anchor:
+    left: 1.05
+    top: 1.64
+company_intro:
+  headline_anchor:
+    left: 1.06
+    top: 1.1
+  sub_anchor:
+    left: 1.64
+    top: 2.0
+placeholder_idx:
+  회사소개:
+    title: 0
+    body: 19
+  본문:
+    title: 0
+    body: 19
+slot_finders:
+  표지:
+    title:
+    - text_contains: DABEEO
+    - position:
+        left: 0.756
+        top: 1.73
+        tol: 0.4
+    sub1:
+    - text_contains: 주식회사 다비오
+    - position:
+        left: 0.756
+        top: 3.858
+        tol: 0.4
+    sub2:
+    - text_contains: 'Date :'
+    - position:
+        left: 0.815
+        top: 6.812
+        tol: 0.4
+  간지:
+    title:
+    - text_contains: '##.'
+    - position:
+        left: 0.741
+        top: 2.51
+        tol: 0.4
+  회사소개:
+    title:
+    - placeholder_idx: 0
+    - position:
+        left: 1.075
+        top: 0.907
+        tol: 0.4
+  본문:
+    title:
+    - placeholder_idx: 0
+    - position:
+        left: 1.075
+        top: 0.907
+        tol: 0.4
+    chap_name:
+    - placeholder_idx: 19
+    - position:
+        left: 1.073
+        top: 0.475
+        tol: 0.4
+    chap_no:
+    - position:
+        left: 0
+        top: 0.699
+        tol: 0.3
+footer:
+  top: 6.9
+top_right_label:
+  enabled: true
+  position:
+    left: 10.996
+    top: 0.212
+    width: 2.103
+    height: 0.162
+  font_pt: 9
+  color: light_navy
+_samples_detected:
+- idx: 1
+  layout: 빈페이지
+  layout_idx: 2
+  shapes:
+  - name: 그룹 23
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.052
+    top: 2.13
+    width: 11.229
+    height: 2.789
+  - name: TextBox 1
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.353
+    top: 0.121
+    width: 12.486
+    height: 0.404
+    text: Guide_Key color template
+  text_blob: Guide_Key color template
+- idx: 2
+  layout: 빈페이지
+  layout_idx: 2
+  shapes:
+  - name: 표 1
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 0.353
+    top: 0.72
+    width: 5.922
+    height: 3.147
+  - name: 표 21
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 0.353
+    top: 4.061
+    width: 5.922
+    height: 3.147
+  - name: 표 23
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 6.916
+    top: 0.72
+    width: 5.922
+    height: 3.147
+  - name: 그룹 3
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 6.916
+    top: 6.03
+    width: 5.922
+    height: 1.177
+  - name: TextBox 2
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.353
+    top: 0.121
+    width: 12.486
+    height: 0.404
+    text: Guide_Table template
+  - name: TextBox 4
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.916
+    top: 5.508
+    width: 5.922
+    height: 0.404
+    text: Colors
+  text_blob: Guide_Table template Colors
+- idx: 3
+  layout: 빈페이지
+  layout_idx: 2
+  shapes:
+  - name: 그룹 4
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.018
+    top: 1.621
+    width: 11.315
+    height: 5.879
+  - name: TextBox 9
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.756
+    top: 1.73
+    width: 5.861
+    height: 2.221
+    text: 'DABEEO
+
+      INTELLIGENCE'
+    font_pt: 66.0
+  - name: TextBox 10
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.756
+    top: 3.858
+    width: 5.231
+    height: 0.463
+    text: 주식회사 다비오
+    font_pt: 28.0
+  - name: TextBox 11
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.815
+    top: 6.812
+    width: 1.454
+    height: 0.253
+    text: 'Date :'
+    font_pt: 14.0
+  text_blob: 'DABEEO
+
+    INTELLIGENCE 주식회사 다비오 Date :'
+- idx: 4
+  layout: 빈페이지
+  layout_idx: 2
+  shapes:
+  - name: 그룹 2
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.149
+    top: 2.728
+    width: 9.184
+    height: 4.772
+  - name: Picture 4
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: -3.25
+    top: 3.759
+    width: 7.676
+    height: 0.019
+  - name: Group 5
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1565.678
+    top: 1565.678
+    width: 1565.678
+    height: 1565.678
+  - name: TextBox 9
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.741
+    top: 2.51
+    width: 5.861
+    height: 2.02
+    text: '##.
+
+      Chapter name'
+    font_pt: 60.0
+  text_blob: '##.
+
+    Chapter name'
+- idx: 5
+  layout: 00. 샘플 (좌정렬)
+  layout_idx: 0
+  shapes:
+  - name: 제목 2
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.073
+    top: 0.907
+    width: 11.473
+    height: 0.537
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 'Head message (Font: Prentendard Bold, 28)'
+  - name: 텍스트 개체 틀 7
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.073
+    top: 0.475
+    width: 11.473
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 'Chapter Name (Font: Pretendard Medium, 16)'
+  - name: 바닥글 개체 틀 10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 4.417
+    top: 7.007
+    width: 4.5
+    height: 0.399
+    ph_idx: 3
+    ph_type: FOOTER (15)
+    text: Dabeeo Inc. All rights reserved and confidential
+  - name: 슬라이드 번호 개체 틀 11
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.296
+    top: 7.007
+    width: 0.604
+    height: 0.399
+    ph_idx: 4
+    ph_type: SLIDE_NUMBER (13)
+    text: '5'
+  - name: 직사각형 1
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 1.506
+    width: 11.473
+    height: 0.64
+    text: "Description Subtitle (Font: Pretendard, 16) \nApply highlight color to\
+      \ key text (#214DC5)"
+    font_pt: 16.0
+  - name: 직사각형 4
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 2.206
+    width: 12.062
+    height: 4.819
+    text: ''
+  - name: TextBox 5
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.115
+    top: 2.206
+    width: 4.021
+    height: 0.303
+    text: Keep all contents within the boundary
+    font_pt: 12.0
+  text_blob: "Head message (Font: Prentendard Bold, 28) Chapter Name (Font: Pretendard\
+    \ Medium, 16) Dabeeo Inc. All rights reserved and confidential 5 Description Subtitle\
+    \ (Font: Pretendard, 16) \nApply highlight color to key text (#214DC5) Keep all\
+    \ contents within the boundary"
+- idx: 6
+  layout: 00. 샘플 (중앙)
+  layout_idx: 1
+  shapes:
+  - name: 제목 6
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.472
+    height: 0.537
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 'Head message (Font: Prentendard Bold, 28)'
+  - name: 바닥글 개체 틀 32
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 4.417
+    top: 7.007
+    width: 4.5
+    height: 0.399
+    ph_idx: 3
+    ph_type: FOOTER (15)
+    text: Dabeeo Inc. All rights reserved and confidential
+  - name: 슬라이드 번호 개체 틀 33
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.296
+    top: 7.007
+    width: 0.604
+    height: 0.399
+    ph_idx: 4
+    ph_type: SLIDE_NUMBER (13)
+    text: '6'
+  - name: 텍스트 개체 틀 7
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.073
+    top: 0.475
+    width: 11.473
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 'Chapter Name (Font: Pretendard Medium, 16)'
+  - name: 직사각형 9
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 1.506
+    width: 11.473
+    height: 0.64
+    text: "Description Subtitle (Font: Pretendard, 16) \nApply highlight color to\
+      \ key text (#214DC5)"
+    font_pt: 16.0
+  - name: 직사각형 11
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 2.206
+    width: 12.062
+    height: 4.819
+    text: ''
+  - name: TextBox 12
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.115
+    top: 2.206
+    width: 4.021
+    height: 0.303
+    text: Keep all contents within the boundary
+    font_pt: 12.0
+  text_blob: "Head message (Font: Prentendard Bold, 28) Dabeeo Inc. All rights reserved\
+    \ and confidential 6 Chapter Name (Font: Pretendard Medium, 16) Description Subtitle\
+    \ (Font: Pretendard, 16) \nApply highlight color to key text (#214DC5) Keep all\
+    \ contents within the boundary"
+- idx: 7
+  layout: 빈페이지
+  layout_idx: 2
+  shapes:
+  - name: 그룹 2
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.149
+    top: 2.728
+    width: 9.184
+    height: 4.772
+  - name: Picture 4
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: -3.25
+    top: 3.759
+    width: 7.676
+    height: 0.019
+  - name: Group 5
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1565.678
+    top: 1565.678
+    width: 1565.678
+    height: 1565.678
+  - name: TextBox 9
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.741
+    top: 2.51
+    width: 5.861
+    height: 2.02
+    text: '01.
+
+      회사 소개'
+    font_pt: 60.0
+  text_blob: '01.
+
+    회사 소개'
+- idx: 8
+  layout: 00. 샘플 (중앙)
+  layout_idx: 1
+  shapes:
+  - name: 제목 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.472
+    height: 0.537
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 인공지능기반 지구를 읽고 해석해 미래 예측과 결정을 지원
+  - name: 텍스트 개체 틀 7
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.073
+    top: 0.475
+    width: 11.473
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 기업 개요
+  - name: '사각형: 둥근 모서리 45'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.252
+    top: 3.574
+    width: 5.594
+    height: 2.879
+    text: ''
+  - name: '사각형: 둥근 모서리 46'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.169
+    top: 1.931
+    width: 5.247
+    height: 4.522
+    text: ''
+  - name: 표 8
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 7.472
+    top: 2.22
+    width: 4.749
+    height: 3.946
+  - name: TextBox 25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.676
+    top: 2.037
+    width: 5.315
+    height: 1.134
+    text: "AI로 지구를 읽고 미래를 예측하여\v국가·산업의 핵심 의사결정을 지원하는\v글로벌 인텔리전스 기업으로 도약합니다."
+    font_pt: 18.0
+  - name: Rectangle 1
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.135
+    top: 4.303
+    width: 2.044
+    height: 0.606
+    text: 다중센서 데이터를 실시간으로 이해하는 End-to-End Data Intelligence Platform
+    font_pt: 10.0
+  - name: TextBox 50
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.135
+    top: 4.053
+    width: 2.107
+    height: 0.303
+    text: End-to-End 인텔리전스
+    font_pt: 12.0
+  - name: TextBox 51
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.781
+    top: 4.027
+    width: 2.243
+    height: 0.303
+    text: 미래 예측 기반 의사결정
+    font_pt: 12.0
+  - name: TextBox 52
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.135
+    top: 5.361
+    width: 1.674
+    height: 0.303
+    text: 멀티 Vertical 확장성
+    font_pt: 12.0
+  - name: TextBox 53
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.781
+    top: 5.361
+    width: 1.865
+    height: 0.303
+    text: Physical AI 진화
+    font_pt: 12.0
+  - name: Rectangle 1
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.781
+    top: 4.276
+    width: 2.044
+    height: 0.606
+    text: '도시·국가·산업의 변화를 분석해 미래 시나리오 기반 결정 지원
+
+      (생성-분석-예측-제어)'
+    font_pt: 10.0
+  - name: Rectangle 1
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.135
+    top: 5.59
+    width: 1.943
+    height: 0.438
+    text: 국방·환경·인프라·농업 등 다양한 분야로 전략 파트너십 확대
+    font_pt: 10.0
+  - name: Rectangle 1
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.781
+    top: 5.59
+    width: 2.044
+    height: 0.606
+    text: AI가 공간을 읽고 판단하는 Spatial OS 기반 완전 지능형 기술로 발전
+    font_pt: 10.0
+  - name: 그룹 64
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.429
+    top: 4.068
+    width: 0.672
+    height: 0.672
+  - name: 그룹 67
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.133
+    top: 4.068
+    width: 0.672
+    height: 0.672
+  - name: 그룹 70
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.133
+    top: 5.328
+    width: 0.672
+    height: 0.672
+  - name: 그룹 73
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.429
+    top: 5.328
+    width: 0.672
+    height: 0.672
+  text_blob: "인공지능기반 지구를 읽고 해석해 미래 예측과 결정을 지원 기업 개요 AI로 지구를 읽고 미래를 예측하여\v국가·산업의 핵심\
+    \ 의사결정을 지원하는\v글로벌 인텔리전스 기업으로 도약합니다. 다중센서 데이터를 실시간으로 이해하는 End-to-End Data Intelligence\
+    \ Platform End-to-End 인텔리전스 미래 예측 기반 의사결정 멀티 Vertical 확장성 Physical AI 진화 도시·국가·산업의\
+    \ 변화를 분석해 미래 시나리오 기반 결정 지원\n(생성-분석-예측-제어) 국방·환경·인프라·농업 등 다양한 분야로 전략 파트너십 확대 AI가\
+    \ 공간을 읽고 판단하는 Spatial OS 기반 완전 지능형 기술로 발전"
+- idx: 9
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: '사각형: 둥근 모서리 37'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.088
+    top: 1.474
+    width: 11.514
+    height: 5.428
+    text: ''
+  - name: 직선 연결선[R] 17
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.312
+    top: 2.088
+    width: 0.0
+    height: 1.375
+  - name: 직선 연결선[R] 30
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.809
+    top: 2.7
+    width: 0.0
+    height: 0.763
+  - name: 직선 연결선[R] 55
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 2.404
+    top: 2.249
+    width: 0.0
+    height: 1.214
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 2.923
+    top: 2.798
+    width: 0.0
+    height: 0.665
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 3.662
+    top: 1.869
+    width: 0.0
+    height: 1.594
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.721
+    top: 2.347
+    width: 0.0
+    height: 1.116
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 9.406
+    top: 2.035
+    width: 0.0
+    height: 1.428
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.011
+    top: 2.035
+    width: 0.0
+    height: 1.428
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 5.179
+    top: 1.841
+    width: 0.0
+    height: 1.622
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 5.912
+    top: 3.963
+    width: 0.0
+    height: 1.121
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 6.685
+    top: 4.051
+    width: 0.003
+    height: 2.461
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 8.389
+    top: 4.055
+    width: 0.0
+    height: 2.508
+  - name: 제목 3
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 데이터 구축을 넘어, AI 기반 Earth Intelligence 기업으로 도약
+  - name: 텍스트 개체 틀 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 기업 개요
+  - name: TextBox 88
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.124
+    top: 6.457
+    width: 1.946
+    height: 0.303
+    text: BUSINESS KEY EVENT
+    font_pt: 12.0
+  - name: TextBox 90
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.124
+    top: 1.518
+    width: 1.99
+    height: 0.303
+    text: COMPANY KEY EVENT
+    font_pt: 12.0
+  - name: TextBox 91
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.163
+    top: 1.909
+    width: 1.162
+    height: 0.292
+    text: ㈜다비오 설립
+    font_pt: 10.0
+  - name: TextBox 92
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.665
+    top: 2.569
+    width: 1.049
+    height: 0.5
+    text: "Seed\n      투자유치"
+    font_pt: 10.0
+  - name: TextBox 93
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.254
+    top: 2.076
+    width: 0.964
+    height: 0.5
+    text: Series A 투자유치
+    font_pt: 10.0
+  - name: TextBox 94
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.777
+    top: 2.641
+    width: 0.997
+    height: 0.709
+    text: "기술혁신형 \n      이노비즈\n      인증"
+    font_pt: 10.0
+  - name: TextBox 95
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.513
+    top: 1.687
+    width: 1.45
+    height: 0.292
+    text: Series A2 투자유치
+    font_pt: 10.0
+  - name: TextBox 96
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.513
+    top: 1.931
+    width: 1.579
+    height: 0.5
+    text: "다비오 X DGIST \v 인공지능 랩 오픈"
+    font_pt: 10.0
+  - name: TextBox 97
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.031
+    top: 2.225
+    width: 1.513
+    height: 0.5
+    text: "과기부  ICT분야 \v미래 유니콘 기업 선정"
+    font_pt: 10.0
+  - name: TextBox 98
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.031
+    top: 1.934
+    width: 1.624
+    height: 0.292
+    text: CES 2022 혁신상 수상
+    font_pt: 10.0
+  - name: TextBox 99
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.031
+    top: 1.687
+    width: 1.113
+    height: 0.292
+    text: 미국법인 설립
+    font_pt: 10.0
+  - name: TextBox 101
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.256
+    top: 2.155
+    width: 1.45
+    height: 0.292
+    text: 인도네시아 법인설립
+    font_pt: 10.0
+  - name: TextBox 104
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.57
+    top: 2.18
+    width: 1.65
+    height: 0.709
+    text: 산업통산자원부 항공우주 부문 절충교역(Offset) 추천품목
+    font_pt: 10.0
+  - name: TextBox 105
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.864
+    top: 1.894
+    width: 1.567
+    height: 0.292
+    text: LIG 넥스원 전략적투자
+    font_pt: 10.0
+  - name: TextBox 69
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.256
+    top: 2.411
+    width: 2.413
+    height: 0.5
+    text: 중소벤처기업부•중소벤처기업진흥공단 절충교역사업 추천기업 선정
+    font_pt: 10.0
+  - name: TextBox 89
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.57
+    top: 2.823
+    width: 1.757
+    height: 0.5
+    text: 인공지능 신뢰성·품질 대상 수상 (과기부 장관상)
+    font_pt: 10.0
+  - name: TextBox 123
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.256
+    top: 1.894
+    width: 1.344
+    height: 0.292
+    text: 코린도 전략적투자
+    font_pt: 10.0
+  - name: TextBox 1
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 8.242
+    top: 5.158
+    width: 3.387
+    height: 1.544
+    text: "0정찰위성 (425)  다출처영상융합체계 연동장비개발  \nK-기관 분석사업  계약 \n한국자산관리공사 국유지변화탐지사업 계약\
+      \ \n티맵모빌리티 차세대 HDMAP  본사업  \n카카오모빌리티 데이터 사업 \n도미니카공화국 환경부 인공지능사업 MOU\n인도네시아\
+      \ Salim 그룹 (전면적) 팜농장분석  계약"
+    font_pt: 10.0
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.1
+    top: 2.798
+    width: 0.0
+    height: 0.665
+  - name: TextBox 2
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.952
+    top: 2.625
+    width: 0.84
+    height: 0.5
+    text: "베트남\n      법인설립"
+    font_pt: 10.0
+  - name: 그룹 54
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.968
+    top: 4.064
+    width: 2.983
+    height: 1.126
+  - name: 그룹 68
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 3.751
+    top: 5.286
+    width: 2.977
+    height: 1.544
+  - name: TextBox 106
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.044
+    top: 3.433
+    width: 0.525
+    height: 0.269
+    text: '2012'
+    font_pt: 10.0
+  - name: TextBox 108
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.543
+    top: 3.433
+    width: 0.526
+    height: 0.269
+    text: '2015'
+    font_pt: 10.0
+  - name: TextBox 115
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.123
+    top: 3.433
+    width: 0.519
+    height: 0.269
+    text: '2017'
+    font_pt: 10.0
+  - name: TextBox 116
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.663
+    top: 3.433
+    width: 0.737
+    height: 0.269
+    text: '2018'
+    font_pt: 10.0
+  - name: TextBox 119
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.392
+    top: 3.433
+    width: 0.53
+    height: 0.269
+    text: '2019'
+    font_pt: 10.0
+  - name: TextBox 121
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.19
+    top: 3.433
+    width: 0.525
+    height: 0.269
+    text: '2021'
+    font_pt: 10.0
+  - name: TextBox 122
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.918
+    top: 3.433
+    width: 0.544
+    height: 0.269
+    text: '2022'
+    font_pt: 10.0
+  - name: TextBox 124
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.648
+    top: 3.433
+    width: 0.549
+    height: 0.269
+    text: '2023'
+    font_pt: 10.0
+  - name: TextBox 125
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.437
+    top: 3.433
+    width: 0.551
+    height: 0.269
+    text: '2024'
+    font_pt: 10.0
+  - name: TextBox 126
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 8.115
+    top: 3.433
+    width: 0.546
+    height: 0.269
+    text: '2025'
+    font_pt: 10.0
+  - name: TextBox 127
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.026
+    top: 3.433
+    width: 0.549
+    height: 0.269
+    text: '2026'
+    font_pt: 10.0
+  - name: Picture 7
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.085
+    top: 3.68
+    width: 11.514
+    height: 0.375
+  - name: Picture 8
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.825
+    top: -0.07
+    width: 0.375
+    height: 7.875
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.226
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.726
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.306
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.853
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.581
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.38
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.109
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.841
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 6.626
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 8.299
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.209
+    top: 3.776
+    width: 0.162
+    height: 0.162
+  - name: 직선 연결선[R] 57
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 10.29
+    top: 4.033
+    width: 0.0
+    height: 1.052
+  - name: TextBox 120
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.146
+    top: 4.064
+    width: 2.814
+    height: 1.174
+    text: "Triputra Agron 스마트 플랜테이션 계약 \n한화 갤러리아 인프라 데이터 서비스 계약\n신세계면세점 인프라 데이터 서비스\
+      \ 계약 \n도미니카공화국 변화탐지 Pilot 사업 확정\nK-LEO 산업협력 TF 참여기업 선정"
+    font_pt: 10.0
+  text_blob: "데이터 구축을 넘어, AI 기반 Earth Intelligence 기업으로 도약 기업 개요 BUSINESS KEY EVENT\
+    \ COMPANY KEY EVENT ㈜다비오 설립 Seed\n      투자유치 Series A 투자유치 기술혁신형 \n      이노비즈\n\
+    \      인증 Series A2 투자유치 다비오 X DGIST \v 인공지능 랩 오픈 과기부  ICT분야 \v미래 유니콘 기업 선정 CES\
+    \ 2022 혁신상 수상 미국법인 설립 인도네시아 법인설립 산업통산자원부 항공우주 부문 절충교역(Offset) 추천품목 LIG 넥스원 전략적투자\
+    \ 중소벤처기업부•중소벤처기업진흥공단 절충교역사업 추천기업 선정 인공지능 신뢰성·품질 대상 수상 (과기부 장관상) 코린도 전략적투자 0정찰위성\
+    \ (425)  다출처영상융합체계 연동장비개발  \nK-기관 분석사업  계약 \n한국자산관리공사 국유지변화탐지사업 계약 \n티맵모빌리티 차세대\
+    \ HDMAP  본사업  \n카카오모빌리티 데이터 사업 \n도미니카공화국 환경부 인공지능사업 MOU\n인도네시아 Salim 그룹 (전면적)\
+    \ 팜농장분석  계약 베트남\n      법인설립 2012 2015 2017 2018 2019 2021 2022 2023 2024 2025\
+    \ 2026 Triputra Agron 스마트 플랜테이션 계약 \n한화 갤러리아 인프라 데이터 서비스 계약\n신세계면세점 인프라 데이터 서비스\
+    \ 계약 \n도미니카공화국 변화탐지 Pilot 사업 확정\nK-LEO 산업협력 TF 참여기업 선정"
+- idx: 10
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 제목 49
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 국내외 탑티어 VC 및 방산·농림 펀드 투자 유치
+  - name: 텍스트 개체 틀 50
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 투자 유치 실적
+  - name: 그룹 67
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.068
+    top: 2.608
+    width: 11.512
+    height: 2.829
+  - name: 직사각형 70
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.721
+    top: 4.001
+    width: 12.006
+    height: 2.642
+    text: ''
+  - name: 직사각형 72
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.103
+    top: 3.261
+    width: 0.779
+    height: 0.298
+    text: SEED
+    font_pt: 12.0
+  - name: 직사각형 74
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.913
+    top: 2.73
+    width: 0.892
+    height: 0.298
+    text: SERIES-A
+    font_pt: 12.0
+  - name: 직사각형 76
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.235
+    top: 2.486
+    width: 1.086
+    height: 0.298
+    text: FOLLOW UP
+    font_pt: 12.0
+  - name: 직사각형 78
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.146
+    top: 2.237
+    width: 0.881
+    height: 0.298
+    text: SERIES-B
+    font_pt: 12.0
+  - name: 직사각형 81
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.969
+    top: 1.855
+    width: 1.429
+    height: 0.337
+    text: 전략적 투자 유치
+    font_pt: 14.0
+  - name: 직사각형 83
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.816
+    top: 2.728
+    width: 0.916
+    height: 0.497
+    text: 'PRE-
+
+      SERIES A'
+    font_pt: 12.0
+  - name: 직사각형 85
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.365
+    top: 1.56
+    width: 1.468
+    height: 0.337
+    text: 전략적  투자 유치
+    font_pt: 14.0
+  - name: 직사각형 89
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.134
+    top: 3.705
+    width: 0.54
+    height: 0.269
+    text: 0.8억
+    font_pt: 10.0
+  - name: 직사각형 91
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.641
+    top: 3.606
+    width: 1.459
+    height: 0.303
+    text: 25억
+    font_pt: 12.0
+  - name: 직사각형 93
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.26
+    top: 3.46
+    width: 1.103
+    height: 0.431
+    text: 30억
+    font_pt: 20.0
+  - name: 직사각형 95
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 5.993
+    top: 3.321
+    width: 1.2
+    height: 0.522
+    text: 89억
+    font_pt: 24.0
+  - name: 직사각형 97
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 8.163
+    top: 3.239
+    width: 1.124
+    height: 0.522
+    text: 81억
+    font_pt: 24.0
+  - name: 직사각형 98
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 9.478
+    top: 3.963
+    width: 0.821
+    height: 0.282
+    text: 'RCPS : 81'
+    font_pt: 11.0
+  - name: 직사각형 100
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.026
+    top: 3.688
+    width: 0.451
+    height: 0.303
+    text: 5억
+    font_pt: 12.0
+  - name: 직사각형 102
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.402
+    top: 3.149
+    width: 1.651
+    height: 0.597
+    text: 139억
+    font_pt: 30.0
+  - name: 그래픽 127
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.623
+    top: 4.476
+    width: 1.122
+    height: 0.218
+  - name: 그림 135
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.439
+    top: 4.196
+    width: 1.422
+    height: 0.206
+  - name: Picture 4
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.621
+    top: 4.831
+    width: 1.151
+    height: 0.166
+  - name: Picture 6
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.773
+    top: 5.118
+    width: 0.847
+    height: 0.28
+  - name: Picture 8
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.544
+    top: 5.518
+    width: 1.305
+    height: 0.176
+  - name: Picture 10
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.614
+    top: 5.814
+    width: 1.165
+    height: 0.271
+  - name: 그룹 35
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 8.25
+    top: 2.19
+    width: 1.467
+    height: 0.397
+  - name: 직선 연결선 32
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 8.725
+    top: 2.481
+    width: 0.0
+    height: 0.634
+  - name: 그룹 36
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 10.628
+    top: 1.884
+    width: 1.515
+    height: 0.402
+  - name: 직선 연결선 39
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 11.165
+    top: 2.164
+    width: 0.0
+    height: 0.634
+  - name: 직선 연결선 40
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 6.59
+    top: 2.578
+    width: 0.0
+    height: 0.634
+  - name: 직선 연결선 41
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.786
+    top: 2.798
+    width: 0.0
+    height: 0.634
+  - name: 직선 연결선 42
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 3.36
+    top: 3.115
+    width: 0.0
+    height: 0.392
+  - name: 직선 연결선 45
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 2.27
+    top: 3.274
+    width: 0.0
+    height: 0.314
+  - name: '사각형: 둥근 모서리 1'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.086
+    top: 5.302
+    width: 2.637
+    height: 1.281
+    text: '369억원
+
+      INVESTMENT RECORD'
+    font_pt: 36.0
+  - name: 그룹 128
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 8.001
+    top: 4.141
+    width: 1.467
+    height: 1.653
+  - name: 그림 53
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.047
+    top: 4.012
+    width: 0.721
+    height: 0.721
+  - name: 그룹 54
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.833
+    top: 4.109
+    width: 0.868
+    height: 1.018
+  - name: 그룹 58
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 5.766
+    top: 4.177
+    width: 1.665
+    height: 1.61
+  - name: 그룹 77
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.052
+    top: 4.177
+    width: 1.369
+    height: 1.339
+  - name: 그룹 88
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.799
+    top: 4.182
+    width: 1.158
+    height: 0.696
+  text_blob: '국내외 탑티어 VC 및 방산·농림 펀드 투자 유치 투자 유치 실적 SEED SERIES-A FOLLOW UP SERIES-B
+    전략적 투자 유치 PRE-
+
+    SERIES A 전략적  투자 유치 0.8억 25억 30억 89억 81억 RCPS : 81 5억 139억 369억원
+
+    INVESTMENT RECORD'
+- idx: 11
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 제목 3
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 국내외 글로벌 기업, 전략적 투자로 만들어지는 미래 동반성장 발판 마련
+  - name: 텍스트 개체 틀 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 전략적 투자 유치
+  - name: 텍스트 개체 틀 10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 6.626
+    width: 11.498
+    height: 0.708
+    ph_idx: 20
+    ph_type: BODY (2)
+    text: 산업별 대표 기업 3사의 전략적 투자를 기반으로 다비오의 AI 데이터 인텔리전스 사업을 확장
+  - name: Picture 5
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.365
+    top: 2.37
+    width: 3.351
+    height: 4.101
+  - name: TextBox 13
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.645
+    top: 2.602
+    width: 2.601
+    height: 0.463
+    text: LIG 넥스원
+    font_pt: 22.0
+  - name: 직선 연결선 52
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.501
+    top: 4.938
+    width: 2.745
+    height: 0.0
+  - name: TextBox 26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.99
+    top: 2.655
+    width: 0.931
+    height: 0.389
+    text: '[방산]'
+    font_pt: 16.0
+  - name: 그룹 95
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.645
+    top: 3.107
+    width: 2.803
+    height: 0.764
+  - name: 직선 연결선 12
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.501
+    top: 3.972
+    width: 2.745
+    height: 0.0
+  - name: 그룹 92
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.645
+    top: 4.073
+    width: 2.189
+    height: 0.764
+  - name: 그룹 91
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.645
+    top: 5.04
+    width: 2.456
+    height: 0.499
+  - name: TextBox 5
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.537
+    top: 5.912
+    width: 2.745
+    height: 0.37
+    text: "※ 1972년 설립, 국내 3대 방산 체계회사\n   2025년 매출액 4조 3천억원 / 수주잔고 26조 2천억원"
+    font_pt: 8.0
+  - name: Picture 5
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.149
+    top: 2.37
+    width: 3.351
+    height: 4.101
+  - name: TextBox 13
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.429
+    top: 2.602
+    width: 2.601
+    height: 0.463
+    text: KORINDO
+    font_pt: 22.0
+  - name: 직선 연결선 47
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 5.285
+    top: 4.938
+    width: 2.745
+    height: 0.0
+  - name: TextBox 26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.774
+    top: 2.655
+    width: 0.931
+    height: 0.389
+    text: '[임‧농업]'
+    font_pt: 16.0
+  - name: 그룹 94
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 5.429
+    top: 3.107
+    width: 2.803
+    height: 0.764
+  - name: 직선 연결선 63
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 5.285
+    top: 3.972
+    width: 2.745
+    height: 0.0
+  - name: 그룹 93
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 5.429
+    top: 4.073
+    width: 2.189
+    height: 0.764
+  - name: 그룹 90
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 5.429
+    top: 5.04
+    width: 2.456
+    height: 0.751
+  - name: TextBox 68
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.321
+    top: 5.912
+    width: 2.745
+    height: 0.37
+    text: "※ 1969년 설립,  인도네시아 재계 20위\n   2024년 매출액 3조6천억원 (IDR 43Trill)"
+    font_pt: 8.0
+  - name: Picture 5
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 8.933
+    top: 2.37
+    width: 3.351
+    height: 4.101
+  - name: 직선 연결선 97
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 9.069
+    top: 4.938
+    width: 2.745
+    height: 0.0
+  - name: TextBox 26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.518
+    top: 2.655
+    width: 0.931
+    height: 0.389
+    text: '[금융업]'
+    font_pt: 16.0
+  - name: 그룹 99
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 9.213
+    top: 3.107
+    width: 2.803
+    height: 0.764
+  - name: 직선 연결선 102
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 9.069
+    top: 3.972
+    width: 2.745
+    height: 0.0
+  - name: 그룹 103
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 9.213
+    top: 4.073
+    width: 2.189
+    height: 0.764
+  - name: 그룹 106
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 9.213
+    top: 5.04
+    width: 2.456
+    height: 0.751
+  - name: TextBox 109
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.105
+    top: 5.912
+    width: 2.745
+    height: 0.37
+    text: "※ 1961년 설립, 국내 5대 시중은행\n   2025년 당기순이익 1조 8천억원"
+    font_pt: 8.0
+  - name: TextBox 13
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 9.213
+    top: 2.602
+    width: 2.601
+    height: 0.463
+    text: NH농협은행
+    font_pt: 22.0
+  - name: 직사각형 2
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 1.64
+    width: 11.473
+    height: 0.37
+    text: 산업별 대표 기업 3사의 전략적 투자를 기반으로 다비오의 AI 데이터 인텔리전스 사업을 확장
+    font_pt: 16.0
+  text_blob: "국내외 글로벌 기업, 전략적 투자로 만들어지는 미래 동반성장 발판 마련 전략적 투자 유치 산업별 대표 기업 3사의 전략적\
+    \ 투자를 기반으로 다비오의 AI 데이터 인텔리전스 사업을 확장 LIG 넥스원 [방산] ※ 1972년 설립, 국내 3대 방산 체계회사\n \
+    \  2025년 매출액 4조 3천억원 / 수주잔고 26조 2천억원 KORINDO [임‧농업] ※ 1969년 설립,  인도네시아 재계 20위\n\
+    \   2024년 매출액 3조6천억원 (IDR 43Trill) [금융업] ※ 1961년 설립, 국내 5대 시중은행\n   2025년 당기순이익\
+    \ 1조 8천억원 NH농협은행 산업별 대표 기업 3사의 전략적 투자를 기반으로 다비오의 AI 데이터 인텔리전스 사업을 확장"
+- idx: 12
+  layout: 1_01. 회사개요 (중앙-배경)
+  layout_idx: -1
+  shapes:
+  - name: 제목 5
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 국가가 공식 선정한 AI·국방 분야 핵심 기술기업
+  - name: 텍스트 개체 틀 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 주요 수상 및 인증 현황
+  - name: TextBox 21
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.306
+    top: 3.405
+    width: 3.728
+    height: 3.333
+    text: ''
+  - name: TextBox 21
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.153
+    top: 3.405
+    width: 3.728
+    height: 3.333
+    text: ''
+  - name: 그룹 7
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.08
+    top: 1.835
+    width: 11.273
+    height: 4.237
+  - name: 그림 15
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.76
+    top: 2.095
+    width: 2.592
+    height: 3.691
+  - name: TextBox 20
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.537
+    top: 2.273
+    width: 2.239
+    height: 0.685
+    text: "인공지능 \v신뢰성·품질 대상"
+    font_pt: 16.0
+  - name: TextBox 21
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.548
+    top: 3.996
+    width: 2.1
+    height: 1.144
+    text: 'Eartheye, 신뢰성 인증       최고상 수상
+
+      초해상화·객체탐지·3D 복원·변화감지 등 AI 핵심 기술력 공식 인정'
+    font_pt: 12.0
+  - name: TextBox 21
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.364
+    top: 2.993
+    width: 3.782
+    height: 3.381
+    text: ''
+  - name: TextBox 20
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.312
+    top: 2.273
+    width: 2.148
+    height: 0.321
+    text: 방산혁신기업 100
+    font_pt: 16.0
+  - name: TextBox 21
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.312
+    top: 3.996
+    width: 1.985
+    height: 1.174
+    text: '전장 변화 반영 3D 모델링·지능형 분석 기술력 인정
+
+      국방 신산업 분야 국가 인증 혁신기업'
+    font_pt: 12.0
+  - name: 그림 42
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 9.52
+    top: 2.095
+    width: 2.61
+    height: 3.691
+  - name: TextBox 33
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.548
+    top: 2.896
+    width: 2.402
+    height: 0.776
+    text: '과학기술정보통신부
+
+      장관상(대상)'
+    font_pt: 14.0
+  - name: TextBox 33
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.305
+    top: 2.611
+    width: 2.064
+    height: 0.776
+    text: '방위사업청·KRIT
+
+      (국가기술진흥연구소)'
+    font_pt: 14.0
+  text_blob: "국가가 공식 선정한 AI·국방 분야 핵심 기술기업 주요 수상 및 인증 현황 인공지능 \v신뢰성·품질 대상 Eartheye,\
+    \ 신뢰성 인증       최고상 수상\n초해상화·객체탐지·3D 복원·변화감지 등 AI 핵심 기술력 공식 인정 방산혁신기업 100 전장 변화\
+    \ 반영 3D 모델링·지능형 분석 기술력 인정\n국방 신산업 분야 국가 인증 혁신기업 과학기술정보통신부\n장관상(대상) 방위사업청·KRIT\n\
+    (국가기술진흥연구소)"
+- idx: 13
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 제목 5
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 국내외 Top-Tier 기관으로부터 폭넓게 검증된 기술·사업 역량
+  - name: 텍스트 개체 틀 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: 주요 수상 및 인증 현황
+  - name: 그룹 28
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.397
+    top: 1.799
+    width: 2.094
+    height: 2.437
+  - name: 그룹 27
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.61
+    top: 1.799
+    width: 2.043
+    height: 2.437
+  - name: 그룹 26
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 6.773
+    top: 1.799
+    width: 2.043
+    height: 2.437
+  - name: 그룹 18
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 8.935
+    top: 1.799
+    width: 2.043
+    height: 2.437
+  - name: 그룹 30
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.149
+    top: 4.507
+    width: 11.286
+    height: 2.085
+  text_blob: 국내외 Top-Tier 기관으로부터 폭넓게 검증된 기술·사업 역량 주요 수상 및 인증 현황
+- idx: 14
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 타원 217
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.721
+    top: 2.896
+    width: 3.587
+    height: 3.588
+    text: ''
+  - name: 제목 6
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: AI-Powered Orchestration Process 기반 플랫폼 개발
+  - name: 텍스트 개체 틀 7
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: ORCHESTRATION
+  - name: 직사각형 1
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 6.904
+    width: 11.473
+    height: 0.286
+    text: '*Orchestration: 다중 AI 기술과 데이터 처리기술을 유기적으로 연결하여 최적의 결과를 만들어 내는 융합기술 프로세스'
+    font_pt: 11.0
+  - name: 타원 320
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 5.251
+    top: 2.985
+    width: 3.41
+    height: 3.41
+    text: ''
+  - name: 타원 215
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 5.518
+    top: 3.252
+    width: 2.876
+    height: 2.876
+    text: ''
+  - name: 직선 화살표 연결선 216
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 9.366
+    top: 4.69
+    width: 0.386
+    height: 0.0
+  - name: 그룹 218
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.288
+    top: 3.621
+    width: 1.891
+    height: 2.454
+  - name: 직선 화살표 연결선 225
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.189
+    top: 4.69
+    width: 0.239
+    height: 0.0
+  - name: 직선 화살표 연결선 226
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 5.937
+    top: 4.69
+    width: 0.239
+    height: 0.0
+  - name: 직선 화살표 연결선 227
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.652
+    top: 4.69
+    width: 0.239
+    height: 0.0
+  - name: 그룹 228
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.818
+    top: 4.032
+    width: 1.316
+    height: 1.316
+  - name: 그룹 232
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 9.955
+    top: 2.677
+    width: 2.8
+    height: 4.02
+  - name: 그룹 249
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 6.298
+    top: 4.057
+    width: 1.316
+    height: 1.316
+  - name: 그룹 253
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 7.966
+    top: 4.078
+    width: 1.316
+    height: 1.316
+  - name: 그룹 257
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.42
+    top: 3.598
+    width: 0.957
+    height: 0.957
+  - name: 그룹 271
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.42
+    top: 4.921
+    width: 0.957
+    height: 0.957
+  - name: 그룹 295
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.492
+    top: 2.695
+    width: 0.957
+    height: 0.957
+  - name: 그룹 298
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 3.86
+    top: 2.839
+    width: 0.957
+    height: 0.957
+  - name: 그룹 303
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 2.482
+    top: 5.825
+    width: 0.957
+    height: 0.957
+  - name: 그룹 308
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 3.86
+    top: 5.668
+    width: 0.957
+    height: 0.957
+  - name: 그림 313
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.66
+    top: 2.861
+    width: 0.686
+    height: 0.454
+  - name: 타원 314
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.006
+    top: 3.74
+    width: 1.9
+    height: 1.9
+    text: ''
+  - name: TextBox 315
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.953
+    top: 5.217
+    width: 0.533
+    height: 0.503
+    text: '강화
+
+      기술'
+    font_pt: 10.0
+  - name: TextBox 316
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.678
+    top: 3.496
+    width: 0.533
+    height: 0.503
+    text: '핵심
+
+      기술'
+    font_pt: 10.0
+  - name: TextBox 317
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.41
+    top: 5.217
+    width: 0.533
+    height: 0.503
+    text: '주변
+
+      기술'
+    font_pt: 10.0
+  - name: TextBox 318
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.195
+    top: 2.558
+    width: 1.523
+    height: 0.287
+    text: Orchestration
+    font_pt: 12.0
+  - name: 그룹 322
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.474
+    top: 3.945
+    width: 1.478
+    height: 1.478
+  - name: 직사각형 4
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 1.64
+    width: 11.473
+    height: 0.37
+    text: 지구 인텔리전스 사업을 위한 최적의 AI-Powered Orchestration Process 기반 플랫폼 개발
+    font_pt: 16.0
+  text_blob: 'AI-Powered Orchestration Process 기반 플랫폼 개발 ORCHESTRATION *Orchestration:
+    다중 AI 기술과 데이터 처리기술을 유기적으로 연결하여 최적의 결과를 만들어 내는 융합기술 프로세스 강화
+
+    기술 핵심
+
+    기술 주변
+
+    기술 Orchestration 지구 인텔리전스 사업을 위한 최적의 AI-Powered Orchestration Process 기반 플랫폼 개발'
+- idx: 15
+  layout: 00. 샘플 (좌정렬)
+  layout_idx: -1
+  shapes:
+  - name: 제목 3
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 지구 인텔리전스 사업을 위한 다비오 인텔리전스 AI 핵심 기술
+  - name: 텍스트 개체 틀 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: BACKBONE 기술
+  - name: TextBox 13
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.206
+    top: 5.639
+    width: 1.807
+    height: 0.656
+    text: 다출처 영상의 공간 해상도 품질을 최대 4배까지 향상시키는 영상 생성 기술
+    font_pt: 11.0
+  - name: TextBox 14
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.977
+    top: 5.639
+    width: 1.807
+    height: 0.656
+    text: '지형·지물을 픽셀 단위로
+
+      정의된 클래스에
+
+      분류하고 세분화하는 기술'
+    font_pt: 11.0
+  - name: TextBox 15
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.862
+    top: 5.639
+    width: 1.807
+    height: 0.656
+    text: '다출처 영상 데이터에서
+
+      목표 객체를 자동으로 식별하고 추출하는 기술'
+    font_pt: 11.0
+  - name: TextBox 16
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 8.748
+    top: 5.639
+    width: 1.807
+    height: 0.656
+    text: '다중 시점 영상을 분석하여
+
+      공간 변화 발생 유무와
+
+      내용을 식별·탐지하는 기술'
+    font_pt: 11.0
+  - name: 그림 17
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.206
+    top: 3.446
+    width: 1.807
+    height: 1.994
+  - name: 직사각형 18
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.203
+    top: 2.827
+    width: 1.807
+    height: 0.42
+    text: '초해상화
+
+      Super Resolution'
+    font_pt: 14.0
+  - name: 그림 19
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.977
+    top: 3.446
+    width: 1.807
+    height: 1.994
+  - name: 직사각형 20
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.877
+    top: 2.827
+    width: 2.007
+    height: 0.42
+    text: '의미론적 분할
+
+      Semantic Segmentation'
+    font_pt: 14.0
+  - name: 그림 21
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 6.862
+    top: 3.446
+    width: 1.807
+    height: 1.994
+  - name: 직사각형 42
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.862
+    top: 2.827
+    width: 1.81
+    height: 0.42
+    text: '객체탐지
+
+      Object Detection'
+    font_pt: 14.0
+  - name: 그림 43
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.092
+    top: 3.446
+    width: 1.807
+    height: 1.993
+  - name: 직사각형 44
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 3.088
+    top: 2.827
+    width: 1.81
+    height: 0.42
+    text: '이미지 정합
+
+      Image Alignment'
+    font_pt: 14.0
+  - name: 그림 45
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.633
+    top: 3.446
+    width: 1.807
+    height: 1.993
+  - name: 직사각형 46
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.633
+    top: 2.827
+    width: 1.81
+    height: 0.42
+    text: '3차원 재건
+
+      3D Reconstruction'
+    font_pt: 14.0
+  - name: 그림 47
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 8.748
+    top: 3.446
+    width: 1.807
+    height: 1.993
+  - name: 직사각형 48
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 8.748
+    top: 2.827
+    width: 1.81
+    height: 0.42
+    text: '변화탐지
+
+      Change Detection'
+    font_pt: 14.0
+  - name: TextBox 49
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.633
+    top: 5.639
+    width: 1.807
+    height: 0.656
+    text: '중첩 다출처 영상데이터로
+
+      고정밀 3차원 공간을
+
+      복원 및 모델링하는 기술'
+    font_pt: 11.0
+  - name: TextBox 50
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.092
+    top: 5.639
+    width: 1.807
+    height: 0.656
+    text: '다중 영상 간 기하·지리적
+
+      오차를 정밀하게 보정하여
+
+      정합성을 확보하는 기술'
+    font_pt: 11.0
+  - name: 직사각형 51
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.135
+    top: 2.156
+    width: 5.296
+    height: 0.337
+    text: The 6 Core AI Backbone Technologies
+    font_pt: 14.0
+  - name: 직선 연결선[R] 5
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 3.573
+    top: 4.009
+    width: 0.602
+    height: 0.0
+  - name: 직선 연결선[R] 7
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 3.789
+    top: 4.566
+    width: 0.602
+    height: 0.0
+  text_blob: '지구 인텔리전스 사업을 위한 다비오 인텔리전스 AI 핵심 기술 BACKBONE 기술 다출처 영상의 공간 해상도 품질을 최대
+    4배까지 향상시키는 영상 생성 기술 지형·지물을 픽셀 단위로
+
+    정의된 클래스에
+
+    분류하고 세분화하는 기술 다출처 영상 데이터에서
+
+    목표 객체를 자동으로 식별하고 추출하는 기술 다중 시점 영상을 분석하여
+
+    공간 변화 발생 유무와
+
+    내용을 식별·탐지하는 기술 초해상화
+
+    Super Resolution 의미론적 분할
+
+    Semantic Segmentation 객체탐지
+
+    Object Detection 이미지 정합
+
+    Image Alignment 3차원 재건
+
+    3D Reconstruction 변화탐지
+
+    Change Detection 중첩 다출처 영상데이터로
+
+    고정밀 3차원 공간을
+
+    복원 및 모델링하는 기술 다중 영상 간 기하·지리적
+
+    오차를 정밀하게 보정하여
+
+    정합성을 확보하는 기술 The 6 Core AI Backbone Technologies'
+- idx: 16
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 제목 3
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 독자적 기술 스택 기반의 데이터 분석 플랫폼 구축
+  - name: 텍스트 개체 틀 4
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: BACKBONE 기술
+  - name: '사각형: 둥근 모서리 7'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.075
+    top: 2.893
+    width: 2.742
+    height: 3.638
+    text: ''
+  - name: 타원 8
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.015
+    top: 2.443
+    width: 0.86
+    height: 0.86
+    text: ''
+  - name: TextBox 25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.409
+    top: 3.49
+    width: 2.074
+    height: 0.361
+    text: 공간·인프라
+    font_pt: 14.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.264
+    top: 3.932
+    width: 2.362
+    height: 0.332
+    text: 지오메트리(맵핑) 데이터 사업
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.264
+    top: 4.315
+    width: 2.362
+    height: 0.332
+    text: 도시 (변동건물) 분석사업
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.264
+    top: 4.698
+    width: 2.362
+    height: 0.332
+    text: 국가 국유지 관리 분석 사업
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.264
+    top: 5.081
+    width: 2.362
+    height: 0.332
+    text: 로케이션 어플리케이션 서비스
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.264
+    top: 5.464
+    width: 2.362
+    height: 0.332
+    text: 지자체 변화탐지 클라우드 사업
+    font_pt: 12.0
+  - name: 직선 연결선 15
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.235
+    top: 3.907
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 16
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.235
+    top: 4.289
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 17
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.235
+    top: 4.672
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 18
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.235
+    top: 5.055
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 19
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.235
+    top: 5.438
+    width: 2.421
+    height: 0.0
+  - name: '사각형: 둥근 모서리 20'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 3.977
+    top: 2.893
+    width: 2.742
+    height: 3.638
+    text: ''
+  - name: 타원 21
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.936
+    top: 2.443
+    width: 0.86
+    height: 0.86
+    text: ''
+  - name: TextBox 26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.329
+    top: 3.49
+    width: 2.074
+    height: 0.361
+    text: 국방·감시정찰
+    font_pt: 14.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.185
+    top: 3.932
+    width: 2.362
+    height: 0.332
+    text: SAR 선박탐지 및 분류
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.185
+    top: 4.315
+    width: 2.362
+    height: 0.332
+    text: 초소형위성활용시스템 설계
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.185
+    top: 4.698
+    width: 2.362
+    height: 0.332
+    text: 전략자산 탐지용 객체 레이블링
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.185
+    top: 5.081
+    width: 2.362
+    height: 0.332
+    text: NK 변화감지 (감시.정찰) 사업
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.215
+    top: 5.821
+    width: 2.362
+    height: 0.332
+    text: 지휘.통제 (C4I) 전장환경 사업
+    font_pt: 12.0
+  - name: 직선 연결선 28
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.156
+    top: 3.907
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 29
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.156
+    top: 4.289
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 30
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.156
+    top: 4.672
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 31
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.156
+    top: 5.055
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 32
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.156
+    top: 5.438
+    width: 2.421
+    height: 0.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.138
+    top: 5.464
+    width: 2.362
+    height: 0.332
+    text: 글로벌 방산 절충교역 사업
+    font_pt: 12.0
+  - name: 직선 연결선 34
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 4.156
+    top: 5.821
+    width: 2.421
+    height: 0.0
+  - name: '사각형: 둥근 모서리 35'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.916
+    top: 2.893
+    width: 2.742
+    height: 3.638
+    text: ''
+  - name: 타원 36
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.857
+    top: 2.443
+    width: 0.86
+    height: 0.86
+    text: ''
+  - name: TextBox 27
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.25
+    top: 3.49
+    width: 2.074
+    height: 0.361
+    text: 임·농업
+    font_pt: 14.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.106
+    top: 3.932
+    width: 2.362
+    height: 0.332
+    text: 팜오일 농장 모니터링
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.106
+    top: 4.315
+    width: 2.362
+    height: 0.332
+    text: 팜식생 건강도 분석 사업
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.106
+    top: 4.698
+    width: 2.362
+    height: 0.332
+    text: 조림지 분석 사업
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.106
+    top: 5.081
+    width: 2.362
+    height: 0.332
+    text: 농작지 토지매력도 분석
+    font_pt: 12.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.106
+    top: 5.464
+    width: 2.362
+    height: 0.332
+    text: 모바일 농장(필드)관리 사업
+    font_pt: 12.0
+  - name: 직선 연결선 43
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.076
+    top: 3.907
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 44
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.076
+    top: 4.289
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 45
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.076
+    top: 4.672
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 46
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.076
+    top: 5.055
+    width: 2.421
+    height: 0.0
+  - name: 직선 연결선 47
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 7.076
+    top: 5.438
+    width: 2.421
+    height: 0.0
+  - name: '사각형: 둥근 모서리 48'
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 9.837
+    top: 2.893
+    width: 2.742
+    height: 3.638
+    text: ''
+  - name: 타원 49
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.778
+    top: 2.443
+    width: 0.86
+    height: 0.86
+    text: ''
+  - name: TextBox 27
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.171
+    top: 3.49
+    width: 2.074
+    height: 0.361
+    text: 기후변화
+    font_pt: 14.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.027
+    top: 3.932
+    width: 2.362
+    height: 0.332
+    text: dMRV (탄소중립)
+    font_pt: 12.0
+  - name: 직선 연결선 52
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 9.997
+    top: 3.907
+    width: 2.421
+    height: 0.0
+  - name: TextBox 28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.264
+    top: 5.832
+    width: 2.362
+    height: 0.332
+    text: 시뮬레이션용 데이터 사업
+    font_pt: 12.0
+  - name: 직선 연결선 184
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 1.235
+    top: 5.806
+    width: 2.421
+    height: 0.0
+  - name: 그림 55
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.94
+    top: 2.605
+    width: 0.536
+    height: 0.536
+  - name: 그림 56
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 8.051
+    top: 2.635
+    width: 0.472
+    height: 0.472
+  - name: 그림 57
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.111
+    top: 2.637
+    width: 0.472
+    height: 0.472
+  - name: 그림 73
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.209
+    top: 2.623
+    width: 0.472
+    height: 0.472
+  text_blob: 독자적 기술 스택 기반의 데이터 분석 플랫폼 구축 BACKBONE 기술 공간·인프라 지오메트리(맵핑) 데이터 사업 도시 (변동건물)
+    분석사업 국가 국유지 관리 분석 사업 로케이션 어플리케이션 서비스 지자체 변화탐지 클라우드 사업 국방·감시정찰 SAR 선박탐지 및 분류 초소형위성활용시스템
+    설계 전략자산 탐지용 객체 레이블링 NK 변화감지 (감시.정찰) 사업 지휘.통제 (C4I) 전장환경 사업 글로벌 방산 절충교역 사업 임·농업
+    팜오일 농장 모니터링 팜식생 건강도 분석 사업 조림지 분석 사업 농작지 토지매력도 분석 모바일 농장(필드)관리 사업 기후변화 dMRV (탄소중립)
+    시뮬레이션용 데이터 사업
+- idx: 17
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 제목 1
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: AI 데이터 기반 농지담보대출 평가 체계
+  - name: 텍스트 개체 틀 3
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: NH농협은행 AI Transformation
+  - name: 직사각형 2
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 1.64
+    width: 11.473
+    height: 0.37
+    text: 기존 여신 프로세스를 보완하는 AI 기반 농지 데이터를 결합한 의사결정 체계 구현
+    font_pt: 16.0
+  - name: TextBox 66
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.848
+    top: 2.612
+    width: 1.995
+    height: 0.337
+    text: 대출 신청
+    font_pt: 14.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.848
+    top: 2.341
+    width: 2.15
+    height: 4.684
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 3.34
+    top: 2.341
+    width: 2.15
+    height: 4.684
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 5.833
+    top: 2.341
+    width: 2.15
+    height: 4.684
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 8.325
+    top: 2.341
+    width: 2.15
+    height: 4.684
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.817
+    top: 2.341
+    width: 2.15
+    height: 4.684
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.744
+    top: 2.175
+    width: 0.359
+    height: 0.371
+    text: '01'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.236
+    top: 2.175
+    width: 0.359
+    height: 0.371
+    text: '02'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.728
+    top: 2.175
+    width: 0.359
+    height: 0.371
+    text: '03'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 9.22
+    top: 2.175
+    width: 0.359
+    height: 0.371
+    text: '04'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 11.713
+    top: 2.175
+    width: 0.359
+    height: 0.371
+    text: '05'
+    font_pt: 12.0
+  - name: TextBox 77
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.848
+    top: 2.624
+    width: 2.15
+    height: 0.337
+    text: 대출 신청
+    font_pt: 14.0
+  - name: TextBox 78
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.34
+    top: 2.624
+    width: 2.15
+    height: 0.337
+    text: 대출 심사
+    font_pt: 14.0
+  - name: TextBox 79
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.833
+    top: 2.624
+    width: 2.15
+    height: 0.337
+    text: 담보 평가
+    font_pt: 14.0
+  - name: TextBox 80
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 8.325
+    top: 2.624
+    width: 2.15
+    height: 0.337
+    text: 승인 / 실행
+    font_pt: 14.0
+  - name: TextBox 81
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.817
+    top: 2.624
+    width: 2.15
+    height: 0.337
+    text: 여신 관리
+    font_pt: 14.0
+  - name: 그림 82
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.2
+    top: 3.12
+    width: 1.447
+    height: 0.933
+  - name: 그림 83
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.692
+    top: 3.12
+    width: 1.447
+    height: 0.933
+  - name: 그림 84
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 6.26
+    top: 3.12
+    width: 1.627
+    height: 0.927
+  - name: 그림 85
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 8.646
+    top: 3.12
+    width: 1.507
+    height: 0.927
+  - name: 그림 86
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 11.135
+    top: 3.12
+    width: 1.513
+    height: 0.933
+  - name: TextBox 87
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.848
+    top: 4.456
+    width: 2.15
+    height: 0.967
+    text: '담보 농지 정보 입력
+
+      ▼
+
+      농지 데이터 자동 조회'
+    font_pt: 14.0
+  - name: TextBox 88
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.34
+    top: 4.456
+    width: 2.15
+    height: 1.28
+    text: '농지 이용현황 확인
+
+      ▼
+
+      농지 신용점수(FCS) 기반
+
+      상환능력 보조 평가'
+    font_pt: 14.0
+  - name: TextBox 89
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.833
+    top: 4.456
+    width: 2.15
+    height: 0.341
+    text: 데이터 기반 담보 검증
+    font_pt: 14.0
+  - name: 그룹 90
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 5.924
+    top: 5.028
+    width: 1.967
+    height: 1.733
+  - name: TextBox 100
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 8.325
+    top: 4.456
+    width: 2.15
+    height: 0.967
+    text: '대출 승인 및 실행
+
+      ▼
+
+      데이터 기반 신속 심사'
+    font_pt: 14.0
+  - name: TextBox 101
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.817
+    top: 4.456
+    width: 2.15
+    height: 2.219
+    text: '사후 관리
+
+      ▼
+
+      농지 상태 지속 모니터링
+
+      고객군 분류
+
+      이상 징후 탐지
+
+      ▼
+
+      부실채권 관리 고도화'
+    font_pt: 14.0
+  text_blob: 'AI 데이터 기반 농지담보대출 평가 체계 NH농협은행 AI Transformation 기존 여신 프로세스를 보완하는 AI
+    기반 농지 데이터를 결합한 의사결정 체계 구현 대출 신청 01 02 03 04 05 대출 신청 대출 심사 담보 평가 승인 / 실행 여신 관리
+    담보 농지 정보 입력
+
+    ▼
+
+    농지 데이터 자동 조회 농지 이용현황 확인
+
+    ▼
+
+    농지 신용점수(FCS) 기반
+
+    상환능력 보조 평가 데이터 기반 담보 검증 대출 승인 및 실행
+
+    ▼
+
+    데이터 기반 신속 심사 사후 관리
+
+    ▼
+
+    농지 상태 지속 모니터링
+
+    고객군 분류
+
+    이상 징후 탐지
+
+    ▼
+
+    부실채권 관리 고도화'
+- idx: 18
+  layout: 00. 샘플 (중앙)
+  layout_idx: -1
+  shapes:
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.848
+    top: 2.915
+    width: 2.802
+    height: 2.868
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.165
+    top: 2.915
+    width: 2.802
+    height: 2.868
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.973
+    top: 2.915
+    width: 2.802
+    height: 2.868
+    text: ''
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 3.91
+    top: 2.915
+    width: 2.802
+    height: 2.868
+    text: ''
+  - name: 제목 1
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: AI 데이터 기반 농지담보대출 평가 체계
+  - name: 텍스트 개체 틀 3
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+    ph_idx: 19
+    ph_type: BODY (2)
+    text: NH농협은행 AI Transformation
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.848
+    top: 2.175
+    width: 12.119
+    height: 0.371
+    text: '[To-Be 모델] |  심사 속도·정확도·확장성 개선'
+    font_pt: 14.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.848
+    top: 5.966
+    width: 2.802
+    height: 0.837
+    text: 심사 기간 단축
+    font_pt: 14.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.07
+    top: 2.731
+    width: 0.359
+    height: 0.371
+    text: '01'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 5.132
+    top: 2.731
+    width: 0.359
+    height: 0.371
+    text: '02'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 8.194
+    top: 2.731
+    width: 0.359
+    height: 0.371
+    text: '03'
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 11.387
+    top: 2.731
+    width: 0.359
+    height: 0.371
+    text: '04'
+    font_pt: 12.0
+  - name: TextBox 26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.848
+    top: 4.761
+    width: 2.802
+    height: 0.859
+    text: "수작업 및 개별 판단 \n→ 데이터 기반 표준화‧자동화 지원\n→ 심사 기간 단축 및 운영 비용 절감"
+    font_pt: 12.0
+  - name: TextBox 27
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.848
+    top: 3.118
+    width: 2.802
+    height: 0.337
+    text: 심사 프로세스 효율화
+    font_pt: 14.0
+  - name: TextBox 31
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.91
+    top: 3.118
+    width: 2.802
+    height: 0.337
+    text: 담보 평가 고도화
+    font_pt: 14.0
+  - name: TextBox 32
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.973
+    top: 3.118
+    width: 2.802
+    height: 0.337
+    text: 상환능력 평가 고도화
+    font_pt: 14.0
+  - name: TextBox 33
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.165
+    top: 3.118
+    width: 2.802
+    height: 0.337
+    text: 여신 관리 및 모니터링 체계 구축
+    font_pt: 14.0
+  - name: TextBox 34
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 3.91
+    top: 4.761
+    width: 2.802
+    height: 0.859
+    text: "서류 중심 담보 확인 \n→ 농지 실제 이용현황 기반 정량 평가\n→ 담보 판단 정확도 및 신뢰도 향상"
+    font_pt: 12.0
+  - name: TextBox 35
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.973
+    top: 4.761
+    width: 2.915
+    height: 0.859
+    text: "신용소득 기반 추정 \n→ 농지 생산성 기반 평가\n→ 우량 차주 선별 및 여신 확대 기반 확보"
+    font_pt: 12.0
+  - name: TextBox 36
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.165
+    top: 4.761
+    width: 3.062
+    height: 0.859
+    text: "사후 대응 중심 \n→ 농지 현황 모니터링 및 고객군 분류\n→ 선제적 대응 및 부실채권 관리 고도화"
+    font_pt: 12.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 3.91
+    top: 5.966
+    width: 2.802
+    height: 0.837
+    text: 담보 평가 신뢰도 향상
+    font_pt: 14.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.973
+    top: 5.966
+    width: 2.802
+    height: 0.837
+    text: 여신 확대
+    font_pt: 14.0
+  - name: 오른쪽 화살표[R] 43
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 10.165
+    top: 5.966
+    width: 2.802
+    height: 0.837
+    text: 리스크 조기 대응
+    font_pt: 14.0
+  - name: 그림 41
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.251
+    top: 3.469
+    width: 1.974
+    height: 1.24
+  - name: 그림 43
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.325
+    top: 3.469
+    width: 1.974
+    height: 1.24
+  - name: 그림 45
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 7.386
+    top: 3.469
+    width: 1.974
+    height: 1.24
+  - name: 그림 47
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 10.579
+    top: 3.469
+    width: 1.974
+    height: 1.24
+  - name: 직사각형 2
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.073
+    top: 1.64
+    width: 11.473
+    height: 0.37
+    text: 현장‧서류 기반 심사를 보완하여 AI 분석 데이터를 결합한 심사 프로세스로 고도화
+    font_pt: 16.0
+  text_blob: "AI 데이터 기반 농지담보대출 평가 체계 NH농협은행 AI Transformation [To-Be 모델] |  심사 속도·정확도·확장성\
+    \ 개선 심사 기간 단축 01 02 03 04 수작업 및 개별 판단 \n→ 데이터 기반 표준화‧자동화 지원\n→ 심사 기간 단축 및 운영 비용\
+    \ 절감 심사 프로세스 효율화 담보 평가 고도화 상환능력 평가 고도화 여신 관리 및 모니터링 체계 구축 서류 중심 담보 확인 \n→ 농지 실제\
+    \ 이용현황 기반 정량 평가\n→ 담보 판단 정확도 및 신뢰도 향상 신용소득 기반 추정 \n→ 농지 생산성 기반 평가\n→ 우량 차주 선별\
+    \ 및 여신 확대 기반 확보 사후 대응 중심 \n→ 농지 현황 모니터링 및 고객군 분류\n→ 선제적 대응 및 부실채권 관리 고도화 담보 평가\
+    \ 신뢰도 향상 여신 확대 리스크 조기 대응 현장‧서류 기반 심사를 보완하여 AI 분석 데이터를 결합한 심사 프로세스로 고도화"
+_layouts_detected:
+- idx: 0
+  name: 00. 샘플 (좌정렬)
+  placeholders:
+  - idx: 0
+    type: TITLE (1)
+    name: 제목 16
+    left: 1.073
+    top: 0.907
+    width: 11.473
+    height: 0.537
+  - idx: 19
+    type: BODY (2)
+    name: 텍스트 개체 틀 21
+    left: 1.073
+    top: 0.475
+    width: 11.473
+    height: 0.371
+  - idx: 3
+    type: FOOTER (15)
+    name: 바닥글 개체 틀 4
+    left: 4.417
+    top: 7.007
+    width: 4.5
+    height: 0.399
+  - idx: 4
+    type: SLIDE_NUMBER (13)
+    name: 슬라이드 번호 개체 틀 5
+    left: 0.296
+    top: 7.007
+    width: 0.604
+    height: 0.399
+  extras:
+  - name: TextBox 10
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: -0.459
+    top: 5.734
+    width: 2.103
+    height: 0.139
+    text: DABEEO INTELLIGENCE
+    font_pt: 8.0
+  - name: 직선 연결선 11
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 0.593
+    top: 0.0
+    width: 0.0
+    height: 5.606
+  - name: 직사각형 5
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.0
+    top: 0.699
+    width: 0.593
+    height: 0.461
+    text: '#'
+    font_pt: 20.0
+  - name: TextBox 8
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.996
+    top: 0.212
+    width: 2.103
+    height: 0.162
+    text: Chapter name
+    font_pt: 9.0
+- idx: 1
+  name: 00. 샘플 (중앙)
+  placeholders:
+  - idx: 0
+    type: TITLE (1)
+    name: 제목 16
+    left: 1.075
+    top: 0.907
+    width: 11.472
+    height: 0.537
+  - idx: 3
+    type: FOOTER (15)
+    name: 바닥글 개체 틀 4
+    left: 4.417
+    top: 7.007
+    width: 4.5
+    height: 0.399
+  - idx: 4
+    type: SLIDE_NUMBER (13)
+    name: 슬라이드 번호 개체 틀 5
+    left: 0.296
+    top: 7.007
+    width: 0.604
+    height: 0.399
+  - idx: 19
+    type: BODY (2)
+    name: 텍스트 개체 틀 21
+    left: 1.073
+    top: 0.475
+    width: 11.473
+    height: 0.371
+  extras:
+  - name: 직선 연결선 11
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 0.593
+    top: 0.0
+    width: 0.0
+    height: 5.606
+  - name: 직사각형 5
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.0
+    top: 0.699
+    width: 0.593
+    height: 0.461
+    text: '#'
+    font_pt: 20.0
+  - name: TextBox 3
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: -0.459
+    top: 5.734
+    width: 2.103
+    height: 0.139
+    text: DABEEO INTELLIGENCE
+    font_pt: 8.0
+  - name: TextBox 7
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.996
+    top: 0.212
+    width: 2.103
+    height: 0.162
+    text: Chapter name
+    font_pt: 9.0
+- idx: 2
+  name: 빈페이지
+  placeholders: []
+  extras: []
+- idx: 3
+  name: 01. 회사개요 (중앙)
+  placeholders:
+  - idx: 0
+    type: TITLE (1)
+    name: 제목 16
+    left: 1.075
+    top: 0.907
+    width: 11.498
+    height: 0.495
+  - idx: 19
+    type: BODY (2)
+    name: 텍스트 개체 틀 21
+    left: 1.075
+    top: 0.475
+    width: 11.498
+    height: 0.371
+  - idx: 20
+    type: BODY (2)
+    name: 텍스트 개체 틀 7
+    left: 1.075
+    top: 1.467
+    width: 11.498
+    height: 0.708
+  extras:
+  - name: 직선 연결선 11
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 0.593
+    top: 0.0
+    width: 0.0
+    height: 5.606
+  - name: 직사각형 5
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.0
+    top: 0.699
+    width: 0.593
+    height: 0.461
+    text: '01'
+    font_pt: 20.0
+  - name: TextBox 6
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 10.996
+    top: 0.199
+    width: 2.103
+    height: 0.176
+    text: 01 회사개요
+  - name: TextBox 9
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: -0.459
+    top: 5.779
+    width: 2.103
+    height: 0.139
+    text: DABEEO INTELLIGENCE
+    font_pt: 8.0
+  - name: 슬라이드 번호 개체 틀 5
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.296
+    top: 7.007
+    width: 0.604
+    height: 0.399
+    text: ‹#›
+  - name: 그림 18
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 12.497
+    top: 7.217
+    width: 0.602
+    height: 0.134
+  - name: 바닥글 개체 틀 4
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.417
+    top: 7.007
+    width: 4.5
+    height: 0.399
+    text: Dabeeo Inc. All rights reserved and confidential
+    font_pt: 10.0

@@ -1,0 +1,2509 @@
+_generated_by: scripts/analyze_template.py --raw
+_template_source: templates/Dabeeo_presentation_Template_2022_v1.pptx
+_purpose: 원시 데이터. LLM (template-analyzer agent)이 이 yaml과 thumbnails 보고 의미 분석.
+slide_size:
+  width_in: 13.333
+  height_in: 7.5
+theme:
+  colors:
+    dk1: '#222222'
+    lt1: '#FFFFFF'
+    dk2: '#0A1743'
+    lt2: '#E7E6E6'
+    accent1: '#1C3997'
+    accent2: '#37D1D4'
+    accent3: '#FFC000'
+    accent4: '#C9AED9'
+    accent5: '#8D9CCB'
+    accent6: '#EE5112'
+    hlink: '#37D1D4'
+    folHlink: '#757070'
+  fonts:
+    major: Arial
+    minor: Arial
+layouts:
+- idx: 0
+  name: 표지
+  placeholders:
+  - idx: 1
+    type: BODY (2)
+    name: Google Shape;16;p2
+    left: 0.679
+    top: 5.966
+    width: 6.083
+    height: 0.407
+  - idx: 2
+    type: BODY (2)
+    name: Google Shape;17;p2
+    left: 0.679
+    top: 6.53
+    width: 6.083
+    height: 0.407
+  - idx: 0
+    type: TITLE (1)
+    name: Google Shape;19;p2
+    left: 0.616
+    top: 3.45
+    width: 8.816
+    height: 1.865
+  extras:
+  - name: Google Shape;14;p2
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 0.0
+    top: 0.0
+    width: 13.333
+    height: 7.5
+  - name: Google Shape;15;p2
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 11.025
+    top: 6.498
+    width: 1.588
+    height: 0.352
+  - name: Google Shape;18;p2
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.049
+    top: 0.155
+    width: 13.167
+    height: 0.599
+    text: "This document contains privileged and confidential information intended\
+      \ only for the use of the individual or entity to which it is addressed.\n본\
+      \ 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다.  \n[ STRICTLY\
+      \ CONFIDENTIAL ]"
+    font_pt: 8.0
+- idx: 1
+  name: 목차
+  placeholders:
+  - idx: 0
+    type: TITLE (1)
+    name: Google Shape;21;p3
+    left: 0.563
+    top: 0.35
+    width: 12.207
+    height: 0.266
+  - idx: 1
+    type: BODY (2)
+    name: Google Shape;22;p3
+    left: 0.568
+    top: 1.906
+    width: 1.232
+    height: 4.507
+  - idx: 2
+    type: BODY (2)
+    name: Google Shape;23;p3
+    left: 6.699
+    top: 1.906
+    width: 1.232
+    height: 4.507
+  - idx: 3
+    type: BODY (2)
+    name: Google Shape;24;p3
+    left: 1.8
+    top: 1.906
+    width: 4.729
+    height: 4.507
+  - idx: 4
+    type: BODY (2)
+    name: Google Shape;25;p3
+    left: 7.93
+    top: 1.906
+    width: 4.729
+    height: 4.507
+  - idx: 11
+    type: FOOTER (15)
+    name: Google Shape;26;p3
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.416
+  extras: []
+- idx: 2
+  name: 1_본문2
+  placeholders:
+  - idx: 12
+    type: SLIDE_NUMBER (13)
+    name: Google Shape;28;p4
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+  - idx: 1
+    type: BODY (2)
+    name: Google Shape;29;p4
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+  - idx: 0
+    type: TITLE (1)
+    name: Google Shape;30;p4
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+  - idx: 2
+    type: BODY (2)
+    name: Google Shape;31;p4
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+  - idx: 11
+    type: FOOTER (15)
+    name: Google Shape;33;p4
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.416
+  extras:
+  - name: Google Shape;32;p4
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 12.392
+    top: 0.399
+    width: 0.023
+    height: 0.159
+    text: ''
+- idx: 3
+  name: 1_표지
+  placeholders:
+  - idx: 11
+    type: FOOTER (15)
+    name: Google Shape;37;p5
+    left: 0.678
+    top: 6.591
+    width: 2.838
+    height: 0.304
+  - idx: 0
+    type: TITLE (1)
+    name: Google Shape;39;p5
+    left: 0.616
+    top: 3.45
+    width: 8.816
+    height: 1.865
+  extras:
+  - name: Google Shape;35;p5
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 0.0
+    top: 0.0
+    width: 13.333
+    height: 7.5
+  - name: Google Shape;36;p5
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 11.025
+    top: 6.498
+    width: 1.588
+    height: 0.352
+  - name: Google Shape;38;p5
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.049
+    top: 0.155
+    width: 13.167
+    height: 0.599
+    text: "This document contains privileged and confidential information intended\
+      \ only for the use of the individual or entity to which it is addressed.\n본\
+      \ 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다.  \n[ STRICTLY\
+      \ CONFIDENTIAL ]"
+    font_pt: 8.0
+- idx: 4
+  name: 1_목차
+  placeholders:
+  - idx: 12
+    type: SLIDE_NUMBER (13)
+    name: Google Shape;41;p6
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+  - idx: 11
+    type: FOOTER (15)
+    name: Google Shape;42;p6
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.416
+  extras: []
+- idx: 5
+  name: 간지
+  placeholders:
+  - idx: 0
+    type: TITLE (1)
+    name: Google Shape;44;p7
+    left: 0.741
+    top: 3.75
+    width: 11.807
+    height: 1.554
+  - idx: 1
+    type: BODY (2)
+    name: Google Shape;45;p7
+    left: 0.741
+    top: 2.609
+    width: 2.342
+    height: 1.09
+  extras:
+  - name: Google Shape;46;p7
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.049
+    top: 0.155
+    width: 13.167
+    height: 0.599
+    text: "This document contains privileged and confidential information intended\
+      \ only for the use of the individual or entity to which it is addressed.\n본\
+      \ 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다.  \n[ STRICTLY\
+      \ CONFIDENTIAL ]"
+    font_pt: 8.0
+- idx: 6
+  name: TITLE
+  placeholders:
+  - idx: 11
+    type: FOOTER (15)
+    name: Google Shape;48;p8
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.416
+  - idx: 12
+    type: SLIDE_NUMBER (13)
+    name: Google Shape;49;p8
+    left: 12.017
+    top: 7.05
+    width: 0.4
+    height: 0.202
+  extras: []
+slides:
+- idx: 1
+  layout_name: 표지
+  layout_idx: 0
+  shapes:
+  - name: Google Shape;54;p9
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.679
+    top: 5.966
+    width: 6.083
+    height: 0.407
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: 000사업부 / 홍길동
+  - name: Google Shape;55;p9
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.679
+    top: 6.53
+    width: 6.083
+    height: 0.407
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 2021. 12. 01
+  - name: Google Shape;56;p9
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.616
+    top: 3.45
+    width: 8.816
+    height: 1.865
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: "2022 다비오\v프리젠테이션 템플릿"
+    font_pt: 60.0
+- idx: 2
+  layout_name: 목차
+  layout_idx: 1
+  shapes:
+  - name: Google Shape;62;p10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.8
+    top: 1.906
+    width: 4.729
+    height: 4.507
+    ph_idx: 3
+    ph_type: BODY (2)
+    text: '타이틀 1
+
+      타이틀 2
+
+      타이틀 3
+
+      타이틀 4
+
+      타이틀 5'
+  - name: Google Shape;63;p10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 7.93
+    top: 1.906
+    width: 4.729
+    height: 4.507
+    ph_idx: 4
+    ph_type: BODY (2)
+    text: '타이틀 6
+
+      타이틀 7
+
+      타이틀 8'
+  - name: Google Shape;64;p10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+  - name: Google Shape;65;p10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.563
+    top: 0.35
+    width: 12.207
+    height: 0.266
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: CONTENT
+  - name: Google Shape;66;p10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.568
+    top: 1.906
+    width: 1.232
+    height: 4.507
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01
+
+      02
+
+      03
+
+      04
+
+      05'
+  - name: Google Shape;67;p10
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 6.699
+    top: 1.906
+    width: 1.232
+    height: 4.507
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: '06
+
+      07
+
+      08'
+- idx: 3
+  layout_name: 간지
+  layout_idx: 5
+  shapes:
+  - name: Google Shape;73;p11
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.741
+    top: 3.75
+    width: 11.807
+    height: 1.554
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 타이틀 페이지
+  - name: Google Shape;74;p11
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.741
+    top: 2.609
+    width: 2.342
+    height: 1.09
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+- idx: 4
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;79;p12
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;80;p12
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;81;p12
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 1.   왼쪽 정렬 페이지 - 샘플 A
+  - name: Google Shape;82;p12
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;83;p12
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.057
+    top: 2.322
+    width: 2.187
+    height: 2.241
+    text: ''
+  - name: Google Shape;84;p12
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 8.165
+    height: 0.99
+    text: '글로벌 최고 수준의 기술력을 보유한
+
+      글로벌 영상정보 분석기술 스타트업 입니다.'
+    font_pt: 28.0
+  - name: Google Shape;85;p12
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.644
+    top: 2.765
+    width: 3.848
+    height: 1.273
+    text: '50여 명의 직원들과 함께,
+
+      글로벌 영상정보 분석 및 이미지 분석을 통한
+
+      기술기반 사업화를 진행하고 있으며,
+
+      이에 최적화 된 R&D 조직을 구축 운영'
+    font_pt: 14.0
+  - name: Google Shape;86;p12
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.557
+    top: 2.344
+    width: 1.81
+    height: 0.168
+    text: 주식회사 dabeeo, Inc.
+    font_pt: 10.0
+  - name: Google Shape;87;p12
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 5.557
+    top: 2.618
+    width: 3.281
+    height: 3.281
+  - name: Google Shape;88;p12
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 5
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;93;p13
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;94;p13
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;95;p13
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 1.   왼쪽 정렬 페이지 - 샘플 B
+  - name: Google Shape;96;p13
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;97;p13
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 4.884
+    height: 1.131
+    text: '여기에 컨텐츠
+
+      헤드라인을 적어주세요.'
+    font_pt: 32.0
+  - name: Google Shape;98;p13
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 2.545
+    width: 4.244
+    height: 1.091
+    text: '이상은 아니더면, 커다란 살 없으면 우리 안고, 그들에게 이것이다. 그들은 발휘하기 든 가슴이 것이다. 할지니, 가장 아니한 동력은
+      끝까지 위하여서. 그들은 웅대한 같으며, 우리의 것이다.
+
+      그러므로 실로 사랑의 바이며, 따뜻한 못할 운다.'
+    font_pt: 12.0
+  - name: Google Shape;99;p13
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.941
+    top: 1.411
+    width: 6.476
+    height: 4.85
+  - name: Google Shape;100;p13
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.622
+    top: 4.078
+    width: 3.254
+    height: 2.923
+    text: ''
+  - name: Google Shape;101;p13
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 6
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;106;p14
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;107;p14
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;108;p14
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 1.   왼쪽 정렬 페이지 - 샘플 C
+  - name: Google Shape;109;p14
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;110;p14
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.057
+    top: 2.322
+    width: 2.187
+    height: 2.241
+    text: ''
+  - name: Google Shape;111;p14
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 8.165
+    height: 0.99
+    text: '글로벌 최고 수준의 기술력을 보유한
+
+      글로벌 영상정보 분석기술 스타트업 입니다.'
+    font_pt: 28.0
+  - name: Google Shape;112;p14
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.644
+    top: 2.765
+    width: 4.244
+    height: 1.013
+    text: '50여 명의 직원들과 함께,
+
+      글로벌 영상정보 분석 및 이미지 분석을 통한
+
+      기술기반 사업화를 진행하고 있으며,
+
+      이에 최적화 된 R&D 조직을 구축 운영'
+    font_pt: 14.0
+  - name: Google Shape;113;p14
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 5.889
+    top: 3.351
+    width: 6.099
+    height: 3.153
+  - name: Google Shape;136;p14
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 7
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;141;p15
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.323
+    top: 3.216
+    width: 1.83
+    height: 0.168
+    text: 주식회사 dabeeo, Inc.
+    font_pt: 10.0
+  - name: Google Shape;142;p15
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;143;p15
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;144;p15
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 2.   가운데 정렬 타이틀 페이지- 샘플 A
+  - name: Google Shape;145;p15
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;146;p15
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 11.126
+    height: 0.737
+    text: '글로벌 최고 수준의 기술력을 보유한
+
+      글로벌 영상정보 분석기술 스타트업'
+    font_pt: 18.0
+  - name: Google Shape;147;p15
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.644
+    top: 2.002
+    width: 9.911
+    height: 0.424
+    text: '50여 명의 직원들과 함께, 글로벌 영상정보 분석 및 이미지 분석을 통한 기술기반 사업화를 진행하고 있으며,
+
+      이에 최적화 된 R&D 조직을 구축 운영'
+    font_pt: 12.0
+  - name: Google Shape;148;p15
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 1.323
+    top: 3.491
+    width: 3.281
+    height: 3.281
+  - name: Google Shape;149;p15
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 8
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;154;p16
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;155;p16
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;156;p16
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 2.   가운데 정렬 타이틀 페이지- 샘플 B
+  - name: Google Shape;157;p16
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;158;p16
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 11.126
+    height: 0.737
+    text: '글로벌 최고 수준의 기술력을 보유한
+
+      글로벌 영상정보 분석기술 스타트업'
+    font_pt: 18.0
+  - name: Google Shape;159;p16
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.644
+    top: 2.002
+    width: 9.911
+    height: 0.439
+    text: '50여 명의 직원들과 함께, 글로벌 영상정보 분석 및 이미지 분석을 통한 기술기반 사업화를 진행하고 있으며,
+
+      이에 최적화 된 R&D 조직을 구축 운영'
+    font_pt: 12.0
+  - name: Google Shape;160;p16
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.121
+    top: 2.816
+    width: 5.147
+    height: 3.855
+  - name: Google Shape;161;p16
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.292
+    top: 3.598
+    width: 2.558
+    height: 2.297
+    text: ''
+  - name: Google Shape;162;p16
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 9
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;167;p17
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;168;p17
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;169;p17
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 2.   가운데 정렬 타이틀 페이지- 샘플 C
+  - name: Google Shape;170;p17
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 페이지 타이틀
+  - name: Google Shape;171;p17
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 11.126
+    height: 0.737
+    text: '글로벌 최고 수준의 기술력을 보유한
+
+      글로벌 영상정보 분석기술 스타트업'
+    font_pt: 18.0
+  - name: Google Shape;172;p17
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 3.521
+    top: 3.017
+    width: 6.306
+    height: 3.153
+  - name: Google Shape;195;p17
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 10
+  layout_name: 1_표지
+  layout_idx: 3
+  shapes:
+  - name: Google Shape;200;p18
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.678
+    top: 6.591
+    width: 2.838
+    height: 0.271
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: ⓒ2021 Dabeeo Inc. All rights reserved.
+  - name: Google Shape;201;p18
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.616
+    top: 3.45
+    width: 8.816
+    height: 1.865
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: Thank you.
+  - name: Google Shape;202;p18
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.781
+    top: 7.059
+    width: 0.552
+    height: 0.202
+    ph_idx: 4294967295
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;203;p18
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 0.52
+    top: 3.711
+    width: 3.843
+    height: 0.745
+- idx: 11
+  layout_name: 간지
+  layout_idx: 5
+  shapes:
+  - name: Google Shape;208;p19
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.741
+    top: 3.75
+    width: 11.807
+    height: 1.554
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 작성요령
+  - name: Google Shape;209;p19
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.741
+    top: 2.609
+    width: 2.342
+    height: 1.09
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+- idx: 12
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;214;p20
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;215;p20
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;216;p20
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 1.    작성 영역
+  - name: Google Shape;217;p20
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;218;p20
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.057
+    top: 2.322
+    width: 2.187
+    height: 2.241
+    text: ''
+  - name: Google Shape;219;p20
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.102
+    width: 8.165
+    height: 0.99
+    text: '글로벌 최고 수준의 기술력을 보유한
+
+      글로벌 영상정보 분석기술 스타트업 입니다.'
+    font_pt: 28.0
+  - name: Google Shape;220;p20
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.644
+    top: 2.765
+    width: 3.848
+    height: 1.273
+    text: '50여 명의 직원들과 함께,
+
+      글로벌 영상정보 분석 및 이미지 분석을 통한
+
+      기술기반 사업화를 진행하고 있으며,
+
+      이에 최적화 된 R&D 조직을 구축 운영'
+    font_pt: 14.0
+  - name: Google Shape;221;p20
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 5.557
+    top: 2.344
+    width: 1.308
+    height: 0.353
+    text: 주식회사 dabeeo, Inc.
+    font_pt: 10.0
+  - name: Google Shape;222;p20
+    is_placeholder: false
+    shape_type: TABLE (19)
+    left: 5.557
+    top: 2.618
+    width: 3.281
+    height: 3.281
+  - name: Google Shape;223;p20
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.057
+    top: 1.102
+    width: 11.219
+    height: 5.539
+    text: "본문은 해당 영역 안쪽에 작성되어야 \n외곽 여백 등으로 인해 집중이 되어 시인성이 좋습니다."
+    font_pt: 18.0
+  - name: Google Shape;224;p20
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 13
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;229;p21
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;230;p21
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;231;p21
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 1.    기본 작성 요령
+  - name: Google Shape;232;p21
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;233;p21
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.049
+    top: 1.167
+    width: 9.76
+    height: 2.215
+    text: "텍스트 서술형 내용은 이와 같이 써주시기 바랍니다. \v통상적으로 단락이 같은 내용은 Alt+Enter를 이용해 작성합니다. \n\
+      단락이 넘어갈 경우에는 Enter를 입력해서 작성하시기 바랍니다. 단락의 간격은 10pt 입니다.\n본문의 컬러는 ‘진한회색, 텍스트1’\
+      \ 를 선택 해주시기 바랍니다.\n글자의 기준 정렬은 도형 기준이 아니며, 실제 모양 기준입니다. Alt 키를 누른 채로 도형의 크기를\
+      \ 미세하게\v조정하시기 바랍니다."
+    font_pt: 14.0
+  - name: Google Shape;234;p21
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.341
+    top: 6.353
+    width: 1.749
+    height: 0.286
+    text: 본문 폰트 컬러
+    font_pt: 10.5
+  - name: Google Shape;235;p21
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 3.32
+    top: 4.597
+    width: 1.824
+    height: 2.042
+  - name: Google Shape;244;p21
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.331
+    top: 3.66
+    width: 1.749
+    height: 2.667
+  - name: Google Shape;245;p21
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 14
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;250;p22
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;251;p22
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '01'
+  - name: Google Shape;252;p22
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 2.    글머리 작성 요령
+  - name: Google Shape;253;p22
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 타이틀 페이지
+  - name: Google Shape;254;p22
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.049
+    top: 1.58
+    width: 9.675
+    height: 3.611
+    text: '1단 타이틀
+
+      2단 타이틀
+
+      🠊 2단 타이틀에 대한 효과 기재 할 때
+
+      2단 두번째 타이틀입니다.
+
+      3단 내용은 이와 같습니다
+
+      3단 내용은 이와 같습니다.
+
+      ※ 글 머리 행을 손쉽게 움직이려면, 행에 커서를 위치시킨 뒤 Alt + Shift + 커서(화살표) 키를 눌러주시기 바랍니다.'
+    font_pt: 16.0
+  - name: Google Shape;255;p22
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 0.946
+    top: 1.0
+    width: 0.304
+    height: 0.292
+    text: ''
+  - name: Google Shape;256;p22
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 0.946
+    top: 1.097
+    width: 11.325
+    height: 0.381
+    text: 글머리
+    font_pt: 18.46
+  - name: Google Shape;257;p22
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 15
+  layout_name: 간지
+  layout_idx: 5
+  shapes:
+  - name: Google Shape;262;p23
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.741
+    top: 3.75
+    width: 11.807
+    height: 1.554
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;263;p23
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.741
+    top: 2.609
+    width: 2.342
+    height: 1.09
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+- idx: 16
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;268;p24
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;269;p24
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+  - name: Google Shape;270;p24
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 1.   폰트
+  - name: Google Shape;271;p24
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;272;p24
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.057
+    top: 1.118
+    width: 3.912
+    height: 1.25
+  - name: Google Shape;276;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.757
+    top: 2.852
+    width: 3.705
+    height: 1.01
+    text: 타이틀
+    font_pt: 60.0
+  - name: Google Shape;277;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.757
+    top: 3.994
+    width: 3.705
+    height: 0.539
+    text: 헤드라인1
+    font_pt: 32.0
+  - name: Google Shape;278;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.757
+    top: 4.784
+    width: 3.119
+    height: 0.404
+    text: 헤드라인2
+    font_pt: 24.0
+  - name: Google Shape;279;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.757
+    top: 5.433
+    width: 1.936
+    height: 0.236
+    text: 본문1
+    font_pt: 14.0
+  - name: Google Shape;280;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.757
+    top: 5.886
+    width: 1.66
+    height: 0.202
+    text: 본문2
+    font_pt: 12.0
+  - name: Google Shape;281;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.757
+    top: 6.304
+    width: 1.507
+    height: 0.185
+    text: 본문2
+    font_pt: 11.0
+  - name: Google Shape;282;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.08
+    top: 2.974
+    width: 0.324
+    height: 0.185
+    text: 60pt
+    font_pt: 11.0
+  - name: Google Shape;283;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.08
+    top: 4.039
+    width: 0.324
+    height: 0.185
+    text: 32pt
+    font_pt: 11.0
+  - name: Google Shape;284;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.08
+    top: 4.885
+    width: 0.324
+    height: 0.185
+    text: 24pt
+    font_pt: 11.0
+  - name: Google Shape;285;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.08
+    top: 5.433
+    width: 0.324
+    height: 0.185
+    text: 14pt
+    font_pt: 11.0
+  - name: Google Shape;286;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.08
+    top: 5.892
+    width: 0.324
+    height: 0.185
+    text: 12pt
+    font_pt: 11.0
+  - name: Google Shape;287;p24
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.08
+    top: 6.304
+    width: 0.324
+    height: 0.185
+    text: 11pt
+    font_pt: 11.0
+  - name: Google Shape;288;p24
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 17
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;293;p25
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;294;p25
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+  - name: Google Shape;295;p25
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 2.   기본 색상
+  - name: Google Shape;296;p25
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;297;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.266
+    top: 1.614
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;298;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.922
+    top: 1.614
+    width: 0.863
+    height: 0.84
+    text: ''
+    font_pt: 18.0
+  - name: Google Shape;299;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.579
+    top: 1.614
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;300;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.376
+    top: 2.589
+    width: 0.642
+    height: 0.424
+    text: 메인 블루
+    font_pt: 12.0
+  - name: Google Shape;301;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.954
+    top: 2.589
+    width: 0.8
+    height: 0.424
+    text: 포인트 블루
+    font_pt: 12.0
+  - name: Google Shape;302;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.686
+    top: 2.589
+    width: 0.649
+    height: 0.424
+    text: 배경 블루
+    font_pt: 12.0
+  - name: Google Shape;303;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.266
+    top: 3.158
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;304;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.922
+    top: 3.158
+    width: 0.863
+    height: 0.84
+    text: ''
+    font_pt: 18.0
+  - name: Google Shape;305;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.579
+    top: 3.158
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;306;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.406
+    top: 4.132
+    width: 0.642
+    height: 0.424
+    text: 메인 블랙
+    font_pt: 12.0
+  - name: Google Shape;307;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 2.958
+    top: 4.132
+    width: 0.792
+    height: 0.424
+    text: 메인 그레이
+    font_pt: 12.0
+  - name: Google Shape;308;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.539
+    top: 4.132
+    width: 0.943
+    height: 0.424
+    text: 라이트 그레이
+    font_pt: 12.0
+  - name: Google Shape;309;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.235
+    top: 3.158
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;310;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.185
+    top: 4.132
+    width: 0.964
+    height: 0.202
+    text: 블루 그레이
+    font_pt: 12.0
+  - name: Google Shape;311;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.266
+    top: 5.231
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;312;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 2.922
+    top: 5.231
+    width: 0.863
+    height: 0.84
+    text: ''
+    font_pt: 18.0
+  - name: Google Shape;313;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.579
+    top: 5.231
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;314;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 6.235
+    top: 5.231
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;315;p25
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.892
+    top: 5.231
+    width: 0.863
+    height: 0.84
+    text: ''
+  - name: Google Shape;316;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.118
+    width: 1.813
+    height: 0.236
+    text: 본문/제목 색상
+    font_pt: 14.0
+  - name: Google Shape;317;p25
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 4.736
+    width: 1.607
+    height: 0.236
+    text: 그래프 색상
+    font_pt: 14.0
+  - name: Google Shape;318;p25
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 18
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;323;p26
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;324;p26
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+  - name: Google Shape;325;p26
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 3.   기본 색상 응용
+  - name: Google Shape;326;p26
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;327;p26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.118
+    width: 2.009
+    height: 0.236
+    text: 컬러 응용 오브젝트
+    font_pt: 14.0
+  - name: Google Shape;328;p26
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.049
+    top: 3.293
+    width: 4.685
+    height: 0.915
+  - name: Google Shape;335;p26
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.057
+    top: 1.913
+    width: 4.677
+    height: 0.778
+  - name: Google Shape;344;p26
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.049
+    top: 4.808
+    width: 4.685
+    height: 0.845
+  - name: Google Shape;350;p26
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.667
+    top: 1.13
+    width: 2.469
+    height: 0.236
+    text: 컬러 응용 그라데이션
+    font_pt: 14.0
+  - name: Google Shape;351;p26
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 6.699
+    top: 1.78
+    width: 4.649
+    height: 3.939
+  - name: Google Shape;357;p26
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 19
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;362;p27
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;363;p27
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+  - name: Google Shape;364;p27
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 4.   로고
+  - name: Google Shape;365;p27
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;366;p27
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.823
+    top: 2.064
+    width: 3.764
+    height: 1.292
+  - name: Google Shape;367;p27
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.118
+    width: 1.659
+    height: 0.236
+    text: Dabeeo CI
+    font_pt: 14.0
+  - name: Google Shape;368;p27
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.407
+    top: 1.832
+    width: 4.246
+    height: 1.769
+    text: ''
+  - name: Google Shape;369;p27
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 7.641
+    top: 2.064
+    width: 3.777
+    height: 1.296
+  - name: Google Shape;370;p27
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.544
+    top: 4.25
+    width: 4.246
+    height: 1.769
+    text: ''
+  - name: Google Shape;371;p27
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.446
+    top: 6.096
+    width: 4.304
+    height: 0.471
+    text: ※ 로고 사용시 외곽 경계와의 거리는 최소 여백은 5%이상으로 두어 사용.
+    font_pt: 11.0
+  - name: Google Shape;372;p27
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.778
+    top: 4.482
+    width: 3.777
+    height: 1.296
+  - name: Google Shape;373;p27
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 4.778
+    top: 4.497
+    width: 3.777
+    height: 1.296
+    text: ''
+  - name: Google Shape;374;p27
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.539
+    top: 4.061
+    width: 0.234
+    height: 0.316
+  - name: Google Shape;378;p27
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 4.422
+    top: 4.219
+    width: 0.234
+    height: 0.316
+  - name: Google Shape;382;p27
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 20
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;387;p28
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;388;p28
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+  - name: Google Shape;389;p28
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 5.    아이콘 및 다이어그램
+  - name: Google Shape;390;p28
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;391;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.758
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;392;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.633
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;393;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.633
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;394;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.073
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;395;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.273
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;396;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.51
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;397;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.874
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;398;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.758
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;399;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 0.946
+    top: 3.171
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;400;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.633
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;401;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.874
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;402;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.073
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;403;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.273
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;404;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.874
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;405;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.51
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;406;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.073
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;407;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.273
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;408;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 0.946
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;409;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.51
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;410;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.758
+    top: 2.336
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;411;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 0.946
+    top: 1.538
+    width: 0.782
+    height: 0.782
+  - name: Google Shape;412;p28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 4.026
+    width: 5.609
+    height: 0.217
+    text: ※ 추가 아이콘 사용시 아래와 같은 라인형태로 사용 권장
+    font_pt: 12.0
+  - name: Google Shape;413;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 3.469
+    top: 5.054
+    width: 0.451
+    height: 0.451
+  - name: Google Shape;414;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.94
+    top: 5.069
+    width: 0.5
+    height: 0.5
+  - name: Google Shape;415;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 1.089
+    top: 5.069
+    width: 0.639
+    height: 0.458
+  - name: Google Shape;416;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.639
+    top: 5.022
+    width: 0.632
+    height: 0.632
+  - name: Google Shape;417;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 2.029
+    top: 5.876
+    width: 0.412
+    height: 0.61
+  - name: Google Shape;418;p28
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.166
+    top: 5.853
+    width: 0.479
+    height: 0.65
+  - name: Google Shape;421;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 5.091
+    top: 5.145
+    width: 0.418
+    height: 0.418
+  - name: Google Shape;422;p28
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 4.227
+    top: 5.069
+    width: 0.557
+    height: 0.557
+  - name: Google Shape;423;p28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.118
+    width: 1.659
+    height: 0.236
+    text: 기본 ICON
+    font_pt: 14.0
+  - name: Google Shape;424;p28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 4.618
+    width: 1.895
+    height: 0.236
+    text: 응용 ICON
+    font_pt: 14.0
+  - name: Google Shape;425;p28
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 6.901
+    top: 1.118
+    width: 1.772
+    height: 0.236
+    text: 다이어그램
+    font_pt: 14.0
+  - name: Google Shape;426;p28
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 10.388
+    top: 2.137
+    width: 1.378
+    height: 0.0
+  - name: Google Shape;427;p28
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 10.388
+    top: 2.381
+    width: 1.378
+    height: 0.0
+  - name: Google Shape;428;p28
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.654
+    top: 1.982
+    width: 0.653
+    height: 0.57
+    text: ''
+  - name: Google Shape;429;p28
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 7.678
+    top: 4.659
+    width: 3.753
+    height: 0.749
+  - name: Google Shape;433;p28
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 9.554
+    top: 4.376
+    width: 0.001
+    height: 2.064
+  - name: Google Shape;434;p28
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 8.768
+    top: 5.654
+    width: 1.573
+    height: 0.236
+    text: 결과 분석 및 과정 개선
+    font_pt: 8.0
+  - name: Google Shape;435;p28
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 8.372
+    top: 1.982
+    width: 0.653
+    height: 0.57
+    text: ''
+  - name: Google Shape;436;p28
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 7.654
+    top: 2.938
+    width: 2.088
+    height: 0.57
+    text: ''
+  - name: Google Shape;437;p28
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 9.089
+    top: 1.982
+    width: 0.653
+    height: 0.57
+    text: ''
+  - name: Google Shape;438;p28
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."
+- idx: 21
+  layout_name: 1_본문2
+  layout_idx: 2
+  shapes:
+  - name: Google Shape;443;p29
+    is_placeholder: false
+    shape_type: PICTURE (13)
+    left: 6.913
+    top: 2.635
+    width: 5.357
+    height: 3.047
+  - name: Google Shape;444;p29
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.275
+    top: 7.058
+    width: 0.551
+    height: 0.185
+    ph_idx: 12
+    ph_type: SLIDE_NUMBER (13)
+    text: ‹#›
+  - name: Google Shape;445;p29
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 12.408
+    top: 0.304
+    width: 0.418
+    height: 0.354
+    ph_idx: 1
+    ph_type: BODY (2)
+    text: '#'
+  - name: Google Shape;446;p29
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 0.499
+    top: 0.304
+    width: 9.291
+    height: 0.354
+    ph_idx: 0
+    ph_type: TITLE (1)
+    text: 6.    다이어그램 및 프레임
+  - name: Google Shape;447;p29
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 9.777
+    top: 0.304
+    width: 2.54
+    height: 0.354
+    ph_idx: 2
+    ph_type: BODY (2)
+    text: 디자인가이드 및 리소스
+  - name: Google Shape;448;p29
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 2.214
+    top: 1.87
+    width: 0.707
+    height: 0.0
+  - name: Google Shape;449;p29
+    is_placeholder: false
+    shape_type: LINE (9)
+    left: 2.214
+    top: 2.114
+    width: 0.707
+    height: 0.0
+  - name: Google Shape;450;p29
+    is_placeholder: false
+    shape_type: AUTO_SHAPE (1)
+    left: 1.244
+    top: 1.716
+    width: 0.653
+    height: 0.57
+    text: ''
+  - name: Google Shape;451;p29
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 1.118
+    width: 1.864
+    height: 0.236
+    text: 기본 방향 지시 표시
+    font_pt: 14.0
+  - name: Google Shape;452;p29
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 1.057
+    top: 3.145
+    width: 1.908
+    height: 0.236
+    text: 붙임 이미지 및 설명
+    font_pt: 14.0
+  - name: Google Shape;453;p29
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 1.101
+    top: 3.644
+    width: 1.864
+    height: 2.808
+  - name: Google Shape;456;p29
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 4.075
+    top: 1.118
+    width: 1.028
+    height: 0.236
+    text: 프레임
+    font_pt: 14.0
+  - name: Google Shape;457;p29
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 3.754
+    top: 1.716
+    width: 3.159
+    height: 4.781
+  - name: Google Shape;460;p29
+    is_placeholder: false
+    shape_type: GROUP (6)
+    left: 6.905
+    top: 2.042
+    width: 5.368
+    height: 3.64
+  - name: Google Shape;478;p29
+    is_placeholder: false
+    shape_type: TEXT_BOX (17)
+    left: 7.107
+    top: 5.787
+    width: 4.96
+    height: 0.404
+    text: '이미지 스크린샷 등에 활용되는 이미지 구성시, 프레임 투명 레이어가 최상위에 위치하게 합니다.
+
+      (대상 이미지 스크린샷은 최하위로 위치 이동)'
+    font_pt: 9.0
+  - name: Google Shape;479;p29
+    is_placeholder: true
+    shape_type: PLACEHOLDER (14)
+    left: 1.644
+    top: 6.908
+    width: 10.489
+    height: 0.396
+    ph_idx: 11
+    ph_type: FOOTER (15)
+    text: "ⓒ2021 Dabeeo Inc. All rights reserved.    \n[ STRICTLY CONFIDENTIAL ] \
+      \ 본 문서는 보안 문서로, 의도된 수신자가 아니라면 본 정보의 유출, 복사, 배포 및  기타 행위는 엄격히 금지되어 있습니다."

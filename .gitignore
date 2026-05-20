@@ -34,3 +34,19 @@ install.log
 
 # LibreOffice/Office 임시 잠금 파일
 .~lock.*#
+
+# Template 백업·캐시·생성물 (재현 가능)
+templates/*.style.yaml.bak
+templates/*.style.yaml.bak.*
+templates/*.style.yaml.auto
+templates/*.style.yaml.manual
+templates/*.pptx.old
+templates/.sync.log
+templates/*.thumbnails/
+
+# 큰 template .pptx (GitHub 100MB 제한 회피 — 별도 공유)
+templates/[다비오] 회사소개자료.pptx
+templates/[다비오] 회사소개자료.raw.yaml
+
+# Samples (큰 파일·임시)
+samples/proposals/

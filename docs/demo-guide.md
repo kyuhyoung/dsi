@@ -2,7 +2,16 @@
 
 처음 이 repo를 받는 사람을 위한 빠른 시작·시연 안내.
 
-## 5분 안에 첫 RFP 처리하기
+## 두 가지 시작점
+
+| 가지고 있는 것 | 사용 명령 | 단계 수 | 산출물 |
+|---|---|---|---|
+| **RFP 파일** (제안서 작성 안 됨) | `/rfp <파일>` | 7단계 | `.docx` 제안서 + `.pptx` 발표자료 + `.pdf` |
+| **이미 작성된 제안서** | `/proposal <파일>` | 4단계 | `.pptx` 발표자료 + `.pdf` |
+
+지원 포맷: `.md` `.txt` `.docx` `.hwp` `.hwpx` `.pdf`
+
+## 5분 안에 첫 처리하기
 
 ### 사전 준비 (한 번만)
 
@@ -14,41 +23,89 @@ cd dsi
 
 `install.sh` 실행 결과 마지막에 *"=== 설정 완료 ==="* 가 보이면 준비 끝.
 
-### 첫 실행
+### 첫 실행 — RFP에서 시작
 
 ```bash
-# 1. dsi/ 디렉토리에서 Claude Code 시작
 claude
-
-# 2. 슬래시 명령
-/rfp examples/sample-rfp.md
+# 그 후:
+/rfp samples/rfp_downloaded/피지컬AI연구_제안요청서.hwp
 ```
 
-### 진행 흐름
+### 첫 실행 — 제안서에서 시작
+
+```bash
+# 제안서 파일을 samples/proposals/ 에 떨궈놓고:
+claude
+/proposal samples/proposals/<제안서>.hwp
+```
+
+### 진행 흐름 (/rfp)
 
 각 단계마다 결과 보여주고 *"진행"* 응답 대기:
 
 ```
-[1/6] RFP 분석 중...
+[1/7] RFP 분석 중... (.hwp 자동 변환 포함)
        → analysis.yaml 보여줌. 누락·위험 항목 확인.
        → "진행" 입력
 
-[2/6] 본문 작성 중... (KB 검색)
+[2/7] 본문 작성 중... (KB 검색)
        → 제안서 본문 .md 보여줌. 톤·내용 검토.
        → "진행" 또는 "수정: <내용>"
 
-[3/6] .docx 생성 중...
+[3/7] .docx 생성 중...
        → output/<날짜>/제안서_*.docx 경로 안내
 
-[4/6] 슬라이드 구성 중...
-       → slides_*.yaml 보여줌. 분량 검토.
+[4/7] 슬라이드 구성 중... (간지·레이아웃·차트 자동 결정)
+       → slides_*.yaml 보여줌. 분량·시각화 검토.
        → "진행"
 
-[5/6] .pptx 생성 중...
-       → output/<날짜>/발표자료_*.pptx 경로 안내
+[5/7] .pptx 생성 중... (회사 템플릿 자동 선택)
+       → output/<날짜>/발표자료_*.pptx
 
-[6/6] 완료. 산출물 목록 출력.
+[6/7] PDF 자동 변환 (LibreOffice headless)
+       → output/<날짜>/발표자료_*.pdf
+
+[7/7] 완료. 산출물 목록 + (선택) /preview 안내
 ```
+
+### 진행 흐름 (/proposal — RFP 단계 스킵)
+
+```
+[1/4] 제안서 텍스트 추출 (HWP → 평문 + 이미지 자동 dump)
+[2/4] 사업명·발주처 자동 추출 후 사용자 확인
+[3/4] 슬라이드 구성 yaml 작성 (ppt-designer)
+[4/4] 빌드 → .pptx → .pdf
+```
+
+### 빌드 후 검토
+
+```
+/preview output/<날짜>/발표자료_*.pptx
+```
+
+Claude가 슬라이드별 PNG 추출 후 시각 검토 → 이슈 보고.
+
+## 회사 템플릿 추가
+
+```bash
+cp ~/Downloads/회사_template.pptx templates/
+# Claude Code 안에서:
+/onboard-template
+# → 자동 발견 + 분석 + (필요 시) vision 보강 → style.yaml 작성
+# 이후 /rfp 또는 /proposal 빌드 시 자동 사용
+```
+
+`/onboard-template` 동작:
+- 인자 없음: `templates/*.pptx` 스캔, 새/변경된 template만 처리
+- 인자 `<name>`: 특정 template 강제 재처리
+- `--force`: 모든 template 재처리
+
+template 종류별 처리:
+- **디자인 가이드 ppt** (V1 같은 견본 컬렉션, placeholder + 안내문): 자동 분석만으로 충분
+- **발표 자료** (실제 콘텐츠 + 디자인 융합): vision 보강 필요 — `/onboard-template`가 자동 호출
+- **깔끔 정리본** (디자인만 살린 빈 견본): 자동 분석으로 빠르게 처리
+
+자세한 자동 추론 항목은 [README.md](../README.md) 참조.
 
 ## 응답어 약속
 

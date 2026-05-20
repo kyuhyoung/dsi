@@ -1,0 +1,158 @@
+# 시각요소 (visual element) 스키마 정의 — 시스템 자산
+#
+# ppt-designer agent가 *이 yaml을 읽고* 콘텐츠 yaml의 시각요소를 정확히 작성.
+# 빌더는 *이 스키마를 검증*해서 키 오류 즉시 발견.
+#
+# 모든 시각요소는 다음 공통 형식:
+#   - type: <타입명>
+#     <type별 필수·선택 키들>
+#
+# *키 이름은 정확히 일치* — 빌더가 .get() 으로 직접 lookup.
+
+visual_elements:
+
+  flow_arrow:
+    description: N단계 가로 흐름 화살표. 단계별 박스 + 사이 화살표.
+    required:
+      items:
+        description: 단계 라벨 리스트 (문자열 N개)
+        type: list[str]
+        example: ['수집', '정제', '학습', '배포']
+    optional: {}
+    common_mistakes:
+      - 'steps 키 사용 금지 — 올바른 키는 items'
+      - 'stages 키 사용 금지 — 올바른 키는 items'
+
+  matrix_2x2:
+    description: 2×2 매트릭스 (X축·Y축 + 4분면)
+    required:
+      x_axis:
+        description: X축 라벨
+        type: str
+      y_axis:
+        description: Y축 라벨
+        type: str
+      quadrants:
+        description: 4분면 라벨. 키 Q1·Q2·Q3·Q4 또는 좌상·우상·좌하·우하
+        type: dict
+        # 각 분면 값의 *허용 형식* — 빌더가 둘 다 처리
+        value_types:
+          - str                # 단순: '높은 가치, 낮은 노력'
+          - dict_label_body    # {label: '...', body: '...'} — 빌더가 'label\nbody'로 렌더
+        # dict_label_body 형식의 sub-keys
+        value_sub_keys:
+          dict_label_body:
+            required: [label]
+            optional: [body, position]
+        example_str:
+          Q1: '높은 가치, 낮은 노력'
+          Q2: '높은 가치, 높은 노력'
+        example_dict:
+          Q1: {label: 'KORINDO·SALIM', body: '본계약 추진'}
+          Q2: {label: 'Genting·PAR', body: '조건 협상'}
+    common_mistakes:
+      - 'quadrants 값에 position 키만 있고 label·body 없음 → label 필수'
+      - '4분면 미만 입력 → 빈 분면은 빈 문자열로'
+
+  bar_chart:
+    description: 막대 차트 (categories × series)
+    required:
+      categories:
+        description: 카테고리 라벨 리스트 (X축)
+        type: list[str]
+        example: ['2024', '2025', '2026']
+      series:
+        description: 시리즈 dict (이름 → 값 리스트). 단일 시리즈도 dict로.
+        type: dict[str, list[number]]
+        example:
+          매출: [100, 150, 220]
+          비용: [80, 100, 130]
+    optional:
+      title:
+        description: 차트 상단 제목
+        type: str
+      highlight_indices:
+        description: 강조할 카테고리 *인덱스* 리스트 (0-based). 해당 막대는 강조 색으로 그림.
+        type: list[int]
+        example: [0, 1]
+      highlight_categories:
+        description: 강조할 카테고리 *이름* 리스트. highlight_indices 대신 사용 가능.
+        type: list[str]
+        example: ['재료비', '인건비']
+
+  timeline:
+    description: 가로 타임라인 (점·선·라벨)
+    required:
+      items:
+        description: 타임라인 항목 리스트. 각 항목은 {label, content} dict 또는 단순 문자열.
+        type: list
+        item_types:
+          - str
+          - dict_label_content
+        item_sub_keys:
+          dict_label_content:
+            required: [label]
+            optional: [content]
+        example:
+          - {label: '2024', content: '시범 도입'}
+          - {label: '2025', content: '본격 확산'}
+          - {label: '2026', content: '안정화'}
+
+  callout_cards:
+    description: N개 강조 카드 (가로 배치). 각 카드는 번호·제목·본문.
+    required:
+      items:
+        description: 카드 리스트. 각 카드는 {title, body} dict 또는 단순 문자열.
+        type: list
+        item_types:
+          - str                # 단순: '글로벌 거점'
+          - dict_title_body    # {title: '...', body: '...'}
+        item_sub_keys:
+          dict_title_body:
+            required: [title]
+            optional: [body]
+        example:
+          - {title: '글로벌 거점', body: '본사 + 인니·미국·베트남 3개 법인'}
+          - {title: '기술 자산', body: '특허 51건 / 인증 14건'}
+          - {title: '투자 기반', body: '369억원'}
+
+  image:
+    description: 단일 이미지. caption 권장.
+    required:
+      path:
+        description: 이미지 파일 경로 (상대 또는 절대)
+        type: str
+        example: 'samples/proposals/dabeeo/images/img20.png'
+    optional:
+      caption:
+        description: 이미지 하단 캡션 (청중에게 *무엇을 봐야 하는지* 한 줄로)
+        type: str
+      fit:
+        description: 이미지 fit 모드. contain (기본) 또는 cover.
+        type: str
+        default: contain
+
+  mermaid:
+    description: Mermaid 다이어그램. Node.js mmdc 필요.
+    required:
+      code:
+        description: Mermaid 텍스트 코드
+        type: str
+        example: |
+          graph LR
+            A --> B
+            B --> C
+    optional:
+      theme:
+        description: 'mermaid 테마: default·dark·forest·neutral'
+        type: str
+        default: default
+      background:
+        description: 배경색 (예. white, transparent, #FFF)
+        type: str
+        default: white
+
+# 검증 정책 — 빌더가 yaml 로드 시 이 스키마로 검사
+validation:
+  unknown_keys_action: warn       # 정의 안 된 키 발견 시: warn / error
+  missing_required_action: warn   # 필수 키 누락 시: warn (해당 요소 미표시) / error (빌드 중단)

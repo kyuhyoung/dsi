@@ -1,0 +1,423 @@
+_generated_by: template-analyzer agent (LLM vision-based analysis, 2026-05-20)
+_template_source: templates/Dabeeo_presentation_Template_2022_v1.pptx
+_analysis_summary: |
+  21 slides, 7 layouts. 디자인 가이드 ppt (실 콘텐츠 아님).
+  - 챕터 구조 없음 (콘텐츠 챕터 흐름 미정의)
+  - 본문 layout 단일(idx=2 "1_본문2"), 간지 layout 단일(idx=5)
+  - 본문 견본 4종: 기본(텍스트만, slide=14), 이미지(slide=5), 표(slide=4), 차트(slide=6)
+  - 표지·감사: 짙은 남색(#0A1743) + 큐브 일러스트 + dabeeo 로고
+  - 간지: 동일 남색 배경 + 좌상단 큰 cyan(#37D1D4) chap_no/# 마크 + 큰 흰색 타이틀
+  - 본문은 흰 배경, 상단 회색 라벨 "타이틀 페이지 | 01" + 좌상단 작은 챕터 라벨, footer 보안 문구
+
+template:
+  path: templates/Dabeeo_presentation_Template_2022_v1.pptx
+  slide_size:
+    width_in: 13.333
+    height_in: 7.5
+
+  # 챕터 정보: 이 template은 디자인 가이드라 챕터에 박힌 콘텐츠가 없음.
+  # 콘텐츠 chap_no/chap_name은 본문 우상단 라벨(ph_idx=1·2)을 빌더가 *덮어씀*.
+  # 간지의 큰 #/01 마크와 큰 타이틀도 빌더가 콘텐츠로 덮어씀.
+  chapters: null
+
+  # layout 매핑 — 디자인 가이드라 챕터별 분기 없음. 모든 종류 단일 견본.
+  layouts:
+    표지: 1               # 짙은 남색 배경 + 큐브 + 60pt 큰 타이틀
+    목차: 2               # CONTENT — 8개 슬롯
+    간지: 3               # 짙은 남색 + 큰 cyan "01" + 큰 흰 타이틀
+    회사소개:              # 회사소개 전용 견본 없음 — 본문 견본 4번 재사용 (왼쪽정렬+표)
+      기본: 4
+    본문:
+      기본: 14            # 글머리 작성 요령 — 가장 깨끗한 텍스트 견본
+      이미지: 5           # 왼쪽 텍스트 + 우측 큰 이미지
+      표: 4               # 왼쪽 텍스트 + 우측 표
+      차트: 6             # 왼쪽 텍스트 + 우측 차트
+      이단: 7             # 가운데 정렬 + 표 (변형)
+    감사: 10              # Thank you 견본
+    결론:
+      기본: 14            # 본문 기본 재사용
+
+  # 콘텐츠 챕터 → template 챕터 매핑 정책
+  # 이 template은 chapters: null 이므로 정책 의미 없음. 빈 dict.
+  chapter_mapping_policy: {}
+
+  body_area:
+    left: 1.05
+    top: 1.1
+    width: 11.23
+    height: 5.5
+
+# 본문 견본의 우상단 챕터 라벨 — 빌더가 흰 박스로 가린 뒤 콘텐츠 챕터명/번호 덮어씀
+chapter_labels:
+  - name: 본문_chap_no_topright
+    position: {left: 12.408, top: 0.304, width: 0.418, height: 0.354}
+    font_pt: 11
+    color: grey
+    role: chap_no
+  - name: 본문_chap_name_topright
+    position: {left: 9.777, top: 0.304, width: 2.54, height: 0.354}
+    font_pt: 11
+    color: grey
+    role: chap_name
+
+# 본문 견본 상단 라벨 자리 자동 덮어쓰기 활성화
+top_right_label:
+  enabled: true
+  position: {left: 9.777, top: 0.304, width: 2.54, height: 0.354}
+  font_pt: 11
+  color: grey
+left_chap_no:
+  enabled: false   # 본문 좌상단은 큰 번호 없음 (간지의 큰 # 마크만 있음)
+
+# 간지 전용 — 큰 chap_no 자리 (raw.yaml slide 3: ph_idx=1, "#" 또는 "01")
+section_divider:
+  unified_title_format:
+    chap_no_box:
+      position: {left: 0.741, top: 2.609, width: 2.342, height: 1.09}
+      font_pt: 60
+      color: light_navy   # cyan #37D1D4
+      bold: true
+    title_box:
+      position: {left: 0.741, top: 3.75, width: 11.807, height: 1.554}
+      font_pt: 54
+      color: white
+      bold: true
+
+sample_clone:
+  clear_non_placeholder_text: true
+  shape_coords_tol: 0.1
+
+  # 디자인 자산 — 빌더가 콘텐츠 채우기 후에도 보존
+  preserve_shape_coords:
+    # 표지·감사·간지의 짙은 배경 큐브 일러스트 (전면 picture)
+    - {left: 0.0, top: 0.0, width: 13.333, height: 7.5, hint: '표지/감사 배경 큐브 일러스트'}
+    # 표지·감사 우하단 dabeeo 로고
+    - {left: 11.025, top: 6.498, width: 1.588, height: 0.352, hint: '표지/감사 로고'}
+    # 표지·감사·간지 상단 보안 문구 박스
+    - {left: 0.049, top: 0.155, width: 13.167, height: 0.599, hint: '상단 보안 문구'}
+    # 감사(slide 10) "Reading and Interpreting the Earth." 손글씨 picture
+    - {left: 0.52, top: 3.711, width: 3.843, height: 0.745, hint: '감사 손글씨'}
+    # 목차·본문 하단 footer 보안 문구 placeholder
+    - {left: 1.644, top: 6.908, width: 10.489, height: 0.396, hint: 'footer 보안 문구'}
+    # 목차 좌하단 dabeeo 로고 (slide 2)
+    - {left: 0.0, top: 7.15, width: 0.16, height: 0.16, hint: 'dabeeo 로고 마크 좌하단'}
+
+  # 잔재 — 빌더가 콘텐츠 그리기 전 강제 제거.
+  # 이 template은 placeholder 격자나 수평 점선 같은 잔재가 거의 없음.
+  # 빈 AUTO_SHAPE (text='') 박스들이 일부 견본에 시각 보조 역할로 있으나,
+  # 콘텐츠 채우기 시 위치가 겹치므로 제거 후 새로 그림.
+  remove_shape_coords:
+    # slide 4·12·14 견본 좌측 박스 (mint 색 배경 박스, 본문 영역 가이드)
+    - {left: 1.057, top: 2.322, width: 2.187, height: 2.241, hint: '본문 견본 좌측 mint 가이드 박스'}
+    # slide 12 회색 반투명 영역 표시 박스
+    - {left: 1.057, top: 1.102, width: 11.219, height: 5.539, hint: 'slide 12 본문 영역 반투명 박스'}
+    # 좌상단 # 마크 박스 (slide 14 글머리 가이드의 cyan 사각형)
+    - {left: 0.946, top: 1.0, width: 0.304, height: 0.292, hint: 'slide 14 글머리 cyan 마크'}
+    # slide 13 본문 폰트 컬러 가이드 그룹 picture/group
+    - {left: 1.331, top: 3.66, width: 1.749, height: 2.667, hint: 'slide 13 폰트 컬러 캡쳐 이미지'}
+    - {left: 3.32, top: 4.597, width: 1.824, height: 2.042, hint: 'slide 13 글자 정렬 가이드 그룹'}
+
+  # 견본의 콘텐츠 텍스트 — 새 콘텐츠로 교체 시 비울 대상
+  dummy_texts:
+    # 표지 (slide 1)
+    - "2022 다비오\v프리젠테이션 템플릿"
+    - "2022 다비오 프리젠테이션 템플릿"
+    - 000사업부 / 홍길동
+    - 2021. 12. 01
+
+    # 목차 (slide 2)
+    - CONTENT
+    - "타이틀 1\n타이틀 2\n타이틀 3\n타이틀 4\n타이틀 5"
+    - "타이틀 6\n타이틀 7\n타이틀 8"
+    - 타이틀 1
+    - 타이틀 2
+    - 타이틀 3
+    - 타이틀 4
+    - 타이틀 5
+    - 타이틀 6
+    - 타이틀 7
+    - 타이틀 8
+    - "01\n02\n03\n04\n05"
+    - "06\n07\n08"
+
+    # 간지 (slide 3, 11, 15)
+    - 타이틀 페이지
+    - 작성요령
+    - 디자인가이드 및 리소스
+    - '#'
+    - '01'
+
+    # 본문 견본 — 회사 소개 더미 (slide 4·6·7·8·9·12)
+    - "글로벌 최고 수준의 기술력을 보유한\n글로벌 영상정보 분석기술 스타트업 입니다."
+    - 글로벌 최고 수준의 기술력을 보유한
+    - 글로벌 영상정보 분석기술 스타트업 입니다.
+    - "글로벌 최고 수준의 기술력을 보유한\n글로벌 영상정보 분석기술 스타트업"
+    - 글로벌 영상정보 분석기술 스타트업
+    - "50여 명의 직원들과 함께,\n글로벌 영상정보 분석 및 이미지 분석을 통한\n기술기반 사업화를 진행하고 있으며,\n이에 최적화 된 R&D 조직을 구축 운영"
+    - 50여 명의 직원들과 함께,
+    - 글로벌 영상정보 분석 및 이미지 분석을 통한
+    - 기술기반 사업화를 진행하고 있으며,
+    - 이에 최적화 된 R&D 조직을 구축 운영
+    - "50여 명의 직원들과 함께, 글로벌 영상정보 분석 및 이미지 분석을 통한 기술기반 사업화를 진행하고 있으며,\n이에 최적화 된 R&D 조직을 구축 운영"
+    - 주식회사 dabeeo, Inc.
+
+    # 본문 (slide 5) — Lorem ipsum 한국어
+    - "여기에 컨텐츠\n헤드라인을 적어주세요."
+    - 여기에 컨텐츠
+    - 헤드라인을 적어주세요.
+    - "이상은 아니더면, 커다란 살 없으면 우리 안고, 그들에게 이것이다. 그들은 발휘하기 든 가슴이 것이다. 할지니, 가장 아니한 동력은 끝까지 위하여서. 그들은 웅대한 같으며, 우리의 것이다.\n그러므로 실로 사랑의 바이며, 따뜻한 못할 운다."
+
+    # 본문 slide 12 영역 가이드
+    - "본문은 해당 영역 안쪽에 작성되어야 \n외곽 여백 등으로 인해 집중이 되어 시인성이 좋습니다."
+
+    # 본문 slide 13 폰트 컬러 가이드
+    - "텍스트 서술형 내용은 이와 같이 써주시기 바랍니다. \v통상적으로 단락이 같은 내용은 Alt+Enter를 이용해 작성합니다. \n단락이 넘어갈 경우에는 Enter를 입력해서 작성하시기 바랍니다. 단락의 간격은 10pt 입니다.\n본문의 컬러는 ‘진한회색, 텍스트1’ 를 선택 해주시기 바랍니다.\n글자의 기준 정렬은 도형 기준이 아니며, 실제 모양 기준입니다. Alt 키를 누른 채로 도형의 크기를 미세하게\v조정하시기 바랍니다."
+    - 본문 폰트 컬러
+    - 글자 정렬 기준
+
+    # 본문 slide 14 글머리 가이드
+    - 글머리
+    - "1단 타이틀\n2단 타이틀\n🠊 2단 타이틀에 대한 효과 기재 할 때\n2단 두번째 타이틀입니다.\n3단 내용은 이와 같습니다\n3단 내용은 이와 같습니다.\n※ 글 머리 행을 손쉽게 움직이려면, 행에 커서를 위치시킨 뒤 Alt + Shift + 커서(화살표) 키를 눌러주시기 바랍니다."
+
+    # 본문 slide 16 폰트 가이드
+    - 맑은고딕
+    - Malgun Gothic
+    - 본문/제목
+    - 타이틀
+    - 헤드라인1
+    - 헤드라인2
+    - 본문1
+    - 본문2
+    - 60pt
+    - 32pt
+    - 24pt
+    - 14pt
+    - 12pt
+    - 11pt
+
+    # 본문 slide 17 색상 가이드
+    - 본문/제목 색상
+    - 그래프 색상
+    - 메인 블루
+    - 포인트 블루
+    - 배경 블루
+    - 메인 블랙
+    - 메인 그레이
+    - 라이트 그레이
+    - 블루 그레이
+
+    # 본문 slide 18 컬러 응용
+    - 컬러 응용 오브젝트
+    - 컬러 응용 그라데이션
+
+    # 본문 slide 19 로고
+    - Dabeeo CI
+    - "※ 로고 사용시 외곽 경계와의 거리는 최소 여백은 5%\n이상으로 두어 사용."
+
+    # 본문 slide 20·21 아이콘·프레임 가이드
+    - 기본 ICON
+    - 다이어그램
+    - 응용 ICON
+    - ※ 추가 아이콘 사용시 아래와 같은 라인형태로 사용 권장
+    - 기본 방향 지시 표시
+    - 프레임
+    - 붙임 이미지 및 설명
+    - "이미지의 제목입니다.\n이미지의 부연 설명\n혹은 캡션 등이 들어갑니다."
+
+    # 본문 견본 우상단 라벨 (모든 본문 slide)
+    - 타이틀 페이지
+    - 페이지 타이틀
+    # slide title 견본명들
+    - 1.   왼쪽 정렬 페이지 - 샘플 A
+    - 1.   왼쪽 정렬 페이지 - 샘플 B
+    - 1.   왼쪽 정렬 페이지 - 샘플 C
+    - 2.   가운데 정렬 타이틀 페이지- 샘플 A
+    - 2.   가운데 정렬 타이틀 페이지- 샘플 B
+    - 2.   가운데 정렬 타이틀 페이지- 샘플 C
+    - 1.    작성 영역
+    - 1.    기본 작성 요령
+    - 2.    글머리 작성 요령
+    - 1.   폰트
+    - 2.   기본 색상
+    - 3.   기본 색상 응용
+    - 4.   로고
+    - 5.   아이콘 및 다이어그램
+    - 6.   다이어그램 및 프레임
+    - Reading and Interpreting the Earth.
+    - Thank you.
+
+  preserve_keywords:
+    - ©
+    - ⓒ
+    - Strictly
+    - STRICTLY
+    - Confidential
+    - CONFIDENTIAL
+    - 보안 문서
+    - All rights reserved
+    - dabeeo
+    - 2021 Dabeeo Inc
+
+  remove_decorative_pictures: []
+  gradient_white_masks: []
+
+# 회사 CI 색 — slide 17 본문 색상 가이드에서 추출
+colors:
+  navy: '#0A1743'          # 메인 블루 / 배경 블루
+  main_blue: '#1C3997'     # 메인 블루 (theme accent1)
+  light_navy: '#37D1D4'    # 포인트 블루 / cyan
+  cyan: '#37D1D4'
+  gold: '#FFC000'          # 그래프 황색 (theme accent3)
+  light_gold: '#FFC000'
+  purple: '#C9AED9'        # 그래프 보라
+  blue_grey: '#8D9CCB'     # 블루 그레이
+  orange: '#EE5112'        # accent6 (위험·강조)
+  grey: '#757070'           # 메인 그레이
+  light_grey: '#E7E6E6'    # 라이트 그레이
+  dark: '#222222'          # 메인 블랙 (텍스트1)
+  white: '#FFFFFF'
+
+fonts:
+  body: Malgun Gothic
+  title: Malgun Gothic
+  fallback: Arial
+
+# 표지 견본 (slide 1) 슬롯 — raw.yaml 직접 읽음
+cover:
+  title_fit:
+    - max_chars: 10
+      pt: 60
+    - max_chars: 18
+      pt: 48
+    - max_chars: 30
+      pt: 36
+    - max_chars: 50
+      pt: 28
+    - max_chars: 80
+      pt: 22
+    - max_chars: 999
+      pt: 18
+  auto_fit: true
+  title_box:
+    left: 0.616
+    top: 3.45
+    width: 8.816
+    height: 1.865
+  sub1_box:                  # 부서/작성자
+    left: 0.679
+    top: 5.966
+    width: 6.083
+    height: 0.407
+  sub2_box:                  # 일자
+    left: 0.679
+    top: 6.530
+    width: 6.083
+    height: 0.407
+
+content:
+  messages_height_with_visuals: 1.4
+  visuals_top_gap: 0.2
+  body_textbox_anchor:
+    left: 1.057
+    top: 1.102
+
+company_intro:
+  headline_anchor:
+    left: 1.057
+    top: 1.102
+  sub_anchor:
+    left: 1.644
+    top: 2.765
+
+# placeholder 인덱스 (raw.yaml 기준)
+placeholder_idx:
+  표지:
+    title: 0          # 큰 타이틀 (slide 1)
+    body: 1           # 부서/작성자
+  목차:
+    title: 0          # "CONTENT"
+    body: 3           # 왼쪽 타이틀 그룹
+  간지:
+    title: 0          # 큰 흰 타이틀 (slide 3·11·15)
+    body: 1           # 좌상단 큰 chap_no/# 마크
+  회사소개:
+    title: 0
+    body: null
+  본문:
+    title: 0          # 좌상단 타이틀 라벨
+    body: null        # 본문은 placeholder가 아닌 text_box로 자유 배치
+  감사:
+    title: 0
+
+# 슬롯 위치 — raw.yaml에서 직접 추출
+slot_finders:
+  표지:
+    title:
+      - placeholder_idx: 0
+      - position: {left: 0.616, top: 3.45, tol: 0.4}
+    sub1:
+      - position: {left: 0.679, top: 5.966, tol: 0.3}
+    sub2:
+      - position: {left: 0.679, top: 6.530, tol: 0.3}
+
+  목차:
+    title:
+      - placeholder_idx: 0
+      - position: {left: 0.563, top: 0.35, tol: 0.4}
+    body_left_num:                # 좌측 01-05
+      - position: {left: 0.568, top: 1.906, tol: 0.3}
+    body_left_title:              # 좌측 타이틀 1-5
+      - position: {left: 1.800, top: 1.906, tol: 0.3}
+    body_right_num:               # 우측 06-08
+      - position: {left: 6.699, top: 1.906, tol: 0.3}
+    body_right_title:             # 우측 타이틀 6-8
+      - position: {left: 7.930, top: 1.906, tol: 0.3}
+
+  간지:
+    title:
+      - placeholder_idx: 0
+      - position: {left: 0.741, top: 3.75, tol: 0.4}
+    chap_no:                      # 좌상단 큰 #/01
+      - placeholder_idx: 1
+      - position: {left: 0.741, top: 2.609, tol: 0.4}
+
+  회사소개:
+    title:
+      - placeholder_idx: 0
+      - position: {left: 0.499, top: 0.304, tol: 0.4}
+    headline:
+      - position: {left: 1.057, top: 1.102, tol: 0.4}
+    sub:
+      - position: {left: 1.644, top: 2.765, tol: 0.4}
+    chap_no:
+      - placeholder_idx: 1
+      - position: {left: 12.408, top: 0.304, tol: 0.3}
+    chap_name:
+      - placeholder_idx: 2
+      - position: {left: 9.777, top: 0.304, tol: 0.4}
+
+  본문:
+    title:
+      - placeholder_idx: 0
+      - position: {left: 0.499, top: 0.304, tol: 0.4}
+    headline:                    # 본문 큰 헤드라인 (slide 4·5·6 위쪽)
+      - position: {left: 1.057, top: 1.102, tol: 0.4}
+    body:                        # 본문 서술 텍스트 영역
+      - position: {left: 1.057, top: 1.6, tol: 0.6}
+    chap_no:                     # 우상단 작은 번호 (덮어쓸 대상)
+      - placeholder_idx: 1
+      - position: {left: 12.408, top: 0.304, tol: 0.3}
+    chap_name:                   # 우상단 챕터명 (덮어쓸 대상)
+      - placeholder_idx: 2
+      - position: {left: 9.777, top: 0.304, tol: 0.4}
+
+  감사:
+    title:
+      - placeholder_idx: 0
+      - position: {left: 0.616, top: 3.45, tol: 0.4}
+
+footer:
+  top: 6.908
+  text_anchor:
+    left: 1.644
+    width: 10.489
