@@ -45,8 +45,10 @@ templates/.sync.log
 templates/*.thumbnails/
 
 # 큰 template .pptx (GitHub 100MB 제한 회피 — 별도 공유)
-templates/[다비오] 회사소개자료.pptx
-templates/[다비오] 회사소개자료.raw.yaml
+# [다비오]의 대괄호는 glob 문자클래스라 와일드카드로 매칭
+templates/*회사소개자료*.pptx
+templates/*회사소개자료*.raw.yaml
+templates/*회사소개자료*.thumbnails/
 
 # Samples (큰 파일·임시)
 samples/proposals/

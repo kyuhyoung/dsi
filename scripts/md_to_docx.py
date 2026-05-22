@@ -37,13 +37,17 @@ def add_paragraph(doc, text):
 def add_table(doc, rows):
     if not rows:
         return
-    n_cols = len(rows[0])
-    table = doc.add_table(rows=len(rows), cols=n_cols)
+    # 모든 행의 셀 수 통일 — 가장 긴 행 기준, 부족한 행은 빈 셀로 패딩.
+    n_cols = max(len(r) for r in rows)
+    padded = [list(r) + [""] * (n_cols - len(r)) for r in rows]
+    table = doc.add_table(rows=len(padded), cols=n_cols)
     table.style = "Light Grid Accent 1"
-    for i, row in enumerate(rows):
+    for i, row in enumerate(padded):
         for j, cell_text in enumerate(row):
+            if j >= n_cols:
+                break
             cell = table.cell(i, j)
-            cell.text = cell_text.strip()
+            cell.text = (cell_text or "").strip()
             for para in cell.paragraphs:
                 for run in para.runs:
                     run.font.name = "맑은 고딕"
@@ -118,6 +122,12 @@ def parse_md(md_text):
             i += 1
             continue
 
+        # page break 마커: <!-- pagebreak --> 또는 <!-- page break -->
+        if re.match(r"^<!--\s*page[\s_-]?break\s*-->$", stripped, re.IGNORECASE):
+            tokens.append(("pagebreak",))
+            i += 1
+            continue
+
         if stripped:
             tokens.append(("p", stripped))
         else:
@@ -156,6 +166,8 @@ def render(doc, tokens):
                 run.font.color.rgb = RGBColor(0x66, 0x66, 0x66)
         elif t == "hr":
             doc.add_paragraph("─" * 40)
+        elif t == "pagebreak":
+            doc.add_page_break()
         elif t == "blank":
             pass
 

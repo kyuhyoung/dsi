@@ -1,0 +1,661 @@
+_purpose: 농식품AI 양식의 86개 표 의미 분석. form-analyst agent 산출물.
+_source_form: samples/rfp_downloaded/농식품AI_양식.form.yaml
+_source_txt: samples/rfp_downloaded/농식품AI_양식.txt
+_generated: 2026-05-21
+_agent: form-analyst
+
+# ────────────────────────────────────────────────────────────
+# 0. 양식 구조 요약 (섹션별 표 인덱스 매핑)
+# ────────────────────────────────────────────────────────────
+sections:
+  - section: '[별지 제1호] 자가진단서'
+    table_idxs: [0, 1, 2, 3]
+  - section: '[별지 제2-1호] 사업신청서(종합)'
+    table_idxs: [4, 5]
+  - section: '[별지 제2-2호] 사업신청서(중소기업 단독 또는 주관기업)'
+    table_idxs: [6, 7, 8]
+  - section: '[별지 제2-3호] 사업신청서(컨소시엄 참여기업)'
+    table_idxs: [9, 10, 11, 12]
+  - section: '[별지 제3호] 사업계획서 머리'
+    table_idxs: [13, 14, 15, 16, 17, 18, 19]
+  - section: '1. 상용화 대상 개요 (1-1~1-3)'
+    table_idxs: [20, 21, 22, 23]
+  - section: '2. 상용화 대상 시장 (2-1, 2-2)'
+    table_idxs: [24, 25, 26]
+  - section: '3. 상용화 계획 및 전략 (3-1~3-6)'
+    table_idxs: [27, 28, 29, 30, 31, 32, 33]
+  - section: '4. 상용화 역량 (4-1~4-5)'
+    table_idxs: [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+  - section: '5. 성과 실현 가능성 (5-1, 5-2)'
+    table_idxs: [51, 52, 53]
+  - section: '6. 상용화 일정 및 향후계획 (6-1~6-3)'
+    table_idxs: [54, 55, 56, 57, 58]
+  - section: '7. 지원금 구성 및 집행계획 (7-1~7-5)'
+    table_idxs: [59, 60, 61, 62, 63, 64, 65, 66]
+  - section: '[붙임 4] 지원금 집행계획서'
+    table_idxs: [67, 68, 69]
+  - section: '[붙임 5] 책임자 이력'
+    table_idxs: [70, 71, 72]
+  - section: '[별지 제4호] 지원금 사용 비목 (참고용)'
+    table_idxs: [73, 74, 75, 76, 77, 78, 79]
+  - section: '[별지 제5호] 정보제공 동의서'
+    table_idxs: [80, 81, 82, 83, 84]
+  - section: '[붙임] 정보제공 동의 인원 목록'
+    table_idxs: [85]
+
+# ────────────────────────────────────────────────────────────
+# 1. 표 분류 (8개 그룹)
+# ────────────────────────────────────────────────────────────
+table_groups:
+  group_separator:
+    description: '별지 구분용 1셀 표지 (콘텐츠 없음, builder 그대로 재현)'
+    table_idxs: [1, 4, 6, 9, 13, 68, 70, 73, 80]
+    cell_count_total: 9
+    fill_strategy: '재현만. placeholder 없음.'
+
+  group_instruction:
+    description: '작성 지시문·주석만 담긴 1셀 표 (※ 또는 * 시작 텍스트)'
+    table_idxs: [21, 22, 23, 25, 26, 28, 29, 30, 31, 32, 33, 35, 37, 40, 42, 45, 53, 55, 56, 58, 60, 65, 67, 74, 81]
+    cell_count_total: 25
+    fill_strategy: '재현만. 본문은 *별도 narrative 표/section* 에 작성. instruction은 그대로 둘 수도, 작성 후 삭제 안내 (지시문 자체에 "삭제 후 제출" 명시된 경우만).'
+
+  group_section_header:
+    description: '섹션 헤더 표 (예: "1. 상용화 대상 개요") — 1행 2열 또는 1행 1열'
+    table_idxs: [15, 20, 24, 27, 34, 50, 51, 54, 59, 82]
+    cell_count_total: 10
+    fill_strategy: '재현만. 텍스트 변경 금지.'
+
+  group_self_diagnosis:
+    description: '자가진단서 — 확인사항/해당/미해당 ○ 표기 표'
+    table_idxs: [2, 3]
+    placeholder_cells: '7개 항목 + 4개 세부 (총 11항목) × 2칸(해당/미해당)'
+    fill_strategy: '○ 마크. KB 검증 데이터 매핑 필요.'
+
+  group_company_info:
+    description: '기업 기본정보·재무·지식재산권·지원사업 이력 (사업신청서)'
+    table_idxs: [5, 7, 8, 10, 11, 12, 14, 16, 17]
+    fill_strategy: '회사 KB (kb/company/dabeeo/) 데이터로 직접 매핑.'
+
+  group_narrative:
+    description: '서술형 콘텐츠를 받는 빈 표 또는 As-Is/To-Be 표 (1행 1~2열, 큰 텍스트박스)'
+    table_idxs: [19, 38, 43, 46, 47, 48, 49, 50, 75, 76, 77, 78, 79]
+    note: '38·43·46·47·48·49는 행/열 표 형태이나 본문 데이터 채움.'
+    fill_strategy: 'proposal-writer가 RFP·KB 종합하여 텍스트 채움.'
+
+  group_team_org:
+    description: '인적 역량·조직도 표 (직원 학력·경력)'
+    table_idxs: [36, 39, 41, 44, 72]
+    fill_strategy: '회사 KB 조직·이력 데이터로 매핑.'
+
+  group_schedule:
+    description: '추진 일정표 (월별 간트 표)'
+    table_idxs: [57]
+    fill_strategy: '제안서 작성 시 협약 기간 기반 ●·▲ 등 일정 마커 표기.'
+
+  group_budget:
+    description: '지원금 총괄·세부·인건비 표 (7-1~7-5)'
+    table_idxs: [18, 52, 61, 62, 63, 64, 66, 69, 71]
+    note: '18·52는 사업계획서 요약(머리)·5-1 성과지표. 17과 동일 구조 일부.'
+    fill_strategy: 'proposal-writer가 예산 산출 후 채움. 합계 종속.'
+
+  group_consent_list:
+    description: '정보제공 동의서·동의 인원 목록'
+    table_idxs: [83, 84, 85]
+    fill_strategy: '주관·참여기업 대표자 서명, 인원 명단 (23행 이상 가변).'
+
+# ────────────────────────────────────────────────────────────
+# 2. 셀 채움 계획 (cell_fill_plan) — 핵심 콘텐츠 표만 상세
+# ────────────────────────────────────────────────────────────
+cell_fill_plan:
+
+  # ─── 자가진단서 (table 2) ─────────────────────────────
+  - table_idx: 2
+    table_title: '자가진단서 — 확인 사항 ○/× 표기'
+    rows: 12
+    cols: 4
+    cell_fills:
+      - cell: {row: 1, col: 2}  # row1: 농식품 산업 분야 해당 여부 → 해당
+        description: '"농식품 산업 분야 해당 여부" 해당 표기'
+        fill_from: 'RFP 본문 + 다비오 사업 (실내공간 AI는 농식품 분야 아님)'
+        fill_type: check_mark
+        example: '○ 또는 ×'
+        kb_status: '확인 필요 (다비오는 실내공간·AI지도 — 농식품 분야가 아닐 가능성 高)'
+      - cell: {row: 2, col: 2}
+        description: '중소기업 여부 → 해당'
+        fill_from: 'kb/company/dabeeo/intro.md (중소기업 인증)'
+        fill_type: check_mark
+        kb_status: '매핑 가능'
+      - cell: {row: 3, col: 2}
+        description: 'AI 기술 관련 여부 → 해당'
+        fill_from: 'kb/company/dabeeo/tech-core.md (AI 비전·지도)'
+        fill_type: check_mark
+        kb_status: '매핑 가능'
+      - cell: {row: 4, col: 2}
+        description: '지원유형별 기술·상용화 성숙도 충족 여부'
+        fill_from: 'RFP의 TRL 기준 + 다비오 기술 단계'
+        fill_type: check_mark
+        kb_status: '확인 필요'
+      - cell: {row: 5, col: 2}
+        description: '증빙서류 보유 여부'
+        fill_from: '제출 첨부서류 보유 여부'
+        fill_type: check_mark
+        kb_status: '확인 필요'
+      - cell: {row: 6, col: 3}
+        description: '타 부처 동일·유사 지원사업 중복 신청 여부 → 미해당'
+        fill_from: '확인 필요'
+        fill_type: check_mark
+        kb_status: '확인 필요'
+      - cell_range: 'r7~r11, col 2 또는 3'
+        description: '지원 제한 요건 (채무불이행·신용정보·참여제한·휴업) → 전부 미해당'
+        fill_from: 'kb/company/dabeeo/intro.md (정상 영위)'
+        fill_type: check_mark
+        kb_status: '매핑 가능 (모두 미해당)'
+
+  # ─── 신청서 종합 머리 (table 5) ─────────────────────────
+  - table_idx: 5
+    table_title: '사업신청서(종합) — 신청과제·핵심AI기술·신청자정보'
+    rows: 19
+    cols: 7
+    note: '대분류·소분류·AI기술 □에 ■ 표기. 추가 신청자(주관/참여) 이름·연락처.'
+    cell_fills:
+      - description: '신청과제 대·소분류 □ 체크'
+        fill_from: 'RFP의 지원유형 + 다비오 사업 분야 매핑'
+        fill_type: check_mark
+        kb_status: '확인 필요 (RFP 본문 추가 분석 필요)'
+      - description: '핵심 AI 기술 □ 체크 (기본기술·시스템구현·AI인프라)'
+        fill_from: 'kb/company/dabeeo/tech-core.md'
+        fill_type: check_mark
+        kb_status: '매핑 가능 (딥러닝·머신러닝 등)'
+      - description: '주관기업/참여기업 대표자명·연락처·이메일'
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        kb_status: '일부 매핑 가능, 일부 확인 필요'
+
+  # ─── 회사 기본정보 (table 7) ─────────────────────────────
+  - table_idx: 7
+    table_title: '주관기업 기본정보'
+    rows: 18
+    cols: 7
+    cell_fills:
+      - cell: {row: 1, col: 1, hint: '주관기업명'}
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        example: '주식회사 다비오'
+        kb_status: '매핑 가능'
+      - cell: {row: 1, col: 5, hint: '설립일'}
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: date
+        kb_status: '매핑 가능'
+      - cell: {row: 2, col: 1, hint: '대표자'}
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        example: '박주흠'
+        kb_status: '매핑 가능'
+      - cell: {row: 2, col: 5, hint: '회계담당자'}
+        fill_from: '확인 필요 (실명·연락처)'
+        fill_type: text
+        kb_status: '확인 필요'
+      - cell: {row: 3, col: 1, hint: '사업자등록번호'}
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        kb_status: '확인 필요 (KB에 미기재 가능)'
+      - cell: {row: 3, col: 5, hint: '업종'}
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        kb_status: '매핑 가능'
+      - cell: {row: 4, col: 1, hint: '주생산품(제품/서비스)'}
+        fill_from: 'kb/company/dabeeo/business.md, intro.md'
+        fill_type: text
+        kb_status: '매핑 가능'
+      - cell_range: 'r5~r9 매출액/고용인원 (2023·2024·2025)'
+        description: '연도별 매출·고용인원'
+        fill_from: 'kb/company/dabeeo/quantitative.md'
+        fill_type: number
+        unit: '백만원 / 명'
+        kb_status: '매핑 가능 (KB의 연도별 매출 데이터 활용)'
+      - cell_range: 'r10~r12 투자유치실적'
+        description: '~2024년·2025년 투자유치액·투자처'
+        fill_from: 'kb/company/dabeeo/investment.md'
+        fill_type: number
+        unit: '백만원'
+        kb_status: '매핑 가능'
+      - cell_range: 'r13~r15 사업장 주소 (사무실·연구소·공장)'
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        kb_status: '일부 매핑 가능 (사무실 주소 있음, 연구소·공장 확인 필요)'
+      - cell: {row: 16, col: 1, hint: '기업소개(요약)'}
+        fill_from: 'kb/company/dabeeo/intro.md'
+        fill_type: text
+        kb_status: '매핑 가능'
+      - cell: {row: 17, col: 1, hint: '특기 사항(창업 이후 연혁)'}
+        fill_from: 'kb/company/dabeeo/history.md'
+        fill_type: text
+        kb_status: '매핑 가능'
+
+  # ─── 재무현황·지식재산권·타 지원사업 (table 8) ──────────
+  - table_idx: 8
+    table_title: '재무현황 + 보유 지식재산권 + 타 지원사업 수행 이력 (1개 표에 결합)'
+    rows: 22
+    cols: 5
+    cell_fills:
+      - cell_range: 'r2~r7 × 3년 (2023·2024·2025) — 총자산·총부채·자기자본·매출액·영업이익·당기순이익'
+        fill_from: 'kb/company/dabeeo/quantitative.md (재무제표 기반)'
+        fill_type: number
+        unit: '원'
+        kb_status: '일부 매핑 가능 (매출은 KB 있음, 자산·부채·자본·이익은 확인 필요)'
+      - cell_range: 'r10~r14 × 5열 — 지식재산권 종류·명·등록번호·권리권자'
+        fill_from: 'kb/company/dabeeo/certifications.md (특허·인증)'
+        fill_type: text
+        kb_status: '매핑 가능'
+      - cell_range: 'r17~r21 — 타 지원사업 (사업명·지원기관·기간·금액·수행상태)'
+        fill_from: 'kb/projects/ (과거 정부사업 실적)'
+        fill_type: text
+        kb_status: '일부 매핑 가능 (사업 목록 있음, 금액·기간 일부 확인 필요)'
+
+  # ─── 컨소시엄 참여기업 (table 10, 11, 12) ────────────────
+  - table_idx: 10
+    table_title: '참여기업 기본정보 (컨소시엄 시)'
+    rows: 17
+    cols: 8
+    note: 'table 7과 동일 구조의 참여기업 버전. 컨소시엄 미구성 시 비움.'
+    fill_strategy: '컨소시엄 여부에 따라 작성. 표 구조는 동일.'
+    kb_status: '확인 필요 (컨소시엄 파트너 결정 후)'
+  - table_idx: 11
+    table_title: '참여기업 재무현황'
+    rows: 8
+    cols: 4
+    note: 'table 8의 재무 부분 단축형.'
+    fill_strategy: '컨소시엄 참여기업 재무.'
+    kb_status: '확인 필요'
+  - table_idx: 12
+    table_title: '참여기업 지식재산권 + 타 지원사업'
+    rows: 13
+    cols: 5
+    fill_strategy: '컨소시엄 참여기업 데이터.'
+    kb_status: '확인 필요'
+
+  # ─── 사업계획서 머리 (table 14) ────────────────────────
+  - table_idx: 14
+    table_title: '사업계획서 머리 — 주관기업명·설립일·대표·사업자등록·업종·법인등록'
+    rows: 4
+    cols: 4
+    fill_from: 'kb/company/dabeeo/intro.md'
+    fill_type: text
+    kb_status: '대부분 매핑 가능, 법인등록번호·사업자등록번호는 확인 필요'
+
+  # ─── 신청유형·컨소시엄 (table 16) ──────────────────────
+  - table_idx: 16
+    table_title: '신청유형(타입1/2) + 컨소시엄 여부'
+    rows: 3
+    cols: 3
+    cell_fills:
+      - description: '타입 1 (1년 내 상용화) vs 타입 2 (2027.12까지 상용화) 선택'
+        fill_type: check_mark
+        kb_status: '확인 필요 (사업 전략 결정 사항)'
+      - description: '컨소시엄 여/부'
+        fill_type: check_mark
+        kb_status: '확인 필요'
+
+  # ─── 사업비 구성·성과목표 (table 17) ───────────────────
+  - table_idx: 17
+    table_title: '사업비 구성 + 성과목표 (정량·정성)'
+    rows: 8
+    cols: 7
+    cell_fills:
+      - description: '자기부담금(30%)/국고(70%)/합계 금액 (백만원)'
+        fill_from: '예산 산출'
+        fill_type: number
+        unit: '백만원'
+        kb_status: '확인 필요 (예산 책정 후)'
+      - description: '현금(자기부담의 10% 이상)/현물(자기부담의 90% 이하)'
+        fill_type: number
+        kb_status: '확인 필요'
+      - description: '성과목표 — 상용화 건수, 국민체감활동, 투자, 매출(국내·수출)'
+        fill_type: number
+        kb_status: '확인 필요 (목표치 설정)'
+      - description: '성과목표 정성 (불량률·기술인력·지재권 등)'
+        fill_type: text
+        kb_status: '확인 필요'
+
+  # ─── 사업계획서 요약 (table 18) ────────────────────────
+  - table_idx: 18
+    table_title: '사업계획서 요약 (2페이지 내외)'
+    rows: 11
+    cols: 3
+    cell_fills:
+      - description: '상용화 대상명·상세 설명·이미지'
+        fill_type: text + image
+      - description: '상용화 배경·필요성'
+        fill_type: text
+      - description: '주관-참여기업 협업 배경·역할'
+        fill_type: text
+      - description: '추진전략·목표시장·주요 고객층 등'
+        fill_type: text
+    kb_status: 'proposal-writer 작성'
+
+  # ─── As-Is/To-Be 표 (table 19) ──────────────────────────
+  - table_idx: 19
+    table_title: '과제 상세 — As is / To be'
+    rows: 3
+    cols: 2
+    fill_from: 'proposal-writer 작성'
+    fill_type: text
+
+  # ─── 4-1 보유 시설·장비 (table 36) ────────────────────
+  - table_idx: 36
+    table_title: '연구·생산 시설·장비 보유 현황'
+    rows: 6
+    cols: 7
+    cell_fills:
+      - description: '장비명·규격·수량·용도·활용시기·구입가격·구입년도'
+        fill_from: 'kb/company/dabeeo/tech-core.md, kb/tech/'
+        fill_type: text + number
+        kb_status: '일부 매핑 가능 (보유 시설 정보 확인 필요)'
+
+  # ─── 4-2 마케팅 노력 (table 38) ────────────────────────
+  - table_idx: 38
+    table_title: '마케팅 노력 (최근 3년)'
+    rows: 5
+    cols: 3
+    cell_fills:
+      - description: '추진사항·추진기간·세부내용'
+        fill_from: 'kb/company/dabeeo/history.md, kb/projects/'
+        fill_type: text
+        kb_status: '일부 매핑 가능'
+
+  # ─── 4-3 인력 표 (table 41) ────────────────────────────
+  - table_idx: 41
+    table_title: '대표·사업책임자·직원 현황 및 역량'
+    rows: 11
+    cols: 11
+    cell_fills:
+      - description: '성명·직위·성별·학위·전공·담당분야·채용년월·참여율'
+        fill_from: 'kb/company/dabeeo/organization.md'
+        fill_type: text + number
+        kb_status: '일부 매핑 가능 (대표·핵심 인력)'
+      - description: '주요 경력'
+        fill_type: text
+
+  # ─── 4-4 컨소시엄 역할 분담 (table 43) ─────────────────
+  - table_idx: 43
+    table_title: '참여기업 — 주요 역량·협력·역할·비고'
+    rows: 4
+    cols: 4
+    fill_from: '확인 필요 (컨소시엄 결정 후)'
+    kb_status: '확인 필요'
+
+  # ─── 4-5 사업 실적 표 4개 (table 46, 47, 48, 49) ────────
+  - table_idx: 46
+    table_title: '내수시장 진출 실적 — 유통채널·진출시기·아이템·금액'
+    rows: 4
+    cols: 4
+    fill_from: 'kb/projects/ (국내 사업 실적)'
+    fill_type: text + number
+    kb_status: '일부 매핑 가능'
+  - table_idx: 47
+    table_title: '글로벌 진출 실적 — 수출국가·수출액·품목수·품목명'
+    rows: 4
+    cols: 4
+    fill_from: 'kb/projects/ (해외 사업)'
+    fill_type: text + number
+    kb_status: '확인 필요 (해외 실적 KB 빈약)'
+  - table_idx: 48
+    table_title: '글로벌 진출 역량 — 해외특허·국제인증·국제협약 건수'
+    rows: 4
+    cols: 3
+    fill_from: 'kb/company/dabeeo/certifications.md'
+    fill_type: number
+    kb_status: '확인 필요'
+  - table_idx: 49
+    table_title: '자금조달 실적 — 조달금액·조달방식·조달처'
+    rows: 4
+    cols: 3
+    fill_from: 'kb/company/dabeeo/investment.md'
+    fill_type: text + number
+    kb_status: '매핑 가능'
+
+  # ─── 5-1 성과지표 (table 52) — table 17과 동일 ──────────
+  - table_idx: 52
+    table_title: '성과지표 (table 17과 동일 구조, 본문에서 재기재)'
+    rows: 6
+    cols: 5
+    note: 'table 17의 성과목표 부분 복제. 동일 값 사용.'
+    fill_strategy: 'table 17과 동기화'
+    kb_status: 'table 17 종속'
+
+  # ─── 6-2 추진 일정표 (table 57) — 월별 간트 ─────────────
+  - table_idx: 57
+    table_title: '추진 일정표 (월별 12개월 간트)'
+    rows: 12
+    cols: 26
+    cell_fills:
+      - description: '구분(번호) / 추진계획 (9개 단계 — 계획수립·시설구축·시제품·외주·양산·중간보고·판로·홍보·최종보고)'
+        fill_from: 'RFP의 협약 기간 (계약일~종료일) 기반 일정 매핑'
+        fill_type: text
+      - description: '월별 진행 셀 (●·▲·━ 마커)'
+        fill_type: marker
+        kb_status: '확인 필요 (사업 일정 수립 후)'
+
+  # ─── 7-1 지원금 총괄표 (table 61) ──────────────────────
+  - table_idx: 61
+    table_title: '지원금 총괄 — 합계·국고·자기부담(현금·현물)'
+    rows: 4
+    cols: 3
+    note: '샘플값 (28.87144억 등) 박혀 있음. *실제 사업 규모로 교체*.'
+    fill_from: '예산 산출'
+    fill_type: number
+    unit: '원/억원'
+    kb_status: '확인 필요 (예산 책정)'
+
+  # ─── 7-2 자기부담금 상세 (table 62) ────────────────────
+  - table_idx: 62
+    table_title: '자기부담금 상세 — 현금/현물 × 주관/참여기업 × 비목'
+    rows: 17
+    cols: 6
+    cell_fills:
+      - description: '비목별 금액·산출근거 (재료비·인건비·시설장비비····)'
+        fill_from: '예산 산출'
+        fill_type: number + text
+        unit: '천원'
+        kb_status: '확인 필요'
+
+  # ─── 7-3 국고지원금 상세 (table 63) ────────────────────
+  - table_idx: 63
+    table_title: '국고지원금 상세 — 주관·참여기업 × 비목'
+    rows: 14
+    cols: 5
+    fill_strategy: 'table 62와 유사 구조. 국고 부분만.'
+    kb_status: '확인 필요'
+
+  # ─── 7-4 총 지원금 상세 (table 64) ─────────────────────
+  - table_idx: 64
+    table_title: '총 지원금 상세 — 비목별 자기부담+국고 통합'
+    rows: 16
+    cols: 6
+    note: 'table 62·63의 합계. 종속 관계.'
+    fill_strategy: 'table 62 + table 63 합산'
+    kb_status: '종속'
+
+  # ─── 7-5 인건비 상세 (table 66) ────────────────────────
+  - table_idx: 66
+    table_title: '인건비 상세 — 인력별 (기존·신규) × 월급여·참여기간·참여율'
+    rows: 10
+    cols: 11
+    cell_fills:
+      - description: '비목·인력구분·구분·채용시기·성명·직위·월급여·참여기간·참여율·합계'
+        fill_from: '인력 계획'
+        fill_type: text + number
+        unit: '천원·개월·%'
+        kb_status: '확인 필요'
+
+  # ─── 붙임4 지원금 집행계획서 (table 69) ────────────────
+  - table_idx: 69
+    table_title: '비목별 단일 건 2,000만원 이상 집행계획서'
+    rows: 9
+    cols: 5
+    cell_fills:
+      - description: '참여형태·비목구분·건명·집행금액·수행기간·계약대상·목표·상세내용'
+        fill_type: text + number + check_mark
+        kb_status: '확인 필요 (집행계획 수립 후)'
+    note: '복수 건마다 반복 작성. 양식 사본 사용.'
+
+  # ─── 붙임5 책임자 이력 (table 71, 72) ──────────────────
+  - table_idx: 71
+    table_title: '이력 머리 — 참여형태·구분·지원유형·과제형태·상용화 대상명칭'
+    rows: 4
+    cols: 6
+    fill_from: 'kb/company/dabeeo/organization.md'
+    fill_type: check_mark + text
+    kb_status: '일부 매핑 가능'
+  - table_idx: 72
+    table_title: '이력 본문 — 학력·근무경력·자격증·수행이력'
+    rows: 20
+    cols: 5
+    fill_from: 'kb/company/dabeeo/organization.md (대표·책임자 이력)'
+    fill_type: text + number
+    kb_status: '일부 매핑 가능 (대표 이력은 있을 가능성)'
+
+  # ─── 별지4 지원금 사용 비목 (table 75~79) — 참고용 ─────
+  - table_idx_range: [75, 76, 77, 78, 79]
+    table_title: '지원금 사용 비목 — 인건비·지급수수료·여비 등 *참고 기준표*'
+    note: '작성 시 *삭제 후 제출* (74번 표 지시).'
+    fill_strategy: '재현만, 또는 삭제.'
+
+  # ─── 별지5 정보제공 동의서 (table 83, 84) ──────────────
+  - table_idx: 83
+    table_title: '정보제공 동의서 — 정보제공 기관 + 수집·이용목적'
+    rows: 2
+    cols: 2
+    fill_strategy: '재현 (텍스트 고정)'
+  - table_idx: 84
+    table_title: '동의서 본문 — 6개 항목 (목적·기간·항목·거부권 등) + 동의 □'
+    rows: 6
+    cols: 2
+    cell_fills:
+      - cell: {row: 5, col: 0, hint: '동의함/동의하지 않음 □'}
+        fill_type: check_mark
+        example: '□ 동의함'
+        kb_status: '매핑 가능 (동의 처리)'
+
+  # ─── 붙임 정보제공 동의 인원 목록 (table 85) ───────────
+  - table_idx: 85
+    table_title: '정보제공 동의 인원 목록 (23행)'
+    rows: 24
+    cols: 4
+    cell_fills:
+      - description: '번호·구분(기업명)·정보제공자(이름)·서명'
+        fill_from: '인력 명단'
+        fill_type: text
+        kb_status: '확인 필요 (사업 참여 인력 명단)'
+
+# ────────────────────────────────────────────────────────────
+# 3. 표 간 관계 (table_relations)
+# ────────────────────────────────────────────────────────────
+table_relations:
+
+  - sum_relation:
+      label: '재무현황 표 = 신청서 기업정보 매출액 일치'
+      source: {table_idx: 7, cell_range: 'r5~r8 × col 1,3 (연도별 매출액)'}
+      target: {table_idx: 8, cell_range: 'r5 (매출액) × 연도'}
+      note: '동일 데이터를 두 표에 기재 — 값 일치 필수.'
+
+  - duplicate_relation:
+      label: '성과목표 표 중복 — table 17과 table 52'
+      source: {table_idx: 17, cell_range: 'r2~r7 성과목표'}
+      target: {table_idx: 52, cell_range: 'r0~r5 성과목표 (동일 구조)'}
+      note: '17은 사업비 표 안 통합형, 52는 5-1 단독 표. 값 동일.'
+
+  - sum_relation:
+      label: '지원금 총괄 = 자기부담 + 국고'
+      source:
+        - {table_idx: 62, hint: '자기부담금 합계 (현금+현물)'}
+        - {table_idx: 63, hint: '국고지원금 합계'}
+      target: {table_idx: 61, cell: {row: 2, col: 0, hint: '지원금 합계'}}
+      note: '7-4 (table 64) 가 통합. 종속 관계 강제.'
+
+  - sum_relation:
+      label: '지원금 총 상세 = 자기부담 + 국고 (비목별)'
+      source:
+        - {table_idx: 62, hint: '자기부담 비목별 금액'}
+        - {table_idx: 63, hint: '국고 비목별 금액'}
+      target: {table_idx: 64, cell_range: '비목별 통합 금액'}
+
+  - sum_relation:
+      label: '인건비 표 = 자기부담·국고 인건비 일치'
+      source: {table_idx: 66, hint: '인력별 인건비 합계 (A×B×C)'}
+      target:
+        - {table_idx: 62, hint: '자기부담 인건비 항목'}
+        - {table_idx: 63, hint: '국고 인건비 항목'}
+
+  - duplicate_relation:
+      label: '컨소시엄 표 = 주관기업 표 구조 동일 (table 7 vs 10, 8 vs 11+12)'
+      source: {table_idx: 7, hint: '주관기업 기본정보'}
+      target: {table_idx: 10, hint: '참여기업 기본정보'}
+      note: '컨소시엄 미구성 시 10·11·12 비움.'
+
+  - fk_relation:
+      label: '신청서 종합 (5) — 신청자 정보가 신청서 (7) 와 일치'
+      source: {table_idx: 7, hint: '주관기업 대표·연락처'}
+      target: {table_idx: 5, hint: '신청서 종합 머리'}
+
+# ────────────────────────────────────────────────────────────
+# 4. KB 매핑 가능 / 확인 필요 통계
+# ────────────────────────────────────────────────────────────
+kb_mapping_summary:
+  total_placeholder_cells_estimate: 350
+  total_placeholder_groups: 약 70
+  by_status:
+    kb_매핑_가능:
+      groups: 약 18
+      examples:
+        - '기업명·대표·설립일·업종·기업소개 (kb/company/dabeeo/intro.md)'
+        - '연혁 (kb/company/dabeeo/history.md)'
+        - '연도별 매출 (kb/company/dabeeo/quantitative.md)'
+        - '투자유치 (kb/company/dabeeo/investment.md)'
+        - '특허·인증 (kb/company/dabeeo/certifications.md)'
+        - '기술 분야 (kb/company/dabeeo/tech-core.md)'
+        - '자가진단 지원제한 요건 (정상 영위)'
+    kb_일부_매핑:
+      groups: 약 12
+      examples:
+        - '재무 (매출은 매핑, 자산·부채·이익은 확인 필요)'
+        - '타 지원사업 이력 (목록 있음, 금액·기간 일부 확인 필요)'
+        - '내수실적 (일부 있음)'
+        - '인력 (대표·핵심 매핑, 전체 직원 확인 필요)'
+    확인_필요:
+      groups: 약 40
+      examples:
+        - '사업자등록번호·법인등록번호'
+        - '회계담당자·연락처'
+        - '컨소시엄 파트너 (구성 시)'
+        - '예산 산출 전체 (table 17, 61~66)'
+        - '추진 일정 마커 (table 57)'
+        - '책임자 이력 (대표 외 사업책임자)'
+        - '해외 진출 실적 (KB 빈약)'
+        - '신청유형(타입1/2) 선택'
+        - '동의 인원 명단'
+    재현만:
+      groups: 약 9 (group_separator) + 25 (group_instruction) + 10 (group_section_header) + 5 (별지4 비목)
+      note: 'placeholder 없음. builder가 텍스트·구조 그대로 재현.'
+
+# ────────────────────────────────────────────────────────────
+# 5. proposal-writer 에 대한 가이드
+# ────────────────────────────────────────────────────────────
+writer_guidance:
+  - principle: '각 cell_fill_plan 항목의 fill_from 경로의 KB 데이터를 읽어 해당 셀 위치에 채움.'
+  - principle: 'kb_status="확인 필요" 항목은 *"확인 필요"* 마커 그대로 두고 사용자 검토 받기.'
+  - principle: 'group_instruction·group_section_header·group_separator 표는 *원본 텍스트 그대로 보존*.'
+  - principle: 'table_relations 의 sum/duplicate 관계 *반드시 일치*. 한 표만 수정 시 종속 표도 동기화.'
+  - principle: 'table 57 (일정표) 은 협약 시작·종료일 결정 후 작성.'
+  - principle: 'table 17·52 의 성과목표는 *동일 값* 사용.'
+  - principle: '컨소시엄 미구성 시 table 10·11·12·43·45 비우거나 "해당없음" 표기.'
+
+# ────────────────────────────────────────────────────────────
+# 6. builder (md_to_docx) 에 대한 가이드
+# ────────────────────────────────────────────────────────────
+builder_guidance:
+  - principle: 'form.yaml의 cells 좌표·colspan/rowspan 그대로 재현.'
+  - principle: '빈 셀(text="")은 placeholder. proposal-writer 출력에서 해당 위치 텍스트 삽입.'
+  - principle: 'group_self_diagnosis 의 ○/× 는 단일 문자. 셀 가운데 정렬.'
+  - principle: 'table 57 (일정표) 의 r1c2~r1c24 짝수 col 은 월 번호. ●·▲·━ 등 마커는 셀 중앙.'
+  - principle: 'group_instruction 표는 *회색 음영* 적용 가능 (선택).'
