@@ -188,10 +188,11 @@ table_captions:
   position: "above"        # 표 *위*에 캡션
 
 # ──────────────────────────────────────────────
-# 표지 페이지 — 별지 제3호 사업계획서 1쪽
+# 표지 페이지 — AI 별도 표지 생성 금지 (양식이 곧 표지)
+# proposal-writer.md 1-0 원칙: 양식의 본체 별지 첫 표가 1쪽.
 # ──────────────────────────────────────────────
 cover:
-  enabled: true
+  enabled: false
   layout:
     title_position_cm: { x: 2.5, y: 8.0 }
     subtitle_position_cm: { x: 2.5, y: 11.0 }

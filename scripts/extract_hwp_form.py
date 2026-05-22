@@ -50,8 +50,96 @@ def text_of(el):
     return "".join(parts).strip()
 
 
+def extract_borderfills(root):
+    """DocInfo 안 BorderFill 정의를 id별 dict로 추출.
+
+    반환: {id: {background_color, has_fill, pattern_color, border_color}}
+    """
+    fills = {}
+    for idx, bf in enumerate(root.iter("BorderFill")):
+        # 일부 BorderFill 은 borderfill-id 가 없고 *순서대로 1, 2, 3...* (hwp5proc 출력 기준)
+        # 따라서 등장 순서를 id로 사용. 인덱스는 1부터 시작 (hwp 관례).
+        bf_id = bf.get("borderfill-id") or str(idx)
+        fcp = bf.find(".//FillColorPattern")
+        bg = fcp.get("background-color") if fcp is not None else None
+        pattern = fcp.get("pattern-color") if fcp is not None else None
+        # fillflags 가 "00000000" 이면 fill 없음
+        flags = bf.get("fillflags", "00000000")
+        has_fill = flags != "00000000"
+        # 첫 Border 의 color 를 대표 border color 로
+        border_el = bf.find("Border")
+        border_color = border_el.get("color") if border_el is not None else "#000000"
+
+        entry = {
+            "has_fill": has_fill,
+            "background_color": bg,
+            "pattern_color": pattern,
+            "border_color": border_color,
+        }
+        # 순서 id (1부터) 와 명시적 id 둘 다 저장
+        fills[str(idx)] = entry
+        if bf.get("borderfill-id"):
+            fills[bf.get("borderfill-id")] = entry
+    return fills
+
+
+def extract_charshapes(root):
+    """DocInfo 안 CharShape 정의를 id별 dict로 추출.
+
+    반환: {id: {bold, italic, text_color, shade_color}}
+    """
+    shapes = {}
+    for idx, cs in enumerate(root.iter("CharShape")):
+        cs_id = cs.get("charshape-id") or str(idx)
+        entry = {
+            "bold": cs.get("bold") == "1",
+            "italic": cs.get("italic") == "1",
+            "text_color": cs.get("text-color"),
+            "shade_color": cs.get("shade-color"),
+        }
+        shapes[str(idx)] = entry
+        if cs.get("charshape-id"):
+            shapes[cs.get("charshape-id")] = entry
+    return shapes
+
+
+def cell_visual(cell, borderfills, charshapes):
+    """TableCell 의 시각 정보 추출.
+
+    - borderfill-id-list: 셀별 BorderFill 참조
+    - 셀 안 첫 Text 의 paragraph charshape-id
+    """
+    visual = {}
+    # 셀 BorderFill (배경색·테두리)
+    # hwp XML 에서 TableCell 은 'borderfill-id-list' 또는 단일 'borderfill-id' 가짐
+    bf_ref = cell.get("borderfill-id") or cell.get("borderfill-id-list")
+    if bf_ref:
+        # list 형태면 첫 번째 사용
+        bf_id = bf_ref.split()[0] if " " in bf_ref else bf_ref
+        bf_entry = borderfills.get(bf_id)
+        if bf_entry:
+            if bf_entry["has_fill"] and bf_entry["background_color"]:
+                visual["background_color"] = bf_entry["background_color"]
+            visual["border_color"] = bf_entry["border_color"]
+
+    # 첫 paragraph의 char-shape-id (셀 안 텍스트 굵기·색)
+    first_para = cell.find(".//Paragraph")
+    if first_para is not None:
+        cs_id = first_para.get("char-shape-id") or first_para.get("charshape-id")
+        if cs_id:
+            cs_entry = charshapes.get(cs_id)
+            if cs_entry:
+                if cs_entry["bold"]:
+                    visual["bold"] = True
+                if cs_entry["italic"]:
+                    visual["italic"] = True
+                if cs_entry["text_color"] and cs_entry["text_color"] != "#000000":
+                    visual["text_color"] = cs_entry["text_color"]
+    return visual
+
+
 def analyze_form(hwp_path):
-    """hwp 파일 → 양식 구조 dict (표 + 페이지 break)."""
+    """hwp 파일 → 양식 구조 dict (표 + 페이지 break + 시각 정보)."""
     xml_bytes = extract_xml(hwp_path)
     root = etree.fromstring(xml_bytes)
 
@@ -61,6 +149,10 @@ def analyze_form(hwp_path):
         if prop.get("id-label") == "PIDSI_TITLE":
             title = prop.get("value", "")
             break
+
+    # 시각 정의 추출 (BorderFill·CharShape)
+    borderfills = extract_borderfills(root)
+    charshapes = extract_charshapes(root)
 
     # 페이지·섹션 break 위치 (단락 번호 기준)
     page_breaks = []         # paragraph-id list with new-page=1
@@ -75,7 +167,6 @@ def analyze_form(hwp_path):
     # 표 list
     tables = []
     for t_idx, table in enumerate(root.iter("TableControl")):
-        # TableBody 안에 TableRow → TableCell 구조
         body = table.find(".//TableBody")
         if body is None:
             continue
@@ -83,19 +174,22 @@ def analyze_form(hwp_path):
         for r_idx, row in enumerate(body.findall("TableRow")):
             cells_data = []
             for c_idx, cell in enumerate(row.findall("TableCell")):
-                # 셀 안 텍스트 추출
                 cell_text = text_of(cell)
                 col_addr = cell.get("col-addr") or cell.get("col") or str(c_idx)
                 row_addr = cell.get("row-addr") or cell.get("row") or str(r_idx)
                 colspan = cell.get("col-span") or "1"
                 rowspan = cell.get("row-span") or "1"
-                cells_data.append({
+                visual = cell_visual(cell, borderfills, charshapes)
+                cell_data = {
                     "row": int(row_addr) if row_addr.isdigit() else r_idx,
                     "col": int(col_addr) if col_addr.isdigit() else c_idx,
                     "text": cell_text,
                     "colspan": int(colspan) if colspan.isdigit() else 1,
                     "rowspan": int(rowspan) if rowspan.isdigit() else 1,
-                })
+                }
+                if visual:
+                    cell_data["visual"] = visual
+                cells_data.append(cell_data)
             rows_data.append(cells_data)
         if rows_data:
             tables.append({
@@ -110,7 +204,7 @@ def analyze_form(hwp_path):
 
     return {
         "_extracted_from": str(hwp_path),
-        "_purpose": "시각 양식 구조. form-analyst agent (LLM)가 보고 의미 해석.",
+        "_purpose": "시각 양식 구조 + 셀별 시각 정보 (background_color·bold·text_color). form-analyst agent (LLM)가 의미 해석.",
         "title": title,
         "paragraph_count": para_count,
         "table_count": len(tables),
@@ -118,6 +212,8 @@ def analyze_form(hwp_path):
         "section_break_count": len(section_breaks),
         "page_breaks_at_paragraph": page_breaks,
         "section_breaks_at_paragraph": section_breaks,
+        "borderfill_count": len(set(borderfills.keys())),
+        "charshape_count": len(set(charshapes.keys())),
         "tables": tables,
     }
 

@@ -28,9 +28,11 @@ from docx.shared import Cm, Pt, RGBColor
 
 
 # ──────────────────────────────────────────────
-# style.yaml 로딩 + 기본값
+# style.yaml + form.yaml 로딩 + 기본값
 # ──────────────────────────────────────────────
 STYLE: dict = {}
+FORM_TABLES: list = []        # form.yaml 의 tables list (cell.visual 포함)
+FORM_TABLE_CURSOR = {"i": 0}  # 현재 렌더링 중인 form 표 인덱스
 
 
 def load_style(path: Optional[Path]) -> dict:
@@ -39,6 +41,32 @@ def load_style(path: Optional[Path]) -> dict:
         return {}
     with path.open(encoding="utf-8") as f:
         return yaml.safe_load(f) or {}
+
+
+def load_form(path: Optional[Path]) -> list:
+    """form.yaml 로딩 후 tables list 반환. 없으면 [].
+
+    *시각 정보 (cell.visual.background_color·bold) 를 빌더가 직접 적용*하도록 사용.
+    """
+    if path is None or not path.exists():
+        return []
+    with path.open(encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    return data.get("tables", []) or []
+
+
+def form_cell_visual(table_idx: int, row: int, col: int) -> dict:
+    """form.yaml 의 (table_idx, row, col) 셀의 visual dict 반환. 없으면 {}.
+
+    form table 의 cells 는 [{row, col, text, colspan, rowspan, visual?}] list.
+    """
+    if not FORM_TABLES or table_idx >= len(FORM_TABLES):
+        return {}
+    cells = FORM_TABLES[table_idx].get("cells", [])
+    for c in cells:
+        if c.get("row") == row and c.get("col") == col:
+            return c.get("visual", {}) or {}
+    return {}
 
 
 def s_get(*keys, default=None):
@@ -56,6 +84,20 @@ def hex_to_rgb(h: str) -> RGBColor:
     if len(h) != 6:
         return RGBColor(0, 0, 0)
     return RGBColor(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
+
+
+def luminance(hex_color: str) -> float:
+    """배경 색의 상대 명도 계산 (0~1). WCAG 근사. 짙으면 0에 가까움."""
+    h = (hex_color or "").lstrip("#")
+    if len(h) != 6:
+        return 1.0
+    r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
+
+
+def auto_text_color(bg_hex: str) -> str:
+    """배경 명도 기반 대비 텍스트 색 자동 결정. 짙은 배경 → 흰색, 밝은 배경 → 검정."""
+    return "FFFFFF" if luminance(bg_hex) < 0.5 else "000000"
 
 
 # ──────────────────────────────────────────────
@@ -295,6 +337,12 @@ def render_table(doc: Document, rows: list[list[str]]):
     fill_header = s_get("tables", "cell_fill", "header", default="D9D9D9")
     fill_emphasis = s_get("tables", "cell_fill", "emphasis", default="FFF2CC")
 
+    # form.yaml 매칭 — 현재 md 표 idx 와 form.yaml 의 같은 idx 표를 매칭
+    # cursor 는 (a) parse_md 의 "표 N" 헤딩 hint 또는 (b) 자동 증가
+    form_table_idx = FORM_TABLE_CURSOR["i"] if FORM_TABLES else -1
+    use_form_visual = 0 <= form_table_idx < len(FORM_TABLES)
+    FORM_TABLE_CURSOR["i"] += 1  # 다음 표가 hint 없으면 자동 증가
+
     # 헤더 행 인식 — 첫 행에 header_keywords 중 하나가 있으면 헤더
     first_row_texts = [c.strip() for c in padded[0]]
     is_header_first_row = any(
@@ -307,12 +355,22 @@ def render_table(doc: Document, rows: list[list[str]]):
             cell.text = (cell_text or "").strip()
             cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
 
+            # *form.yaml 시각 정보 우선 적용* (있으면)
+            visual = form_cell_visual(form_table_idx, i, j) if use_form_visual else {}
+            bg_from_form = visual.get("background_color")
+            bold_from_form = visual.get("bold", False)
+
+            # fallback: style.yaml 기반 분류 (form.yaml 없거나 visual 없는 셀)
             is_header = (i == 0 and is_header_first_row)
             is_emphasis = any(
                 re.search(pat, cell_text or "") for pat in emphasis_patterns
             )
 
-            if is_header:
+            # fill 결정 — form.yaml visual 우선
+            if bg_from_form:
+                set_cell_fill(cell, bg_from_form.lstrip("#"))
+                set_cell_borders(cell, border_pt, border_color)
+            elif is_header:
                 set_cell_fill(cell, fill_header)
                 set_cell_borders(cell, border_pt, border_color, bottom_pt=header_bottom_pt)
             elif is_emphasis:
@@ -321,14 +379,23 @@ def render_table(doc: Document, rows: list[list[str]]):
             else:
                 set_cell_borders(cell, border_pt, border_color)
 
+            # 텍스트 서체 — bold: form > is_header
+            apply_bold = bold_from_form or is_header
+            # text 색 — form 명시 > 배경 명도 기반 자동 대비
+            explicit_tc = visual.get("text_color") if visual else None
+            auto_tc = auto_text_color(bg_from_form) if bg_from_form else None
             for p in cell.paragraphs:
                 for run in p.runs:
                     run.font.name = font_name
-                    if is_header:
+                    if apply_bold:
                         run.font.size = Pt(header_pt)
                         run.bold = True
                     else:
                         run.font.size = Pt(body_pt)
+                    if explicit_tc:
+                        run.font.color.rgb = hex_to_rgb(explicit_tc)
+                    elif auto_tc:
+                        run.font.color.rgb = hex_to_rgb(auto_tc)
 
 
 # ──────────────────────────────────────────────
@@ -425,7 +492,12 @@ def parse_md(md_text: str) -> list:
 
         m = re.match(r"^(#{1,6})\s+(.*)$", stripped)
         if m:
-            tokens.append(("heading", len(m.group(1)), m.group(2)))
+            # 헤딩에 "표 N." / "표 N " / "표N" 패턴이 있으면 form table idx hint 추가
+            heading_text = m.group(2)
+            hint_m = re.match(r"^표\s*(\d+)[\.\s]", heading_text)
+            if hint_m:
+                tokens.append(("table_idx_hint", int(hint_m.group(1))))
+            tokens.append(("heading", len(m.group(1)), heading_text))
             i += 1
             continue
 
@@ -544,6 +616,8 @@ def render(doc: Document, tokens: list):
             for run in p.runs:
                 run.font.name = font_name
                 run.font.size = Pt(body_pt)
+        elif t == "table_idx_hint":
+            FORM_TABLE_CURSOR["i"] = token[1]
         elif t == "table":
             render_table(doc, token[1])
         elif t == "figure":
@@ -576,11 +650,14 @@ def main():
     parser.add_argument("src", help="입력 .md")
     parser.add_argument("dst", help="출력 .docx")
     parser.add_argument("--style", help="style.yaml 경로", default=None)
+    parser.add_argument("--form", help="form.yaml 경로 (셀 visual 매칭)", default=None)
     args = parser.parse_args()
 
-    global STYLE
+    global STYLE, FORM_TABLES
     style_path = Path(args.style) if args.style else None
     STYLE = load_style(style_path)
+    form_path = Path(args.form) if args.form else None
+    FORM_TABLES = load_form(form_path)
 
     src = Path(args.src)
     dst = Path(args.dst)
@@ -605,7 +682,9 @@ def main():
     doc.save(dst)
     print(f"saved: {dst}", file=sys.stderr)
     print(
-        f"  figures: {FIGURE_COUNTER['n']}, style: {args.style or 'none'}",
+        f"  figures: {FIGURE_COUNTER['n']}, "
+        f"form_tables: {len(FORM_TABLES)}, "
+        f"style: {args.style or 'none'}, form: {args.form or 'none'}",
         file=sys.stderr,
     )
 

@@ -11,7 +11,7 @@ description: 제안서 양식(.hwp/.docx)의 *시각 양식 구조* — 표·셀
 
 ## 입력
 
-- `<form>.form.yaml` — `scripts/extract_hwp_form.py`로 추출된 양식 구조 (모든 표·셀의 행·열·텍스트·colspan/rowspan)
+- `<form>.form.yaml` — `scripts/extract_hwp_form.py`로 추출된 양식 구조. *셀별 visual 정보 포함* (`cell.visual.background_color`·`bold`·`italic`·`text_color`).
 - (보조) `<form>.txt` — 단순 텍스트 추출본 (섹션 흐름·작성요령 참조용)
 - (보조) `<form>.hwp` 원본 — 필요 시 hwp5html 변환해 시각 확인
 
@@ -49,6 +49,54 @@ tables:
 - 본문 셀의 *작성 지시* 단서 (예: "(○ 표기)", "예: 1,000원" 등) 식별
 - *placeholder 셀* (비어있는 셀) vs *지시 셀* (작성 안내) 구분
 - 표 위치 — 어느 섹션 (예: 자가진단·1-1·2-2 등) 의 표인지 추정
+
+### 2단계-1: 셀 *시각 정보* 활용 (visual 키 있는 경우)
+
+`extract_hwp_form.py` 가 추출한 *셀별 visual 정보* 활용:
+- `cell.visual.background_color` — 셀 배경색
+- `cell.visual.bold` / `cell.visual.italic` — 셀 텍스트 굵기·이탤릭
+- `cell.visual.text_color` — 셀 텍스트 색
+
+**시각 단서로 셀 역할 자동 추정** (*양식 내 통계·관계 기반*. 특정 색에 의존하지 마라):
+
+1. **양식 안 fill 색 빈도 분석**:
+   - 가장 빈도 높은 fill 색 (보통 회색 계열, *saturation 낮음*) → *헤더 행*
+   - 두 번째 빈도 (연한 회색·베이지 등) → *보조 헤더 / 라벨 셀*
+2. **색 채도·명도 기반 분류**:
+   - *진하고 saturation 高* (파랑·빨강·녹색 계열, 명도 30% 이하) → *섹션 표지/머리 박스*
+   - *회색 계열* (R≈G≈B, saturation < 10%) → *헤더·라벨*
+   - *fill 없음 또는 흰색* → *본문 / placeholder*
+3. **굵기·이탤릭과 결합**:
+   - `bold: true` + 진한 fill → *섹션 표지*
+   - `bold: true` + 회색 fill → *헤더*
+   - `bold: false` + fill 없음 → *본문*
+   - `italic: true` 또는 *밝은 회색 text_color* (예: 명도 70%+) → *작성 지시/주석*
+4. **흔치 않은 색**:
+   - 양식 내 1~2회만 등장하는 진한 색 → *위험·강조·필수 표시*
+
+이 정보를 *기존 text 키워드 단서와 cross-check* 해 분류 정확도 향상. text는 같아도 visual 다르면 다른 역할.
+
+**원칙**: *구체 색 (#003366·#d9d9d9 등) 에 매핑 박지 마라*. 색은 양식마다 다름. *양식 내 빈도·관계*로 판단.
+
+**시각 기반 cell_fill_plan 보강** (양식 내 빈도·채도 기반 자동 분류, 색은 *추출 결과만* 인용):
+
+```yaml
+cell_fills:
+  - cell: {row: 0, col: 0}
+    visual: {background_color: <진한 saturation 高>, bold: true}
+    role: section_label
+    fill_strategy: '재현만. 양식의 짙은 박스 그대로.'
+  - cell: {row: 1, col: 0}
+    visual: {background_color: <양식 내 최빈 회색>, bold: true}
+    role: header
+    fill_strategy: '라벨 그대로.'
+  - cell: {row: 1, col: 1}
+    visual: {background_color: null}
+    role: placeholder
+    fill_from: 'kb/company/...'
+```
+
+빌더가 *form.yaml 의 cell.visual 그대로* 적용 (빌더는 양식 색을 *해석하지 않고 재현*). 양식 시각 100% 일치 목표.
 
 ### 3단계: 셀 *채울 데이터* 매핑
 
