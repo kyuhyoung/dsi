@@ -23,8 +23,17 @@ Thumbs.db
 *.swp
 install.log
 
-# 생성된 산출물 (재현 가능, 추적 불필요)
-/output/
+# 생성된 산출물 (재현 가능, 추적 불필요) — *내부 파일* 단위 ignore (디렉토리는 추적)
+output/**
+# 단 *시스템 자산*은 화이트리스트로 추적 (집/회사 환경 이전 시 필요)
+!output/**/
+!output/learned_patterns_*.yaml
+!output/proposal_style_*.md
+!output/**/rfp_analysis_*.yaml
+!output/**/rfp_analysis_*.report.md
+!output/**/사전질의_*.md
+!output/D_*_filled_cells.yaml
+!output/comparison_D_*.md
 
 # Node
 /node_modules/
