@@ -22,6 +22,7 @@ description: 제안서 양식(.hwp/.docx)의 *시각 양식 구조* — 표·셀
 2. **각 셀의 *역할 분류*** — header / instruction / placeholder / formula / 빈 셀
 3. **셀 *채울 데이터 종류 명시*** — 회사 KB의 어느 데이터로 채울지
 4. **표 간 *관계·종속성*** — A 표의 합계가 B 표 셀에 들어감 등
+5. **각 *별지/섹션의 역할* 분류** — `main` (본체, 사업계획서·제안서) / `subsidiary` (부속, 자가진단·신청서·동의서). 본체는 *콘텐츠 작성의 본체*, 부속은 *체크박스·메타·서약*.
 
 ## 작업 절차
 
@@ -106,6 +107,35 @@ table_relations:
 ## 출력
 
 `<form>.form_analysis.yaml` — 양식 의미 분석 결과.
+
+### sections 구조 (역할 메타 포함)
+
+```yaml
+sections:
+  - section: '[별지 제1호] 자가진단서'
+    table_idxs: [0, 1, 2, 3]
+    role: subsidiary             # main / subsidiary
+    role_reason: '체크박스 자가진단, 콘텐츠 작성 없음'
+  - section: '[별지 제3호] 사업계획서 머리'
+    table_idxs: [13, 14, 15, 16, 17, 18, 19]
+    role: main                   # 본체 — 콘텐츠 작성의 핵심
+    role_reason: 'RFP가 사업계획서 명시 + 평가배점 응답 집중'
+  - section: '1. 상용화 대상 개요 (1-1~1-3)'
+    table_idxs: [20, 21, 22, 23]
+    role: main
+    role_reason: '사업계획서 본체 1장'
+  # ...
+```
+
+### 본체 별지 식별 (form-analyst가 자동)
+
+기준:
+1. **셀 수 가장 많은 별지** (compute: section별 sum(table.rows × table.cols))
+2. **placeholder 셀이 가장 많은 별지** (작성해야 할 내용 多)
+3. **분량 50% 이상 차지하는 별지**
+
+3가지 모두 만족 별지 = `role: main`. 나머지 = `role: subsidiary`.
+
 `analysis.yaml` 의 `제안서_가이드.시각_양식` 섹션도 갱신.
 
 ## 보고 형식

@@ -1,0 +1,246 @@
+# 농식품AI 제안서 시각 스타일 정의
+#
+# 용도: scripts/yaml_to_docx.py 가 이 파일을 읽어 *셀 fill·헤더·footer·페이지번호* 등을
+#       D (사람 작성본) 수준 시각으로 재현.
+#
+# 분리 정책:
+# - 공통 (모든 제안서): scripts/yaml_to_docx.py 의 기본 동작
+# - 사업 전용 (이 파일): 색·강조 위치·페이지 번호 양식 등 D 고유 특성
+#
+# D 분석 결과 (사람 작성본 53쪽·30 그림·86 표):
+# - 헤더 셀 회색 fill (#D9D9D9), 본문 흰색
+# - 일부 강조 셀 노랑 fill (#FFF2CC) — 핵심 수치·차별성 표시
+# - 페이지 번호 footer 우측 (예: "3 / 53")
+# - 제목 폰트 12pt bold, 본문 10pt, 표 셀 9pt
+# - 표 테두리 모두 검정 0.5pt, 헤더 행 하단 1.0pt
+
+meta:
+  name: "농식품AI 사업계획서"
+  business_id: "2026_농식품AI"
+  derived_from: "사업계획서_최종본2.hwp (D 역공학)"
+
+# ──────────────────────────────────────────────
+# 페이지 설정
+# ──────────────────────────────────────────────
+page:
+  size: A4
+  orientation: portrait
+  margin_cm:
+    top: 2.0
+    bottom: 2.0
+    left: 2.5
+    right: 2.5
+
+# ──────────────────────────────────────────────
+# 폰트
+# ──────────────────────────────────────────────
+fonts:
+  default_family: "맑은 고딕"
+  heading1_pt: 16
+  heading2_pt: 13
+  heading3_pt: 11
+  body_pt: 10
+  table_header_pt: 10
+  table_body_pt: 9
+  table_caption_pt: 9
+  page_number_pt: 9
+  cover_title_pt: 24
+  cover_subtitle_pt: 14
+
+# ──────────────────────────────────────────────
+# 표 스타일
+# ──────────────────────────────────────────────
+tables:
+  default_style: "Light Grid Accent 1"
+
+  # 셀 fill 색상 (RGB hex, '#' 없이)
+  cell_fill:
+    header: "D9D9D9"          # 헤더 행 — 회색
+    sub_header: "EDEDED"      # 보조 헤더 — 연회색
+    emphasis: "FFF2CC"        # 강조 셀 — 노랑 (핵심 수치)
+    title_box: "1F4E79"       # 별지 표지 제목 박스 — 짙은 남색
+    title_box_text: "FFFFFF"  # 제목 박스 텍스트 — 흰색
+    body: null                # 본문 — 흰색 (fill 없음)
+
+  # 헤더 인식 — 첫 행에 *이 키워드 중 하나* 있으면 헤더 fill 적용
+  header_keywords:
+    - "구분"
+    - "항목"
+    - "내용"
+    - "비고"
+    - "단계"
+    - "기간"
+    - "담당"
+    - "산출물"
+
+  # 강조 인식 — 셀 텍스트가 *이 패턴*과 매치되면 emphasis fill
+  emphasis_patterns:
+    - "당사는.*보유함"          # KB 인용 강조
+    - "당사는.*확보함"
+    - "당사는.*구축함"
+    - "차별성"
+    - "핵심"
+    - "특화"
+
+  # 테두리
+  borders:
+    all_pt: 0.5
+    color: "000000"
+    header_bottom_pt: 1.0       # 헤더 행 하단 굵게
+
+# ──────────────────────────────────────────────
+# 별지 표지 — 페이지 시작에 배치
+# ──────────────────────────────────────────────
+section_dividers:
+  # 별지 제N호 표지 양식
+  enabled: true
+  position: "page_top"       # 페이지 상단
+  height_cm: 3.0
+  fill: "1F4E79"             # 짙은 남색
+  text_color: "FFFFFF"
+  font_pt: 18
+  bold: true
+  alignment: "center"
+
+  # 표지에 들어갈 추가 정보
+  meta_table:
+    enabled: true
+    height_cm: 2.5
+    cells:
+      - label: "사업명"
+        value_from: "meta.사업명"
+      - label: "신청기관"
+        value_from: "meta.제안사"
+      - label: "작성일"
+        value_from: "meta.작성일"
+
+# ──────────────────────────────────────────────
+# Footer — 페이지 번호
+# ──────────────────────────────────────────────
+footer:
+  enabled: true
+  format: "{page} / {total}"   # 예: "3 / 53"
+  alignment: "right"
+  font_pt: 9
+  color: "666666"
+  margin_top_cm: 0.5
+
+# ──────────────────────────────────────────────
+# Header — 사업명
+# ──────────────────────────────────────────────
+header_text:
+  enabled: true
+  text_from: "meta.사업명_short"   # 예: "농식품AI 사업계획서"
+  alignment: "right"
+  font_pt: 9
+  color: "666666"
+
+# ──────────────────────────────────────────────
+# 그림 placeholder
+# ──────────────────────────────────────────────
+figures:
+  # markdown image link 검출 → docx 그림 placeholder로 변환
+  placeholder_pattern: '!\[(.*?)\]\(placeholder:\s*(.+?)\)'
+
+  # placeholder 시각 표현 — 자리표시자 박스
+  placeholder_style:
+    width_cm: 14
+    height_cm: 7
+    fill: "F2F2F2"          # 연회색
+    border_color: "BFBFBF"
+    border_pt: 0.5
+    text_align: "center"
+    icon_emoji: "🖼"        # 박스 안에 아이콘
+    label_font_pt: 10
+    label_italic: true
+
+  # 자동 그림 삽입 (KB의 assets/*.png 가 있으면)
+  auto_insert:
+    enabled: true
+    asset_dir: "kb/company/dabeeo/assets"
+    # placeholder 파일명 ↔ 실제 파일 매핑
+    mapping:
+      eartheye_ui_capture.png: "eartheye_ui.png"
+      as_is_to_be.png: "as_is_to_be.png"
+      6panel_data_flow.png: "6panel_flow.png"
+      field_photos.png: "field.jpg"
+      partner_logos.png: "partners.png"
+      gantt_chart.png: null   # null = placeholder 유지 (수동 삽입)
+      org_chart.png: null
+
+  # 캡션
+  caption:
+    font_pt: 9
+    italic: true
+    color: "404040"
+    prefix: "그림"          # "그림 1-1", "그림 1-2" 등 자동 번호
+    auto_numbering: true
+
+# ──────────────────────────────────────────────
+# 표 캡션
+# ──────────────────────────────────────────────
+table_captions:
+  font_pt: 9
+  italic: true
+  color: "404040"
+  prefix: "표"             # "표 1-1", "표 1-2" 등
+  auto_numbering: true
+  position: "above"        # 표 *위*에 캡션
+
+# ──────────────────────────────────────────────
+# 표지 페이지 — 별지 제3호 사업계획서 1쪽
+# ──────────────────────────────────────────────
+cover:
+  enabled: true
+  layout:
+    title_position_cm: { x: 2.5, y: 8.0 }
+    subtitle_position_cm: { x: 2.5, y: 11.0 }
+    meta_table_position_cm: { x: 2.5, y: 16.0 }
+    logo_position_cm: { x: 2.5, y: 23.0 }
+
+  title:
+    text_from: "meta.사업명"
+    font_pt: 24
+    bold: true
+    color: "1F4E79"
+    alignment: "center"
+
+  subtitle:
+    text: "사 업 계 획 서"
+    font_pt: 18
+    color: "404040"
+    alignment: "center"
+
+  meta_table:
+    rows:
+      - label: "사업명"
+        value_from: "meta.사업명"
+      - label: "신청기관"
+        value_from: "meta.제안사"
+      - label: "대표자"
+        value_from: "meta.대표자"
+      - label: "작성일"
+        value_from: "meta.작성일"
+
+# ──────────────────────────────────────────────
+# 별지 순서 큐레이션
+# ──────────────────────────────────────────────
+# C 양식의 별지 1·2·3·4·5호 중 *어느 것을 표지로 둘지* 명시
+# D (사람 작성)는 별지 제3호 (사업계획서)를 표지로 두고
+# 별지 1·2 (자가진단·신청서)는 *부속*으로 뒤에 배치
+section_order:
+  - "[별지 제3호] 사업계획서"     # 표지 + 본문
+  - "[별지 제1호] 자가진단서"
+  - "[별지 제2호] 사업신청서"
+  - "[별지 제4호] 붙임 양식"
+  - "[별지 제5호] 동의서"
+
+# ──────────────────────────────────────────────
+# 분량 점검 임계
+# ──────────────────────────────────────────────
+length_check:
+  target_pages: 53          # D 기준
+  body_min_pages: 30
+  body_max_pages: 60
+  warn_if_below: 30
+  warn_if_above: 80
