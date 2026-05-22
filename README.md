@@ -31,13 +31,39 @@ dsi/
 
 ## 빠른 시작
 
+### Linux / WSL / macOS
 ```bash
-# 1. 환경 설정 (Python·Node·LibreOffice 점검 + 의존성 설치)
 bash install.sh
+claude   # Claude Code 시작
+```
 
-# 2. Claude Code로 이 디렉토리에서 시작
+### Windows PowerShell (native, WSL 아님)
+```powershell
+# 1. 저장소 클론
+git clone git@github.com:kyuhyoung/dsi.git
+cd dsi
+
+# 2. UTF-8 콘솔 (한글 깨짐 방지)
+chcp 65001
+
+# 3. 설치 스크립트 (Python 의존성 + 외부 도구 점검)
+.\install.ps1
+
+# 4. Claude Code 시작
 claude
 ```
+
+**Windows 사전 설치 (직접)**:
+- Python 3.10+ (https://python.org)
+- LibreOffice (https://www.libreoffice.org/) — `.docx → .pdf` 변환용
+- Chrome (대부분 설치되어 있음) — `.hwp → .pdf` 변환용
+- (선택) ImageMagick·poppler — 시각 검증용
+- (선택) 한컴오피스 풀버전 — `.hwp → .docx` 자동 변환용 (없으면 수동 변환 또는 빌더로 우회)
+
+**환경 차이**:
+- 회사 (WSL Linux) ↔ 집 (Windows native): 코드는 *그대로 동작*. `.gitattributes` 가 줄 끝 자동 처리.
+- `~/.claude/projects/.../memory/` 의 *Claude memory* 는 *환경별*. 회사 memory 는 회사에만, 집은 새로 누적.
+- `output/` 는 .gitignore — 산출물은 환경별 재생성.
 
 ## 슬래시 명령
 

@@ -1,0 +1,39 @@
+# 모든 텍스트 파일: 저장소엔 LF, 체크아웃 시 OS 기본 (CRLF on Windows, LF on Linux)
+* text=auto
+
+# Python 스크립트: 항상 LF (Windows에서도 LF 유지 — 일관성·해시 안정)
+*.py text eol=lf
+
+# Shell 스크립트: LF (Windows에서 CRLF로 변환되면 안 됨)
+*.sh text eol=lf
+
+# PowerShell: Windows 기본 CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Markdown / YAML / 설정: LF (cross-platform)
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# 바이너리 — 변환 금지
+*.pdf binary
+*.docx binary
+*.pptx binary
+*.xlsx binary
+*.hwp binary
+*.hwpx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.zip binary
+*.tar.gz binary
+*.tgz binary
