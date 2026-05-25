@@ -34,6 +34,8 @@ output/**
 !output/**/사전질의_*.md
 !output/D_*_filled_cells.yaml
 !output/comparison_D_*.md
+!output/**/fills_*.yaml
+!output/**/통합양식*.form.yaml
 
 # Node
 /node_modules/
@@ -43,6 +45,10 @@ output/**
 
 # LibreOffice/Office 임시 잠금 파일
 .~lock.*#
+
+# 회사 KB 원본 파일 (보안, .md 추출본만 git)
+kb/company/dabeeo/*.pptx
+kb/company/dabeeo/*.docx
 
 # Template 백업·캐시·생성물 (재현 가능)
 templates/*.style.yaml.bak

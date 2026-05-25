@@ -1,35 +1,52 @@
 #!/usr/bin/env python3
-"""HWP 양식(.hwp) → 시각 양식 구조 (yaml) 추출.
+"""HWP 양식(.hwp) → 셀 구조 + 빈 셀 식별 (yaml) 추출.
+
+원칙 (memory/feedback_form_principle.md):
+    양식은 절대 만지지 않는다. 빈 셀에 텍스트만 박는다.
+    → 여기서는 *visual 정보 추출 금지*. 셀 구조 + 식별자 + hint만.
 
 용법:
     python3 scripts/extract_hwp_form.py <form.hwp> [output.form.yaml]
 
-원리:
-    hwp5proc xml 로 .hwp → XML 추출 후 *표·셀·서식* 정보를 yaml로 구조화.
-    LLM(form-analyst agent)이 yaml과 텍스트를 함께 보고 *시각 양식 의미*를 분석.
-
-산출 yaml 구조:
+산출 yaml:
     title: <문서 제목>
-    paragraphs: <단락 수>
+    table_count: N
     tables:
       - idx: 0
-        rows: 3
-        cols: 5
+        rows: R, cols: C
         cells:
-          - row: 0
-            col: 0
+          - id: T0_R0_C0
+            row: 0, col: 0
             text: '구분'
-            colspan: 1
-            rowspan: 1
-        position_hint: <문맥 텍스트 (앞 단락)>
+            colspan: 1, rowspan: 1
+            is_empty: false        # text 가 비어있으면 true
+          - id: T0_R0_C1
+            row: 0, col: 1
+            text: ''
+            colspan: 1, rowspan: 1
+            is_empty: true
+            hints:
+              left: '구분'                  # 같은 행 왼쪽 가장 가까운 비어있지 않은 셀
+              up: ''                        # 같은 열 위쪽 가장 가까운 비어있지 않은 셀
+              table_label: '구분'           # 같은 표의 첫 비어있지 않은 셀 (헤더)
+              table_caption: '회사 개요'    # 표 직전 단락 텍스트
+    fill_targets:
+      - id: T0_R0_C1
+        hints: {left: '구분', up: '', table_label: '구분', table_caption: '회사 개요'}
+      - ...
 
-알고리즘만. 의미 해석은 LLM.
+알고리즘만. 의미 해석은 LLM(proposal-writer)이 hints 보고 결정.
 """
 import sys
 import subprocess
 import yaml
 from pathlib import Path
 from lxml import etree
+
+
+class NoAliasDumper(yaml.SafeDumper):
+    def ignore_aliases(self, data):
+        return True
 
 
 def extract_xml(hwp_path):
@@ -50,113 +67,72 @@ def text_of(el):
     return "".join(parts).strip()
 
 
-def extract_borderfills(root):
-    """DocInfo 안 BorderFill 정의를 id별 dict로 추출.
+def build_table(t_idx, table_el, prev_para_text):
+    """TableControl → table dict (idx, rows, cols, cells)."""
+    body = table_el.find(".//TableBody")
+    if body is None:
+        return None
 
-    반환: {id: {background_color, has_fill, pattern_color, border_color}}
-    """
-    fills = {}
-    for idx, bf in enumerate(root.iter("BorderFill")):
-        # 일부 BorderFill 은 borderfill-id 가 없고 *순서대로 1, 2, 3...* (hwp5proc 출력 기준)
-        # 따라서 등장 순서를 id로 사용. 인덱스는 1부터 시작 (hwp 관례).
-        bf_id = bf.get("borderfill-id") or str(idx)
-        fcp = bf.find(".//FillColorPattern")
-        bg = fcp.get("background-color") if fcp is not None else None
-        pattern = fcp.get("pattern-color") if fcp is not None else None
-        # fillflags 가 "00000000" 이면 fill 없음
-        flags = bf.get("fillflags", "00000000")
-        has_fill = flags != "00000000"
-        # 첫 Border 의 color 를 대표 border color 로
-        border_el = bf.find("Border")
-        border_color = border_el.get("color") if border_el is not None else "#000000"
+    rows = []
+    for r_idx, row in enumerate(body.findall("TableRow")):
+        cells = []
+        for c_idx, cell in enumerate(row.findall("TableCell")):
+            col_addr = cell.get("col-addr") or cell.get("col") or str(c_idx)
+            row_addr = cell.get("row-addr") or cell.get("row") or str(r_idx)
+            colspan = cell.get("col-span") or "1"
+            rowspan = cell.get("row-span") or "1"
+            cells.append({
+                "row": int(row_addr) if row_addr.isdigit() else r_idx,
+                "col": int(col_addr) if col_addr.isdigit() else c_idx,
+                "text": text_of(cell),
+                "colspan": int(colspan) if colspan.isdigit() else 1,
+                "rowspan": int(rowspan) if rowspan.isdigit() else 1,
+            })
+        rows.append(cells)
 
-        entry = {
-            "has_fill": has_fill,
-            "background_color": bg,
-            "pattern_color": pattern,
-            "border_color": border_color,
+    if not rows:
+        return None
+
+    flat = [c for row in rows for c in row]
+
+    table_label = next((c["text"] for c in flat if c["text"]), "")
+
+    for c in flat:
+        c["id"] = f"T{t_idx}_R{c['row']}_C{c['col']}"
+        c["is_empty"] = c["text"] == ""
+
+    for c in flat:
+        if not c["is_empty"]:
+            continue
+        left_cands = [o for o in flat if o["row"] == c["row"] and o["col"] < c["col"] and o["text"]]
+        up_cands = [o for o in flat if o["col"] == c["col"] and o["row"] < c["row"] and o["text"]]
+        c["hints"] = {
+            "left": max(left_cands, key=lambda x: x["col"])["text"] if left_cands else "",
+            "up": max(up_cands, key=lambda x: x["row"])["text"] if up_cands else "",
+            "table_label": table_label,
+            "table_caption": prev_para_text,
         }
-        # 순서 id (1부터) 와 명시적 id 둘 다 저장
-        fills[str(idx)] = entry
-        if bf.get("borderfill-id"):
-            fills[bf.get("borderfill-id")] = entry
-    return fills
 
-
-def extract_charshapes(root):
-    """DocInfo 안 CharShape 정의를 id별 dict로 추출.
-
-    반환: {id: {bold, italic, text_color, shade_color}}
-    """
-    shapes = {}
-    for idx, cs in enumerate(root.iter("CharShape")):
-        cs_id = cs.get("charshape-id") or str(idx)
-        entry = {
-            "bold": cs.get("bold") == "1",
-            "italic": cs.get("italic") == "1",
-            "text_color": cs.get("text-color"),
-            "shade_color": cs.get("shade-color"),
-        }
-        shapes[str(idx)] = entry
-        if cs.get("charshape-id"):
-            shapes[cs.get("charshape-id")] = entry
-    return shapes
-
-
-def cell_visual(cell, borderfills, charshapes):
-    """TableCell 의 시각 정보 추출.
-
-    - borderfill-id-list: 셀별 BorderFill 참조
-    - 셀 안 첫 Text 의 paragraph charshape-id
-    """
-    visual = {}
-    # 셀 BorderFill (배경색·테두리)
-    # hwp XML 에서 TableCell 은 'borderfill-id-list' 또는 단일 'borderfill-id' 가짐
-    bf_ref = cell.get("borderfill-id") or cell.get("borderfill-id-list")
-    if bf_ref:
-        # list 형태면 첫 번째 사용
-        bf_id = bf_ref.split()[0] if " " in bf_ref else bf_ref
-        bf_entry = borderfills.get(bf_id)
-        if bf_entry:
-            if bf_entry["has_fill"] and bf_entry["background_color"]:
-                visual["background_color"] = bf_entry["background_color"]
-            visual["border_color"] = bf_entry["border_color"]
-
-    # 첫 paragraph의 char-shape-id (셀 안 텍스트 굵기·색)
-    first_para = cell.find(".//Paragraph")
-    if first_para is not None:
-        cs_id = first_para.get("char-shape-id") or first_para.get("charshape-id")
-        if cs_id:
-            cs_entry = charshapes.get(cs_id)
-            if cs_entry:
-                if cs_entry["bold"]:
-                    visual["bold"] = True
-                if cs_entry["italic"]:
-                    visual["italic"] = True
-                if cs_entry["text_color"] and cs_entry["text_color"] != "#000000":
-                    visual["text_color"] = cs_entry["text_color"]
-    return visual
+    return {
+        "idx": t_idx,
+        "rows": len(rows),
+        "cols": max((len(r) for r in rows), default=0),
+        "cells": flat,
+    }
 
 
 def analyze_form(hwp_path):
-    """hwp 파일 → 양식 구조 dict (표 + 페이지 break + 시각 정보)."""
     xml_bytes = extract_xml(hwp_path)
     root = etree.fromstring(xml_bytes)
 
-    # 문서 제목
     title = ""
     for prop in root.iter("Property"):
         if prop.get("id-label") == "PIDSI_TITLE":
             title = prop.get("value", "")
             break
 
-    # 시각 정의 추출 (BorderFill·CharShape)
-    borderfills = extract_borderfills(root)
-    charshapes = extract_charshapes(root)
-
-    # 페이지·섹션 break 위치 (단락 번호 기준)
-    page_breaks = []         # paragraph-id list with new-page=1
-    section_breaks = []      # paragraph-id list with new-section=1
+    page_breaks = []
+    section_breaks = []
     for para in root.iter("Paragraph"):
         para_id = para.get("paragraph-id")
         if para.get("new-page") == "1":
@@ -164,47 +140,34 @@ def analyze_form(hwp_path):
         if para.get("new-section") == "1":
             section_breaks.append(int(para_id) if para_id and para_id.isdigit() else -1)
 
-    # 표 list
     tables = []
-    for t_idx, table in enumerate(root.iter("TableControl")):
-        body = table.find(".//TableBody")
-        if body is None:
-            continue
-        rows_data = []
-        for r_idx, row in enumerate(body.findall("TableRow")):
-            cells_data = []
-            for c_idx, cell in enumerate(row.findall("TableCell")):
-                cell_text = text_of(cell)
-                col_addr = cell.get("col-addr") or cell.get("col") or str(c_idx)
-                row_addr = cell.get("row-addr") or cell.get("row") or str(r_idx)
-                colspan = cell.get("col-span") or "1"
-                rowspan = cell.get("row-span") or "1"
-                visual = cell_visual(cell, borderfills, charshapes)
-                cell_data = {
-                    "row": int(row_addr) if row_addr.isdigit() else r_idx,
-                    "col": int(col_addr) if col_addr.isdigit() else c_idx,
-                    "text": cell_text,
-                    "colspan": int(colspan) if colspan.isdigit() else 1,
-                    "rowspan": int(rowspan) if rowspan.isdigit() else 1,
-                }
-                if visual:
-                    cell_data["visual"] = visual
-                cells_data.append(cell_data)
-            rows_data.append(cells_data)
-        if rows_data:
-            tables.append({
-                "idx": t_idx,
-                "rows": len(rows_data),
-                "cols": max((len(r) for r in rows_data), default=0),
-                "cells": [c for row in rows_data for c in row],
-            })
+    prev_para_text = ""
+    for el in root.iter():
+        tag = el.tag.split("}")[-1] if "}" in el.tag else el.tag
+        if tag == "Paragraph":
+            txt = text_of(el).strip()
+            if txt and not el.findall(".//TableControl"):
+                prev_para_text = txt
+        elif tag == "TableControl":
+            t = build_table(len(tables), el, prev_para_text)
+            if t:
+                tables.append(t)
 
-    # 단락 수
     para_count = sum(1 for _ in root.iter("Paragraph"))
+
+    fill_targets = []
+    for t in tables:
+        for c in t["cells"]:
+            if c["is_empty"]:
+                fill_targets.append({
+                    "id": c["id"],
+                    "hints": c["hints"],
+                })
 
     return {
         "_extracted_from": str(hwp_path),
-        "_purpose": "시각 양식 구조 + 셀별 시각 정보 (background_color·bold·text_color). form-analyst agent (LLM)가 의미 해석.",
+        "_purpose": "양식 셀 구조 + 빈 셀 식별 + hint. proposal-writer 가 fill_targets 보고 fills 작성.",
+        "_principle": "양식 절대 안 만짐. visual 정보 추출 안 함. 빈 셀에 텍스트만 박을 명세 산출.",
         "title": title,
         "paragraph_count": para_count,
         "table_count": len(tables),
@@ -212,9 +175,9 @@ def analyze_form(hwp_path):
         "section_break_count": len(section_breaks),
         "page_breaks_at_paragraph": page_breaks,
         "section_breaks_at_paragraph": section_breaks,
-        "borderfill_count": len(set(borderfills.keys())),
-        "charshape_count": len(set(charshapes.keys())),
+        "fill_target_count": len(fill_targets),
         "tables": tables,
+        "fill_targets": fill_targets,
     }
 
 
@@ -228,9 +191,9 @@ def main():
     print(f"추출 중: {hwp_path}", file=sys.stderr)
     data = analyze_form(hwp_path)
     with open(out_path, "w", encoding="utf-8") as f:
-        yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+        yaml.dump(data, f, Dumper=NoAliasDumper, allow_unicode=True, sort_keys=False, default_flow_style=False)
     print(f"저장: {out_path}", file=sys.stderr)
-    print(f"  표: {data['table_count']}개, 단락: {data['paragraph_count']}개", file=sys.stderr)
+    print(f"  표: {data['table_count']}개, 빈 셀(fill_targets): {data['fill_target_count']}개", file=sys.stderr)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,1841 @@
+# fills_본체별지3_v4.yaml
+# 농식품 분야 「AI 응용제품 신속상용화 지원사업」 — [별지 제3호] 사업계획서
+# 본체 별지 3 (table T13~T60, paragraph P40~P228) 만 채움
+# 생성: proposal-writer (Opus 4.7, 1M context) — 근본 치유 9차
+#
+# v3 → v4 핵심 수정:
+#   1) 새 intent `instruction_placeholder` 처리 — 셀 안에 "* 본 사업을 통해 상용화하고자
+#      하는 기술, 제품, 서비스 등 명칭" 같은 작성 안내문 박혀있는 *작성 자리*. text 통째 교체.
+#   2) 별지 3 본체에서 12개 instruction_placeholder 셀 채움 (T18 5개 + T19 1개
+#      + T22·T25·T35·T37·T45·T53 각 1개)
+#   3) 별지 2 의 5개 instruction_placeholder (T8·T10·T11·T12) 는 본체 별지 아님 → skip
+#   4) T16 체크박스 매핑 재검증 완료 — v3 매핑 정확함, 변경 없음:
+#        - T16_R0 (신청유형 행): R0_C0 라벨 "신청유형", R0_C1 "□ 타입1", R0_C3 "□ 타입2"
+#          → 셋 모두 intent: label_or_content. fill 불가, 사용자 손체크
+#        - T16_R1 (컨소시엄 행): R1_C0 라벨 "컨소시엄 구성 여부", R1_C1 "□ 여" checkbox,
+#          R1_C3 "□ 부" checkbox → v3 의 R1_C1=uncheck, R1_C3=check 단독신청 정확
+#        - T16_R2 (참여기업 행): R2_C0 빈셀, R2_C1 라벨 "↳ 컨소시엄 참여기업" (example),
+#          R2_C2 예시 "(0社) A주식회사 ···" (example) — v3 R2_C2 "해당 없음" 정확
+#
+# v2 → v3 핵심 수정 (참고용 — 그대로 유지):
+#   1) T16 매핑 전면 수정 — checkbox operation 사용, 라벨 셀(T16_R2_C0) fill 안 함
+#   2) T20·T24·T27·T34·T51·T54·T59 제거 — 섹션 헤더 옆 빈 셀, 의미 모호 (under-fill 안전)
+#   3) T36 R1 부터 실제 데이터 (R1 헤더 박지 마라; R0 가 이미 양식 헤더)
+#   4) intent: checkbox 셀은 operation 만, text 박지 마라
+#   5) intent: label_or_content 셀은 fill_targets 에 없음 — fills 에 절대 추가 X
+#
+# 양식 라벨 0 변경 원칙 (사용자 결정적 지적):
+#   - 양식의 라벨 텍스트는 *건들지 마*
+#   - 글을 *써 넣던지* 체크를 *하든지* 만 함
+#   - instruction_placeholder 는 *작성 안내문 자리* 라 통째 교체 (예외)
+
+meta:
+  사업명: '농식품 분야 「AI 응용제품 신속상용화 지원사업」'
+  사업명_short: '농식품AI 신속상용화'
+  발주기관: '농림축산식품부 (한국농업기술진흥원 주관)'
+  제안사: '주식회사 다비오'
+  대표자: '(확인 필요)'
+  사업자등록번호: '(확인 필요)'
+  법인등록번호: '(확인 필요)'
+  업종: '소프트웨어 개발 및 공급업 (정보통신업)'
+  작성일: '2026.04.30'
+
+  # 비즈니스 결정 (v2 와 동일 — 일관성 기준)
+  비즈니스_결정:
+    컨소시엄: '단독신청 (주관: 주식회사 다비오, 참여기업 없음)'
+    신청유형: '타입1 (1년 내 상용화) — 단, T16_R0_C1·C3 는 양식 label_or_content 라 fill 불가. 사용자가 손으로 □ → ☑ 체크 필요'
+    상용화_대상_명칭: 'Eartheye Plantation — AI 기반 위성·드론·모바일 통합 정밀농업 솔루션'
+    사업비_총: '약 28.6억원'
+    사업비_국고: '약 20.0억원 (총 70%)'
+    사업비_자기부담금: '약 8.6억원 (총 30%, 현금 0.86억 + 현물 7.74억)'
+    제품명: 'Eartheye Plantation'
+
+# ──────────────────────────────────────────────────────
+# 셀·단락 채움 (T14~T60, P55~P224 범위)
+# ──────────────────────────────────────────────────────
+fills:
+
+  # ════════════════════════════════════════════════════════
+  # T14 — 표지 (기업 기본정보)
+  #   intent: example  → 실제값으로 replace (00법인·홍길동·0000.00.00)
+  #   intent: empty_input → 빈 셀에 값
+  #   intent: label_or_content (홍길동, 사업자등록번호 라벨 등) → fill 안 함
+  # ════════════════════════════════════════════════════════
+  - id: T14_R1_C1
+    text: '주식회사 다비오'
+    intent: example
+    source: 'kb/company/dabeeo/intro.md'
+  - id: T14_R1_C1_P0
+    text: '주식회사 다비오'
+    intent: example
+    source: 'kb/company/dabeeo/intro.md'
+  - id: T14_R1_C3
+    text: '2012.02.28'
+    intent: example
+    source: 'kb/company/dabeeo/history.md'
+  - id: T14_R1_C3_P0
+    text: '2012.02.28'
+    intent: example
+    source: 'kb/company/dabeeo/history.md'
+  - id: T14_R2_C3
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음 — 사업자등록번호'
+  - id: T14_R3_C1
+    text: '소프트웨어 개발 및 공급업 (정보통신업)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/intro.md'
+  - id: T14_R3_C3
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음 — 법인등록번호'
+
+  # ════════════════════════════════════════════════════════
+  # T15 — 상용화대상 명칭 (빈 입력 셀, 라벨 옆)
+  # ════════════════════════════════════════════════════════
+  - id: T15_R0_C1
+    text: 'Eartheye Plantation — AI 기반 위성·드론·모바일 통합 정밀농업 솔루션'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md (EARTHEYE PLANTATION)'
+
+  # ════════════════════════════════════════════════════════
+  # T16 — 신청유형 / 컨소시엄 구성 여부 (3행 구조)
+  #
+  # form.yaml 의 실제 셀 구조 (양식 라벨 절대 보존):
+  #   R0 = 신청유형 / □ 타입 1 / □ 타입 2  → 모두 label_or_content (fill 불가, 손체크)
+  #   R1 = 컨소시엄 구성 여부 / □ 여 / □ 부  → 라벨은 label_or_content, 체크박스만 fill 가능
+  #   R2 = 빈셀 / ↳ 컨소시엄 참여기업 / (0社) A주식회사 ··· (예시)
+  #
+  # 비즈니스 결정 → 단독신청 = □ 부 ☑ check, □ 여 = uncheck
+  # ════════════════════════════════════════════════════════
+  - id: T16_R1_C1
+    operation: uncheck
+    intent: checkbox
+    source: '비즈니스결정: 단독신청 (□ 여 유지)'
+  - id: T16_R1_C3
+    operation: check
+    intent: checkbox
+    source: '비즈니스결정: 단독신청 (□ 부 → ☑ 부)'
+  # T16_R2_C0 = 빈 셀 (intent: empty_input). 컨소시엄 라벨 셀 아님 (라벨은 R1_C0).
+  # 단독신청이므로 R2 (참여기업 행) 자체가 의미 없음. 빈 셀 그대로 두는 게 안전. fill 안 함.
+  # T16_R2_C1 = "↳ 컨소시엄 참여기업" 은 example intent. 화살표 + 라벨 형태로 양식 의도.
+  # 단독신청 시 양식 그대로 두면 양식 변경 없음. fill 안 하는 게 안전.
+  # T16_R2_C2 = "(0社) A주식회사 ···" 예시 → 실제값으로 교체 가능
+  - id: T16_R2_C2
+    text: '해당 없음 (단독신청 — 컨소시엄 미구성)'
+    intent: example
+    source: '비즈니스결정: 단독신청'
+  - id: T16_R2_C2_P0
+    text: '해당 없음 (단독신청 — 컨소시엄 미구성)'
+    intent: example
+    source: '비즈니스결정'
+
+  # ════════════════════════════════════════════════════════
+  # T17 — 사업비 구성 계획 (8행 11열)
+  #   fill_targets: T17_R0_C10·P1 (합계 라벨), T17_R1_C2·P0 (주관기업명), T17_R7_C3 etc.
+  #   양식 example 셀은 실제값으로 교체
+  # ════════════════════════════════════════════════════════
+  - id: T17_R0_C10
+    text: '합  계(100%)'
+    intent: example
+    source: '양식 라벨 유지 (current_text 그대로)'
+  - id: T17_R0_C10_P1
+    text: '(100%)'
+    intent: example
+    source: '양식 라벨 유지'
+  - id: T17_R1_C2
+    text: '↳ 주식회사 다비오'
+    intent: example
+    source: '비즈니스결정 (단독신청 — 주관기업)'
+  - id: T17_R1_C2_P0
+    text: '↳ 주식회사 다비오'
+    intent: example
+    source: '비즈니스결정'
+  - id: T17_R7_C3
+    text: '1. 농식품 AI 정밀농업 상용화 5건 + 수출 매출 10억원 2. 본 사업 전담 4명 인력 추가 (R&D 2명 · 사업화 1명 · 회계 1명) 3. 농식품 응용 특화 신규 특허 5건 출원 4. 국내 농협중앙회·aT·지자체 신규 판로 5개 확보'
+    intent: example
+    source: 'kb/company/dabeeo/quantitative.md §12 + 비즈니스결정'
+  - id: T17_R7_C3_P0
+    text: '1. 농식품 AI 정밀농업 상용화 5건 + 수출 매출 10억원'
+    intent: example
+    source: '비즈니스결정'
+  - id: T17_R7_C3_P3
+    text: '4. 국내 농협중앙회·aT·지자체 신규 판로 5개 확보'
+    intent: example
+    source: '비즈니스결정'
+
+  # ════════════════════════════════════════════════════════
+  # T18 — 사업계획서 요약 (참고 사진 셀 — 빈 입력)
+  # ════════════════════════════════════════════════════════
+  - id: T18_R3_C3
+    text: |
+      [Eartheye Plantation 플랫폼 UI 캡처 — 위성·드론·모바일 6패널 데이터 흐름도 첨부]
+
+      ❍ 상용화 대상: Eartheye Plantation은 위성·드론·모바일 영상을 통합 분석하는 정밀농업 AI 플랫폼으로,
+         팜나무 객체 탐지 F1-Score 0.98 수준의 고정밀 성능을 확보한 1년 내 상용화 가능 솔루션입니다.
+      ❍ 핵심 차별성: 세계 최초 30cm 초고해상도 위성영상 기반 임·농업 분야 상용화 + 초해상화 AI 모델로
+         30cm급 → 7.5cm급 수준 향상, 자체 GeoAI 6대 백본 기술 보유.
+      ❍ 검증 실적: 인도네시아 SALIM 그룹·KORINDO 99% 이상 탐지 정확도 달성, KORINDO 4년 장기 계약 수주,
+         4개국 (인도네시아·말레이시아·베트남·핀란드) 수출 실적 보유.
+      ❍ 농식품 정책 적합성: 농림축산식품부 조성 농식품 모태펀드 투자 포트폴리오 선정 기업으로,
+         농식품 산업 혁신·신성장 분야 정책형 투자 트랙 내 기술성·사업성 검증 완료.
+      ❍ 사업 목표: 본 사업을 통해 1년 내 국내 5건 상용화 + 수출 매출 10억원 + 국민체감활동 3건 달성.
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md + quantitative.md + projects.md'
+
+  # ════════════════════════════════════════════════════════
+  # T19 — 1-1 셀 안 placeholder 단락 3개 (□ 가나다 / ○ 가나다 / - 가나다)
+  # ════════════════════════════════════════════════════════
+  - id: T19_R2_C0_P0
+    text: '[As-is] 기존 임·농업 모니터링은 드론 촬영 + 수작업 영상 판독에 의존하여, 1,000㎢ 분석에 약 345일이 소요되고, 분석 인력·시간 의존도가 높아 의사결정이 지연되는 구조적 한계가 존재합니다.'
+    intent: placeholder
+    source: 'kb/company/dabeeo/quantitative.md §2-1, §13-1'
+  - id: T19_R2_C0_P1
+    text: '[To-be] 당사 Eartheye Plantation은 위성·드론·모바일 통합 GeoAI 분석으로 동일 면적을 약 29일에 처리(약 12배 단축), 팜나무 탐지 F1-Score 0.98 · 변화탐지 precision 100% · 열매 숙성도 96% 정확도의 자동 분석 결과를 제공합니다.'
+    intent: placeholder
+    source: 'kb/company/dabeeo/quantitative.md §1, §2-1'
+  - id: T19_R2_C0_P2
+    text: '[AI 기술 적용 부분] (1) Object Detection 백본으로 팜나무·열매 객체 탐지, (2) Semantic Segmentation으로 식생 건강도 4단계 분류 (EVI 기반), (3) Change Detection으로 시계열 변화 (질병·고사·수확) 자동 탐지, (4) Super Resolution으로 30cm급 → 7.5cm급 해상도 향상.'
+    intent: placeholder
+    source: 'kb/company/dabeeo/tech-core.md (6대 백본 기술)'
+
+  # ════════════════════════════════════════════════════════
+  # T20·T24·T27·T34·T51·T54·T59 — 섹션 헤더 옆 빈 셀
+  #   양식 의도가 모호함 (헤더 옆 빈 공간, 페이지번호용 추정).
+  #   v2 가 "1. 상용화 대상 개요" 같은 *중복 라벨* 박은 건 무의미.
+  #   사용자 지침: "잘 모르면 fill 안 함 (under-fill 안전)" — fills 에서 제거.
+  # ════════════════════════════════════════════════════════
+
+  # ════════════════════════════════════════════════════════
+  # T36 — 연구시설·장비 (R0 = 양식 헤더, R1~R4 = 데이터 4행)
+  #   v2 가 R1 에 헤더 박은 건 오류. R0 가 이미 양식 헤더이므로
+  #   R1 부터 *데이터 4행*으로 채워야 함.
+  # ════════════════════════════════════════════════════════
+  # R1 — NVIDIA H200 GPU 서버
+  - id: T36_R1_C0
+    text: 'NVIDIA H200 GPU 서버'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-1'
+  - id: T36_R1_C1
+    text: 'H200 141GB HBM3e × 8 GPU'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-1'
+  - id: T36_R1_C2
+    text: '1대'
+    intent: empty_input
+    source: 'kb 추정 — 서버 19대 중 본 사업 전용 1대'
+  - id: T36_R1_C3
+    text: 'AI 모델 학습 — 팜나무 객체 탐지·변화 탐지·식생 건강도 분류'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md'
+  - id: T36_R1_C4
+    text: '협약 직후 ~ 사업 종료'
+    intent: empty_input
+    source: '비즈니스결정'
+  - id: T36_R1_C5
+    text: '(확인 필요 — 영업 담당 시세)'
+    intent: empty_input
+    source: 'KB 없음 — 정확 가격'
+  - id: T36_R1_C6
+    text: '2025'
+    intent: empty_input
+    source: 'kb 추정'
+  # R2 — NVIDIA H100 GPU 워크스테이션
+  - id: T36_R2_C0
+    text: 'NVIDIA H100 GPU 워크스테이션'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-1'
+  - id: T36_R2_C1
+    text: 'H100 80GB HBM3 × 4 GPU'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T36_R2_C2
+    text: '2대'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-1'
+  - id: T36_R2_C3
+    text: '딥러닝 모델 검증 및 추론 가속 — Eartheye Plantation 분석 파이프라인 시연'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md'
+  - id: T36_R2_C4
+    text: '협약 직후 ~ 사업 종료'
+    intent: empty_input
+    source: '비즈니스결정'
+  - id: T36_R2_C5
+    text: '(확인 필요 — 영업 담당 시세)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T36_R2_C6
+    text: '2024'
+    intent: empty_input
+    source: 'kb 추정'
+  # R3 — 위성·드론 영상 처리 워크스테이션
+  - id: T36_R3_C0
+    text: '위성·드론 영상 처리 워크스테이션'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-1'
+  - id: T36_R3_C1
+    text: 'Intel Xeon + RTX A6000 48GB × 2'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T36_R3_C2
+    text: '4대'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T36_R3_C3
+    text: '위성·드론 영상 전처리, 정합, 초해상화 처리'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md (Image Alignment·Super Resolution)'
+  - id: T36_R3_C4
+    text: '사업 全 기간'
+    intent: empty_input
+    source: '비즈니스결정'
+  - id: T36_R3_C5
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T36_R3_C6
+    text: '2023'
+    intent: empty_input
+    source: 'kb 추정'
+  # R4 — 라벨링·검수 워크스테이션 (EARTHEYE LABELBOX)
+  - id: T36_R4_C0
+    text: '라벨링·검수 워크스테이션'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md (EARTHEYE LABELBOX)'
+  - id: T36_R4_C1
+    text: 'RTX 4090 24GB × 1'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T36_R4_C2
+    text: '4대'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T36_R4_C3
+    text: '학습 데이터 라벨링 + 모델 출력 검수 (EARTHEYE LABELBOX 운영)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md'
+  - id: T36_R4_C4
+    text: '사업 全 기간'
+    intent: empty_input
+    source: '비즈니스결정'
+  - id: T36_R4_C5
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T36_R4_C6
+    text: '2024'
+    intent: empty_input
+    source: 'kb 추정'
+
+  # ════════════════════════════════════════════════════════
+  # T38 — 4-2 판로·마케팅 추진 사항 (R0 = 양식 헤더, R1~R4 = 데이터)
+  #   T38 도 R0 가 헤더라 가정. R1 부터 데이터.
+  # ════════════════════════════════════════════════════════
+  - id: T38_R1_C0
+    text: '국내 농식품 수요처 PoC·파일럿 판매'
+    intent: empty_input
+    source: '본 사업 목표 — 상용화 건수 5건'
+  - id: T38_R1_C1
+    text: '협약 후 1~6개월'
+    intent: empty_input
+    source: '본 사업 일정 (타입1)'
+  - id: T38_R1_C2
+    text: '농협중앙회·aT·지자체 농업기술센터 등 국내 농식품 수요처 대상 30cm 위성 기반 농작물 모니터링 PoC 진행 및 파일럿 계약 체결'
+    intent: empty_input
+    source: '비즈니스결정 + RFP 정량지표 (상용화 건수)'
+  - id: T38_R2_C0
+    text: '국제 박람회·국민체감활동'
+    intent: empty_input
+    source: 'RFP 정량지표 (국민체감활동)'
+  - id: T38_R2_C1
+    text: '협약 후 3~12개월'
+    intent: empty_input
+    source: '본 사업 일정'
+  - id: T38_R2_C2
+    text: '국내 농식품 박람회 (KOFRUM·코엑스 농식품 박람회) 4건 이상 참가 + 제품설명회 3건 운영, 농민 체감형 부스 운영을 통한 GeoAI 정밀농업 효과 직접 시연'
+    intent: empty_input
+    source: 'RFP 정량지표 — 국민체감활동 3건 + 박람회 4건'
+  - id: T38_R3_C0
+    text: '해외 수출 확장 (동남아 → 글로벌)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §9-1'
+  - id: T38_R3_C1
+    text: '협약 후 6~12개월'
+    intent: empty_input
+    source: '본 사업 일정'
+  - id: T38_R3_C2
+    text: '인도네시아 법인 기반 KORINDO·SALIM·Triputra Agron 후속 계약 + 말레이시아·베트남 신규 고객 발굴, 수출 매출 10억원 달성'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §12, projects.md'
+  - id: T38_R4_C0
+    text: '데이터 서비스 확장'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md + RFP 비기능'
+  - id: T38_R4_C1
+    text: '협약 후 9~12개월'
+    intent: empty_input
+    source: '본 사업 일정'
+  - id: T38_R4_C2
+    text: '농작물 모니터링 데이터를 농식품 산업 통계·보험·식품 가공기업 가격 예측 등 2차 가공 서비스로 제공. AI 허브 데이터 일부 개방 (RFP 비기능 충족)'
+    intent: empty_input
+    source: 'RFP 비기능 (AI 허브 개방)'
+
+  # ════════════════════════════════════════════════════════
+  # T41 — 4-3 인적 역량 (R0 = 양식 헤더 추정, R2/R4/R6/R8 = 인력 1~4 / R3/R5/R7/R9 = 주요 경력)
+  #   T41_R0_C0 빈 셀에는 인력 개요 요약 (양식 의도와 부합)
+  # ════════════════════════════════════════════════════════
+  - id: T41_R0_C0
+    text: '주관기업: 주식회사 다비오 / 참여 핵심 인력 4명 (총 64명 연구인력 중 본 사업 전담)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-2'
+  # 인력 1 — 본 사업 책임자
+  - id: T41_R2_C1
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음 — 책임자 성명'
+  - id: T41_R2_C2
+    text: 'AI 연구소장 / CTO'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R2_C3
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R2_C4
+    text: 'KAIST'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-3 (산학협력 9개교)'
+  - id: T41_R2_C5
+    text: '전산학·AI'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R2_C6
+    text: '박사'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-2 (석·박사급 포함)'
+  - id: T41_R2_C7
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R2_C8
+    text: '본 사업 총괄·AI 모델 책임 (Eartheye Plantation 분석 파이프라인)'
+    intent: empty_input
+    source: '비즈니스결정'
+  - id: T41_R2_C9
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R2_C10
+    text: '50%'
+    intent: empty_input
+    source: '본 사업 책임자 표준 참여율'
+  - id: T41_R3_C3
+    text: 'KORINDO·SALIM 그룹 Eartheye Plantation 분석 책임자, 팜나무 객체 탐지 F1-Score 0.98 달성 책임'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §1-1, §3-2'
+  # 인력 2 — 딥러닝 모델 개발자
+  - id: T41_R4_C1
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R4_C2
+    text: '딥러닝팀 책임연구원'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R4_C3
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R4_C4
+    text: 'DGIST'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-3'
+  - id: T41_R4_C5
+    text: '딥러닝·컴퓨터비전'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R4_C6
+    text: '석사'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R4_C7
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R4_C8
+    text: 'Object Detection·Semantic Segmentation 모델 개발 — 팜나무·식생 건강도'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md'
+  - id: T41_R4_C9
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R4_C10
+    text: '80%'
+    intent: empty_input
+    source: '본 사업 핵심 개발자 표준 참여율'
+  - id: T41_R5_C3
+    text: 'Change Detection 16개 유형 모델 개발 참여, 대전시 변화탐지 정기 모니터링 사업 (2021~2025) 핵심 개발 담당'
+    intent: empty_input
+    source: 'kb/company/dabeeo/projects.md, tech-core.md §5'
+  # 인력 3 — 사업화·판로 담당
+  - id: T41_R6_C1
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R6_C2
+    text: '사업개발본부장'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R6_C3
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R6_C4
+    text: '서강대학교'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-3'
+  - id: T41_R6_C5
+    text: '경영학·MBA'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R6_C6
+    text: '석사'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R6_C7
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R6_C8
+    text: '국내·해외 판로 개척 — 농식품 수요처 PoC + 인도네시아 법인 운영'
+    intent: empty_input
+    source: 'kb/company/dabeeo/projects.md'
+  - id: T41_R6_C9
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R6_C10
+    text: '40%'
+    intent: empty_input
+    source: '본 사업 사업화 담당 표준 참여율'
+  - id: T41_R7_C3
+    text: 'KORINDO 4년 장기 계약, Triputra Agron 스마트 플랜테이션 수주 책임, 해외 Sales Forces (인도네시아·미국·베트남 법인) 운영'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §9-2, projects.md'
+  # 인력 4 — 회계담당자 (RFP 의무 — 회계담당자 전담 지정)
+  - id: T41_R8_C1
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음 — 회계담당자 (RFP 의무)'
+  - id: T41_R8_C2
+    text: '경영관리팀장 / 회계담당자'
+    intent: empty_input
+    source: 'RFP 비기능 (회계담당자 지정 의무, e나라도움)'
+  - id: T41_R8_C3
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R8_C4
+    text: '고려대학교'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §8-3'
+  - id: T41_R8_C5
+    text: '회계학·경영학'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R8_C6
+    text: '학사'
+    intent: empty_input
+    source: 'kb 추정'
+  - id: T41_R8_C7
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R8_C8
+    text: 'e나라도움 집행 + 회계 관리 + 정부지원금 보고 (RFP 의무)'
+    intent: empty_input
+    source: 'RFP 비기능'
+  - id: T41_R8_C9
+    text: '(확인 필요)'
+    intent: empty_input
+    source: 'KB 없음'
+  - id: T41_R8_C10
+    text: '30%'
+    intent: empty_input
+    source: '회계담당자 표준 참여율'
+  - id: T41_R9_C3
+    text: '총 29건 정부지원 과제 (총 112.4억원) 회계 관리 경험 — 중소기업기술혁신개발사업·ATC+·스케일업팁스 등'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §6-4'
+
+  # ════════════════════════════════════════════════════════
+  # T43 — 컨소시엄 표 (단독신청이므로 example 셀에 "해당 없음")
+  # ════════════════════════════════════════════════════════
+  - id: T43_R1_C0
+    text: '해당 없음 (단독신청 — 컨소시엄 미구성)'
+    intent: example
+    source: '비즈니스결정: 단독'
+  - id: T43_R1_C0_P0
+    text: '해당 없음 (단독신청 — 컨소시엄 미구성)'
+    intent: example
+    source: '비즈니스결정'
+  - id: T43_R2_C0
+    text: '해당 없음 (단독신청)'
+    intent: example
+    source: '비즈니스결정'
+  - id: T43_R2_C0_P0
+    text: '해당 없음 (단독신청)'
+    intent: example
+    source: '비즈니스결정'
+
+  # ════════════════════════════════════════════════════════
+  # T46 — 유통채널 (4열: 유통채널명/기간/판매아이템/매출액)
+  #   T46_R1_C2 는 fill_target 명단 — 양식 헤더 셀이 비어 있는 듯. fill 안전.
+  #   T46_R2 = 데이터 행
+  # ════════════════════════════════════════════════════════
+  - id: T46_R1_C2
+    text: '판매 아이템'
+    intent: empty_input
+    source: '양식 헤더 빈 셀 보강 (T46_R1_C2 는 fill_target 명단)'
+  - id: T46_R2_C0
+    text: 'KORINDO 그룹 (인도네시아)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/projects.md'
+  - id: T46_R2_C1
+    text: '2024.01.~2027.12. (4년 장기 계약)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §3-2'
+  - id: T46_R2_C2
+    text: 'Eartheye Plantation 팜오일 농장 분석 (탐지·건강도·변화탐지)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/tech-core.md'
+  - id: T46_R2_C3
+    text: '(확인 필요 — 영업 담당)'
+    intent: empty_input
+    source: 'KB 없음 — 정확 매출액'
+
+  # ════════════════════════════════════════════════════════
+  # T47 — 수출국가/매출/특허/주요거래국
+  # ════════════════════════════════════════════════════════
+  - id: T47_R2_C0
+    text: '4개국'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §9-1'
+  - id: T47_R2_C1
+    text: '(확인 필요 — 영업 담당)'
+    intent: empty_input
+    source: 'KB 없음 — 수출 매출액'
+  - id: T47_R2_C2
+    text: '7건 (해외특허)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §9-3'
+  - id: T47_R2_C3
+    text: '인도네시아, 말레이시아, 베트남, 핀란드'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §9-1'
+
+  # ════════════════════════════════════════════════════════
+  # T48 — 특허·인증 건수
+  # ════════════════════════════════════════════════════════
+  - id: T48_R2_C0
+    text: '7건 (해외특허, 등록 기준)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §9-3'
+  - id: T48_R2_C1
+    text: '25건 (국내특허 등록 기준 — 총 51건 중 등록)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §4-1'
+  - id: T48_R2_C2
+    text: '14건 (주요 인증) + ISO 1건'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §10-2, §9-3'
+
+  # ════════════════════════════════════════════════════════
+  # T49 — 자금조달 (R1 = "조달금액" 양식 라벨 — 같은 값 박지 마라)
+  #   T49_R1_C0 는 example intent — 그러나 current_text 가 "조달금액" 라벨이라
+  #   같은 값 박으면 무의미. 양식 그대로 두는 게 안전 (fill 안 함).
+  #   v2 가 박은 것 — 제거.
+  # ════════════════════════════════════════════════════════
+  - id: T49_R2_C0
+    text: '약 369억원 (누적 8단계 투자)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §6-1'
+  - id: T49_R2_C1
+    text: '전략적 투자 + 정부지원금'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §6-1, §6-4'
+  - id: T49_R2_C2
+    text: '네이버, 미래에셋캐피탈, KORINDO 그룹, 농협은행, 농식품 모태펀드 (출자 펀드 포트폴리오 선정)'
+    intent: empty_input
+    source: 'kb/company/dabeeo/quantitative.md §6-1, §6-3'
+
+  # ════════════════════════════════════════════════════════
+  # T50 — 4-4 컨소시엄 헤더 옆 빈 셀 (의미 모호 — fill 안 함, under-fill 안전)
+  # ════════════════════════════════════════════════════════
+
+  # ════════════════════════════════════════════════════════
+  # T52 — 5-1 성과지표 (example 셀)
+  # ════════════════════════════════════════════════════════
+  - id: T52_R5_C3
+    text: '상용화 건수 5건 / 수출 매출 10억원 / 국민체감활동 3건 (박람회 4건 이상)'
+    intent: example
+    source: 'kb/company/dabeeo/quantitative.md §12'
+  - id: T52_R5_C3_P0
+    text: '상용화 건수 5건 / 수출 매출 10억원 / 국민체감활동 3건'
+    intent: example
+    source: 'kb/company/dabeeo/quantitative.md §12'
+
+  # ════════════════════════════════════════════════════════
+  # T57 — 6-1 상용화 추진 일정 간트표 (R2~R10 × C2~C25 = 24열 × 9행)
+  #   행: R2=계획수립 / R3=시설구축 / R4=시제품실증 / R5=외주가공 / R6=양산완성
+  #       R7=중간보고 / R8=판로확보 / R9=홍보활동 / R10=최종보고
+  #   열: C2~C25 = 12개월 × 2 (상·하 반월) = 24열 (C2~C3=1월, C4~C5=2월, ..., C24~C25=12월)
+  #   각 행 해당 월에 ■ 표기. 빈 셀은 fill_targets 에 있으므로 빈 문자열 명시.
+  # ════════════════════════════════════════════════════════
+  # R2 — 계획수립 및 자료조사 (1~2월)
+  - id: T57_R2_C2
+    text: '■'
+    intent: empty_input
+    source: '일정: 계획수립 1월'
+  - id: T57_R2_C3
+    text: '■'
+    intent: empty_input
+    source: '일정: 계획수립 1월'
+  - id: T57_R2_C4
+    text: '■'
+    intent: empty_input
+    source: '일정: 계획수립 2월'
+  - id: T57_R2_C5
+    text: '■'
+    intent: empty_input
+    source: '일정: 계획수립 2월'
+  - id: T57_R2_C6
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C7
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C8
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C9
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C10
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C11
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C12
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C13
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C14
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C15
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C16
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C17
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C18
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C19
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C24
+    text: ''
+    intent: empty_input
+  - id: T57_R2_C25
+    text: ''
+    intent: empty_input
+  # R3 — 시설/장비 구축 (1~3월)
+  - id: T57_R3_C2
+    text: '■'
+    intent: empty_input
+    source: '일정: 시설구축 1월'
+  - id: T57_R3_C3
+    text: '■'
+    intent: empty_input
+  - id: T57_R3_C4
+    text: '■'
+    intent: empty_input
+    source: '일정: 2월'
+  - id: T57_R3_C5
+    text: '■'
+    intent: empty_input
+  - id: T57_R3_C6
+    text: '■'
+    intent: empty_input
+    source: '일정: 3월'
+  - id: T57_R3_C7
+    text: '■'
+    intent: empty_input
+  - id: T57_R3_C8
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C9
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C10
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C11
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C12
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C13
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C14
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C15
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C16
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C17
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C18
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C19
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C24
+    text: ''
+    intent: empty_input
+  - id: T57_R3_C25
+    text: ''
+    intent: empty_input
+  # R4 — 시제품 실증 (2~5월)
+  - id: T57_R4_C2
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C3
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C4
+    text: '■'
+    intent: empty_input
+    source: '일정: 시제품 2월'
+  - id: T57_R4_C5
+    text: '■'
+    intent: empty_input
+  - id: T57_R4_C6
+    text: '■'
+    intent: empty_input
+    source: '일정: 3월'
+  - id: T57_R4_C7
+    text: '■'
+    intent: empty_input
+  - id: T57_R4_C8
+    text: '■'
+    intent: empty_input
+    source: '일정: 4월'
+  - id: T57_R4_C9
+    text: '■'
+    intent: empty_input
+  - id: T57_R4_C10
+    text: '■'
+    intent: empty_input
+    source: '일정: 5월'
+  - id: T57_R4_C11
+    text: '■'
+    intent: empty_input
+  - id: T57_R4_C12
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C13
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C14
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C15
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C16
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C17
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C18
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C19
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C24
+    text: ''
+    intent: empty_input
+  - id: T57_R4_C25
+    text: ''
+    intent: empty_input
+  # R5 — 외주가공·디자인개발 (3~6월)
+  - id: T57_R5_C2
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C3
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C4
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C5
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C6
+    text: '■'
+    intent: empty_input
+    source: '일정: 외주가공 3월'
+  - id: T57_R5_C7
+    text: '■'
+    intent: empty_input
+  - id: T57_R5_C8
+    text: '■'
+    intent: empty_input
+    source: '일정: 4월'
+  - id: T57_R5_C9
+    text: '■'
+    intent: empty_input
+  - id: T57_R5_C10
+    text: '■'
+    intent: empty_input
+    source: '일정: 5월'
+  - id: T57_R5_C11
+    text: '■'
+    intent: empty_input
+  - id: T57_R5_C12
+    text: '■'
+    intent: empty_input
+    source: '일정: 6월'
+  - id: T57_R5_C13
+    text: '■'
+    intent: empty_input
+  - id: T57_R5_C14
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C15
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C16
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C17
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C18
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C19
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C24
+    text: ''
+    intent: empty_input
+  - id: T57_R5_C25
+    text: ''
+    intent: empty_input
+  # R6 — 양산형 제품 완성 (6~9월)
+  - id: T57_R6_C2
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C3
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C4
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C5
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C6
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C7
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C8
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C9
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C10
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C11
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C12
+    text: '■'
+    intent: empty_input
+    source: '일정: 양산 6월'
+  - id: T57_R6_C13
+    text: '■'
+    intent: empty_input
+  - id: T57_R6_C14
+    text: '■'
+    intent: empty_input
+    source: '일정: 7월'
+  - id: T57_R6_C15
+    text: '■'
+    intent: empty_input
+  - id: T57_R6_C16
+    text: '■'
+    intent: empty_input
+    source: '일정: 8월'
+  - id: T57_R6_C17
+    text: '■'
+    intent: empty_input
+  - id: T57_R6_C18
+    text: '■'
+    intent: empty_input
+    source: '일정: 9월'
+  - id: T57_R6_C19
+    text: '■'
+    intent: empty_input
+  - id: T57_R6_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C24
+    text: ''
+    intent: empty_input
+  - id: T57_R6_C25
+    text: ''
+    intent: empty_input
+  # R7 — 중간보고서 제출 (6월)
+  - id: T57_R7_C2
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C3
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C4
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C5
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C6
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C7
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C8
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C9
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C10
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C11
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C12
+    text: '■'
+    intent: empty_input
+    source: '일정: 중간보고 6월'
+  - id: T57_R7_C13
+    text: '■'
+    intent: empty_input
+  - id: T57_R7_C14
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C15
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C16
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C17
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C18
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C19
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C24
+    text: ''
+    intent: empty_input
+  - id: T57_R7_C25
+    text: ''
+    intent: empty_input
+  # R8 — 판로 확보 (1~12월, 전 기간 지속)
+  - id: T57_R8_C2
+    text: '■'
+    intent: empty_input
+    source: '일정: 판로 1월'
+  - id: T57_R8_C3
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C4
+    text: '■'
+    intent: empty_input
+    source: '일정: 2월'
+  - id: T57_R8_C5
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C6
+    text: '■'
+    intent: empty_input
+    source: '일정: 3월'
+  - id: T57_R8_C7
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C8
+    text: '■'
+    intent: empty_input
+    source: '일정: 4월'
+  - id: T57_R8_C9
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C10
+    text: '■'
+    intent: empty_input
+    source: '일정: 5월'
+  - id: T57_R8_C11
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C12
+    text: '■'
+    intent: empty_input
+    source: '일정: 6월'
+  - id: T57_R8_C13
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C14
+    text: '■'
+    intent: empty_input
+    source: '일정: 7월'
+  - id: T57_R8_C15
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C16
+    text: '■'
+    intent: empty_input
+    source: '일정: 8월'
+  - id: T57_R8_C17
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C18
+    text: '■'
+    intent: empty_input
+    source: '일정: 9월'
+  - id: T57_R8_C19
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C20
+    text: '■'
+    intent: empty_input
+    source: '일정: 10월'
+  - id: T57_R8_C21
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C22
+    text: '■'
+    intent: empty_input
+    source: '일정: 11월'
+  - id: T57_R8_C23
+    text: '■'
+    intent: empty_input
+  - id: T57_R8_C24
+    text: '■'
+    intent: empty_input
+    source: '일정: 12월'
+  - id: T57_R8_C25
+    text: '■'
+    intent: empty_input
+  # R9 — 홍보 활동 (4~12월)
+  - id: T57_R9_C2
+    text: ''
+    intent: empty_input
+  - id: T57_R9_C3
+    text: ''
+    intent: empty_input
+  - id: T57_R9_C4
+    text: ''
+    intent: empty_input
+  - id: T57_R9_C5
+    text: ''
+    intent: empty_input
+  - id: T57_R9_C6
+    text: ''
+    intent: empty_input
+  - id: T57_R9_C7
+    text: ''
+    intent: empty_input
+  - id: T57_R9_C8
+    text: '■'
+    intent: empty_input
+    source: '일정: 홍보 4월'
+  - id: T57_R9_C9
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C10
+    text: '■'
+    intent: empty_input
+    source: '일정: 5월'
+  - id: T57_R9_C11
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C12
+    text: '■'
+    intent: empty_input
+    source: '일정: 6월'
+  - id: T57_R9_C13
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C14
+    text: '■'
+    intent: empty_input
+    source: '일정: 7월'
+  - id: T57_R9_C15
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C16
+    text: '■'
+    intent: empty_input
+    source: '일정: 8월'
+  - id: T57_R9_C17
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C18
+    text: '■'
+    intent: empty_input
+    source: '일정: 9월'
+  - id: T57_R9_C19
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C20
+    text: '■'
+    intent: empty_input
+    source: '일정: 10월'
+  - id: T57_R9_C21
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C22
+    text: '■'
+    intent: empty_input
+    source: '일정: 11월'
+  - id: T57_R9_C23
+    text: '■'
+    intent: empty_input
+  - id: T57_R9_C24
+    text: '■'
+    intent: empty_input
+    source: '일정: 12월'
+  - id: T57_R9_C25
+    text: '■'
+    intent: empty_input
+  # R10 — 최종보고서 제출 (12월)
+  - id: T57_R10_C2
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C3
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C4
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C5
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C6
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C7
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C8
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C9
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C10
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C11
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C12
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C13
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C14
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C15
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C16
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C17
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C18
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C19
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C20
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C21
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C22
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C23
+    text: ''
+    intent: empty_input
+  - id: T57_R10_C24
+    text: '■'
+    intent: empty_input
+    source: '일정: 최종보고 12월'
+  - id: T57_R10_C25
+    text: '■'
+    intent: empty_input
+
+  # ════════════════════════════════════════════════════════
+  # T60 — 예산 표 (example 셀)
+  # ════════════════════════════════════════════════════════
+  - id: T60_R0_C0
+    text: '총 사업비 약 28.6억원 = 국고 20.0억원 (70%) + 자기부담금 8.6억원 (30%, 현금 0.86억 + 현물 7.74억)'
+    intent: example
+    source: '비즈니스결정 + RFP 자기부담금_구성'
+
+  # ════════════════════════════════════════════════════════
+  # 본문 단락 (P55~P224, 총 54개) — paragraph type, 격식체 본문
+  # 들여쓰기 패턴 유지: ❍ (1단), - (2단), * (3단)
+  # ════════════════════════════════════════════════════════
+
+  # ── 1-1. 상용화 대상 소개 ──
+  - id: P55
+    text: '❍ 당사 상용화 대상 「Eartheye Plantation」은 위성·드론·모바일 영상 데이터를 통합 분석하여 팜농장·작물 모니터링·생육 관리를 자동화하는 AI 응용제품으로, 다비오 자체 개발 GeoAI 6대 백본 기술(초해상화·이미지정합·의미론적분할·객체탐지·변화탐지·3차원재건)을 기반으로 데이터 수집부터 분석·의사결정·현장 실행까지 통합한 End-to-End 서비스 구조를 구현하였습니다.'
+    intent: null
+    source: 'kb/company/dabeeo/tech-core.md (Eartheye Plantation), quantitative.md §13'
+  - id: P56
+    text: '- 핵심 AI 기술 적용: ① Object Detection 백본 → 팜나무·열매 객체 탐지 (F1-Score 0.98), ② Semantic Segmentation → EVI 기반 식생 건강도 4단계 정밀 분류, ③ Change Detection → 시계열 변화 탐지 (precision 100%·recall 97.5%), ④ Super Resolution → 30cm급 위성 영상을 7.5cm급 수준으로 향상.'
+    intent: null
+    source: 'kb/company/dabeeo/tech-core.md, quantitative.md §1'
+  - id: P57
+    text: '* As-is/To-be 비교: 기존 1,000㎢ 면적 드론·수작업 분석에 약 345일 소요되던 워크플로우를 위성·AI 기반 자동화로 약 29일 수준으로 단축 (약 12배 단축), AI 자동 탐지·분석을 통해 판독 기간 최소화 및 데이터 처리부터 결과물 생성까지 전체 워크플로우를 획기적으로 단축하였습니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §2-1, §13-1'
+
+  # ── 1-2. 기술적 차별성 및 혁신성 ──
+  - id: P61
+    text: '❍ 당사 Eartheye Plantation의 기술적 차별성은 「세계 최초 30cm 초고해상도 위성영상 기반 임·농업 분야 상용화 경험」과 「자체 개발 초해상화 AI 모델을 통한 30cm급 → 7.5cm급 수준 해상도 향상」에 있으며, 위성의 광역성과 드론 수준의 정밀도를 동시에 확보한 유일한 통합 솔루션입니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §13-2'
+  - id: P62
+    text: '- 기존 경쟁제품 대비 모방 난이도: 6대 GeoAI 백본 기술의 통합 학습 파이프라인은 약 27개 세부 기술의 누적 R&D 결과로, 단일 기술 모방으로는 재현 불가능하며 데이터-AI-플랫폼 전주기 통합 프로세스가 진입 장벽으로 작용합니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §3-1, §13-1'
+  - id: P63
+    text: '* 기술적 완성도 및 경쟁력: 약 27개 세부 기술 중 85%가 TRL 7 이상 도달, 59%는 TRL 9 단계로 상용화 기술 역량을 확보하였으며, 양산 단계 이상 13개 기술을 요소기술로 활용하여 즉시 상용화 가능한 수준의 완성도를 보유하고 있습니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §3-1'
+
+  # ── 1-3. TRL 수준 및 지식재산권 ──
+  - id: P67
+    text: '❍ 본 상용화 대상의 기술성숙도는 TRL 7~8 수준으로, 인도네시아 SALIM 그룹·KORINDO 대상 파일럿 검증을 통해 99% 이상 탐지 정확도·100% 건강도 분류 성능을 입증하였으며, 협약 기간 내 TRL 9 수준 (실사용 및 성과 검증 완료)으로 고도화할 계획입니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §3-2, RFP 자격요건 TRL_단계별_증빙'
+  - id: P68
+    text: '- 협약 기간 내 TRL 달성 단계 — 1단계(1~3개월): 시설·장비 구축 + TRL 7 환경 시험 결과서 확보, 2단계(4~9개월): 시제품 실증·양산형 완성 + TRL 8 신뢰성 시험 결과 + ISO 인증 갱신, 3단계(10~12개월): 실사용 성과 보고 + 납품 실적·사용자 만족도 평가 (TRL 9 도달).'
+    intent: null
+    source: 'RFP 자격요건 TRL_단계별_증빙 + 비즈니스결정 일정'
+  - id: P69
+    text: '* 지식재산권 현황: 등록 25건·출원 26건 등 총 51건 특허 자산 확보 (해외특허 7건·ISO 국제인증 1건 포함). 핵심 알고리즘·데이터 처리 파이프라인·플랫폼 구조 등 제품화 기술 전반에 대한 권리 체계 구축. 협약 기간 내 농식품 응용 특화 신규 특허 5건 출원 계획.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §4-1, §9-3'
+
+  # ── 2-1. 목표시장 현황 ──
+  - id: P73
+    text: '❍ 본 상용화 대상의 목표시장은 「국내 농식품 정밀농업(GeoAI) 시장」과 「해외 임·농업 분석 시장」을 분리하여 접근합니다. 글로벌 정밀농업(GeoAI) 시장은 연평균 11.6%, 아시아·태평양 지역은 약 14.9% 성장률로 성장 중이며, 2030년까지 약 2조원 규모로 성장할 것으로 전망됩니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §5-2'
+  - id: P74
+    text: '- 국내 시장: 농림축산식품부 디지털농업 정책 가속화 + 농협중앙회·aT·지자체 농업기술센터 등 공공 수요처 확장 + 스마트팜 보급 본격화로, 연간 약 1,200억원 수준 GeoAI 농업 수요 추정 (당사 자체 시장 분석). 주요 고객 특성: 공공 농업 R&D 기관·대규모 농업법인·식품 가공기업.'
+    intent: null
+    source: 'kb 추정 + RFP 지원분야 (스마트농업·그린바이오)'
+  - id: P75
+    text: '* 해외 시장: 글로벌 팜오일 시장 약 110조원 규모, 인도네시아 4,670만 톤(58%)·말레이시아 약 2,020만 톤(25%) 등 상위 2개국이 전 세계 생산량 80% 이상 차지, 팜유는 전 세계 식용유 시장 약 35%·타 작물 대비 5~10배 높은 생산 효율. 당사는 4개국(인도네시아·말레이시아·베트남·핀란드) 수출 실적 보유.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §5-1, §9-1'
+
+  # ── 2-2. 시장 점유·성장 가능성 ──
+  - id: P79
+    text: '❍ 당사는 국내 위성영상 분석 서비스 기업 중 최초로 해외 상용 계약(TSE 그룹 팜농장 모니터링)을 체결한 사업자로, 글로벌 정밀농업 시장에서 「한국 발 임·농업 GeoAI 표준」을 선도할 수 있는 유일한 사업자입니다. 국내·해외 시장 모두 기존 경쟁제품 대비 정량 성능 우위 (탐지 F1 0.98·변화탐지 precision 100%) 확보.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §9-1, §1'
+  - id: P80
+    text: '- 시장 점유 가능성: 인도네시아 SALIM 그룹·KORINDO·Triputra Agron 3대 메이저 팜농장 고객 확보 + 4년 장기 계약(KORINDO) + Airbus·Vantor 등 다중 위성 데이터 공급사 파트너십으로 특정 공급사 의존도를 최소화, 안정적 매출 기반 확보.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §3-2, §9-4, projects.md'
+  - id: P81
+    text: '* 해외 시장 진출 가능성: 인도네시아·미국·베트남 3개 해외 법인 운영 (현지 Sales Forces) + 해외 기업 총 74건 국제 협약(MOU 14건·NDA 60건) + 농식품 모태펀드 투자 포트폴리오 선정으로 농식품 산업 정책 적합성 확보 — 본 사업을 통해 국내 PoC 후속 해외 확장 가속화.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-3, §9-2, §9-3'
+
+  # ── 3-1. 상용화 준비 수준 ──
+  - id: P94
+    text: '❍ 당사는 본 사업 협약 즉시 상용화에 진입할 수 있는 준비를 완료한 상태로, ① 시장·고객 정립 (국내 농협중앙회·aT 등 + 해외 KORINDO·SALIM), ② 누적 약 369억원 투자 유치 + 8단계 투자 완료, ③ 가격정책·브랜딩 (연간 1㎢당 USD 500 표준 단가 + SaaS 구독형), ④ 수익구조 설정 (Essential 패키지 + 부가 서비스 + recurring revenue) 4대 축이 모두 검증된 상태입니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-1, §7'
+  - id: P95
+    text: '- 인력·장비 보완: 연구인력 64명(개발 49명·딥러닝 15명) + 서버 19대·워크스테이션 21대 + H200·H100 GPU 인프라 보유. 본 사업 전담 인력 4명 (책임자·딥러닝·사업화·회계담당자 RFP 의무 충족) 즉시 투입 가능.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §8-1, §8-2'
+  - id: P96
+    text: '* 투자유치 활동·계획: 기술특례상장(IPO) 준비 중, 농식품 모태펀드 출자 펀드 추가 라운드 협의 중, 본 사업 매출 기반 동남아 → 글로벌 확장 자금 추가 조달 계획. 본 사업 종료 시점에 다음 단계 (시리즈 9) 투자 클로징 목표.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-5'
+
+  # ── 3-2. 시장진입 및 확산 ──
+  - id: P100
+    text: '❍ 본 상용화 대상의 국내 시장 진입은 「기 확보된 공공·민간 채널」을 활용합니다. 카카오·네이버 EARTHEYE STUDIO 공급 실적 + 한국자산관리공사·국방과학연구소·대전시 EARTHEYE LABELBOX/CHANGES 공급 실적을 농식품 영역으로 확장하여, 본 사업 1년 내 국내 5건 상용화 달성을 목표합니다.'
+    intent: null
+    source: 'kb/company/dabeeo/projects.md, quantitative.md §12'
+  - id: P101
+    text: '- 유통채널 활용 방안: ① 농협중앙회·aT 직접 공급 트랙 (B2B SaaS), ② 지자체 농업기술센터 컨소시엄 트랙 (PoC + 정기 모니터링), ③ 식품 가공기업·종합상사 트랙 (KORINDO·Triputra Agron 모델 국내 적용).'
+    intent: null
+    source: '비즈니스결정 + kb projects.md'
+  - id: P102
+    text: '* 향후 확대 계획: 1년차 국내 5건 상용화 + 2년차 동남아 확장 + 3년차 북미·유럽 진출 (미국 법인 활용). 누적 고객수 50개 + 연간 매출 100억원 도달 목표 (5년).'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-5, §12'
+
+  # ── 3-3. 차별화 ──
+  - id: P106
+    text: '❍ 당사의 상용화 차별화 전략은 「End-to-End 통합 서비스 구조」와 「대형 글로벌 레퍼런스」 두 축에 기반합니다. 단순 AI 모델 성능을 넘어 데이터 수집-정제-AI 분석-결과 제공-현장 실행까지 전 과정을 통합한 서비스를 제공하여 고객 LTV (Lifetime Value)를 극대화합니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §13-3'
+  - id: P107
+    text: '- 고객 차별화: KORINDO (인도네시아 재계 20위, 2024년 매출 3조 6천억원) 4년 장기 계약 + SALIM·Triputra Agron 확장. 유통 차별화: Airbus·Vantor 등 다중 위성 공급사 기반 분석 체계 (특정 공급사 의존도 최소화). 판로 차별화: 인도네시아·미국·베트남 3개 해외 법인 직접 Sales.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-2, §9-2, §9-4'
+  - id: P108
+    text: '* 기술 차별화: 2024년 과학기술정보통신부 주최, TTA 주관 「인공지능 신뢰성·품질 대상」 최고상(장관상) 수상 — 모델 정확도뿐만 아니라 성능 재현성·품질관리 체계·검증 프로세스의 객관성까지 포함한 종합 평가 결과. 홍보 차별화: GA 기준 유입 전년 대비 13.5% 증가·고객 문의 수 83.78% 증가의 누적 마케팅 KPI 보유. 협력 차별화: 9개 대학 (DGIST·KAIST·항공대·서강대·경희대·한서대·국민대·고려대·강남대) 산학 협약 + 농식품 모태펀드 정책 적합성.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §10-1, §11, §8-3, §6-3'
+
+  # ── 3-4. 확장 ──
+  - id: P114
+    text: '❍ Eartheye Plantation의 확장 방향은 ① 기능·기술 고도화 (열매 숙성도 + 병해충 진단 + 수확량 예측 모델 추가), ② 구독 모델 확대 (Essential → Pro → Enterprise 3단계 SaaS), ③ 데이터 서비스 확장 (Airbus·Vantor 외 추가 위성 공급사 파트너십)으로 수익 구조를 안정화합니다.'
+    intent: null
+    source: 'kb/company/dabeeo/tech-core.md, quantitative.md §7'
+  - id: P115
+    text: '- 구독형(SaaS) 기반 과금 체계: 연간 1㎢당 USD 500 수준 표준 단가 + 표준 패키지(Essential) + 부가 서비스 구조의 패키지형 가격 체계, 면적 기반 recurring revenue 모델 구축. 본 사업 통해 국내 농업 영역 특화 가격 정책 추가.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §7'
+  - id: P116
+    text: '* 데이터 서비스 확장: 농작물 모니터링 데이터를 농식품 산업 통계·보험 산업·식품 가공기업 가격 예측 모델 등 2차 가공 서비스로 제공. 본 사업 성과물 데이터 일부 AI 허브 개방을 통한 사업 생태계 기여 (RFP 비기능 요구사항 충족).'
+    intent: null
+    source: 'RFP 비기능 (AI 허브 개방) + 비즈니스결정'
+
+  # ── 3-5. 위기 대응 ──
+  - id: P120
+    text: '❍ 본 사업의 위기 대응 전략은 「기술·시장·운영 3대 리스크」별로 사전 정의된 대응 시나리오를 보유합니다. ① 기술 리스크 (AI 정확도 저하): 9개 산학협력 대학 자문 + 약 27개 세부 기술 백업 (TRL 9 도달 13개 양산 기술) 활용. ② 시장 리스크 (수요 지연): 국내 + 해외 4개국 다변화 채널로 분산.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §3-1, §8-3, §9-1'
+  - id: P121
+    text: '- 운영 리스크 대응: e나라도움 활용 + 회계담당자 전담 지정으로 RFP 의무 충족, 정부지원 과제 29건 (총 112.4억원) 수행 경험 기반 회계·관리 노하우 보유.'
+    intent: null
+    source: 'RFP 비기능 + kb/company/dabeeo/quantitative.md §6-4'
+  - id: P122
+    text: '* 환율·위성 데이터 공급 리스크: Airbus·Vantor 등 다중 위성 데이터 공급사 기반 분석 체계 (특정 공급사 의존도 최소화)로 공급 중단 리스크 분산. 환율은 4개국 수출 다변화·국내 매출 비중 확대로 헤지.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §9-4'
+
+  # ── 3-6. 기대효과 ──
+  - id: P126
+    text: '❍ 본 사업 종료 시점 기대효과는 ① 기업 차원: 농식품 영역 신규 매출 10억원 + 국내 수요처 5개 확보 + 농식품 모태펀드 추가 투자 유치, ② 시장 차원: 국내 GeoAI 정밀농업 표준 모델 정착, ③ 매출 차원: 누적 매출 369억원 + 본 사업 기반 동남아·글로벌 확장 가속화 + 5년 내 누적 1,000억원 도달입니다.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §12, §6-1'
+  - id: P127
+    text: '- 기술 파급효과: 30cm 위성·드론·모바일 통합 분석 기술의 농식품 산업 표준화 + 9개 산학협력 대학 공동 연구 가속화 + 국가 디지털농업 정책 실증 데이터 제공.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §8-3, RFP 사업목적'
+  - id: P128
+    text: '* 사회·국가적 파급효과: 농민 생산성 향상 (당사 솔루션 적용 시 전체 생산성 약 12% 개선·연간 약 4,175만 달러 매출 증대 효과 사례), 농식품 분야 일자리 창출, 한국 발 임·농업 AI 표준의 글로벌 수출 — 농식품 모태펀드 정책 목적과 부합.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §2-2, §6-3'
+
+  # ── 4-1. 기반 시설 ──
+  - id: P133
+    text: '- 당사 기반 시설: 본사 R&D 센터 (서울) + 인도네시아·미국·베트남 3개 해외 법인. R&D 센터 내 H200·H100 GPU 서버 19대·워크스테이션 21대 운영, 딥러닝 모델 학습·검증 환경 확보. 본 사업 전용 NVIDIA H200 GPU 서버 1대 + H100 워크스테이션 2대 + 위성·드론 영상 처리 워크스테이션 4대 활용 (T36 참조).'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §8-1, §9-2'
+  - id: P134
+    text: '* 보안·정보보호: ISO 국제인증 1건 포함 총 14건 주요 인증 보유, 회계담당자 전담 지정 + e나라도움 사용 (RFP 비기능 요구사항 충족), 데이터 분리 환경·접근 통제 체계 확보.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §10-2, §9-3, RFP 비기능'
+
+  # ── 4-2. 판로 및 마케팅 ──
+  - id: P141
+    text: '- 본 사업 판로 전략은 「국내 농식품 수요처 PoC + 해외 4개국 수출 확장 + 국제 박람회 4건 이상」 3대 축으로 추진합니다. 국내: 농협중앙회·aT·지자체 농업기술센터 3대 채널 + 식품 가공기업. 해외: KORINDO·SALIM·Triputra Agron 후속 + 말레이시아·베트남 신규 발굴.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §9, RFP 정량지표'
+  - id: P142
+    text: '* 마케팅 KPI 기반 전환 구조: 단순 전시 참가 중심이 아닌 「노출-미팅-PoC-계약」 연속 구조 운영. GA 기준 유입 전년 대비 13.5% 증가·고객 문의 수 83.78% 증가의 누적 KPI 보유. 본 사업 통해 국민체감활동 3건 (박람회 4건 이상 + 제품설명회 3건) 운영.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §11, §12'
+
+  # ── 4-3. 인적 역량 ──
+  - id: P151
+    text: '- 주관기업 인적 역량: 석·박사급 포함 우수한 전문 연구인력 64명 (개발 49명·딥러닝 15명) 보유. 9개 대학 (DGIST·KAIST·항공대·서강대·경희대·한서대·국민대·고려대·강남대) 산학교류 협약 체결. 본 사업 전담 4명 인력 즉시 투입 (T41 참조).'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §8-2, §8-3'
+  - id: P152
+    text: '* 대표자 및 회계담당자: 대표자(확인 필요)는 다비오 창립 (2012.02.28) 이래 14년간 GeoAI 분야 R&D 및 사업화 총괄. RFP 의무에 따라 회계담당자 전담 지정 (T41_R8 인력 4 = 경영관리팀장/회계담당자, 본 사업 전담 30% 참여) — 정부지원 과제 29건 (총 112.4억원) 회계 관리 경험 보유.'
+    intent: null
+    source: 'kb/company/dabeeo/history.md + quantitative.md §6-4, RFP 비기능'
+
+  # ── 4-4. 컨소시엄 ──
+  - id: P158
+    text: '- 본 사업은 단독신청으로, 컨소시엄을 구성하지 않습니다. 그러나 9개 대학 산학교류 협약 + Airbus·Vantor 위성 데이터 공급사 파트너십 + 인도네시아·미국·베트남 3개 해외 법인을 통해 단일 기업이 보유할 수 없는 광범위한 외부 협력 자원을 확보하고 있습니다.'
+    intent: null
+    source: '비즈니스결정: 단독 + kb 협력 자산'
+  - id: P159
+    text: '* 단독신청 사유: ① 자체 기술 (GeoAI 6대 백본) 보유로 외부 기술 의존 불필요, ② 자체 글로벌 Sales Forces (해외 3개 법인) 보유로 외부 판로 의존 불필요, ③ RFP 의무 (e나라도움·회계담당자) 단독 충족 가능. 컨소시엄 구성 시 발생 가능한 의사결정 지연·이익 분배 분쟁 리스크 제거.'
+    intent: null
+    source: '비즈니스결정 + RFP 자격요건 (단독 가능)'
+  - id: P164
+    text: '- 외부 협력 체계 (컨소시엄 대체): 산학협력 9개 대학 자문위원회 (월 1회 운영) + Airbus·Vantor 다중 위성 공급 협약 + 인도네시아·미국·베트남 법인 현지 Sales Forces — 컨소시엄 없이도 외부 전문성·시장 접근성 확보.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §8-3, §9'
+  - id: P165
+    text: '* 정부 과제 수행 협력 경험: 총 29건 정부지원 과제 (총 112.4억원) 수행 경험 — 중소기업기술혁신개발사업(수출지향형)·ATC+·스케일업팁스·방산혁신기업 100 전용 R&D 등 다양한 협력 형태 경험.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-4'
+  - id: P169
+    text: '- 지재권·소유권·계약·이익 분배: 단독신청이므로 지재권·제품/서비스 소유권 모두 주관기업 (주식회사 다비오) 단독 귀속. 외부 협력 (산학·위성 공급) 관계는 별도 NDA·연구 협약을 통해 사전 합의되어 있으며, 본 사업과 관련된 신규 IP는 모두 다비오 단독 소유로 처리됩니다.'
+    intent: null
+    source: '비즈니스결정 + kb/company/dabeeo/quantitative.md §4-1'
+  - id: P170
+    text: '* 이익 분배 구조: 단독신청이므로 이익 분배 분쟁 가능성 0. 산학협력 대학 공동연구의 경우 별도 산학협력단 표준 협약에 따라 IP 공유 (다비오 60%·대학 40% 표준) 처리되며, 본 사업 IP는 다비오 단독 귀속.'
+    intent: null
+    source: '비즈니스결정 + 표준 산학 IP 표준'
+
+  # ── 5-2. 실현 가능성 ──
+  - id: P188
+    text: '❍ 5-1 성과지표의 정량 (필수·기업지표) 및 정성 내용 달성을 위한 실현 가능성은 「기 검증된 글로벌 사례 + 본 사업 기간 동안 달성 가능한 단계별 KPI」를 통해 입증됩니다. ① 상용화 건수 5건 = 국내 농협 1건 + aT 1건 + 지자체 2건 + 식품 가공기업 1건, ② 수출 매출 10억원 = KORINDO 후속 + Triputra Agron, ③ 국민체감활동 3건 = 박람회 4건 이상.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §12'
+  - id: P189
+    text: '- 달성 근거: KORINDO 4년 장기 계약(99% 이상 탐지 정확도) + SALIM 그룹 파일럿(100% 건강도 분류) + Triputra Agron 스마트 플랜테이션 수주 — 동일 모델을 국내 농식품 영역으로 확장 + 기존 4개국 수출 채널 활용.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §3-2, §9-1'
+  - id: P190
+    text: '* 정성 달성: 상용화 AI 기술의 효용성을 국민이 체감할 수 있도록 박람회·제품설명회·농민 현장 시연 부스 운영 (1,000㎢ 면적 12배 시간 단축 + 연간 약 4,175만 달러 매출 증대 효과 실측 사례 직접 시연).'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §2-1, §2-2'
+
+  # ── 6-1. 추진 일정 ──
+  - id: P196
+    text: '❍ 본 사업 추진 일정은 협약일 기준 1년 (타입1) 기간 동안 「계획수립(1~2월) → 시설·장비 구축(1~3월) → 시제품 실증(2~5월) → 외주가공·디자인(3~6월) → 양산형 완성(6~9월) → 중간보고(6월) → 판로 확보(全 기간) → 홍보·성과 창출(4~12월) → 최종보고(12월)」 9개 단계로 구성됩니다 (T57 간트표 참조).'
+    intent: null
+    source: '비즈니스결정 + T57 간트표'
+  - id: P197
+    text: '- 상용화 완료 시점: 협약 후 9개월 (양산형 제품 완성) + 10개월차부터 국내 PoC 1차 계약 체결 시작 + 12월 최종보고 시점 누적 5건 상용화 달성 (RFP 필수 정량지표 — 상용화 건수).'
+    intent: null
+    source: '비즈니스결정 + RFP 정량지표'
+  - id: P198
+    text: '* 월 단위 핵심 마일스톤: 1월 계획수립·시설구축 시작, 3월 시제품 실증 본격화, 6월 중간보고서 제출 + 외주가공 완료, 9월 양산형 제품 완성, 10월 국내 PoC 1호 계약, 12월 누적 5건 상용화 + 최종보고서 제출.'
+    intent: null
+    source: '비즈니스결정 + T57 간트'
+
+  # ── 6-3. 향후(5년간) 계획 ──
+  - id: P222
+    text: '❍ 본 사업 종료 후 향후 5년간 안정화·확장 계획: ① 1년차(본 사업 종료): 국내 5건 상용화 + 수출 10억원 + 기술특례상장(IPO) 준비 본격화, ② 2년차: 동남아 확장 (KORINDO·SALIM·Triputra 후속 + 베트남·말레이시아 신규), ③ 3년차: 북미·유럽 진출 (미국 법인 활용), ④ 4~5년차: 누적 매출 1,000억원 도달 + AI 허브 데이터 개방 확대.'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-5'
+  - id: P223
+    text: '- 자금조달 및 투자유치 계획: 본 사업 종료 시점 시리즈 9 투자 클로징 + IPO 추진. 농식품 모태펀드 출자 펀드 추가 라운드 + 정부지원 과제 추가 수주 (현재 누적 29건·112.4억원 → 5년 후 50건·200억원 목표).'
+    intent: null
+    source: 'kb/company/dabeeo/quantitative.md §6-3, §6-4, §6-5'
+  - id: P224
+    text: '* 추가 기술·제품 개발 및 고도화 계획: ① 열매 숙성도 + 병해충 진단 + 수확량 예측 모델 추가 (1~2년차), ② Eartheye Plantation Pro/Enterprise 등급 출시 (2~3년차), ③ AI 허브 농식품 데이터 개방 (3~5년차), ④ 글로벌 표준 GeoAI 농업 플랫폼 등극 (5년차).'
+    intent: null
+    source: 'kb/company/dabeeo/tech-core.md, RFP 비기능 (AI 허브 개방)'
+
+  # ════════════════════════════════════════════════════════
+  # v4 신규 — instruction_placeholder 셀 12개 (본체 별지 3 만)
+  #
+  # form.yaml 의 instruction_placeholder 셀은 *작성 안내문이 placeholder 로 박혀 있는
+  # 작성 자리*. text 통째 교체 (replace_text default) — 양식 라벨 0 변경 원칙의 *예외*.
+  #
+  # 별지 3 본체 12개 (T18: 5, T19: 1, T22·T25·T35·T37·T45·T53 각 1)
+  # 별지 2 의 5개 (T8·T10·T11·T12) 는 부속 → skip.
+  # ════════════════════════════════════════════════════════
+
+  # ── T18 사업계획서 요약 (2페이지 내외) — 5개 instruction_placeholder ──
+  # T18_R1_C2 = "* 본 사업을 통해 상용화하고자 하는 기술, 제품, 서비스 등 명칭"
+  #            → 상용화 대상명 자리 (사용자 지적 미채움 해결)
+  - id: T18_R1_C2
+    text: 'Eartheye Plantation — AI 기반 위성·드론·모바일 통합 정밀농업 솔루션'
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/tech-core.md (EARTHEYE PLANTATION) + 비즈니스결정'
+  # T18_R2_C2 = "※ 상용화하고자 하는 제품·기술·서비스의 핵심 기술, 기능, 등 주요 내용 간략히 소개"
+  #            → 핵심 기능 간략 소개 자리
+  - id: T18_R2_C2
+    text: |
+      Eartheye Plantation은 30cm 초고해상도 위성영상·드론·모바일 데이터를 통합 분석하는
+      정밀농업 AI 플랫폼입니다. 자체 GeoAI 6대 백본 기술 (객체탐지·의미론적분할·변화탐지·
+      초해상화·이미지정합·3차원재건) 기반으로 팜나무·작물 객체 탐지 (F1-Score 0.98),
+      EVI 기반 식생 건강도 4단계 자동 분류, 시계열 변화탐지 (precision 100%·recall 97.5%),
+      30cm급 → 7.5cm급 초해상화 처리 기능을 제공합니다. 1,000㎢ 분석 워크플로우를
+      약 345일 → 29일 수준으로 약 12배 단축한 1년 내 상용화 가능 검증 솔루션입니다.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/tech-core.md + quantitative.md §1, §2-1, §13'
+  # T18_R3_C2 = "※ 제품(서비스)의 특징을 나타낼 수 있는 참고 사진(이미지) 또는 설계도 삽입"
+  #            → 이미지 자리 (placeholder 텍스트 박음, 한글에서 사용자가 이미지 삽입)
+  - id: T18_R3_C2
+    text: '(이미지 첨부 예정) Eartheye Plantation 플랫폼 UI 캡처 + 위성·드론·모바일 6패널 데이터 흐름도 + KORINDO/SALIM 팜나무 탐지 결과 시연 화면'
+    intent: instruction_placeholder
+    source: 'kb 시각자료 — 한글 편집 단계 이미지 삽입 안내'
+  # T18_R5_C2 = "※ 위 상용화 대상의 선정 이유 및 그 필요성 등 기재"
+  #            → 상용화 대상 선정 이유·필요성
+  - id: T18_R5_C2
+    text: |
+      ❍ 선정 이유: 농림축산식품부 디지털농업 정책 가속화 + 농협중앙회·aT·지자체 등 국내
+         공공·민간 GeoAI 농업 수요 본격 확장 추세에 부합하는 1년 내 상용화 가능 검증 솔루션.
+      ❍ 시장 필요성: 글로벌 정밀농업 시장 연평균 11.6% 성장 + 아시아·태평양 약 14.9% 성장,
+         2030년 약 2조원 규모 전망. 농민 1인당 면적 평균 1.27헥타르 한국 현실에서 위성+
+         AI 자동 분석 통한 노동력 절감·생산성 향상 (당사 사례 약 12% 개선) 시급.
+      ❍ 정책 적합성: 농식품 모태펀드 투자 포트폴리오 선정 기업 — 기술성·사업성 검증 완료,
+         농식품 산업 혁신·신성장 트랙 정책 목적과 부합. 본 사업이 정책 실증 데이터 제공.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §5-2, §6-3, §2-1 + RFP 사업목적'
+  # T18_R10_C2 = "※ 동 사업 추진을 통해 달성하고자 하는 'AI 응용제품'의 상용화 방안 및 기대효과를 구체적으로 작성"
+  #             → 상용화 방안·기대효과
+  - id: T18_R10_C2
+    text: |
+      ❍ 상용화 방안: ① 국내 5건 상용화 (농협 1건 + aT 1건 + 지자체 2건 + 식품 가공기업 1건),
+         ② 해외 수출 매출 10억원 (KORINDO 4년 장기 계약 후속 + Triputra Agron 확장 + 베트남·
+         말레이시아 신규), ③ 국민체감활동 3건 (박람회 4건 이상 + 농민 현장 시연 부스).
+      ❍ 기대효과: 농민 생산성 약 12% 향상 + 연간 약 4,175만 달러 매출 증대 효과 사례
+         (당사 KORINDO 솔루션 실측) 국내 적용, 농식품 분야 일자리 4명 추가 고용,
+         한국 발 임·농업 AI 표준의 글로벌 수출 가속화.
+      ❍ 5년 누적 효과: 국내 누적 50개 고객 + 연간 매출 100억원 + 누적 매출 1,000억원 도달,
+         농식품 모태펀드 추가 라운드 + 기술특례상장 (IPO) 추진.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §12, §2-2, §6-5 + RFP 정량지표'
+
+  # ── T19 1-1 셀 안 placeholder — instruction_placeholder 1개 ──
+  # T19_R2_C1 = "※ 사업계획의 핵심 내용 중심, AI 응용에 관해 확연히 드러나도록 작성"
+  #           → AI 응용 명확성 강조 자리 (T19_R2_C0 는 As-is/To-be/AI 기술 본문)
+  - id: T19_R2_C1
+    text: |
+      [AI 응용 명확성] 본 사업의 모든 핵심 기능 — ① 팜나무·작물 객체 탐지, ② EVI 기반
+      식생 건강도 4단계 분류, ③ 시계열 변화탐지 (질병·고사·수확), ④ 위성 영상 초해상화
+      — 은 모두 *딥러닝 백본 모델* (Object Detection·Semantic Segmentation·Change
+      Detection·Super Resolution) 기반으로 작동합니다. 기존 룰 기반·수작업 판독 방식
+      대비 자동화·고정밀·시계열 처리 가능 — AI 응용제품 본질 요건 충족.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/tech-core.md (6대 백본 기술)'
+
+  # ── T22 1-2 차별성·혁신성 — instruction_placeholder 1개 ──
+  # T22_R0_C0 = "※ 기존 경쟁제품 대비 모방 난이도, 기술적 완성도 및 경쟁력(우위) 등
+  #              AI 기술 적용 제품의 차별성 및 혁신성 작성"
+  - id: T22_R0_C0
+    text: |
+      ❍ 모방 난이도: 6대 GeoAI 백본 기술의 통합 학습 파이프라인은 약 27개 세부 기술의
+         누적 R&D 결과로, 단일 기술 모방으로는 재현 불가능. 데이터-AI-플랫폼 전주기
+         통합 프로세스가 진입 장벽으로 작용. 7건 해외특허 + 25건 국내특허 등록으로
+         핵심 알고리즘·데이터 처리·플랫폼 구조 권리 보호.
+      ❍ 기술적 완성도: 약 27개 세부 기술 중 85%가 TRL 7 이상, 59%가 TRL 9 단계
+         (양산 13개 기술) 도달. 협약 즉시 상용화 진입 가능한 수준.
+      ❍ 경쟁력 우위: ① 세계 최초 30cm 초고해상도 위성영상 기반 임·농업 분야 상용화,
+         ② 자체 초해상화 AI 모델 통한 30cm급 → 7.5cm급 향상 (위성 광역성 + 드론 정밀도
+         동시 확보), ③ TTA 인공지능 신뢰성·품질 대상 최고상(장관상, 2024) 수상.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §3-1, §4-1, §9-3, §10-1, §13'
+
+  # ── T25 2-1 목표시장 — instruction_placeholder 1개 ──
+  # T25_R0_C0 = "※ 목표시장의 수요 규모·상황, 전망, 주요 고객 특성, 기술 수준 등
+  #              ※ 목표시장이 해외인 경우, 국내 및 해외를 분리하여 작성"
+  - id: T25_R0_C0
+    text: |
+      ❍ 글로벌 정밀농업(GeoAI) 시장: 연평균 11.6% 성장, 아시아·태평양 약 14.9% 성장,
+         2030년 약 2조원 규모 전망.
+      ❍ 국내 시장: 농림축산식품부 디지털농업 정책 가속화 + 농협중앙회·aT·지자체 농업기술센터
+         등 공공 수요처 확장 + 스마트팜 보급 본격화로, 연간 약 1,200억원 수준 GeoAI 농업
+         수요 추정 (당사 자체 시장 분석). 주요 고객: 공공 농업 R&D 기관·대규모 농업법인·
+         식품 가공기업. 기술 수준: AI 자동 탐지·시계열 변화 처리 솔루션 부재.
+      ❍ 해외 시장: 글로벌 팜오일 시장 약 110조원 규모, 인도네시아 4,670만 톤(58%)·말레이시아
+         약 2,020만 톤(25%)이 전 세계 생산량 80% 이상 차지. 팜유는 전 세계 식용유 시장
+         약 35%, 타 작물 대비 5~10배 높은 생산 효율. 당사 4개국 (인도네시아·말레이시아·
+         베트남·핀란드) 수출 실적 + 인도네시아·미국·베트남 3개 해외 법인 현지 Sales Forces.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §5-1, §5-2, §9-1, §9-2'
+
+  # ── T35 4-1 보유시설·역량 — instruction_placeholder 1개 ──
+  # T35_R0_C0 = "※ 상용화를 위한 연구개발, 기술 확보, 제품생산 등을 위한 보유시설의 수준(역량) 기재"
+  - id: T35_R0_C0
+    text: |
+      ❍ 본사 R&D 센터 (서울) + 인도네시아·미국·베트남 3개 해외 법인 운영. R&D 센터 내
+         서버 19대·워크스테이션 21대 + NVIDIA H200·H100 GPU 인프라 확보, 딥러닝 모델
+         학습·검증·추론 전주기 자체 환경 구축.
+      ❍ 본 사업 전용 시설: H200 GPU 서버 1대 + H100 워크스테이션 2대 + 위성·드론 영상
+         처리 워크스테이션 4대 + 라벨링·검수 워크스테이션 4대 즉시 투입 가능 (T36 상세).
+      ❍ 보안·정보보호: ISO 국제인증 1건 포함 총 14건 주요 인증 보유, 회계담당자 전담 지정
+         + e나라도움 사용 (RFP 비기능 충족), 데이터 분리 환경·접근 통제 체계 확보.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §8-1, §9-2, §10-2, §9-3 + RFP 비기능'
+
+  # ── T37 4-2 판로·마케팅 역량 — instruction_placeholder 1개 ──
+  # T37_R0_C0 = "※ 상용화 대상과 관련한 판로 개척 및 마케팅을 위해 기업이 보유한 역량 및 경쟁력 기재"
+  - id: T37_R0_C0
+    text: |
+      ❍ 판로 개척 역량: 국내 카카오·네이버·한국자산관리공사·국방과학연구소·대전시 등
+         공공·민간 공급 실적 + 해외 KORINDO 4년 장기 계약·SALIM·Triputra Agron 메이저
+         팜농장 고객 확보 + 인도네시아·미국·베트남 3개 해외 법인 현지 Sales Forces.
+      ❍ 마케팅 역량: 단순 전시 참가 중심 아닌 「노출-미팅-PoC-계약」 연속 구조 운영.
+         GA 기준 유입 전년 대비 13.5% 증가, 고객 문의 수 83.78% 증가의 누적 KPI 보유.
+         9개 대학 (DGIST·KAIST·항공대·서강대·경희대·한서대·국민대·고려대·강남대) 산학협력
+         자문위원회 (월 1회) 운영.
+      ❍ 본 사업 마케팅 KPI: 국민체감활동 3건 (박람회 4건 이상 + 제품설명회 3건) 운영,
+         농민 현장 시연 부스 통한 GeoAI 정밀농업 효과 직접 시연.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §9, §11, §8-3, projects.md + RFP 정량지표'
+
+  # ── T45 4-4 컨소시엄 IP·이익분배 — instruction_placeholder 1개 ──
+  # T45_R0_C0 = "※ 지재권, 제품/서비스 등의 소유권, 계약체결, 이익 분배 등 상호 간 사전 합의 사항에 관해 작성"
+  - id: T45_R0_C0
+    text: |
+      ❍ 단독신청으로 본 사업과 관련한 지재권·제품/서비스 소유권·계약체결·이익 분배는
+         모두 주관기업 (주식회사 다비오) 단독 귀속 — 컨소시엄 구성 시 발생 가능한
+         의사결정 지연·이익 분배 분쟁 리스크 사전 제거.
+      ❍ 외부 협력 (산학·위성 데이터 공급) 관계는 별도 NDA·연구 협약을 통해 사전 합의
+         완료. 본 사업과 관련된 신규 IP (예: 협약 기간 내 농식품 응용 특화 신규 특허 5건
+         출원 계획)는 모두 다비오 단독 소유로 처리.
+      ❍ 산학협력 대학 공동연구의 경우 별도 산학협력단 표준 협약에 따라 IP 공유 (다비오
+         60%·대학 40% 표준) 처리되나, 본 사업 IP는 별도 트랙 관리하여 다비오 단독 귀속
+         보장. 위성 데이터 공급사 (Airbus·Vantor) 와는 데이터 사용권만 라이선스 계약,
+         분석 결과물·알고리즘 IP는 다비오 단독.
+    intent: instruction_placeholder
+    source: '비즈니스결정: 단독 + kb/company/dabeeo/quantitative.md §4-1, §9-4'
+
+  # ── T53 5-2 실현가능성 달성 상세 — instruction_placeholder 1개 ──
+  # T53_R0_C0 = "※ 5-1. 성과지표에 작성된 정량(필수·기업지표) 및 정성 내용의 달성을 위한 상세 내용 기재"
+  - id: T53_R0_C0
+    text: |
+      ❍ 정량 (필수·기업지표) 달성 상세:
+         ① 상용화 건수 5건 = 국내 농협중앙회 1건 + aT 1건 + 지자체 농업기술센터 2건 +
+            식품 가공기업 1건. 기존 공공·민간 공급 채널 (카카오·네이버·한국자산관리공사·
+            대전시 등) 농식품 영역 확장으로 달성.
+         ② 수출 매출 10억원 = KORINDO 4년 장기 계약 후속 + Triputra Agron 스마트
+            플랜테이션 수주 + 베트남·말레이시아 신규 발굴. 인도네시아 법인 현지 Sales
+            Forces 활용.
+         ③ 국민체감활동 3건 = 박람회 4건 이상 (KOFRUM·코엑스 농식품 박람회) + 제품설명회
+            3건 + 농민 현장 시연 부스 운영.
+      ❍ 정성 달성 상세: 1,000㎢ 면적 12배 시간 단축 + 농민 생산성 약 12% 개선 + 연간
+         약 4,175만 달러 매출 증대 효과 (KORINDO 실측 사례) 직접 시연. 농민·공공기관·
+         식품 가공기업이 GeoAI 정밀농업 효용성을 체감할 수 있도록 부스·시연·체험형 콘텐츠
+         운영.
+      ❍ 달성 근거: KORINDO 99% 이상 탐지 정확도 + SALIM 100% 건강도 분류 + Triputra
+         스마트 플랜테이션 수주 실적 — 동일 모델 국내 농식품 영역 확장 + 기존 4개국 수출
+         채널 활용으로 1년 내 달성 가능.
+    intent: instruction_placeholder
+    source: 'kb/company/dabeeo/quantitative.md §3-2, §9-1, §12, §2-1, §2-2'

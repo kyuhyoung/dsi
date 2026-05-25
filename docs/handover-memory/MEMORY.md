@@ -1,0 +1,7 @@
+- [양식 보존 원칙](feedback_form_principle.md) — 양식은 절대 만지지 않고 빈 셀에 텍스트만 박는다 (form_to_docx 폐기)
+- [양식·RFP·KB 일반화 원칙](feedback_no_overfit.md) — 임의 A·B·C 조합 동작 필수. 농식품AI 등 특정 케이스 하드코딩 금지
+- [XML 결정적 채움](feedback_xml_fill.md) — 양식 채움은 .hwpx XML 직접 편집. 한컴 COM은 .hwp↔.hwpx 변환 도구로만 1회. 연속 COM 호출은 비결정성 위험.
+- [본체 별지만 본격 산출](feedback_main_separator.md) — 산출물 = 본체 별지(보통 사업계획서) 1개 .hwpx. 부속 별지(자가진단·신청서·동의서)는 부차. 별지 분할 패턴: `\[별지\s*제?\s*\d+\s*호?\]`.
+- [본문 단락 생성·교체가 핵심 가치](feedback_paragraph_fill.md) — 양식의 "가나다" placeholder 단락을 LLM이 실제 본문 5~10페이지로 자동 생성·교체. AI 자동화의 결정적 이유. 셀 채움만으론 본체 80% 미달.
+- [결과물은 프로젝트 output 폴더에](feedback_output_location.md) — PoC·중간·최종 모두 D:\work\dabeeo\dsi\output\<날짜>\ 저장. C:\Temp 금지.
+- [양식의 모든 요소는 의도가 있다](feedback_intent_understanding.md) — 셀·체크박스·안내·placeholder·예시·조건부 셀 모두 발주처 의도. 빈칸을 독립적으로 채우면 모순. 의도 분류 + 일관성 보장.
