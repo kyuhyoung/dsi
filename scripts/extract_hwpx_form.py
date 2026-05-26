@@ -63,7 +63,7 @@ HEADER_RE = re.compile(r"^\s*([0-9]+[\.\-][0-9]+|[가-힣]\.)\s*")
 # 한컴이 쓰는 변형 포함: 빈/체크 사각·체크표·검은 사각·반쪽 사각.
 CHECKBOX_RE = re.compile(r"[□☐☑☒✓✔■▣◧◨]")
 EXAMPLE_RE = re.compile(
-    r"(0+\.?0*\.?0+|OO법인|OO\s|XX법인|A주식회사|B주식회사|예시:|\(예\)|\u21B3|\([0-9]+\s*社\))"
+    r"(0+\.?0*\.?0+|OO법인|OO\s|XX법인|A주식회사|B주식회사|예시:|\(예\)|\([0-9]+\s*社\))"
 )
 SUBORDINATE_RE = re.compile(r"^\s*\u21B3")
 INSTRUCTION_PLACEHOLDER_RE = re.compile(
