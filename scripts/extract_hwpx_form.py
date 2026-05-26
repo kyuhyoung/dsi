@@ -58,7 +58,10 @@ PLACEHOLDER_RE = re.compile(
 )
 INSTRUCTION_HINT_RE = re.compile(r"^\s*※")
 HEADER_RE = re.compile(r"^\s*([0-9]+[\.\-][0-9]+|[가-힣]\.)\s*")
-CHECKBOX_RE = re.compile(r"^\s*[□☐☑✓]\s*[가-힣\w]{0,15}\s*$")
+# 체크박스 셀 식별 — 셀 텍스트 안에 체크박스 문자 하나라도 있으면 체크박스 셀로 판정.
+# 라벨 길이·괄호·줄바꿈·복수 체크박스(□ 여 / □ 부) 모두 허용.
+# 한컴이 쓰는 변형 포함: 빈/체크 사각·체크표·검은 사각·반쪽 사각.
+CHECKBOX_RE = re.compile(r"[□☐☑☒✓✔■▣◧◨]")
 EXAMPLE_RE = re.compile(
     r"(0+\.?0*\.?0+|OO법인|OO\s|XX법인|A주식회사|B주식회사|예시:|\(예\)|\u21B3|\([0-9]+\s*社\))"
 )
