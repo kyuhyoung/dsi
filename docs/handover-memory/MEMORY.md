@@ -5,3 +5,4 @@
 - [본문 단락 생성·교체가 핵심 가치](feedback_paragraph_fill.md) — 양식의 "가나다" placeholder 단락을 LLM이 실제 본문 5~10페이지로 자동 생성·교체. AI 자동화의 결정적 이유. 셀 채움만으론 본체 80% 미달.
 - [결과물은 프로젝트 output 폴더에](feedback_output_location.md) — PoC·중간·최종 모두 D:\work\dabeeo\dsi\output\<날짜>\ 저장. C:\Temp 금지.
 - [양식의 모든 요소는 의도가 있다](feedback_intent_understanding.md) — 셀·체크박스·안내·placeholder·예시·조건부 셀 모두 발주처 의도. 빈칸을 독립적으로 채우면 모순. 의도 분류 + 일관성 보장.
+- [세션 진행 — 2026-05-26 회사 WSL](session_20260526_progress.md) — CHECKBOX_RE·EXAMPLE_RE 정정, 매핑 0 오차 확인, T16_R2_C0 1건 검토 남음
