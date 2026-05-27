@@ -15,6 +15,7 @@
 출력경로 생략 시 stdout으로 출력.
 """
 import io
+import os
 import shutil
 import subprocess
 import sys
@@ -105,25 +106,59 @@ def _html_to_text(html_str):
     return h.strip()
 
 
+def _resolve_cmd(name):
+    """명령 실행 파일 경로 해석. PATH 에 없으면 (pip --user 설치 후 PATH 미반영)
+    Python scripts 디렉토리(전역·user)까지 탐색 → PATH 미설정·미재시작 PC 에서도 동작.
+
+    pyhwp 의 hwp5txt/hwp5html 는 user Scripts 에 설치되는데 PATH 에 없는 경우가 흔함.
+    """
+    import sysconfig
+    found = shutil.which(name)
+    if found:
+        return found
+    dirs = []
+    for scheme in (None, "nt_user", "posix_user"):
+        try:
+            d = (sysconfig.get_path("scripts") if scheme is None
+                 else sysconfig.get_path("scripts", scheme))
+        except Exception:
+            d = None
+        if d and d not in dirs:
+            dirs.append(d)
+    exts = (".exe", "") if os.name == "nt" else ("",)
+    for d in dirs:
+        for ext in exts:
+            p = Path(d) / (name + ext)
+            if p.is_file():
+                return str(p)
+    return None
+
+
 def extract_hwp(path):
     """hwp5html 사용 — 표 내용 보존 + 이미지 동시 dump.
 
     HWP 파일과 같은 폴더에 <basename>.assets/ 폴더 생성:
     - 본문 텍스트는 함수 리턴값
     - 이미지는 BIN*.png/BIN*.bmp 등으로 dump
+
+    원칙: 한컴 COM 없이 *순수 파이썬 pyhwp* 로 추출 (결정적, headless).
+    한컴 COM→PDF→텍스트 우회는 비결정성·공백손실 위험 → 쓰지 말 것.
     """
     import tempfile as _tempfile
-    if not shutil.which("hwp5html"):
+    hwp5html = _resolve_cmd("hwp5html")
+    if not hwp5html:
         # 폴백: 구버전 hwp5txt 시도
-        if shutil.which("hwp5txt"):
+        hwp5txt = _resolve_cmd("hwp5txt")
+        if hwp5txt:
             proc = subprocess.run(
-                ["hwp5txt", str(path)],
+                [hwp5txt, str(path)],
                 capture_output=True, text=True, timeout=120
             )
             if proc.returncode == 0:
                 return proc.stdout
         raise RuntimeError(
-            "hwp5html 명령 없음. 설치: pip3 install --user pyhwp"
+            "hwp5html/hwp5txt 실행 불가. 설치: pip install pyhwp six "
+            "(six 누락 시 'No module named six' 로 깨짐)"
         )
 
     src = Path(path).resolve()
@@ -131,7 +166,7 @@ def extract_hwp(path):
 
     with _tempfile.TemporaryDirectory(prefix="dsi_hwp_") as tmp:
         proc = subprocess.run(
-            ["hwp5html", str(src)],
+            [hwp5html, str(src)],
             cwd=tmp,
             capture_output=True, text=True, timeout=300
         )

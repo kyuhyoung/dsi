@@ -51,7 +51,7 @@ Write-Log ""
 # 2. pip packages
 # ---------------------------------------------------------------
 Write-Log "[2/5] Python packages" "Yellow"
-$packages = @("pyhwp", "python-docx", "lxml", "pyyaml", "pywin32", "pymupdf")
+$packages = @("pyhwp", "six", "python-docx", "lxml", "pyyaml", "pywin32", "pymupdf")
 foreach ($pkg in $packages) {
     Write-Log "  pip install $pkg ..."
     $proc = Start-Process -FilePath $pythonCmd -ArgumentList "-m", "pip", "install", "--upgrade", $pkg `

@@ -14,6 +14,12 @@ Pillow>=10.0
 # HWP 파싱 (한국 RFP가 .hwp 형식인 경우)
 pyhwp>=0.1b15
 olefile>=0.47
+# six: pyhwp 0.1b15 가 import 하지만 install_requires 선언이 누락됨.
+# 없으면 hwp5txt/hwp5html 이 "No module named 'six'" 로 깨짐 → 반드시 명시.
+six>=1.17
 
 # XML 파싱 (python-pptx 의존성, 명시적으로 선언)
 lxml>=5.0
+
+# PDF 렌더·텍스트 추출 (검증 유틸: pdf_to_png·render_page_region·pdf_to_text·find_image_pages)
+PyMuPDF>=1.24
