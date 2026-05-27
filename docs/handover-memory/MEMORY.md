@@ -1,6 +1,7 @@
 - [양식 보존 원칙](feedback_form_principle.md) — 양식은 절대 만지지 않고 빈 셀에 텍스트만 박는다 (form_to_docx 폐기)
 - [양식·RFP·KB 일반화 원칙](feedback_no_overfit.md) — 임의 A·B·C 조합 동작 필수. 농식품AI 등 특정 케이스 하드코딩 금지
 - [일반화 — 데이터≠하드코딩](feedback_generalization.md) — 하드코딩 금지는 *코드 로직*에 적용. KB 데이터가 회사별인 건 정상. 검증: grep로 scripts/에 회사·양식명 0건
+- [명시 안 한 결정은 물어라](feedback-ask-unspecified-decisions.md) — 신청유형·신청금액 등 전략적 비즈니스 결정은 가정·기본값·이전버전 답습 금지. 반드시 사용자에게 질문.
 - [XML 결정적 채움](feedback_xml_fill.md) — 양식 채움은 .hwpx XML 직접 편집. 한컴 COM은 변환 도구로만. 연속 COM 호출은 비결정성 위험.
 - [본체 별지만 본격 산출](feedback_main_separator.md) — 산출물 = 본체 별지(보통 사업계획서) 1개. 별지 분할은 `\[별지\s*제?\s*\d+\s*호?\]` 자동 검출. 부속 별지는 부차.
 - [본문 단락 생성·교체가 핵심 가치](feedback_paragraph_fill.md) — placeholder 단락을 실제 본문으로 자동 생성·교체. 셀 채움만으론 본체 80% 미달.
