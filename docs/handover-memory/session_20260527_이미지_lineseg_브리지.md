@@ -25,11 +25,11 @@
 - `kb/image_schema.yaml`(신규): 키워드↔의미명 매핑 + search_config(크기·키워드 bound)
 - `.claude/agents/proposal-writer.md`: 셀 의미↔내용 자기검증 규칙
 
-## 남은 갭 (다음 세션)
+## 상태 메모 / 남은 갭
 
-1. **녹색 글자 opt-in** — 채운 텍스트 강제 녹색(#00AA00)이 무조건 적용 중. 제출물엔 검은 글자 필요. `add_green_char_style` 호출을 `--mark-fills` 플래그로(기본 off). [[green-text-must-be-optin]]
-2. **T17 사업비 구성 재작성** — `output/20260524/fills_본체별지3_v4.yaml`의 T17이 회사명 오입력 + 자기부담금/국고 금액칸 공백. proposal-writer 재실행(새 자기검증 규칙 적용)으로 재작성 필요. *예산 수치는 손으로 박지 말 것*(overfit).
-3. **이미지 브리지 실데이터** — `extracted/`(312MB)는 미커밋(거대). 소스 deck도 미커밋. clone 후 `extract_images_from_docs.py`를 회사 deck에 재실행해야 index.yaml·이미지 생성됨.
+- **녹색 채움 = 의도된 디버그 (갭 아님)** — AI 채움 텍스트 녹색(#00AA00)은 양식 원본↔생성 내용 구분용 *의도된* 표시. **버그 아님, 제거·문제삼지 말 것** (한 세션에서 오해해 "수정 필요"로 잘못 분류한 적 있음). 제출 시에만 검정 버전 별도. [[green-text-must-be-optin]], `.claude/CLAUDE.md` 참조.
+- **T17 사업비 구성 — 완료** — 회사명 오입력(↳셀) 제거 + 금액 셀(자기부담 860 / 국고 2,000 / 합계 2,860 / 현금 86 / 현물 774 백만원, `meta.사업비_*` 28.6억과 일치) 채움. form.yaml hints 기준 매핑(위치 추측 금지). v17에서 렌더 검증.
+- **이미지 브리지 실데이터 (유일한 실질 미완)** — `extracted/`(312MB)·소스 deck 미커밋. clone 후 `extract_images_from_docs.py`를 회사 deck에 재실행해야 `index.yaml`·이미지 생성됨.
 
 ## 산출물 위치 (이 세션, output/20260526/)
 

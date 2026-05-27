@@ -792,7 +792,13 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
 
 
 def add_green_char_style(header_path: Path) -> int:
-    """header.xml에 녹색 글자 스타일 추가, 새 id 반환."""
+    """header.xml에 녹색(#00AA00) 글자 스타일 추가, 새 id 반환.
+
+    *의도된* 기능: AI가 채운 셀·단락 텍스트를 녹색으로 표시해 양식 원본(검정)과
+    구분한다 (디버그·검토용). 버그 아님 — 제거하거나 "검정으로 고쳐야 한다"고
+    문제삼지 말 것. 발주처 실제 제출 시에만 검정 버전을 별도 생성한다.
+    (자세히: .claude/CLAUDE.md "AI가 채운 셀 텍스트는 *녹색*" 절)
+    """
     global GREEN_CHAR_PR_ID
     parser = etree.XMLParser(remove_blank_text=False)
     tree = etree.parse(str(header_path), parser)

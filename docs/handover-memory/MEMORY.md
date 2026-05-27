@@ -9,7 +9,7 @@
 - [HWPX 이미지 삽입 기능](image_insertion_feature.md) — insert_image/auto_image 연산. hp:pic + BinData + content.hpf 등록. KB 기존 이미지 우선.
 - [이미지 context 브리지](image_context_bridge.md) — auto_image가 추출 이미지를 출처 슬라이드텍스트 index.yaml + 키워드 점수로 검색. 큐레이트 1순위 override. 하드코딩 0.
 - [텍스트 겹침 근본수정](linesegarray_fill_fix.md) — set_cell_text가 stale linesegarray 미삭제 → 긴 텍스트 한컴 겹침. 삭제로 수정. 2개 양식 검증. 'hp:t render 한계' 갭 해소.
-- [녹색 글자 opt-in 필요](green-text-must-be-optin.md) — 채움 텍스트 강제 녹색은 디버그용. 제출물·검은배경 양식엔 부적합. 기본 off 전환 미완.
+- [녹색 채움은 의도된 디버그](green-text-must-be-optin.md) — AI가 채운 셀 텍스트의 녹색(#00AA00)은 *의도된* 양식↔생성 구분 표시. **버그 아님·제거 말 것**. 제출 시에만 검정 별도.
 - [세션 진행 — 2026-05-26 회사 WSL](session_20260526_progress.md) — CHECKBOX_RE·EXAMPLE_RE 정정, 매핑 0 오차 확인, T16_R2_C0 1건 검토 남음
 - [세션 인수인계 — 2026-05-26 회사 WSL→PowerShell](session_20260526_회사WSL.md) — 환경 이전 스냅샷
-- [세션 — 2026-05-27 이미지·lineseg·브리지](session_20260527_이미지_lineseg_브리지.md) — 이미지 삽입 한컴검증, linesegarray 겹침 근본수정(2양식), 추출→스키마 context 브리지, proposal-writer 셀 자기검증 규칙, KB 사업자등록번호. 미완: 녹색 opt-in·T17 예산 재작성
+- [세션 — 2026-05-27 이미지·lineseg·브리지](session_20260527_이미지_lineseg_브리지.md) — 이미지 삽입 한컴검증, linesegarray 겹침 근본수정(2양식), 추출→스키마 context 브리지, proposal-writer 셀 자기검증 규칙, KB 사업자등록번호, T17 사업비 완료. 녹색채움=의도된 디버그(갭아님). 미완: 이미지 브리지 실데이터(deck 재추출)

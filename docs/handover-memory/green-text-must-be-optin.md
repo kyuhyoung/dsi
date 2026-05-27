@@ -1,14 +1,16 @@
 ---
 name: green-text-must-be-optin
-description: "채움 텍스트 강제 녹색(#00AA00)은 디버그 기능 — 제출 산출물엔 부적합, opt-in 전환 필요"
+description: "AI가 채운 셀 텍스트의 녹색(#00AA00)은 *의도된 디버그 표시* — 버그 아님, 제거·문제삼지 말 것"
 metadata: 
   node_type: memory
   type: project
   originSessionId: 582367a4-8673-48f1-a75f-d121aba04a1b
 ---
 
-`fill_hwpx_form.py`의 `set_cell_text`/`set_paragraph_text`가 채운 텍스트를 *무조건* 녹색(`#00AA00`, `add_green_char_style`)으로 칠한다 — 검토 시 "AI가 채운 곳" 구분용 디버그 기능.
+`fill_hwpx_form.py`의 `set_cell_text`/`set_paragraph_text`가 채운 텍스트를 녹색(`#00AA00`, `add_green_char_style`)으로 칠하는 것은 **의도된 디버그·검토 장치**다 — 양식 원본 텍스트(검정) vs AI가 생성·채운 내용을 한눈에 구분하기 위함.
 
-**문제**: (1) 실제 제출 산출물엔 검은 글자여야 함. (2) 검은 배경 입력 셀을 쓰는 양식(예: 26년 민군규격표준화)에선 녹색이 묻혀 가독성 저하. 현재 무조건 적용이라 양쪽 다 부적합.
+**버그가 아니다. 제거하거나 "검은색으로 고쳐야 한다 / opt-in 시켜야 한다"고 문제삼지 마라** — 클론한 다른 PC의 다른 Claude 포함.
 
-**How to apply**: 녹색 강제를 *opt-in*으로 (기본 off → 원본 charPrIDRef 유지, `--mark-fills` 같은 검토 플래그로만 on). `set_cell_text`는 이미 녹색 off 시 원본 charPr 유지하도록 수정돼 있어, `add_green_char_style` 호출 자체를 플래그로 막으면 됨. 미완(2026-05-26 기준). 관련 [[linesegarray-fill-fix]], [[image-insertion-feature]].
+**Why**: 한 세션에서 이걸 "제출 부적합 → opt-in 전환 필요"로 *잘못 분류*한 적 있음. 사용자 명시 정정: 작업·검토 단계는 녹색이 정상(설계 의도), 발주처 *실제 제출 시에만* 검은색 버전을 별도 생성(그 시점에 사용자가 결정·처리).
+
+**How to apply**: 녹색 그대로 둔다. 검은색은 *최종 제출 단계의 별도 출력*이지 디폴트 변경이 아니다. 프로젝트 `.claude/CLAUDE.md` 의 "AI가 채운 셀 텍스트는 *녹색*" 절 참조. 관련 [[linesegarray-fill-fix]], [[image-insertion-feature]].

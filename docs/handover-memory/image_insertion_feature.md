@@ -147,4 +147,4 @@ python scripts/fill_hwpx_form.py \
 ## 알려진 이슈·수정
 
 - **텍스트 겹침 (해소됨, 2026-05-26)**: `set_cell_text`가 stale `<hp:linesegarray>` 미삭제 → 긴 텍스트가 한컴에서 한 줄에 겹쳐 렌더. `set_paragraph_text`와 동일하게 linesegarray 삭제로 수정. handover의 'hp:t render 한계' 갭의 진짜 원인이었음.
-- **녹색 글자**: `set_cell_text`/`set_paragraph_text`가 채운 텍스트를 #00AA00로 강제 (검토 구분용). *실제 제출 산출물엔 검은 글자 필요* — opt-in(기본 off) 전환 미완.
+- **녹색 글자 (의도된 디버그 — 버그 아님)**: 채운 텍스트를 #00AA00로 표시해 양식 원본↔AI 생성 내용을 구분. *의도된 장치*이니 제거·문제삼지 말 것. 발주처 제출 시에만 검정 버전 별도 생성. [[green-text-must-be-optin]]
