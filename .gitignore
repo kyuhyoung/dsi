@@ -67,3 +67,14 @@ templates/*회사소개자료*.thumbnails/
 
 # Samples (큰 파일·임시)
 samples/proposals/
+samples/**/*.bak
+
+# 추출 이미지 (문서에서 자동 추출, 수백 MB — 재현 가능: extract_images_from_docs.py 재실행)
+kb/company/*/images/extracted/
+
+# 메모리 정본은 docs/handover-memory/ (restore_memory.ps1 가 거기서 복원) — 루트 memory/ 는 작업 사본
+/memory/
+
+# 잡파일
+nul
+install.ps1.log

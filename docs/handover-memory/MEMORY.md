@@ -1,8 +1,15 @@
 - [양식 보존 원칙](feedback_form_principle.md) — 양식은 절대 만지지 않고 빈 셀에 텍스트만 박는다 (form_to_docx 폐기)
 - [양식·RFP·KB 일반화 원칙](feedback_no_overfit.md) — 임의 A·B·C 조합 동작 필수. 농식품AI 등 특정 케이스 하드코딩 금지
-- [XML 결정적 채움](feedback_xml_fill.md) — 양식 채움은 .hwpx XML 직접 편집. 한컴 COM은 .hwp↔.hwpx 변환 도구로만 1회. 연속 COM 호출은 비결정성 위험.
-- [본체 별지만 본격 산출](feedback_main_separator.md) — 산출물 = 본체 별지(보통 사업계획서) 1개 .hwpx. 부속 별지(자가진단·신청서·동의서)는 부차. 별지 분할 패턴: `\[별지\s*제?\s*\d+\s*호?\]`.
-- [본문 단락 생성·교체가 핵심 가치](feedback_paragraph_fill.md) — 양식의 "가나다" placeholder 단락을 LLM이 실제 본문 5~10페이지로 자동 생성·교체. AI 자동화의 결정적 이유. 셀 채움만으론 본체 80% 미달.
-- [결과물은 프로젝트 output 폴더에](feedback_output_location.md) — PoC·중간·최종 모두 D:\work\dabeeo\dsi\output\<날짜>\ 저장. C:\Temp 금지.
-- [양식의 모든 요소는 의도가 있다](feedback_intent_understanding.md) — 셀·체크박스·안내·placeholder·예시·조건부 셀 모두 발주처 의도. 빈칸을 독립적으로 채우면 모순. 의도 분류 + 일관성 보장.
+- [일반화 — 데이터≠하드코딩](feedback_generalization.md) — 하드코딩 금지는 *코드 로직*에 적용. KB 데이터가 회사별인 건 정상. 검증: grep로 scripts/에 회사·양식명 0건
+- [XML 결정적 채움](feedback_xml_fill.md) — 양식 채움은 .hwpx XML 직접 편집. 한컴 COM은 변환 도구로만. 연속 COM 호출은 비결정성 위험.
+- [본체 별지만 본격 산출](feedback_main_separator.md) — 산출물 = 본체 별지(보통 사업계획서) 1개. 별지 분할은 `\[별지\s*제?\s*\d+\s*호?\]` 자동 검출. 부속 별지는 부차.
+- [본문 단락 생성·교체가 핵심 가치](feedback_paragraph_fill.md) — placeholder 단락을 실제 본문으로 자동 생성·교체. 셀 채움만으론 본체 80% 미달.
+- [결과물은 프로젝트 output 폴더에](feedback_output_location.md) — 모두 D:\work\dabeeo\dsi\output\<날짜>\ 저장. C:\Temp 금지.
+- [양식의 모든 요소는 의도가 있다](feedback_intent_understanding.md) — 셀·체크박스·안내·placeholder 모두 발주처 의도. 의도 분류 + 일관성 보장.
+- [HWPX 이미지 삽입 기능](image_insertion_feature.md) — insert_image/auto_image 연산. hp:pic + BinData + content.hpf 등록. KB 기존 이미지 우선.
+- [이미지 context 브리지](image_context_bridge.md) — auto_image가 추출 이미지를 출처 슬라이드텍스트 index.yaml + 키워드 점수로 검색. 큐레이트 1순위 override. 하드코딩 0.
+- [텍스트 겹침 근본수정](linesegarray_fill_fix.md) — set_cell_text가 stale linesegarray 미삭제 → 긴 텍스트 한컴 겹침. 삭제로 수정. 2개 양식 검증. 'hp:t render 한계' 갭 해소.
+- [녹색 글자 opt-in 필요](green-text-must-be-optin.md) — 채움 텍스트 강제 녹색은 디버그용. 제출물·검은배경 양식엔 부적합. 기본 off 전환 미완.
 - [세션 진행 — 2026-05-26 회사 WSL](session_20260526_progress.md) — CHECKBOX_RE·EXAMPLE_RE 정정, 매핑 0 오차 확인, T16_R2_C0 1건 검토 남음
+- [세션 인수인계 — 2026-05-26 회사 WSL→PowerShell](session_20260526_회사WSL.md) — 환경 이전 스냅샷
+- [세션 — 2026-05-27 이미지·lineseg·브리지](session_20260527_이미지_lineseg_브리지.md) — 이미지 삽입 한컴검증, linesegarray 겹침 근본수정(2양식), 추출→스키마 context 브리지, proposal-writer 셀 자기검증 규칙, KB 사업자등록번호. 미완: 녹색 opt-in·T17 예산 재작성

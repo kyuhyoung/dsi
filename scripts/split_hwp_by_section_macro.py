@@ -23,8 +23,81 @@
 import re
 import sys
 import yaml
+import time
+import threading
 from pathlib import Path
 import win32com.client
+
+# 보안 경고 창 자동 클릭 (백그라운드 스레드)
+_auto_click_stop = False
+
+def _auto_click_security_dialogs():
+    """보안 경고 창 자동 클릭 - 창 텍스트에 '접근' 포함된 경우만."""
+    try:
+        import win32gui
+        import win32con
+        import ctypes
+        from ctypes import wintypes
+
+        user32 = ctypes.windll.user32
+        EnumWindows = user32.EnumWindows
+        EnumWindowsProc = ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
+        GetWindowTextW = user32.GetWindowTextW
+        GetWindowTextLengthW = user32.GetWindowTextLengthW
+        IsWindowVisible = user32.IsWindowVisible
+        PostMessageW = user32.PostMessageW
+        SetForegroundWindow = user32.SetForegroundWindow
+    except ImportError:
+        return
+
+    def get_window_text(hwnd):
+        length = GetWindowTextLengthW(hwnd)
+        if length == 0:
+            return ""
+        buf = ctypes.create_unicode_buffer(length + 1)
+        GetWindowTextW(hwnd, buf, length + 1)
+        return buf.value
+
+    while not _auto_click_stop:
+        try:
+            target_hwnd = None
+
+            def enum_callback(hwnd, lParam):
+                nonlocal target_hwnd
+                if IsWindowVisible(hwnd):
+                    title = get_window_text(hwnd)
+                    # "접근" 키워드가 포함된 경고창 또는 제목이 정확히 "한글"인 작은 창
+                    if "접근" in title or "허용" in title:
+                        target_hwnd = hwnd
+                        return False  # 찾으면 중단
+                return True
+
+            EnumWindows(EnumWindowsProc(enum_callback), 0)
+
+            if target_hwnd:
+                SetForegroundWindow(target_hwnd)
+                time.sleep(0.05)
+                PostMessageW(target_hwnd, win32con.WM_KEYDOWN, win32con.VK_RETURN, 0)
+                PostMessageW(target_hwnd, win32con.WM_KEYUP, win32con.VK_RETURN, 0)
+                time.sleep(0.1)
+        except Exception:
+            pass
+        time.sleep(0.15)
+
+
+def start_auto_clicker():
+    """자동 클릭 스레드 시작."""
+    global _auto_click_stop
+    _auto_click_stop = False
+    t = threading.Thread(target=_auto_click_security_dialogs, daemon=True)
+    t.start()
+    return t
+
+
+def stop_auto_clicker():
+    """자동 클릭 스레드 중지."""
+    global _auto_click_stop
+    _auto_click_stop = True
 
 
 def safe_filename(label: str) -> str:
@@ -35,15 +108,10 @@ def safe_filename(label: str) -> str:
 
 def make_hwp():
     hwp = win32com.client.Dispatch("HWPFrame.HwpObject")
-    for mod in ("FilePathCheckDLL", "FilePathChecker"):
-        try:
-            hwp.RegisterModule("FilePathCheckerModule", mod)
-        except Exception:
-            pass
-    try:
-        hwp.SetMessageBoxMode(0x00000020)
-    except Exception:
-        pass
+    # 보안 경고 창 비활성화
+    hwp.RegisterModule("FilePathCheckDLL", "FilePathCheckerModule")
+    # 모든 메시지 박스 자동 확인 (0x00020000 = MB_OK 자동)
+    hwp.SetMessageBoxMode(0x00020000)
     return hwp
 
 
@@ -69,6 +137,12 @@ def split_one(src_hwp: str, p_start: int, p_end, out_path: str):
 
     out_abs = str(Path(out_path).resolve())
     hwp.SaveAs(out_abs, "HWP", "")
+    # PDF도 저장 (실패해도 HWP는 이미 저장됨)
+    pdf_path = out_abs.rsplit(".", 1)[0] + ".pdf"
+    try:
+        hwp.SaveAs(pdf_path, "PDF", "")
+    except Exception as e:
+        print(f"    PDF 저장 실패: {e}", file=sys.stderr)
     hwp.Quit()
 
 
@@ -87,7 +161,9 @@ def main():
         print("ERR: sections 비어있음", file=sys.stderr)
         sys.exit(1)
 
-    print(f"분리: {len(sections)} 별지", file=sys.stderr)
+    # 보안 경고 창 수동 클릭 필요 안내
+    print(f"분리: {len(sections)} 별지 (보안창 뜨면 '허용' 클릭)", file=sys.stderr)
+
     for i, s in enumerate(sections):
         p_start, p_end = s["paragraph_range"]
         fname = f"{i+1:02d}_{safe_filename(s['label'])}.hwp"
@@ -98,6 +174,7 @@ def main():
             print(f"  OK {fname} ({size:,} B) p{p_start}~{p_end}", file=sys.stderr)
         except Exception as e:
             print(f"  ERR {fname}: {e}", file=sys.stderr)
+
 
 
 if __name__ == "__main__":

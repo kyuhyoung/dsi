@@ -34,9 +34,10 @@ meta:
   사업명_short: '농식품AI 신속상용화'
   발주기관: '농림축산식품부 (한국농업기술진흥원 주관)'
   제안사: '주식회사 다비오'
-  대표자: '(확인 필요)'
-  사업자등록번호: '(확인 필요)'
-  법인등록번호: '(확인 필요)'
+  company: 'dabeeo'  # KB 이미지 검색용
+  대표자: '박주흠'
+  사업자등록번호: '(미확인)'
+  법인등록번호: '(미확인)'
   업종: '소프트웨어 개발 및 공급업 (정보통신업)'
   작성일: '2026.04.30'
 
@@ -77,8 +78,17 @@ fills:
     text: '2012.02.28'
     intent: example
     source: 'kb/company/dabeeo/history.md'
+  # 대표자 이름 (홍길동 → 박주흠)
+  - id: T14_R2_C1
+    text: '박주흠'
+    intent: example
+    source: 'kb/company/dabeeo/intro.md#대표이사'
+  - id: T14_R2_C1_P0
+    text: '박주흠'
+    intent: example
+    source: 'kb/company/dabeeo/intro.md#대표이사'
   - id: T14_R2_C3
-    text: '(확인 필요)'
+    text: '(미확인)'
     intent: empty_input
     source: 'KB 없음 — 사업자등록번호'
   - id: T14_R3_C1
@@ -86,7 +96,7 @@ fills:
     intent: empty_input
     source: 'kb/company/dabeeo/intro.md'
   - id: T14_R3_C3
-    text: '(확인 필요)'
+    text: '(미확인)'
     intent: empty_input
     source: 'KB 없음 — 법인등록번호'
 
@@ -116,8 +126,7 @@ fills:
     operation: check
     intent: checkbox
     source: '비즈니스결정: 단독신청 (□ 부 → ☑ 부)'
-  # T16_R2_C0 = 빈 셀 (intent: empty_input). 컨소시엄 라벨 셀 아님 (라벨은 R1_C0).
-  # 단독신청이므로 R2 (참여기업 행) 자체가 의미 없음. 빈 셀 그대로 두는 게 안전. fill 안 함.
+  # T16_R2_C0 = 레이아웃용 빈 셀 (입력란 아님). fill 안 함.
   # T16_R2_C1 = "↳ 컨소시엄 참여기업" 은 example intent. 화살표 + 라벨 형태로 양식 의도.
   # 단독신청 시 양식 그대로 두면 양식 변경 없음. fill 안 하는 게 안전.
   # T16_R2_C2 = "(0社) A주식회사 ···" 예시 → 실제값으로 교체 가능
@@ -165,23 +174,14 @@ fills:
     source: '비즈니스결정'
 
   # ════════════════════════════════════════════════════════
-  # T18 — 사업계획서 요약 (참고 사진 셀 — 빈 입력)
+  # T18 — 사업계획서 요약 (참고 사진 셀 — 이미지 삽입)
   # ════════════════════════════════════════════════════════
   - id: T18_R3_C3
-    text: |
-      [Eartheye Plantation 플랫폼 UI 캡처 — 위성·드론·모바일 6패널 데이터 흐름도 첨부]
-
-      ❍ 상용화 대상: Eartheye Plantation은 위성·드론·모바일 영상을 통합 분석하는 정밀농업 AI 플랫폼으로,
-         팜나무 객체 탐지 F1-Score 0.98 수준의 고정밀 성능을 확보한 1년 내 상용화 가능 솔루션입니다.
-      ❍ 핵심 차별성: 세계 최초 30cm 초고해상도 위성영상 기반 임·농업 분야 상용화 + 초해상화 AI 모델로
-         30cm급 → 7.5cm급 수준 향상, 자체 GeoAI 6대 백본 기술 보유.
-      ❍ 검증 실적: 인도네시아 SALIM 그룹·KORINDO 99% 이상 탐지 정확도 달성, KORINDO 4년 장기 계약 수주,
-         4개국 (인도네시아·말레이시아·베트남·핀란드) 수출 실적 보유.
-      ❍ 농식품 정책 적합성: 농림축산식품부 조성 농식품 모태펀드 투자 포트폴리오 선정 기업으로,
-         농식품 산업 혁신·신성장 분야 정책형 투자 트랙 내 기술성·사업성 검증 완료.
-      ❍ 사업 목표: 본 사업을 통해 1년 내 국내 5건 상용화 + 수출 매출 10억원 + 국민체감활동 3건 달성.
+    operation: auto_image
+    context: '제품(서비스)의 특징을 나타낼 수 있는 참고 사진(이미지) 또는 설계도 삽입'
     intent: empty_input
-    source: 'kb/company/dabeeo/tech-core.md + quantitative.md + projects.md'
+    source: 'kb/company/dabeeo/images/ (자동 검색)'
+    # NOTE: KB에 실제 제품 스크린샷 필요 — product_main.png 또는 eartheye_screenshot.png
 
   # ════════════════════════════════════════════════════════
   # T19 — 1-1 셀 안 placeholder 단락 3개 (□ 가나다 / ○ 가나다 / - 가나다)
@@ -291,7 +291,7 @@ fills:
     intent: empty_input
     source: '비즈니스결정'
   - id: T36_R3_C5
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T36_R3_C6
@@ -320,7 +320,7 @@ fills:
     intent: empty_input
     source: '비즈니스결정'
   - id: T36_R4_C5
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T36_R4_C6
@@ -391,7 +391,7 @@ fills:
     source: 'kb/company/dabeeo/quantitative.md §8-2'
   # 인력 1 — 본 사업 책임자
   - id: T41_R2_C1
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음 — 책임자 성명'
   - id: T41_R2_C2
@@ -399,7 +399,7 @@ fills:
     intent: empty_input
     source: 'kb 추정'
   - id: T41_R2_C3
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R2_C4
@@ -415,7 +415,7 @@ fills:
     intent: empty_input
     source: 'kb/company/dabeeo/quantitative.md §8-2 (석·박사급 포함)'
   - id: T41_R2_C7
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R2_C8
@@ -423,7 +423,7 @@ fills:
     intent: empty_input
     source: '비즈니스결정'
   - id: T41_R2_C9
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R2_C10
@@ -436,7 +436,7 @@ fills:
     source: 'kb/company/dabeeo/quantitative.md §1-1, §3-2'
   # 인력 2 — 딥러닝 모델 개발자
   - id: T41_R4_C1
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R4_C2
@@ -444,7 +444,7 @@ fills:
     intent: empty_input
     source: 'kb 추정'
   - id: T41_R4_C3
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R4_C4
@@ -460,7 +460,7 @@ fills:
     intent: empty_input
     source: 'kb 추정'
   - id: T41_R4_C7
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R4_C8
@@ -468,7 +468,7 @@ fills:
     intent: empty_input
     source: 'kb/company/dabeeo/tech-core.md'
   - id: T41_R4_C9
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R4_C10
@@ -481,7 +481,7 @@ fills:
     source: 'kb/company/dabeeo/projects.md, tech-core.md §5'
   # 인력 3 — 사업화·판로 담당
   - id: T41_R6_C1
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R6_C2
@@ -489,7 +489,7 @@ fills:
     intent: empty_input
     source: 'kb 추정'
   - id: T41_R6_C3
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R6_C4
@@ -505,7 +505,7 @@ fills:
     intent: empty_input
     source: 'kb 추정'
   - id: T41_R6_C7
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R6_C8
@@ -513,7 +513,7 @@ fills:
     intent: empty_input
     source: 'kb/company/dabeeo/projects.md'
   - id: T41_R6_C9
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R6_C10
@@ -526,7 +526,7 @@ fills:
     source: 'kb/company/dabeeo/quantitative.md §9-2, projects.md'
   # 인력 4 — 회계담당자 (RFP 의무 — 회계담당자 전담 지정)
   - id: T41_R8_C1
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음 — 회계담당자 (RFP 의무)'
   - id: T41_R8_C2
@@ -534,7 +534,7 @@ fills:
     intent: empty_input
     source: 'RFP 비기능 (회계담당자 지정 의무, e나라도움)'
   - id: T41_R8_C3
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R8_C4
@@ -550,7 +550,7 @@ fills:
     intent: empty_input
     source: 'kb 추정'
   - id: T41_R8_C7
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R8_C8
@@ -558,7 +558,7 @@ fills:
     intent: empty_input
     source: 'RFP 비기능'
   - id: T41_R8_C9
-    text: '(확인 필요)'
+    text: '박주흠'
     intent: empty_input
     source: 'KB 없음'
   - id: T41_R8_C10
@@ -1587,7 +1587,7 @@ fills:
     intent: null
     source: 'kb/company/dabeeo/quantitative.md §8-2, §8-3'
   - id: P152
-    text: '* 대표자 및 회계담당자: 대표자(확인 필요)는 다비오 창립 (2012.02.28) 이래 14년간 GeoAI 분야 R&D 및 사업화 총괄. RFP 의무에 따라 회계담당자 전담 지정 (T41_R8 인력 4 = 경영관리팀장/회계담당자, 본 사업 전담 30% 참여) — 정부지원 과제 29건 (총 112.4억원) 회계 관리 경험 보유.'
+    text: '* 대표자 및 회계담당자: 대표자박주흠는 다비오 창립 (2012.02.28) 이래 14년간 GeoAI 분야 R&D 및 사업화 총괄. RFP 의무에 따라 회계담당자 전담 지정 (T41_R8 인력 4 = 경영관리팀장/회계담당자, 본 사업 전담 30% 참여) — 정부지원 과제 29건 (총 112.4억원) 회계 관리 경험 보유.'
     intent: null
     source: 'kb/company/dabeeo/history.md + quantitative.md §6-4, RFP 비기능'
 

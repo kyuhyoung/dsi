@@ -1,0 +1,117 @@
+# KB 이미지 스키마 — 의미적 이름 ↔ 파일 경로 매핑
+#
+# 원칙 (feedback_generalization.md):
+#   - 특정 양식/회사에 하드코딩 금지
+#   - 임의의 회사, 임의의 RFP, 임의의 양식에서 동작
+#   - KB 기존 이미지 우선 → 없을 때만 생성 고려
+#
+# 용법:
+#   1. proposal-writer/form-analyst가 이미지 placeholder 셀 발견
+#   2. 셀의 hints.left (라벨) 또는 table_label에서 키워드 추출
+#   3. 이 스키마의 keywords 매칭으로 적합한 이미지 탐색
+#   4. 매칭되면 image_path 사용, 없으면 fallback 또는 skip
+#
+# 스키마 구조:
+#   image_mappings:
+#     - keywords: [키워드1, 키워드2, ...]  # 이미지가 적합한 컨텍스트
+#       image_path: kb/company/{company}/images/파일명.png  # {company}는 동적 치환
+#       description: 이미지 설명 (디버그/로깅용)
+#       priority: 숫자 (낮을수록 우선)
+
+# ──────────────────────────────────────────────────────
+# 공통 이미지 매핑 (회사 무관)
+# ──────────────────────────────────────────────────────
+common_mappings:
+  # 제품/서비스 대표 이미지
+  - keywords: ['제품', '서비스', '솔루션', '플랫폼', 'product', 'service', '대표 사진', '이미지', '특징']
+    image_path: kb/company/{company}/images/product_main.png
+    fallback_paths:
+      - kb/company/{company}/images/ai_workflow_3layer.png
+      - kb/company/{company}/images/dsi_architecture.png
+      - kb/company/{company}/images/product_sample.png
+    description: 제품/서비스 대표 이미지
+    priority: 1
+
+  # 조직도
+  - keywords: ['조직도', '조직 구성', 'organization', 'org chart', '사업단 조직']
+    image_path: kb/company/{company}/images/org_chart.png
+    fallback_paths:
+      - kb/company/{company}/images/organization.png
+    description: 회사 조직도
+    priority: 1
+
+  # 시스템 구성도 / 아키텍처
+  - keywords: ['구성도', '시스템 구성', 'architecture', '아키텍처', '구조도', '설계도']
+    image_path: kb/company/{company}/images/architecture.png
+    fallback_paths:
+      - kb/company/{company}/images/system_diagram.png
+      - kb/company/{company}/images/tech_architecture.png
+    description: 시스템 아키텍처/구성도
+    priority: 1
+
+  # 기술 흐름도 / 프로세스
+  - keywords: ['흐름도', '프로세스', 'workflow', 'flow', '데이터 흐름']
+    image_path: kb/company/{company}/images/workflow.png
+    fallback_paths:
+      - kb/company/{company}/images/process_flow.png
+    description: 업무/기술 흐름도
+    priority: 1
+
+  # 실적/성과 차트
+  - keywords: ['실적', '성과', '매출', 'revenue', 'performance', '그래프', '차트']
+    image_path: kb/company/{company}/images/performance_chart.png
+    fallback_paths:
+      - kb/company/{company}/images/revenue_chart.png
+    description: 실적/성과 시각화
+    priority: 2
+
+  # 로고
+  - keywords: ['로고', 'logo', 'CI', '회사 마크']
+    image_path: kb/company/{company}/images/logo.png
+    fallback_paths:
+      - kb/company/{company}/images/ci_logo.png
+    description: 회사 로고
+    priority: 1
+
+  # 인증서/특허
+  - keywords: ['인증', '특허', 'certification', 'patent', '자격', '증명서']
+    image_path: kb/company/{company}/images/certifications.png
+    fallback_paths:
+      - kb/company/{company}/images/patent.png
+    description: 인증서/특허 이미지
+    priority: 2
+
+  # 사업 일정표
+  - keywords: ['일정', '마일스톤', 'milestone', 'timeline', 'schedule', '추진 일정']
+    image_path: kb/company/{company}/images/timeline.png
+    fallback_paths:
+      - kb/company/{company}/images/schedule.png
+      - kb/company/{company}/images/gantt.png
+    description: 사업 일정/마일스톤
+    priority: 2
+
+# ──────────────────────────────────────────────────────
+# 이미지 탐색 설정
+# ──────────────────────────────────────────────────────
+search_config:
+  # 키워드 매칭 시 정규화 (공백/특수문자 제거, 소문자화)
+  normalize_keywords: true
+
+  # 매칭 안 될 경우 동작
+  on_no_match: skip  # skip | placeholder_text | generate
+
+  # 이미지 없을 때 대체 텍스트 (on_no_match=placeholder_text 일 때)
+  placeholder_template: '[{keyword} 이미지 - KB에서 찾을 수 없음]'
+
+  # 지원 이미지 확장자
+  supported_extensions: ['.png', '.jpg', '.jpeg', '.bmp', '.gif']
+
+  # extracted/index.yaml 검색 시 이미지 크기 sanity bound (바이트)
+  #   - 너무 작음: 아이콘·불릿 (제외)
+  #   - 너무 큼: 애니메이션 gif·초대형 배경/데모 (문서 도식 아님, 제외)
+  index_min_bytes: 15000
+  index_max_bytes: 8000000
+
+  # 짧은 영문 키워드(ci, logo 등)는 공백 제거된 텍스트에서 substring 오탐을 유발.
+  # 한글 키워드는 길이 무관 유지, 순수 영문 키워드는 이 길이 미만이면 검색서 제외.
+  index_latin_min_len: 4
