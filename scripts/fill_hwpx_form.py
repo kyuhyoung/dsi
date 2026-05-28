@@ -683,6 +683,64 @@ def set_paragraph_text(p_el, text: str):
     return True
 
 
+def _norm_for_header_match(s: str) -> str:
+    """헤더 매칭용 정규화 — 공백·하이픈·언더스코어·중점 제거 + 소문자.
+    "As is" / "[To-be]" / "To  be" 모두 동일 정규형으로 매칭."""
+    return re.sub(r"[\s\-_·]+", "", (s or "")).lower()
+
+
+def _detect_column_mismap(tc_el, new_text: str):
+    """채울 내용에 *다른 컬럼의 헤더* 가 마커(`[X]`/`(X)`/`X:`)로 들어있으면 mis-mapping 의심.
+    예: As is 컬럼 셀(C0)에 채우는 텍스트에 `[To-be]` 가 있으면 → C1(To be) 컬럼 내용이 잘못 들어감.
+
+    일반: 비교 표(As-Is/To-Be·이전/이후·입력/출력·국내/해외 등) 컬럼 매핑 오류를
+    *양식의 컬럼 헤더 자체에서 학습*해 검출 — 특정 헤더명·내용 하드코딩 없음.
+    반환: mismap 감지된 *다른 헤더* 텍스트(거부 이유), 없으면 None.
+    """
+    # 부모 tbl
+    el = tc_el.getparent()
+    while el is not None and etree.QName(el).localname != "tbl":
+        el = el.getparent()
+    if el is None:
+        return None
+    trs = el.findall(f"{{{HP_NS}}}tr")
+    if len(trs) < 2:
+        return None  # 헤더+본문 최소 2행 필요
+    # row 0 = 컬럼 헤더
+    header_tcs = trs[0].findall(f"{{{HP_NS}}}tc")
+    headers = ["".join((t.text or "") for t in tc.iter(f"{{{HP_NS}}}t")).strip()
+               for tc in header_tcs]
+    if len([h for h in headers if h]) < 2:
+        return None  # 의미 있는 헤더 2개 미만
+    # 채우는 셀의 column index
+    tr = tc_el.getparent()
+    if tr is None:
+        return None
+    my_tcs = tr.findall(f"{{{HP_NS}}}tc")
+    try:
+        my_col = my_tcs.index(tc_el)
+    except ValueError:
+        return None
+    # 자기 컬럼 헤더 빼고 다른 헤더와 비교 (header row 자체는 skip)
+    if tr is trs[0]:
+        return None
+    my_header_norm = _norm_for_header_match(headers[my_col] if my_col < len(headers) else "")
+    new_norm = _norm_for_header_match(new_text)
+    # `[X]`/`(X)`/`X:` 형태 마커 추출
+    markers = re.findall(r"[\[(]([^\[\]()]{1,30})[\])]|([^\s]{1,30}):", new_text or "")
+    extracted = [_norm_for_header_match(a or b) for a, b in markers]
+    extracted = [m for m in extracted if m]
+    for i, h in enumerate(headers):
+        if i == my_col or not h:
+            continue
+        h_norm = _norm_for_header_match(h)
+        if h_norm == my_header_norm:
+            continue
+        if h_norm and h_norm in extracted:
+            return h
+    return None
+
+
 def _is_standalone_instruction_box(tc_el) -> bool:
     """tc 가 *1×1 단일셀 표*의 셀이고, 텍스트가 ※ 로 시작하는 안내문이면 True.
     이는 standalone 작성요령 box — *내용으로 채우면 안 됨*(양식 안내문, 제출 시 삭제 대상).
@@ -909,6 +967,13 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
             if _is_standalone_instruction_box(tc):
                 stats["blocked_instruction_box"] = stats.get("blocked_instruction_box", 0) + 1
                 print(f"  WARN 작성요령 박스 채움 거부: {cid} (1×1 ※ 박스, 안내문 보존)",
+                      file=sys.stderr)
+                continue
+            # 가드: 채울 내용에 *다른 컬럼 헤더* 마커가 들어있으면 mis-mapping 의심 → 거부
+            mismap = _detect_column_mismap(tc, str(text))
+            if mismap is not None:
+                stats["blocked_column_mismap"] = stats.get("blocked_column_mismap", 0) + 1
+                print(f"  WARN 컬럼 매핑 오류 채움 거부: {cid} (다른 컬럼 헤더 '{mismap}' 가 내용에 마커로 등장)",
                       file=sys.stderr)
                 continue
             if set_cell_text(tc, str(text)):
