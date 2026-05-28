@@ -683,6 +683,27 @@ def set_paragraph_text(p_el, text: str):
     return True
 
 
+def _is_standalone_instruction_box(tc_el) -> bool:
+    """tc 가 *1×1 단일셀 표*의 셀이고, 텍스트가 ※ 로 시작하는 안내문이면 True.
+    이는 standalone 작성요령 box — *내용으로 채우면 안 됨*(양식 안내문, 제출 시 삭제 대상).
+    일반: 한국 공공 양식 공통 관행(단일 셀 ※ 박스 = 안내). 다중 셀(요약 표)은 입력칸.
+    """
+    # 부모 tbl 찾기 (tc → tr → tbl)
+    el = tc_el.getparent()
+    while el is not None and etree.QName(el).localname != "tbl":
+        el = el.getparent()
+    if el is None:
+        return False
+    trs = el.findall(f"{{{HP_NS}}}tr")
+    if len(trs) != 1:
+        return False
+    tcs = trs[0].findall(f"{{{HP_NS}}}tc")
+    if len(tcs) != 1:
+        return False
+    txt = "".join((t.text or "") for t in tc_el.iter(f"{{{HP_NS}}}t")).strip()
+    return bool(txt) and txt.startswith("※")
+
+
 def _load_fill_config(project_root: Path):
     """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (filler 패턴 등)."""
     global PLACEHOLDER_FILLER_RE
@@ -884,6 +905,12 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
             if apply_cell_check(tc, operation):
                 stats["filled_check"] = stats.get("filled_check", 0) + 1
         else:
+            # 가드: standalone 작성요령(1×1 ※ 박스)은 내용으로 채우지 않음 — 양식 안내문 보존
+            if _is_standalone_instruction_box(tc):
+                stats["blocked_instruction_box"] = stats.get("blocked_instruction_box", 0) + 1
+                print(f"  WARN 작성요령 박스 채움 거부: {cid} (1×1 ※ 박스, 안내문 보존)",
+                      file=sys.stderr)
+                continue
             if set_cell_text(tc, str(text)):
                 stats["filled_cell"] = stats.get("filled_cell", 0) + 1
 
