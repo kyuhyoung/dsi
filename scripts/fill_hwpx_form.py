@@ -63,6 +63,8 @@ PARA_ID_RE = re.compile(r"^P(\d+)$")
 # templates/system_defaults.yaml 의 hwpx_fill.placeholder_filler_pattern 으로 덮어씀.
 # (아래는 yaml 로드 실패 시 안전 fallback — 정본은 yaml)
 PLACEHOLDER_FILLER_RE = re.compile(r"가나다라?|[○]{2,}")
+# 잔존 단독 마커 정리용. yaml hwpx_fill.marker_only_pattern 으로 덮어씀.
+MARKER_ONLY_RE = re.compile(r"^[\s\*\-·○□❍•─━]+$")
 
 
 def parse_cell_id(cell_id: str):
@@ -763,16 +765,50 @@ def _is_standalone_instruction_box(tc_el) -> bool:
 
 
 def _load_fill_config(project_root: Path):
-    """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (filler 패턴 등)."""
-    global PLACEHOLDER_FILLER_RE
+    """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (filler·marker_only 패턴 등)."""
+    global PLACEHOLDER_FILLER_RE, MARKER_ONLY_RE
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
-        pat = (cfg.get("hwpx_fill") or {}).get("placeholder_filler_pattern")
-        if pat:
-            PLACEHOLDER_FILLER_RE = re.compile(pat)
+        hf = cfg.get("hwpx_fill") or {}
+        if hf.get("placeholder_filler_pattern"):
+            PLACEHOLDER_FILLER_RE = re.compile(hf["placeholder_filler_pattern"])
+        if hf.get("marker_only_pattern"):
+            MARKER_ONLY_RE = re.compile(hf["marker_only_pattern"])
     except Exception:
         pass  # fallback 유지
+
+
+def cleanup_residual_placeholders(section_root) -> int:
+    """Fill 후 *미채움 placeholder 잔존*을 자동 정리 (텍스트 비움).
+    잡는 케이스 (yaml 패턴 기반):
+      - PLACEHOLDER_FILLER_RE 매칭 (가나다·○○○ 등 채움 문자열)
+      - MARKER_ONLY_RE 매칭 + 짧음 (단독 ❍/-/*/□ 등 마커만 남음)
+    일반: 양식·회사 무관, 모든 hp:p 스캔. 양식 라벨에 우연 단순 마커는 길이 한도(≤5)로 보호.
+    """
+    cleaned = 0
+    for p in section_root.iter(f"{{{HP_NS}}}p"):
+        ts = list(p.iter(f"{{{HP_NS}}}t"))
+        if not ts:
+            continue
+        txt = "".join((t.text or "") for t in ts)
+        stripped = txt.strip()
+        if not stripped:
+            continue
+        matched = False
+        if PLACEHOLDER_FILLER_RE.search(stripped):
+            matched = True
+        elif len(stripped) <= 5 and MARKER_ONLY_RE.match(stripped):
+            matched = True
+        if matched:
+            for t in ts:
+                if t.text:
+                    t.text = ""
+            ls = p.find(f"{{{HP_NS}}}linesegarray")
+            if ls is not None:
+                p.remove(ls)
+            cleaned += 1
+    return cleaned
 
 
 def _para_plain_text(p_el) -> str:
@@ -984,6 +1020,11 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
         n = inject_paragraphs(root, anchor_idx, lines)
         stats["injected_para"] = stats.get("injected_para", 0) + n
 
+    # 모든 fill·inject 완료 후 *잔존 placeholder*(가나다·단독 마커) 자동 정리 — 일반 가드
+    n_cleaned = cleanup_residual_placeholders(root)
+    if n_cleaned:
+        stats["cleaned_residual"] = stats.get("cleaned_residual", 0) + n_cleaned
+
     body = etree.tostring(root, encoding="unicode")
     header = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'
     section_path.write_bytes((header + body).encode("utf-8"))
@@ -1173,6 +1214,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         f"단락 {stats.get('filled_para', 0)}",
         f"셀안단락 {stats.get('filled_cellpara', 0)}",
         f"주입단락 {stats.get('injected_para', 0)}",
+        f"잔존정리 {stats.get('cleaned_residual', 0)}",
         f"체크 {stats.get('filled_check', 0)}",
         f"이미지 {img_total} (명시 {stats.get('filled_image', 0)} + 자동 {stats.get('filled_image_auto', 0)})",
     ]

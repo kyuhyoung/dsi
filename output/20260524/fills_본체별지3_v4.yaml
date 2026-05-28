@@ -192,10 +192,16 @@ fills:
   # ════════════════════════════════════════════════════════
   # T19 — 1-1 셀 안 placeholder 단락 3개 (□ 가나다 / ○ 가나다 / - 가나다)
   # ════════════════════════════════════════════════════════
-  # 컬럼 의도: C0 = As is 컬럼 → As-is 내용만. C1 (To be) 컬럼은 별도 fill (아래 T19_R2_C1).
-  - id: T19_R2_C0
-    text: '기존 임·농업 모니터링은 드론 촬영 + 수작업 영상 판독에 의존하여, 1,000㎢ 분석에 약 345일이 소요되며, 분석 인력·시간 의존도가 높아 의사결정이 지연되는 구조적 한계가 존재합니다. 데이터가 비정형화되어 의사결정·현장 작업과 단절된 운영 체계입니다.'
-    source: 'kb/company/dabeeo/quantitative.md §2-1, §13-1, tech-core.md (As-Is)'
+  # 컬럼 의도: C0 = As is 컬럼 (sub-para 3레벨 ○/-/*), C1 = To be (별도 아래). cross-column 마커 0건.
+  - id: T19_R2_C0_P0
+    text: '○ 기존 임·농업 모니터링은 드론 촬영 + 수작업 영상 판독에 의존하여, 1,000㎢ 분석에 약 345일이 소요되며, 분석 인력·시간 의존도가 높아 의사결정이 지연되는 구조적 한계가 존재합니다.'
+    source: 'kb/company/dabeeo/quantitative.md §2-1'
+  - id: T19_R2_C0_P1
+    text: '- 데이터가 비정형화되어 분석 결과가 의사결정·현장 작업으로 연계되지 않는 단절된 운영 체계입니다.'
+    source: 'kb/company/dabeeo/tech-core.md (As-Is 한계)'
+  - id: T19_R2_C0_P2
+    text: '* 광범위 촬영 운용 비용과 영상 정합 전처리에서 비용·운영 부담이 발생하여 대규모 농장 환경에서 생산성·운영 효율 저하의 구조적 한계가 있습니다.'
+    source: 'kb/company/dabeeo/tech-core.md (As-Is 한계 상세)'
 
   # ════════════════════════════════════════════════════════
   # T20·T24·T27·T34·T51·T54·T59 — 섹션 헤더 옆 빈 셀
@@ -1737,11 +1743,16 @@ fills:
     source: 'kb/company/dabeeo/quantitative.md §12, §2-2, §6-5 + RFP 정량지표'
 
   # ── T19 1-1 셀 안 placeholder — instruction_placeholder 1개 ──
-  # T19_R2_C1 = To be 컬럼 (양식 prompt "※ 사업계획의 핵심 내용 중심, AI 응용에 관해 확연히 드러나도록 작성")
-  # C0(As is) + C1(To be) 컬럼 의도 일치 — To-be 본문 + AI 기술 적용 + AI 응용 명확성을 통합 작성
-  - id: T19_R2_C1
-    text: |
-      당사 Eartheye Plantation 은 위성·드론·모바일 통합 GeoAI 분석으로 동일 면적을 약 29일에 처리(약 12배 단축)하며, ① 팜나무·열매 객체 탐지(F1-Score 0.98), ② EVI 기반 식생 건강도 4단계 분류, ③ 시계열 변화 탐지(질병·고사·수확, precision 100%·recall 97.5%), ④ 위성영상 초해상화(30cm→7.5cm) 등 4대 핵심 기능을 모두 딥러닝 백본(Object Detection·Semantic Segmentation·Change Detection·Super Resolution) 기반 자동화·고정밀·시계열 처리로 제공합니다. 기존 룰 기반·수작업 판독 방식 대비 분석-의사결정-현장 적용이 통합된 End-to-End 체계로, AI 응용제품 본질 요건을 충족합니다.
+  # T19_R2_C1 = To be 컬럼 (sub-para 3레벨 ○/-/*). AI 응용 명확성은 본 컬럼 의도(form prompt: 핵심 내용 + AI 응용 강조).
+  - id: T19_R2_C1_P0
+    text: '○ 당사 Eartheye Plantation 은 위성·드론·모바일 통합 GeoAI 분석으로 동일 면적을 약 29일에 처리(약 12배 단축)하여, 자동화·고정밀·시계열 처리 결과를 제공합니다.'
+    source: 'kb/company/dabeeo/quantitative.md §1, §2-1, §13'
+  - id: T19_R2_C1_P1
+    text: '- 6대 GeoAI 백본 기반 4대 핵심 기능: ① 팜나무·열매 객체 탐지(F1-Score 0.98), ② EVI 기반 식생 건강도 4단계 분류, ③ 시계열 변화 탐지(precision 100%·recall 97.5%), ④ 위성영상 초해상화(30cm→7.5cm).'
+    source: 'kb/company/dabeeo/tech-core.md (6대 백본), quantitative.md (정량 지표)'
+  - id: T19_R2_C1_P2
+    text: '* 분석-의사결정-현장 적용이 통합된 End-to-End 체계로, 기존 룰 기반·수작업 판독 방식 대비 AI 응용제품 본질 요건을 충족합니다.'
+    source: 'kb/company/dabeeo/tech-core.md (시장 효과·통합 구조)'
     source: 'kb/company/dabeeo/tech-core.md (6대 백본 기술)'
 
   # ── T22 1-2 차별성·혁신성 — instruction_placeholder 1개 ──

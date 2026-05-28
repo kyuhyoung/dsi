@@ -12,6 +12,11 @@ hwpx_fill:
   # 다른 양식이 다른 filler(○○○ 등)를 쓰면 여기에 추가. 특정 내용 하드코딩 아님.
   placeholder_filler_pattern: '가나다라?|[○]{2,}'
 
+  # Fill 후 *잔존 단독 마커* 단락(글자 없이 ○/-/*/□ 같은 불릿만 남음) 자동 정리 패턴.
+  # 짧고(stripped ≤ 5자) 이 패턴에 *전체* 매칭하면 미채움 placeholder 잔존으로 보고 비움.
+  # 임의 한국 양식의 미채움 마커 일관 정리 — 특정 셀/회사/양식 하드코딩 아님.
+  marker_only_pattern: '^[\s\*\-·○□❍•─━]+$'
+
 # 시스템 default 라벨 (한국어 발표 기준)
 defaults:
   toc_title: '목차'
