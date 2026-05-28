@@ -33,6 +33,7 @@ fills.yaml 스키마:
 """
 import re
 import sys
+import copy
 import shutil
 import tempfile
 import zipfile
@@ -57,6 +58,11 @@ HWPUNIT_PER_PIXEL = 75
 GREEN_CHAR_PR_ID = None
 CELL_PARA_ID_RE = re.compile(r"^T(\d+)_R(\d+)_C(\d+)_P(\d+)$")
 PARA_ID_RE = re.compile(r"^P(\d+)$")
+
+# 양식 placeholder 채움 문자열 패턴 (단락 복제 시 치환 대상).
+# templates/system_defaults.yaml 의 hwpx_fill.placeholder_filler_pattern 으로 덮어씀.
+# (아래는 yaml 로드 실패 시 안전 fallback — 정본은 yaml)
+PLACEHOLDER_FILLER_RE = re.compile(r"가나다라?|[○]{2,}")
 
 
 def parse_cell_id(cell_id: str):
@@ -677,6 +683,88 @@ def set_paragraph_text(p_el, text: str):
     return True
 
 
+def _load_fill_config(project_root: Path):
+    """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (filler 패턴 등)."""
+    global PLACEHOLDER_FILLER_RE
+    try:
+        cfg_path = project_root / "templates" / "system_defaults.yaml"
+        cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
+        pat = (cfg.get("hwpx_fill") or {}).get("placeholder_filler_pattern")
+        if pat:
+            PLACEHOLDER_FILLER_RE = re.compile(pat)
+    except Exception:
+        pass  # fallback 유지
+
+
+def _para_plain_text(p_el) -> str:
+    return "".join((t.text or "") for t in p_el.iter(f"{{{HP_NS}}}t"))
+
+
+def _leading_marker(text: str) -> str:
+    """선두 공백 뒤의 불릿 마커(비-한글/영숫자 기호열) 추출. 없으면 ''.
+    양식이 쓰는 마커가 무엇이든(❍/-/*/·/○…) 그대로 잡음 — 특정 문자 하드코딩 아님."""
+    m = re.match(r"\s*([^\s가-힣A-Za-z0-9(\[]+)", text or "")
+    return m.group(1) if m else ""
+
+
+def inject_paragraphs(section_root, anchor_idx: int, lines: list) -> int:
+    """anchor_idx 단락부터 *연속된 placeholder 단락*을 레벨 템플릿으로 삼아,
+    lines(각 '마커 + 내용')를 복제·치환해 주입. 양식 불릿·들여쓰기 구조 보존.
+
+    일반화: 레벨 템플릿·마커는 *양식 자체*에서 학습(복제). filler 패턴만 yaml.
+    특정 양식/회사/내용 하드코딩 없음. 주의: 단락을 추가하므로 호출 후 top-level
+    인덱스가 바뀜 → 호출자는 anchor 내림차순으로, 다른 fill 이후 마지막에 실행.
+    """
+    paras = section_root.findall(f"{{{HP_NS}}}p")
+    if anchor_idx < 0 or anchor_idx >= len(paras):
+        return 0
+    # anchor 부터 연속된 filler placeholder 단락 = 레벨 템플릿 (❍/-/* …)
+    templates = []
+    i = anchor_idx
+    while i < len(paras) and PLACEHOLDER_FILLER_RE.search(_para_plain_text(paras[i])):
+        templates.append(paras[i])
+        i += 1
+    if not templates:
+        return 0
+    tmpl_by_marker = {}
+    for tmpl in templates:
+        tmpl_by_marker.setdefault(_leading_marker(_para_plain_text(tmpl)), tmpl)
+
+    anchor = templates[0]
+    parent = anchor.getparent()
+    pos = list(parent).index(anchor)
+    made = 0
+    for line in lines:
+        line = (line or "").strip()
+        if not line:
+            continue
+        marker = _leading_marker(line)
+        content = line[len(marker):].lstrip() if marker and line.startswith(marker) else line
+        tmpl = tmpl_by_marker.get(marker) or templates[0]
+        clone = copy.deepcopy(tmpl)
+        # filler 가 든 run 의 filler 만 content 로 치환 (마커·들여쓰기 run 은 보존)
+        replaced = False
+        for t in clone.iter(f"{{{HP_NS}}}t"):
+            if t.text and PLACEHOLDER_FILLER_RE.search(t.text):
+                t.text = PLACEHOLDER_FILLER_RE.sub(lambda _m: content, t.text, count=1)
+                run = t.getparent()
+                if GREEN_CHAR_PR_ID is not None and run is not None:
+                    run.set("charPrIDRef", str(GREEN_CHAR_PR_ID))
+                replaced = True
+                break
+        if not replaced:
+            continue
+        ls = clone.find(f"{{{HP_NS}}}linesegarray")
+        if ls is not None:
+            clone.remove(ls)
+        parent.insert(pos + made, clone)
+        made += 1
+    if made:
+        for tmpl in templates:
+            parent.remove(tmpl)
+    return made
+
+
 def fill_section(section_path: Path, fills: list, stats: dict, image_registry: dict = None):
     """section XML 파일을 in-place 편집. fills 적용 + stats 갱신.
 
@@ -695,11 +783,24 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
     if image_registry is None:
         image_registry = {}
 
+    # 단락 생성(주입)은 top-level 인덱스를 바꾸므로 여기 모았다가 *루프 후* 처리
+    inject_jobs = []  # [(anchor_idx, [lines])]
+
     for entry in fills:
         cid = entry.get("id", "")
         operation = entry.get("operation", "replace_text")
         text = entry.get("text", "")
         if not cid:
+            continue
+
+        # 다중 단락 주입: paragraphs 리스트가 있으면 P-id 를 anchor 로 모아둠
+        para_list = entry.get("paragraphs")
+        if isinstance(para_list, list) and para_list:
+            pm = parse_para_id(cid)
+            if pm is not None:
+                inject_jobs.append((pm, para_list))
+            else:
+                stats["failed_id"] = stats.get("failed_id", 0) + 1
             continue
 
         # 이미지 삽입 처리
@@ -786,6 +887,11 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
             if set_cell_text(tc, str(text)):
                 stats["filled_cell"] = stats.get("filled_cell", 0) + 1
 
+    # 단락 주입을 마지막에, anchor 내림차순으로 (높은 인덱스 삽입이 낮은 anchor 를 안 밀게)
+    for anchor_idx, lines in sorted(inject_jobs, key=lambda j: -j[0]):
+        n = inject_paragraphs(root, anchor_idx, lines)
+        stats["injected_para"] = stats.get("injected_para", 0) + n
+
     body = etree.tostring(root, encoding="unicode")
     header = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'
     section_path.write_bytes((header + body).encode("utf-8"))
@@ -862,6 +968,8 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
 
     if project_root is None:
         project_root = Path(__file__).parent.parent
+
+    _load_fill_config(project_root)  # filler 패턴 등 (단락 주입용)
 
     fills_data = yaml.safe_load(Path(fills_path).read_text(encoding="utf-8"))
     fills = fills_data.get("fills", [])
@@ -972,6 +1080,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         f"셀 {stats.get('filled_cell', 0)}",
         f"단락 {stats.get('filled_para', 0)}",
         f"셀안단락 {stats.get('filled_cellpara', 0)}",
+        f"주입단락 {stats.get('injected_para', 0)}",
         f"체크 {stats.get('filled_check', 0)}",
         f"이미지 {img_total} (명시 {stats.get('filled_image', 0)} + 자동 {stats.get('filled_image_auto', 0)})",
     ]
