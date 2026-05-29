@@ -16,3 +16,4 @@
 - [세션 진행 — 2026-05-26 회사 WSL](session_20260526_progress.md) — CHECKBOX_RE·EXAMPLE_RE 정정, 매핑 0 오차 확인, T16_R2_C0 1건 검토 남음
 - [세션 인수인계 — 2026-05-26 회사 WSL→PowerShell](session_20260526_회사WSL.md) — 환경 이전 스냅샷
 - [세션 — 2026-05-27 이미지·lineseg·브리지](session_20260527_이미지_lineseg_브리지.md) — 이미지 삽입 한컴검증, linesegarray 겹침 근본수정(2양식), 추출→스키마 context 브리지, proposal-writer 셀 자기검증 규칙, KB 사업자등록번호, T17 사업비 완료. 녹색채움=의도된 디버그(갭아님). 미완: 이미지 브리지 실데이터(deck 재추출)
+- [세션 — 2026-05-29 재무·회사메타 자동 채움](session_20260529_재무_회사메타_자동채움.md) — KB profile.yaml + finance.yaml 추가만으로 별지 2-2호 90셀 자동 채움 (회사 메타 44 + 재무 46). 단위 백만원 통일 정책 yaml 정본화. 별지 라벨 박스 유지 정책 (v8 박스 제거 오해 정정). cleanup nested 표 텍스트 흡수 버그 근본 치유. 산출물 = output/20260529/별지_v15/03_2-2.pdf (2페이지).
