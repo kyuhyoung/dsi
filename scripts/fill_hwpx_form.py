@@ -918,16 +918,30 @@ def release_cell_height_locks(filled_tcs) -> int:
     return released
 
 
+def _own_texts(p_el):
+    """hp:p 의 *자기 자신* 직접 hp:run 자식의 hp:t 만 yield (descendant 아님).
+    *nested cell 안 paragraph 의 t* 는 *그 nested paragraph 가 iter() 에서 따로 잡힘* —
+    별도 처리. 이렇게 분리 안 하면 outer paragraph (큰 표 감싸는 hp:p) 의 itertext
+    가 *표 안 모든 cell 텍스트 합쳐서 반환* → 우연 매칭 시 *모든 nested cell 텍스트
+    비움* (T7 같은 표가 사라지는 버그). HWPX 스키마 룰 — 임의 양식 동일 동작.
+    """
+    for run in p_el.findall(f"{{{HP_NS}}}run"):
+        for t in run.findall(f"{{{HP_NS}}}t"):
+            yield t
+
+
 def cleanup_residual_placeholders(section_root) -> int:
     """Fill 후 *미채움 placeholder 잔존*을 자동 정리 (텍스트 비움).
     잡는 케이스 (yaml 패턴 기반):
       - PLACEHOLDER_FILLER_RE 매칭 (가나다·○○○ 등 채움 문자열)
       - MARKER_ONLY_RE 매칭 + 짧음 (단독 ❍/-/*/□ 등 마커만 남음)
-    일반: 양식·회사 무관, 모든 hp:p 스캔. 양식 라벨에 우연 단순 마커는 길이 한도(≤5)로 보호.
+    각 hp:p 의 *자기 자신* hp:t 만 검사 — nested 표의 cell 안 paragraph 는 *그 자체로
+    iter() 에 잡혀 따로 처리*. 이렇게 분리해야 outer paragraph 가 nested cell 모두
+    비우는 일이 없음 (근본 치유). 일반: 양식·회사·표 중첩 깊이 무관.
     """
     cleaned = 0
     for p in section_root.iter(f"{{{HP_NS}}}p"):
-        ts = list(p.iter(f"{{{HP_NS}}}t"))
+        ts = list(_own_texts(p))
         if not ts:
             continue
         txt = "".join((t.text or "") for t in ts)
@@ -951,7 +965,10 @@ def cleanup_residual_placeholders(section_root) -> int:
 
 
 def _para_plain_text(p_el) -> str:
-    return "".join((t.text or "") for t in p_el.iter(f"{{{HP_NS}}}t"))
+    """*자기 자신* p 의 텍스트 (nested 표 안 cell paragraph 텍스트 제외).
+    근본 룰: outer paragraph 가 표 안 nested cell 텍스트 *흡수*하는 것 방지.
+    """
+    return "".join((t.text or "") for t in _own_texts(p_el))
 
 
 def _leading_marker(text: str) -> str:
