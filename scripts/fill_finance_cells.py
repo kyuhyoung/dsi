@@ -29,15 +29,34 @@ import yaml
 
 
 YEAR_LABEL_RE = re.compile(r"(\d{4})\s*년?")
-# 단위 검출 — *명시 표기*만 (안 그러면 '증명원'·'본 사업원' 같은 일반어 '원'이 잘못 매칭).
-# 우선순위: 괄호 안 단위 > '단위: X' 표기 > 단독 라벨 셀 ('백만원' 만 있는 짧은 셀)
-UNIT_PAREN_RE = re.compile(r"[\(（\[]\s*(백만원|억원|천원|원)\s*[\)）\]]")
-UNIT_LABEL_RE = re.compile(r"단위\s*[:：\-]\s*(백만원|억원|천원|원)")
-UNIT_STANDALONE_RE = re.compile(r"^\s*(백만원|억원|천원|원)\s*$")
+# 단위 검출 정규식은 yaml unit_patterns 에서 *동적 생성* (코드에 단위 박지 않음).
+# build_unit_regexes(label_map) 가 (paren_re, label_re, standalone_re, divisor_map) 반환.
+# 우선순위: 괄호 안 단위 > '단위: X' 표기 > 단독 라벨 셀.
 
 
 def load_label_map(project_root: Path) -> dict:
     return yaml.safe_load((project_root / "templates" / "finance_label_map.yaml").read_text(encoding="utf-8"))
+
+
+def build_unit_regexes(label_map: dict):
+    """yaml unit_patterns → (paren_re, label_re, standalone_re, divisor_map).
+    코드에 단위·divisor 박지 않음 — yaml 만 수정하면 새 단위 자동 인식.
+    한국어 단위 외 (USD/EUR 등) 추가하려면 yaml 만 수정.
+    """
+    patterns = label_map.get("unit_patterns") or []
+    units = [str(p["pattern"]) for p in patterns if p.get("pattern")]
+    divisor_map = {str(p["pattern"]): int(p["divisor"]) for p in patterns if p.get("pattern") and p.get("divisor") is not None}
+    if not units:
+        # 안전 fallback — yaml 깨졌을 때 최소 동작 보장
+        units = ["원"]
+        divisor_map = {"원": 1}
+    # 단위들 alternation. 정확 매칭 위해 길이 내림차순 ('백만원'이 '원'보다 먼저).
+    units_sorted = sorted(units, key=len, reverse=True)
+    alt = "|".join(re.escape(u) for u in units_sorted)
+    paren_re = re.compile(rf"[\(（\[]\s*({alt})\s*[\)）\]]")
+    label_re = re.compile(rf"단위\s*[:：\-]\s*({alt})")
+    standalone_re = re.compile(rf"^\s*({alt})\s*$")
+    return paren_re, label_re, standalone_re, divisor_map
 
 
 def normalize(text: str) -> str:
@@ -77,25 +96,28 @@ def extract_year(label: str) -> str:
     return m.group(1) if m else None
 
 
-def extract_unit_divisor(label_texts: list, unit_default: dict) -> tuple:
+def extract_unit_divisor(label_texts: list, unit_default: dict, unit_regexes: tuple) -> tuple:
     """라벨들에서 *명시 단위 표기* 찾기. 못 찾으면 default.
     (unit_str, divisor) 반환. 일반어 '원' 오매칭 방지: 괄호·'단위:' 형식만 허용.
+    unit_regexes = (paren_re, label_re, standalone_re, divisor_map) — yaml 정본.
     """
-    divisors = {"백만원": 1000000, "억원": 100000000, "천원": 1000, "원": 1}
+    paren_re, label_re, standalone_re, divisor_map = unit_regexes
     # 우선순위: 괄호 > 단위: > 단독
     for txt in label_texts:
         if not txt:
             continue
         s = str(txt)
-        for rx in (UNIT_PAREN_RE, UNIT_LABEL_RE):
+        for rx in (paren_re, label_re):
             m = rx.search(s)
             if m:
                 u = m.group(1)
-                return u, divisors[u]
-        m = UNIT_STANDALONE_RE.match(s)
+                if u in divisor_map:
+                    return u, divisor_map[u]
+        m = standalone_re.match(s)
         if m:
             u = m.group(1)
-            return u, divisors[u]
+            if u in divisor_map:
+                return u, divisor_map[u]
     return unit_default.get("pattern", "백만원"), int(unit_default.get("divisor", 1000000))
 
 
@@ -211,6 +233,9 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
         print("WARN: finance.yaml 에 records 없음", file=sys.stderr)
         return []
 
+    # 단위 정규식·divisor 를 yaml unit_patterns 에서 *동적 생성* (코드 매직 0)
+    unit_regexes = build_unit_regexes(label_map)
+
     fin_tables = find_finance_tables(form, fields, target_section_label)
     print(f"재무 표 검출: {len(fin_tables)} 개", file=sys.stderr)
 
@@ -222,7 +247,7 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
         all_label_texts = list(row_labels.values()) + list(col_labels.values())
         # 표 외부 안내문도 가능 — section 의 caption / table_label
         all_label_texts.append(tbl.get("table_label", "") or "")
-        unit_str, divisor = extract_unit_divisor(all_label_texts, unit_default)
+        unit_str, divisor = extract_unit_divisor(all_label_texts, unit_default, unit_regexes)
 
         # 빈셀 순회
         for p in parsed:
@@ -230,8 +255,8 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
                 continue
             row_lbl = row_labels.get(p["r"], "")
             col_lbl = col_labels.get(p["c"], "")
-            # 셀 자신의 단위 우선
-            cell_unit, cell_divisor = extract_unit_divisor([row_lbl, col_lbl], None) if False else (unit_str, divisor)
+            # 표 단위 적용 (셀별 단위 오버라이드는 향후 필요시 추가)
+            cell_unit, cell_divisor = unit_str, divisor
             # row 라벨 → field
             field = match_field(row_lbl, fields)
             if not field:

@@ -16,6 +16,13 @@
 
 schema_version: 1
 
+# === 도메인 가정 ===
+# 현재 yaml 은 *한국 공공 RFP* 도메인 기준 (단위 백만원·억원, 한국어 회계 용어).
+# 다른 도메인(글로벌 영문 RFP·USD/EUR 단위) 까지 일반화하려면:
+#   - unit_patterns 에 'million USD', 'M EUR' 등 추가
+#   - fields[*].keywords 에 영문 추가 (Total Assets, Net Income 이미 일부 있음)
+#   - 새 도메인용 yaml 별도 작성도 가능 (templates/finance_label_map_global.yaml 등)
+
 # 합계/총계 행 식별 키워드 — extract_finance.py 가 점수 가산
 # (항목 행 < 합계 행 선택). 일반화: 새 표기 ('Sum', '소계' 등) 여기 추가.
 total_row_keywords:
@@ -24,6 +31,25 @@ total_row_keywords:
   - 총액
   - Total
   - Sum
+
+# === 표지·메타 셀 라벨 (extract_finance.py 가 인식) ===
+# 표지·헤더 셀의 *어떤 키워드 다음 셀이 회사명/단위인지* 정본.
+# 한국·영문 혼합. 새 표기 (Issuer, Issued by, Currency 등) 여기 추가.
+meta_labels:
+  company_name:
+    - 회사명
+    - 상호
+    - 법인명
+    - Company
+    - Company Name
+    - Entity
+    - Issuer
+  currency_unit:
+    - 단위
+    - 통화
+    - Unit
+    - Currency
+    - Denomination
 
 # 양식 라벨에서 *제거하고 매칭*할 잡음 (조사/단위 표기/괄호)
 normalize:

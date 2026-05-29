@@ -130,8 +130,23 @@ def extract_field_records(wb, field_name: str, keywords: list) -> dict:
     return best_records
 
 
-def extract_meta(wb) -> dict:
-    """표지·헤더에서 회사명·단위 등 메타 추출."""
+def extract_meta(wb, label_map: dict) -> dict:
+    """표지·헤더에서 회사명·단위 등 메타 추출.
+    키워드·단위 사전 모두 yaml 정본 (finance_label_map.yaml.meta_labels + .unit_patterns).
+    코드에 표기 박지 않음 — 새 표기 추가는 yaml 만.
+    """
+    meta_labels = label_map.get("meta_labels") or {}
+    company_keywords = list(meta_labels.get("company_name") or [])
+    unit_keywords = list(meta_labels.get("currency_unit") or [])
+    # 단위 alternation도 yaml unit_patterns 에서
+    unit_patterns = label_map.get("unit_patterns") or []
+    unit_names = [str(p["pattern"]) for p in unit_patterns if p.get("pattern")]
+    # 추가 통화 키 (KRW, USD 등) — yaml 의 normalize.strip_units 에서도 가져옴
+    extra_currencies = [u for u in (label_map.get("normalize") or {}).get("strip_units") or []
+                        if u not in unit_names]
+    all_unit_names = sorted(set(unit_names + extra_currencies), key=len, reverse=True)
+    unit_alt_re = re.compile("|".join(re.escape(u) for u in all_unit_names)) if all_unit_names else None
+
     meta = {"currency": "KRW"}
     for sn in wb.sheetnames:
         ws = wb[sn]
@@ -140,22 +155,22 @@ def extract_meta(wb) -> dict:
                 v = ws.cell(r, c).value
                 if not isinstance(v, str):
                     continue
-                # 회사명
-                if "회사명" in v or "Company" in v:
-                    # 인접 셀 검사
+                v_str = v.strip()
+                # 회사명 키워드 매칭
+                if any(kw in v_str for kw in company_keywords):
                     for cc in range(c + 1, min(c + 3, ws.max_column + 1)):
                         nv = ws.cell(r, cc).value
                         if isinstance(nv, str) and nv.strip():
                             meta["company_name"] = nv.strip()
                             break
-                # 단위
-                if v.strip().startswith("단위") or "Unit:" in v:
+                # 단위 키워드 매칭
+                if any(kw in v_str for kw in unit_keywords):
                     for cc in range(c + 1, min(c + 3, ws.max_column + 1)):
                         nv = ws.cell(r, cc).value
-                        if isinstance(nv, str) and nv.strip():
-                            m = re.search(r"(원|KRW|백만원|천원|억원)", nv)
+                        if isinstance(nv, str) and nv.strip() and unit_alt_re is not None:
+                            m = unit_alt_re.search(nv)
                             if m:
-                                meta["currency_unit"] = m.group(1)
+                                meta["currency_unit"] = m.group(0)
                             break
         if "company_name" in meta:
             break
@@ -177,8 +192,8 @@ def extract_finance(xlsx_path: Path, label_map: dict, project_root: Path) -> dic
         for year, value in records.items():
             records_by_year.setdefault(year, {})[field_name] = value
 
-    # 메타
-    meta = extract_meta(wb)
+    # 메타 (키워드 yaml 정본)
+    meta = extract_meta(wb, label_map)
     meta["source"] = str(xlsx_path.name)
 
     # 연도 키 내림차순 정렬 (가장 최근 위)
