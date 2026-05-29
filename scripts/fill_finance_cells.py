@@ -142,22 +142,26 @@ def extract_unit_divisor(label_texts: list, unit_default: dict, unit_regexes: tu
     return unit_default.get("pattern", "백만원"), int(unit_default.get("divisor", 1000000))
 
 
-def find_finance_tables(form: dict, fields: dict, target_section_label: str = None) -> list:
+def find_finance_tables(form: dict, fields: dict, target_section_label: str = None,
+                        strip_chars: list = None) -> list:
     """form.yaml 의 tables 중 재무 표만 식별.
-    재무 표 = *연도 헤더* (FY/2023/2024/2025 등) + *재무 키워드 행 라벨* 1개 이상.
-    재무 키워드는 finance_label_map.yaml 의 모든 keywords 합집합 — yaml 정본.
+    재무 표 = *연도* (FY/2023/2024/2025 등) + *재무 키워드 라벨* 1개 이상.
+    공백·기호 제거 정규화 후 매칭 — '매 출 액' 같은 자간 표기도 인식.
+    가로/세로 표 형식 모두: 연도가 헤더 행 아니라 어딘가에만 있어도 OK.
+    재무 키워드·정규화는 yaml 정본.
     """
-    # 모든 필드의 keywords 합집합 (yaml 정본)
+    # 모든 필드의 keywords/exact_labels 합집합 (yaml 정본)
     all_keywords = set()
     for field_def in fields.values():
         for kw in (field_def.get("keywords") or []):
             if isinstance(kw, str) and kw.strip():
                 all_keywords.add(kw.strip())
-    # exact_labels 도 포함
-    for field_def in fields.values():
         for lbl in (field_def.get("exact_labels") or []):
             if isinstance(lbl, str) and lbl.strip():
                 all_keywords.add(lbl.strip())
+    # 키워드 정규화 (자간 공백 등 양식 표기 흡수)
+    normalized_keywords = {normalize(kw, strip_chars) for kw in all_keywords}
+    normalized_keywords.discard("")
 
     tables = form.get("tables") or []
     found = []
@@ -167,11 +171,11 @@ def find_finance_tables(form: dict, fields: dict, target_section_label: str = No
         cells = t.get("cells") or []
         if not cells:
             continue
-        # 셀의 텍스트 모음 검사 — 연도 헤더 + 재무 키워드 행 있어야
         all_texts = [(c.get("text") or "").strip() for c in cells if isinstance(c, dict)]
-        years_seen = any(YEAR_LABEL_RE.search(t) for t in all_texts)
+        normalized_texts = [normalize(s, strip_chars) for s in all_texts]
+        years_seen = any(YEAR_LABEL_RE.search(s) for s in all_texts)
         finance_kw_seen = any(
-            any(kw in t for kw in all_keywords) for t in all_texts
+            any(kw in nt for kw in normalized_keywords) for nt in normalized_texts
         )
         if years_seen and finance_kw_seen:
             # section filter
@@ -219,6 +223,17 @@ def build_row_col_labels(cells: list) -> tuple:
         if p["text"] and p["r"] not in row_labels:
             row_labels[p["r"]] = p["text"]
 
+    # 세로 병합 보정: row 라벨이 *연도* 면 (값 자리 행) → 직전 *비-연도 라벨* 로 교체.
+    # 한국 양식 관행: 연도별 행이 라벨 셀을 *위 행과 병합* 해 form.yaml 에 라벨 안 잡힘.
+    prev_field_lbl = ""
+    for r in sorted(row_labels.keys()):
+        lbl = row_labels[r]
+        if YEAR_LABEL_RE.search(lbl):
+            if prev_field_lbl:
+                row_labels[r] = prev_field_lbl
+        else:
+            prev_field_lbl = lbl
+
     # 헤더 행 찾기 — 가장 작은 r 중 연도가 들어있는 행
     header_rs = sorted({p["r"] for p in parsed if YEAR_LABEL_RE.search(p["text"])})
     header_r = header_rs[0] if header_rs else None
@@ -259,7 +274,7 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
     # 단위 정규식·divisor 를 yaml unit_patterns 에서 *동적 생성* (코드 매직 0)
     unit_regexes = build_unit_regexes(label_map)
 
-    fin_tables = find_finance_tables(form, fields, target_section_label)
+    fin_tables = find_finance_tables(form, fields, target_section_label, strip_chars)
     print(f"재무 표 검출: {len(fin_tables)} 개", file=sys.stderr)
 
     fills = []
@@ -280,14 +295,23 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
             col_lbl = col_labels.get(p["c"], "")
             # 표 단위 적용 (셀별 단위 오버라이드는 향후 필요시 추가)
             cell_unit, cell_divisor = unit_str, divisor
-            # row 라벨 → field (strip_chars yaml 정본)
+            # 양방향 매칭: 가로형(row=field, col=year) + 세로형(row=year, col=field).
+            # 라벨 한쪽에 field, 다른쪽에 year 가 있으면 매칭. yaml 정본·일반 룰.
             field = match_field(row_lbl, fields, strip_chars)
-            if not field:
-                continue
-            # col 라벨 → year
             year = extract_year(col_lbl)
+            if not field:
+                field = match_field(col_lbl, fields, strip_chars)
             if not year:
-                # 가로 형식이 아닌 경우 (행에 연도, 열에 항목) — TODO 추후
+                year = extract_year(row_lbl)
+            # 빈 셀이 *자기 행*에 연도 가지면 그 연도 사용 (header row 의 col 라벨 오버라이드).
+            # T7 같은 세로형: R7_C2 의 *자기 행 첫 셀* R7_C1 = '2024' 가 진짜 year.
+            for q in parsed:
+                if q["r"] == p["r"] and q["c"] < p["c"] and q["text"]:
+                    own_row_year = extract_year(q["text"])
+                    if own_row_year:
+                        year = own_row_year
+                        break
+            if not field or not year:
                 continue
             rec = records.get(year) or records.get(str(year))
             if not rec:

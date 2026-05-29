@@ -43,8 +43,46 @@ def safe_filename(label: str) -> str:
     return s[:80] or "section"
 
 
+def _is_content_empty_p(p):
+    """top-level hp:p 가 *완전 빈 단락* (텍스트 없음 + 표 없음 + secPr 없음)인지.
+    이런 단락은 분할 결과 hwpx 의 *불필요 페이지 자리 차지* 원인이라 정리 대상.
+    HWPX 스키마 상수만 사용 — 임의 양식 동일 동작.
+    """
+    txt = "".join((t.text or "") for t in p.iter(f"{{{HP_NS}}}t")).strip()
+    if txt:
+        return False
+    if list(p.iter(f"{{{HP_NS}}}tbl")):
+        return False
+    if list(p.iter(f"{{{HP_NS}}}secPr")):
+        return False
+    return True
+
+
+def _strip_nonsecpr_runs(p):
+    """*secPr 보존 단락* 안의 *secPr 없는 다른 run* 들을 제거.
+    split 알고리즘이 keep 한 첫 단락(보통 p0)이 *다른 섹션 헤더*(예: '5 관련양식')의
+    텍스트·표 run 도 함께 갖고 들어오는 경우 처리. secPr/ctrl/페이지 설정 run 만 보존.
+    HWPX 스키마: run 안에 secPr 있으면 페이지 설정 run, 없으면 콘텐츠 run.
+    """
+    removed = 0
+    for run in list(p.findall(f"{{{HP_NS}}}run")):
+        has_secpr = run.find(f"{{{HP_NS}}}secPr") is not None
+        if not has_secpr:
+            p.remove(run)
+            removed += 1
+    # 콘텐츠 run 제거 후 linesegarray 도 stale — 한컴 재계산 위해 삭제
+    if removed:
+        ls = p.find(f"{{{HP_NS}}}linesegarray")
+        if ls is not None:
+            p.remove(ls)
+    return removed
+
+
 def extract_section(form_hwpx: Path, p_start: int, p_end, out_path: Path):
-    """form.hwpx 에서 paragraph_range [p_start, p_end) 만 남긴 .hwpx 생성."""
+    """form.hwpx 에서 paragraph_range [p_start, p_end) 만 남긴 .hwpx 생성.
+    가드 1: secPr 보존 단락의 *별지 외 콘텐츠* (다른 섹션 헤더 등) run 제거.
+    가드 2: 별지 끝의 *trailing 빈 단락* 일괄 제거 (불필요 페이지 방지).
+    """
     with tempfile.TemporaryDirectory() as td:
         td_path = Path(td)
         with zipfile.ZipFile(str(form_hwpx), "r") as zin:
@@ -68,6 +106,20 @@ def extract_section(form_hwpx: Path, p_start: int, p_end, out_path: Path):
         for i, p in enumerate(top_ps):
             if i not in keep_set:
                 root.remove(p)
+
+        # 가드 1: secPr 보존 단락 (p_start 외 추가 keep 된 첫 단락) 에서 *다른 섹션*
+        # 콘텐츠 run 제거 — 별지 단독 결과에 시스템 헤더가 안 보이게.
+        if first_p is not None and 0 not in range(p_start, range_end):
+            _strip_nonsecpr_runs(first_p)
+
+        # 가드 2: 마지막 콘텐츠 단락 *뒤*의 빈 단락 일괄 제거 (trailing).
+        # 통합양식의 별지 영역 *끝*에 패딩 빈 단락 있는 경우 흔함.
+        kept_ps = root.findall(f"{{{HP_NS}}}p")
+        for p in reversed(kept_ps):
+            if _is_content_empty_p(p):
+                root.remove(p)
+            else:
+                break
 
         body = etree.tostring(root, encoding="unicode")
         header = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'
