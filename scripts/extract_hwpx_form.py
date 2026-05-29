@@ -182,9 +182,10 @@ def build_table(t_idx, tbl_el):
         elif "example" in inner_intents and c["intent"] == "label_or_content":
             c["intent"] = "example"
 
+    # hints: *모든 셀* 에 생성 (이전엔 is_empty 만). example 셀·label_or_content 셀의
+    # *값 자리* 도 빌더가 KB lookup 으로 채울 수 있게 — 임의 양식의 *예시 텍스트* 가
+    # 양식 라벨 hint 갖도록 일반화. 빌더가 *_is_fillable* (빈/example/맥락) 로 채움.
     for c in flat:
-        if not c["is_empty"]:
-            continue
         left_cands = [o for o in flat if o["row"] == c["row"] and o["col"] < c["col"] and o["text"]]
         up_cands = [o for o in flat if o["col"] == c["col"] and o["row"] < c["row"] and o["text"]]
         c["hints"] = {

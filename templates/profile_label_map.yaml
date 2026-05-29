@@ -1,0 +1,173 @@
+# 양식 셀 라벨 ↔ profile_schema 필드 매핑 (정본)
+#
+# 한국 RFP·양식이 회사 정보를 다양한 표기로 묻는다.
+# 빌더는 셀 라벨 정규화 후 이 dict 에서 lookup. 매칭 없으면 처리 안 함.
+#
+# 일반화: 회사·양식 식별자 0개. 새 표기는 *이 yaml 에만* 추가 — 코드 수정 0.
+# 매칭 우선순위: exact_labels > keywords (부분 포함).
+
+schema_version: 1
+
+# 라벨 정규화 — 공백·기호 제거 후 매칭 (finance_label_map.normalize 와 동일 정책).
+normalize:
+  strip_chars: ['(', ')', '[', ']', '※', '*', ':', ',', '/']
+
+# === 필드별 라벨 사전 ===
+fields:
+  company_name:
+    exact_labels:
+      - 주관기업명
+      - 회사명
+      - 상호
+      - 법인명
+      - 신청기업명
+      - 기업명
+    keywords:
+      - 주관기업
+      - 회사명
+      - 법인명
+      - 신청기업
+      - 기업명
+      - Company Name
+
+  representative:
+    exact_labels:
+      - 대표자
+      - 대 표 자
+      - 대표이사
+      - 대표
+    keywords:
+      - 대표자
+      - 대표이사
+      - Representative
+      - CEO
+
+  establishment_date:
+    exact_labels:
+      - 설립일
+      - 설 립 일
+      - 설립연도
+      - 법인설립일
+      - 창업일
+    keywords:
+      - 설립일
+      - 설립연도
+      - 법인설립
+      - 창업일
+      - Established
+      - Founded
+
+  business_no:
+    exact_labels:
+      - 사업자등록번호
+      - 사업자번호
+    keywords:
+      - 사업자등록
+      - 사업자번호
+      - Business Registration
+
+  corporate_reg_no:
+    exact_labels:
+      - 법인등록번호
+      - 법인번호
+    keywords:
+      - 법인등록
+      - 법인번호
+      - Corporate Registration
+
+  industry:
+    exact_labels:
+      - 업종
+      - 업    종
+      - 업태
+      - 사업분야
+    keywords:
+      - 업종
+      - 업태
+      - 사업분야
+      - Industry
+      - Sector
+
+  main_product:
+    exact_labels:
+      - 주생산품
+      - 주생산품(제품/서비스)
+      - 주요제품
+      - 주력제품
+      - 주력서비스
+    keywords:
+      - 주생산품
+      - 주요제품
+      - 주력제품
+      - 주력서비스
+      - Main Product
+
+  address_office:
+    exact_labels:
+      - 사무실
+      - 본사주소
+      - 회사주소
+      - 소재지
+    keywords:
+      - 사무실
+      - 본사
+      - 회사주소
+      - 소재지
+      - Office
+
+  address_research:
+    exact_labels:
+      - 연구소
+      - 부설연구소
+      - R&D센터
+    keywords:
+      - 연구소
+      - R&D
+      - Research
+
+  address_factory:
+    exact_labels:
+      - 공장
+      - 생산시설
+      - 제조시설
+    keywords:
+      - 공장
+      - 생산시설
+      - 제조시설
+      - Factory
+      - Plant
+
+  phone:
+    exact_labels:
+      - 전화
+      - 전화번호
+      - 연락처
+    keywords:
+      - 전화
+      - 연락처
+      - Phone
+      - Tel
+
+  website:
+    exact_labels:
+      - 홈페이지
+      - 웹사이트
+      - 웹페이지
+    keywords:
+      - 홈페이지
+      - 웹사이트
+      - 웹페이지
+      - Website
+      - Homepage
+      - URL
+
+  finance_officer:
+    exact_labels:
+      - 회계담당자
+      - 재무담당자
+      - 경리담당
+    keywords:
+      - 회계담당
+      - 재무담당
+      - 경리담당
+      - Finance Officer

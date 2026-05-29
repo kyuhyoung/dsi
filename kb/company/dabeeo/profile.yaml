@@ -1,0 +1,22 @@
+# 다비오 회사 프로필 (정본)
+# templates/profile_schema.yaml 스키마 따름.
+
+meta:
+  company_name: 주식회사 다비오
+  source: kb/company/dabeeo/intro.md
+  last_updated: '2026-05-29'
+
+fields:
+  company_name: 주식회사 다비오
+  representative: 박주흠
+  establishment_date: '2012-02-28'
+  business_no: 105-87-68437
+  corporate_reg_no: '(미확인)'
+  industry: 소프트웨어 개발 및 공급업 (정보통신업)
+  main_product: Eartheye Plantation — AI 기반 위성·드론·모바일 통합 정밀농업 솔루션
+  address_office: '(미확인)'
+  address_research: '(미확인)'
+  address_factory: '해당 없음'
+  phone: '(미확인)'
+  website: '(미확인)'
+  finance_officer: '(미확인)'

@@ -1,0 +1,96 @@
+# 회사 프로필 KB 표준 스키마 (정본)
+#
+# 회사별 `kb/company/<name>/profile.yaml` 이 이 스키마 따른다.
+# 빌더 (fill_company_cells.py) 가 양식 셀 라벨 → profile_label_map.yaml → field
+# 로 lookup → profile.yaml 값 자동 채움.
+#
+# 일반화:
+#  - 회사·RFP·양식 식별자 0개.
+#  - 새 회사 KB = profile.yaml 추가만으로 즉시 동작.
+#  - 양식이 표준어 아닌 표기 쓰면 label_map 동의어로 흡수.
+#
+# 출처·작성일은 *항상* 명시 (감사보고서/공시/내부/외부 등).
+
+schema_version: 1
+
+# === 핵심 필드 ===
+# 한국 RFP 양식이 보통 요구하는 회사 기본 정보. 추가 필드는 *label_map 에 동의어*만
+# 추가 + 회사 yaml 에 값 채움.
+required_fields:
+  # 회사 기본
+  - company_name        # 주관기업명 / 회사명
+  - representative      # 대표자
+  - establishment_date  # 설립일
+  - business_no         # 사업자등록번호
+  - corporate_reg_no    # 법인등록번호
+  - industry            # 업종
+  - main_product        # 주생산품 (제품/서비스)
+  # 연락·주소
+  - address_office      # 사업장 (사무실)
+  - address_research    # 연구소
+  - address_factory     # 공장
+  - phone               # 전화
+  - website             # 홈페이지
+  # 사람
+  - finance_officer     # 회계담당자
+
+# === 필드 정의 (사용자 검토용) ===
+field_definitions:
+  company_name:
+    ko: 주관기업명
+    description: 사업 주관 기업의 법인명
+  representative:
+    ko: 대표자
+    description: 대표이사 성명
+  establishment_date:
+    ko: 설립일
+    description: 법인 설립일 (YYYY-MM-DD)
+  business_no:
+    ko: 사업자등록번호
+    description: 사업자등록번호 (NNN-NN-NNNNN)
+  corporate_reg_no:
+    ko: 법인등록번호
+    description: 법인등록번호 (NNNNNN-NNNNNNN)
+  industry:
+    ko: 업종
+    description: 사업자등록증 상 업종 (한국표준산업분류)
+  main_product:
+    ko: 주생산품
+    description: 회사 주력 제품·서비스
+  address_office:
+    ko: 사무실 주소
+  address_research:
+    ko: 연구소 주소
+  address_factory:
+    ko: 공장 주소
+  phone:
+    ko: 전화번호
+  website:
+    ko: 홈페이지
+  finance_officer:
+    ko: 회계담당자
+
+# === 회사별 yaml 작성 예시 ===
+example_schema:
+  meta:
+    company_name: 주식회사 ○○
+    source: 사업자등록증·법인등기부등본
+    last_updated: '2026-05-29'
+  fields:
+    company_name: 주식회사 ○○
+    representative: 홍길동
+    establishment_date: '2020-01-01'
+    business_no: 123-45-67890
+    corporate_reg_no: '(미확인)'
+    industry: 소프트웨어 개발 및 공급업
+    main_product: AI 기반 솔루션
+    address_office: 서울특별시 ...
+    phone: 02-1234-5678
+    website: https://example.com
+    finance_officer: '(미정)'
+
+# === 빌더 동작 규칙 ===
+# 1. 양식 셀 라벨 → profile_label_map 으로 필드명 식별
+# 2. fields[field] 값 가져옴
+# 3. 값이 없거나 '(미확인)' 이면 *그대로 표기* (추측 금지)
+# 4. *재무 외 셀* 만 처리 — 재무는 fill_finance_cells 담당
