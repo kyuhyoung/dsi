@@ -129,6 +129,32 @@ def extract_year(label: str) -> str:
     return year
 
 
+def _cell_text_is_unit(text: str, unit_regexes: tuple) -> bool:
+    """text 가 *단위 표기 셀*인지. unit_regexes 의 어떤 패턴이든 매칭이면 단위 셀.
+    빌더가 *값 셀 옆에 단위 셀이 있는지* 검사해 값+단위 표기 여부 결정."""
+    if not text:
+        return False
+    paren_re, label_re, standalone_re, _ = unit_regexes
+    s = str(text)
+    if paren_re.search(s) or label_re.search(s):
+        return True
+    if standalone_re.match(s):
+        return True
+    return False
+
+
+def _has_adjacent_unit_cell(parsed: list, value_cell: dict, unit_regexes: tuple) -> bool:
+    """value_cell 의 *오른쪽 인접 셀* (같은 row, c+1) 이 단위 셀이면 True.
+    한국 양식 관행: 값 셀과 단위 셀 분리 배치. T7 매출액 (값 / 백만원) 등.
+    """
+    for q in parsed:
+        if q["r"] == value_cell["r"] and q["c"] == value_cell["c"] + 1:
+            if _cell_text_is_unit(q.get("text", ""), unit_regexes):
+                return True
+            break
+    return False
+
+
 def extract_unit_divisor(label_texts: list, unit_default: dict, unit_regexes: tuple) -> tuple:
     """라벨들에서 *명시 단위 표기* 찾기. 못 찾으면 default.
     (unit_str, divisor) 반환. 일반어 '원' 오매칭 방지: 괄호·'단위:' 형식만 허용.
@@ -331,9 +357,12 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
             value = rec.get(field)
             if value is None:
                 continue
-            # 단위 변환
+            # 단위 변환 + 단위 표기 자동 추가 (옆 단위 셀 없으면 값+단위)
             converted = int(round(value / cell_divisor))
-            text = f"{converted:,}"
+            if _has_adjacent_unit_cell(parsed, p, unit_regexes):
+                text = f"{converted:,}"
+            else:
+                text = f"{converted:,} {cell_unit}"
             fills.append({
                 "id": p["id"],
                 "text": text,
