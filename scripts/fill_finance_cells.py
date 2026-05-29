@@ -311,18 +311,28 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
     fields = label_map.get("fields") or {}
     # yaml strip_chars 정본 — 모든 normalize 호출에 전달
     strip_chars = (label_map.get("normalize") or {}).get("strip_chars") or []
-    # === default 단위 결정 (yaml 박힘 0) ===
-    # finance.yaml meta.currency_unit (재무제표 엑셀에서 추출된 단위) 가 *최우선*.
-    # 양식이 단위 명시 안 한 셀은 *재무제표 단위 그대로* 표기 — 추측·가정 0.
-    # finance.yaml 에 단위 없으면 label_map 의 unit_default fallback.
-    finance_meta = finance.get("meta") or {}
-    finance_unit = (finance_meta.get("currency_unit") or "").strip()
-    # divisor_map 은 build_unit_regexes 가 yaml unit_patterns 에서 구축
+    # === default 단위 결정 (사용자 정책: 제안서 출력 단위 통일) ===
+    # 원칙:
+    #  - 재무제표 (finance.yaml) 값은 *원본 단위* (보통 원) 그대로.
+    #  - 제안서 채울 때 *양식이 옆 단위 셀 명시* → 양식 단위 변환 (양식 우선).
+    #  - 양식이 단위 명시 *안 한* 셀 → *proposal_output_unit (yaml 정책)* 통일.
+    # 정책 단위는 label_map.proposal_output_unit 정본 (백만원 default).
+    # 박힘 0 — 단위 변경은 yaml 만 수정.
     _, _, _, divisor_map_preview = build_unit_regexes(label_map)
-    if finance_unit and finance_unit in divisor_map_preview:
-        unit_default = {"pattern": finance_unit, "divisor": divisor_map_preview[finance_unit]}
+    proposal_unit = label_map.get("proposal_output_unit") or {}
+    if proposal_unit and proposal_unit.get("pattern") in divisor_map_preview:
+        unit_default = {
+            "pattern": proposal_unit["pattern"],
+            "divisor": int(proposal_unit["divisor"]),
+        }
     else:
-        unit_default = label_map.get("unit_default") or {"pattern": "원", "divisor": 1}
+        # 정책 yaml 없으면 finance.yaml meta 단위 fallback
+        finance_meta = finance.get("meta") or {}
+        finance_unit = (finance_meta.get("currency_unit") or "").strip()
+        if finance_unit and finance_unit in divisor_map_preview:
+            unit_default = {"pattern": finance_unit, "divisor": divisor_map_preview[finance_unit]}
+        else:
+            unit_default = label_map.get("unit_default") or {"pattern": "원", "divisor": 1}
 
     records = finance.get("records") or {}
     if not records:

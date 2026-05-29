@@ -206,6 +206,15 @@ unit_default:
   pattern: 백만원
   divisor: 1000000
 
+# === 제안서 출력 단위 정책 (사용자 정책) ===
+# 재무제표 (엑셀) 의 값은 *원본 단위* 그대로 읽음 (finance.yaml meta.currency_unit).
+# 제안서 채움 시 *양식이 옆 단위 셀로 명시* 한 셀은 그 단위 변환 (양식 우선).
+# 양식이 단위 명시 *안 한* 셀은 *이 정책 단위 통일* — 표기 일관성 보장.
+# 다른 단위(천원·억원) 원하면 yaml 만 수정. 코드 변경 0.
+proposal_output_unit:
+  pattern: 백만원
+  divisor: 1000000
+
 # === 빌더 결정 규칙 ===
 # - 셀 라벨 normalize → fields 의 exact_labels 먼저 매칭
 # - 없으면 keywords substring 매칭
