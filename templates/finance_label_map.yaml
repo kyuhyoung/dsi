@@ -1,0 +1,134 @@
+# 양식 셀 라벨 ↔ finance_schema 필드 매핑 (정본)
+#
+# 임의의 한국 RFP·양식이 *같은 재무 정보*를 다양한 표기로 묻는다.
+# 빌더는 양식 셀의 라벨 텍스트를 *normalize* (공백/조사/괄호 제거) 후 이 dict 에서 lookup.
+# 매칭 없으면 *해당 셀 재무 채움 안 함* (양식 일반 셀로 처리).
+#
+# 일반화 원칙:
+#  - 회사 식별자 0, 양식 식별자 0.
+#  - 새 동의어는 *이 yaml 에만* 추가 — 코드 수정 0.
+#  - 키워드 부분 매칭 (substring) — 양식의 "최근 3년 매출액(백만원)" → 'revenue' 매칭.
+#
+# 매칭 우선순위:
+#  1. exact_labels (정확 일치) — 우선
+#  2. keywords (부분 포함) — 다음
+#  3. 매칭 없음 → 일반 셀
+
+schema_version: 1
+
+# 합계/총계 행 식별 키워드 — extract_finance.py 가 점수 가산
+# (항목 행 < 합계 행 선택). 일반화: 새 표기 ('Sum', '소계' 등) 여기 추가.
+total_row_keywords:
+  - 합계
+  - 총계
+  - 총액
+  - Total
+  - Sum
+
+# 양식 라벨에서 *제거하고 매칭*할 잡음 (조사/단위 표기/괄호)
+normalize:
+  strip_chars: ['(', ')', '[', ']', '※', '*', ':', ',']
+  strip_units: ['백만원', '천원', '억원', '원', '백만', '천', '억', 'KRW']
+  strip_words: ['최근', '당기', '전기', '전전기', '직전', '년도', '연도', '기준']
+  # 연도 표기 (2022·'24·24년 등) → 별도 처리 (year_extract)
+  # 빌더가 라벨에서 연도 추출 후 records[year] 조회
+
+# === 필드별 라벨 사전 ===
+fields:
+  capital:
+    exact_labels:
+      - 자본금
+      - 납입자본금
+      - 주식자본금
+    keywords:
+      - 자본금
+      - 납입자본
+      - 보통주자본
+
+  total_assets:
+    exact_labels:
+      - 자산총계
+      - 총자산
+    keywords:
+      - 자산총계
+      - 총자산
+      - 자산 합계
+      - Total Assets
+
+  total_liabilities:
+    exact_labels:
+      - 부채총계
+      - 총부채
+    keywords:
+      - 부채총계
+      - 총부채
+      - 부채 합계
+      - Total Liabilities
+
+  total_equity:
+    exact_labels:
+      - 자본총계
+      - 총자본
+      - 자기자본
+    keywords:
+      - 자본총계
+      - 총자본
+      - 자기자본
+      - Total Equity
+
+  revenue:
+    exact_labels:
+      - 매출액
+      - 영업수익
+      - 총매출
+      - 총매출액
+    keywords:
+      - 매출액
+      - 매출
+      - 영업수익
+      - Revenue
+      - Sales
+
+  operating_income:
+    exact_labels:
+      - 영업이익
+    keywords:
+      - 영업이익
+      - 영업손익
+      - Operating Income
+      - Operating Profit
+
+  net_income:
+    exact_labels:
+      - 당기순이익
+      - 순이익
+    keywords:
+      - 당기순이익
+      - 순이익
+      - 순손익
+      - Net Income
+      - Net Profit
+
+# === 단위 인식 (양식 셀의 단위 표기 → 원 단위 변환 계수) ===
+# 빌더가 finance.yaml의 *원 단위* 값을 *셀이 요구하는 단위*로 나누어 표시.
+unit_patterns:
+  - pattern: 백만원
+    divisor: 1000000        # finance value ÷ 1,000,000 = 백만원
+  - pattern: 억원
+    divisor: 100000000
+  - pattern: 천원
+    divisor: 1000
+  - pattern: 원
+    divisor: 1
+
+# default: 단위 없으면 백만원 (한국 RFP 관행)
+unit_default:
+  pattern: 백만원
+  divisor: 1000000
+
+# === 빌더 결정 규칙 ===
+# - 셀 라벨 normalize → fields 의 exact_labels 먼저 매칭
+# - 없으면 keywords substring 매칭
+# - 매칭된 필드 + 라벨에서 추출된 연도 → finance.yaml records[year][field]
+# - 단위 변환 + 천단위 콤마 포맷
+# - 데이터 없으면 '(확인 필요)' 표기

@@ -1,0 +1,30 @@
+meta:
+  currency: KRW
+  company_name: 주식회사 다비오
+  currency_unit: 원
+  source: Dabeeo_표준재무제표_FY23-25_FIN.xlsx
+records:
+  '2025':
+    capital: 3500967096
+    total_assets: 49583991947
+    total_liabilities: 14712945810
+    total_equity: 34871046137
+    revenue: 27501861442
+    operating_income: 4955735928
+    net_income: 2114586764
+  '2024':
+    capital: 3000130889
+    total_assets: 29194613297
+    total_liabilities: 9545663090
+    total_equity: 19648950207
+    revenue: 14801304141
+    operating_income: 1555370918
+    net_income: 409214477
+  '2023':
+    capital: 3000562275
+    total_assets: 17804969521
+    total_liabilities: 6445091728
+    total_equity: 11359877793
+    revenue: 8501979724
+    operating_income: 455299445
+    net_income: 310071134

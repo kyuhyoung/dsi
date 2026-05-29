@@ -49,7 +49,9 @@ HS_NS = "http://www.hancom.co.kr/hwpml/2011/section"
 NS = {"hp": HP_NS, "hs": HS_NS}
 
 SECTION_MARKER_RE = re.compile(
-    r"\[?\s*(별\s*지|붙\s*임|첨\s*부)\s*제?\s*\d+\s*호?\s*\]?",
+    # 별지/붙임/첨부 + 제?N(-M)?호? — 하이픈 서브넘버 (예: 제2-2호, 제2-3호) 지원.
+    # 한국 양식 관행: 큰 별지 한 호가 -1·-2 등 서브로 나뉘는 경우 잦음.
+    r"\[?\s*(별\s*지|붙\s*임|첨\s*부)\s*제?\s*\d+(?:\s*-\s*\d+)?\s*호?\s*\]?",
     re.MULTILINE,
 )
 
