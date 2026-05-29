@@ -43,53 +43,59 @@ def safe_filename(label: str) -> str:
     return s[:80] or "section"
 
 
-def _section_marker_re():
-    """SECTION_MARKER_RE 를 *yaml 정본*에서 가져옴 (extract_hwpx_form 의 로드 메커니즘 재사용).
-    별도 yaml 로드 코드 중복 회피 — 단일 정본 보장."""
-    try:
-        import sys as _sys
-        scripts_dir = str(Path(__file__).parent)
-        if scripts_dir not in _sys.path:
-            _sys.path.insert(0, scripts_dir)
-        import extract_hwpx_form as _e
-        return _e.SECTION_MARKER_RE
-    except Exception:
-        # fallback: yaml 로드 실패 시 안전 한국 양식 default
-        import re as _re
-        return _re.compile(r"\[?\s*(별\s*지|붙\s*임|첨\s*부)\s*제?\s*\d+(?:\s*-\s*\d+)?\s*호?\s*\]?", _re.MULTILINE)
+def _release_all_cell_heights(root):
+    """분할 결과 hwpx 의 *모든 표 cellSz height + 표 sz height* 해제.
+    원본 통합양식이 *전체 47p 페이지 분배 가정* 으로 박은 절대 높이가 *별지 단독*
+    출력엔 부적절 (라벨 박스가 한 페이지 차지 등). 모든 표 압축으로 별지 흐름 자연화.
 
+    yaml hwpx_fill.cell_height_release.{threshold,min_height} 정본 — 코드 박힘 0.
+    fill_hwpx_form 의 release_cell_height_locks 룰과 동일 (단일 정본).
 
-def _remove_section_label_box(root):
-    """별지 단독 hwpx 의 *시작 별지 라벨 1×1 표* 제거.
-    파일명·내용에 이미 별지 식별 정보 있어 시각 박스 불필요. 제거 시 1.기업정보 등
-    실제 콘텐츠가 페이지 상단부터 시작 → 페이지 1 빈공간 압축.
-
-    룰 (일반화):
-        - 첫 *콘텐츠 단락*이 *1행 1셀 표* 보유
-        - 그 표의 텍스트가 SECTION_MARKER_RE (yaml 정본) 매칭
-    안 매칭하면 영향 0 — 이미 라벨 박스 없는 별지나 다른 구조 보존.
-    HWPX 스키마 상수만 사용.
+    임의 별지·임의 양식 동일 동작 — 회사·양식 식별자 0.
     """
-    sec_re = _section_marker_re()
-    for p in list(root.findall(f"{{{HP_NS}}}p")):
-        txt = "".join((t.text or "") for t in p.iter(f"{{{HP_NS}}}t")).strip()
-        if not txt:
+    import sys as _sys
+    scripts_dir = str(Path(__file__).parent)
+    if scripts_dir not in _sys.path:
+        _sys.path.insert(0, scripts_dir)
+    try:
+        import fill_hwpx_form as _f
+        _f._load_fill_config(Path(__file__).parent.parent)
+        if not _f.CELL_HEIGHT_RELEASE_ENABLED:
+            return 0
+        threshold = _f.CELL_HEIGHT_RELEASE_THRESHOLD
+        min_height = _f.CELL_HEIGHT_RELEASE_MIN
+    except Exception:
+        # fallback (yaml 로드 실패 안전망)
+        threshold = 3000
+        min_height = 850
+    released = 0
+    # 모든 셀 cellSz height
+    for tc in root.iter(f"{{{HP_NS}}}tc"):
+        cz = tc.find(f"{{{HP_NS}}}cellSz")
+        if cz is None:
             continue
-        tbls = list(p.iter(f"{{{HP_NS}}}tbl"))
-        if not tbls:
-            return 0  # 콘텐츠는 시작했는데 라벨 박스 아님
-        tbl = tbls[0]
-        trs = tbl.findall(f"{{{HP_NS}}}tr")
-        if len(trs) != 1:
-            return 0
-        tcs = trs[0].findall(f"{{{HP_NS}}}tc")
-        if len(tcs) != 1:
-            return 0
-        if not sec_re.search(txt):
-            return 0
-        root.remove(p)
-        return 1
-    return 0
+        h_str = cz.get("height", "")
+        try:
+            h = int(h_str)
+        except (TypeError, ValueError):
+            continue
+        if h > threshold:
+            cz.set("height", str(min_height))
+            released += 1
+    # 모든 표 sz height
+    for tbl in root.iter(f"{{{HP_NS}}}tbl"):
+        sz = tbl.find(f"{{{HP_NS}}}sz")
+        if sz is None:
+            continue
+        h_str = sz.get("height", "")
+        try:
+            h = int(h_str)
+        except (TypeError, ValueError):
+            continue
+        if h > threshold:
+            sz.set("height", str(min_height))
+            released += 1
+    return released
 
 
 def _is_content_empty_p(p):
@@ -170,10 +176,12 @@ def extract_section(form_hwpx: Path, p_start: int, p_end, out_path: Path):
             else:
                 break
 
-        # 가드 3: 별지 시작 *라벨 박스* (1×1 표 + SECTION_MARKER 매칭) 제거.
-        # 통합양식에서만 의미 있는 시각 헤더. 별지 단독 출력엔 불필요.
-        # 임의 양식 동일 동작 — yaml SECTION_MARKER_RE 정본 사용.
-        _remove_section_label_box(root)
+        # 가드 3: *모든 표 height-release* — 별지 라벨 박스 + 본문 표 모두 압축.
+        # 원본 통합양식 *전체 페이지 분배 가정* 박힌 절대 높이 → 별지 단독 흐름에
+        # 부적절. 라벨 박스 자체는 *유지* (별지 식별 시각 정보 — 사용자 의도) 하되
+        # 그 *크기* 만 콘텐츠 기준으로 압축 → 라벨 + 첫 표가 같은 페이지에 시작.
+        # 임의 별지·임의 양식 동일 동작 — yaml threshold/min_height 정본 사용.
+        _release_all_cell_heights(root)
 
         body = etree.tostring(root, encoding="unicode")
         header = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'
