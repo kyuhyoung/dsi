@@ -58,6 +58,8 @@ SECTION_MARKER_RE = re.compile(
 PLACEHOLDER_RE = re.compile(
     r"^\s*[○\-\*·\u25CF\u25CB\u25E6\u274D\u274C\u25A0\u25A1]?\s*(가나다|ㅇㅇ+|[XＸxｘ]{2,}|예시\s*내용|내용\s*작성|여기에\s*작성|작성하시오|\(작성\))\s*$"
 )
+# 작성요령(안내) 박스 식별 정규식 — *yaml 정본*: system_defaults.yaml.hwpx_fill.instruction_hint_pattern.
+# fallback 패턴은 한국 양식 ※ 관행. _load_extract_patterns()가 yaml 값으로 덮어씀.
 INSTRUCTION_HINT_RE = re.compile(r"^\s*※")
 HEADER_RE = re.compile(r"^\s*([0-9]+[\.\-][0-9]+|[가-힣]\.)\s*")
 # 체크박스 셀 식별 — 셀 텍스트 안에 체크박스 문자 하나라도 있으면 체크박스 셀로 판정.
@@ -76,6 +78,27 @@ INSTRUCTION_PLACEHOLDER_RE = re.compile(
 class NoAliasDumper(yaml.SafeDumper):
     def ignore_aliases(self, data):
         return True
+
+
+def _load_extract_patterns(project_root: Path = None):
+    """templates/system_defaults.yaml 의 hwpx_fill 정본 패턴으로 양식 인식 정규식 갱신.
+    yaml 로 안내 박스 표기 추가 (예: '[작성요령]')만으로 코드 수정 0 으로 인식 가능.
+    """
+    global INSTRUCTION_HINT_RE
+    try:
+        if project_root is None:
+            project_root = Path(__file__).parent.parent
+        cfg_path = project_root / "templates" / "system_defaults.yaml"
+        cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
+        hf = cfg.get("hwpx_fill") or {}
+        if hf.get("instruction_hint_pattern"):
+            INSTRUCTION_HINT_RE = re.compile(hf["instruction_hint_pattern"])
+    except Exception:
+        pass  # fallback 유지
+
+
+# 모듈 로드 시 패턴 갱신 (yaml 정본)
+_load_extract_patterns()
 
 
 def ensure_hwpx(in_path: str, tmp_root: Path) -> Path:

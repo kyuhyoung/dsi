@@ -72,6 +72,11 @@ CELL_HEIGHT_RELEASE_ENABLED = True
 CELL_HEIGHT_RELEASE_THRESHOLD = 3000  # HWPX 단위. 1줄 ≈ 850
 CELL_HEIGHT_RELEASE_MIN = 850
 
+# 단독 마커 라벨 보호 임계 — yaml hwpx_fill.marker_only_max_len 정본.
+MARKER_ONLY_MAX_LEN = 5
+# 작성요령 박스 인식 prefix list — yaml hwpx_fill.instruction_box_prefixes 정본.
+INSTRUCTION_BOX_PREFIXES = ("※",)  # fallback — yaml 로드 실패 시 한국 양식 기본
+
 
 def parse_cell_id(cell_id: str):
     m = CELL_ID_RE.match(cell_id)
@@ -750,9 +755,9 @@ def _detect_column_mismap(tc_el, new_text: str):
 
 
 def _is_standalone_instruction_box(tc_el) -> bool:
-    """tc 가 *1×1 단일셀 표*의 셀이고, 텍스트가 ※ 로 시작하는 안내문이면 True.
+    """tc 가 *1×1 단일셀 표*의 셀이고, 텍스트가 *안내 prefix*(yaml 정본) 로 시작하면 True.
     이는 standalone 작성요령 box — *내용으로 채우면 안 됨*(양식 안내문, 제출 시 삭제 대상).
-    일반: 한국 공공 양식 공통 관행(단일 셀 ※ 박스 = 안내). 다중 셀(요약 표)은 입력칸.
+    일반: 한국 공공 양식 ※ 관행 + 다른 표기 ([작성요령]·[안내] 등) yaml 추가만으로 지원.
     """
     # 부모 tbl 찾기 (tc → tr → tbl)
     el = tc_el.getparent()
@@ -767,13 +772,15 @@ def _is_standalone_instruction_box(tc_el) -> bool:
     if len(tcs) != 1:
         return False
     txt = "".join((t.text or "") for t in tc_el.iter(f"{{{HP_NS}}}t")).strip()
-    return bool(txt) and txt.startswith("※")
+    # yaml instruction_box_prefixes 의 어떤 prefix 로든 시작하면 안내 박스
+    return bool(txt) and any(txt.startswith(p) for p in INSTRUCTION_BOX_PREFIXES)
 
 
 def _load_fill_config(project_root: Path):
-    """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (filler·marker_only 패턴 등)."""
+    """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (정본)."""
     global PLACEHOLDER_FILLER_RE, MARKER_ONLY_RE
     global CELL_HEIGHT_RELEASE_ENABLED, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN
+    global MARKER_ONLY_MAX_LEN, INSTRUCTION_BOX_PREFIXES
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
@@ -782,6 +789,10 @@ def _load_fill_config(project_root: Path):
             PLACEHOLDER_FILLER_RE = re.compile(hf["placeholder_filler_pattern"])
         if hf.get("marker_only_pattern"):
             MARKER_ONLY_RE = re.compile(hf["marker_only_pattern"])
+        if "marker_only_max_len" in hf:
+            MARKER_ONLY_MAX_LEN = int(hf["marker_only_max_len"])
+        if hf.get("instruction_box_prefixes"):
+            INSTRUCTION_BOX_PREFIXES = tuple(hf["instruction_box_prefixes"])
         rel = hf.get("cell_height_release") or {}
         if "enabled" in rel:
             CELL_HEIGHT_RELEASE_ENABLED = bool(rel["enabled"])
@@ -913,7 +924,7 @@ def cleanup_residual_placeholders(section_root) -> int:
         matched = False
         if PLACEHOLDER_FILLER_RE.search(stripped):
             matched = True
-        elif len(stripped) <= 5 and MARKER_ONLY_RE.match(stripped):
+        elif len(stripped) <= MARKER_ONLY_MAX_LEN and MARKER_ONLY_RE.match(stripped):
             matched = True
         if matched:
             for t in ts:

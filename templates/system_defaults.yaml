@@ -13,9 +13,23 @@ hwpx_fill:
   placeholder_filler_pattern: '가나다라?|[○]{2,}'
 
   # Fill 후 *잔존 단독 마커* 단락(글자 없이 ○/-/*/□ 같은 불릿만 남음) 자동 정리 패턴.
-  # 짧고(stripped ≤ 5자) 이 패턴에 *전체* 매칭하면 미채움 placeholder 잔존으로 보고 비움.
+  # 짧고(stripped ≤ marker_only_max_len) 이 패턴에 *전체* 매칭하면 미채움 placeholder 잔존으로 보고 비움.
   # 임의 한국 양식의 미채움 마커 일관 정리 — 특정 셀/회사/양식 하드코딩 아님.
   marker_only_pattern: '^[\s\*\-·○□❍•─━]+$'
+  # 단독 마커 매칭 시 *짧은 라벨 보호 임계* — 양식 라벨에 우연 단순 마커 들어가도 보호.
+  # 이 값보다 긴 텍스트는 marker_only 매칭에서 제외 (실제 라벨 보존).
+  marker_only_max_len: 5
+
+  # 작성요령(안내문) 박스 인식 — 1×1 단일 셀 표가 *이 prefix 중 하나* 로 시작하면 안내문.
+  # 한국 양식 관행: "※" 마커. 다른 양식이 다른 표기 사용 시 prefix 추가.
+  # 빌더는 이 박스를 *내용으로 채우지 않음* (가드).
+  instruction_box_prefixes:
+    - '※'
+    - '[작성요령]'
+    - '[안내]'
+    - '※ '
+  # extract_hwpx_form 에서 단락 시작 ※ 식별 정규식 (yaml 정본). 다른 표기 추가 시 alt 확장.
+  instruction_hint_pattern: '^\s*(※|\[작성요령\]|\[안내\])'
 
   # 채운 셀의 *고정 row 높이* 자동 해제 — 표가 페이지를 넘어가는 근본 원인 가드.
   # 원본 양식은 cellSz/@height 에 placeholder 분량 기준 *명시 절대 높이*를 박아둠
