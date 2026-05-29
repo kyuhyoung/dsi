@@ -17,6 +17,19 @@ hwpx_fill:
   # 임의 한국 양식의 미채움 마커 일관 정리 — 특정 셀/회사/양식 하드코딩 아님.
   marker_only_pattern: '^[\s\*\-·○□❍•─━]+$'
 
+  # 채운 셀의 *고정 row 높이* 자동 해제 — 표가 페이지를 넘어가는 근본 원인 가드.
+  # 원본 양식은 cellSz/@height 에 placeholder 분량 기준 *명시 절대 높이*를 박아둠
+  # (예: 본문 셀 height=63498 ≈ 10인치). AI가 짧게 채워도 한컴이 이 값을 *최소+선호*
+  # 로 존중해 row 가 안 줄어듬 → 빈 공간 잔존 + 표가 페이지 초과.
+  # 룰: AI 가 채운 셀의 cellSz/@height 가 threshold 초과면 → min_height 로 축소.
+  #     한컴이 row 높이를 content 기반 자동 재계산하도록 lock 해제.
+  # 안 채운 셀(양식 라벨·시스템 셀)은 보존 — 양식 디자인 유지.
+  # *임의 양식·회사·RFP*에 동일 룰. 특정 셀 ID·표 매핑 없음.
+  cell_height_release:
+    enabled: true
+    threshold: 3000   # HWPX 단위. 약 3줄 이상(1줄 ≈ 850) 잡힌 셀만 해제 대상
+    min_height: 850   # 약 1줄. 한컴이 이를 시작점으로 위로 자동 확장
+
 # 시스템 default 라벨 (한국어 발표 기준)
 defaults:
   toc_title: '목차'

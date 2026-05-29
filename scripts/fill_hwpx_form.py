@@ -66,6 +66,12 @@ PLACEHOLDER_FILLER_RE = re.compile(r"가나다라?|[○]{2,}")
 # 잔존 단독 마커 정리용. yaml hwpx_fill.marker_only_pattern 으로 덮어씀.
 MARKER_ONLY_RE = re.compile(r"^[\s\*\-·○□❍•─━]+$")
 
+# 채운 셀의 row 고정높이 자동 해제 정책 (한컴이 content 기반 재계산하도록).
+# yaml hwpx_fill.cell_height_release.{enabled,threshold,min_height} 로 덮어씀.
+CELL_HEIGHT_RELEASE_ENABLED = True
+CELL_HEIGHT_RELEASE_THRESHOLD = 3000  # HWPX 단위. 1줄 ≈ 850
+CELL_HEIGHT_RELEASE_MIN = 850
+
 
 def parse_cell_id(cell_id: str):
     m = CELL_ID_RE.match(cell_id)
@@ -767,6 +773,7 @@ def _is_standalone_instruction_box(tc_el) -> bool:
 def _load_fill_config(project_root: Path):
     """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (filler·marker_only 패턴 등)."""
     global PLACEHOLDER_FILLER_RE, MARKER_ONLY_RE
+    global CELL_HEIGHT_RELEASE_ENABLED, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
@@ -775,8 +782,116 @@ def _load_fill_config(project_root: Path):
             PLACEHOLDER_FILLER_RE = re.compile(hf["placeholder_filler_pattern"])
         if hf.get("marker_only_pattern"):
             MARKER_ONLY_RE = re.compile(hf["marker_only_pattern"])
+        rel = hf.get("cell_height_release") or {}
+        if "enabled" in rel:
+            CELL_HEIGHT_RELEASE_ENABLED = bool(rel["enabled"])
+        if "threshold" in rel:
+            CELL_HEIGHT_RELEASE_THRESHOLD = int(rel["threshold"])
+        if "min_height" in rel:
+            CELL_HEIGHT_RELEASE_MIN = int(rel["min_height"])
     except Exception:
         pass  # fallback 유지
+
+
+def _shrink_height_attr(el, threshold: int, min_h: int) -> bool:
+    """el 의 height attribute 가 threshold 초과면 min_h 로 축소. 변경 시 True."""
+    if el is None:
+        return False
+    h_str = el.get("height")
+    if not h_str:
+        return False
+    try:
+        h = int(h_str)
+    except (TypeError, ValueError):
+        return False
+    if h > threshold:
+        el.set("height", str(min_h))
+        return True
+    return False
+
+
+def release_cell_height_locks(filled_tcs) -> int:
+    """채운 셀의 cellSz/@height + 그 셀이 속한 표의 hp:sz/@height 가 임계 초과면 min_h 로 축소.
+    한컴이 row·표 높이를 *내용 기반*으로 자동 재계산하도록 absolute height lock 해제.
+
+    근본 치유: 원본 양식은 placeholder 분량 기준 절대 높이를 *두 곳* 에 박아둠 —
+    (a) hp:tbl/hp:sz/@height (표 전체 box) (b) hp:tc/hp:cellSz/@height (셀 단위).
+    cellSz 만 줄여도 *표 sz* 가 크면 한컴이 표 영역을 그 크기로 그려 row 가 안 줄어듬.
+    *두 곳 모두* 해제해야 한컴이 콘텐츠 기반 재계산 → 표 페이지 안 수렴.
+
+    채운 셀만 해제 → 양식 라벨·시스템 셀의 디자인은 보존.
+    임의 양식·회사·RFP 동일 동작. 룰 임계값은 yaml 정본.
+
+    Returns: 변경된 height attribute 개수 (셀 + 표).
+    """
+    if not CELL_HEIGHT_RELEASE_ENABLED:
+        return 0
+    released = 0
+    seen_tc = set()
+    seen_tbl = set()
+    for tc in filled_tcs:
+        if tc is None:
+            continue
+        tid = id(tc)
+        if tid in seen_tc:
+            continue
+        seen_tc.add(tid)
+        # (a) 셀 cellSz 축소
+        cz = tc.find(f"{{{HP_NS}}}cellSz")
+        if _shrink_height_attr(cz, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN):
+            released += 1
+        # (b) 같은 표의 sz 축소 — 표마다 1회
+        # 주의: lxml iterancestors 결과를 *바로* tbl.find 에 쓰면 일부 케이스에서 None 반환
+        # → 한 차례 itertext() 호출로 tree state 안정화. (검증 가설: lxml 내부 캐시 이슈)
+        tbl = None
+        for anc in tc.iterancestors(f"{{{HP_NS}}}tbl"):
+            tbl = anc
+            break
+        if tbl is None:
+            continue
+        _ = "".join(tbl.itertext())  # tree 안정화 — 이 줄 없으면 find(sz) 가 None
+        if id(tbl) in seen_tbl:
+            continue
+        seen_tbl.add(id(tbl))
+        tsz = tbl.find(f"{{{HP_NS}}}sz")
+        if _shrink_height_attr(tsz, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN):
+            released += 1
+    # (c) 채운 셀 안 *완전 빈 단락* 자체를 제거 — 빈 단락이 자리 차지하면 row 가 그만큼
+    # 잡힘. cellSz/sz 줄여도 한컴 layout 은 *셀 안 단락 개수* 로 row 자리 산정.
+    # 채운 셀 안의 미사용 placeholder 단락(텍스트 비움 후) 도 함께 정리해야 row 가 콘텐츠
+    # 기반으로 줄어듦. 단, 셀의 *마지막 단락 하나*는 보존 (한컴 표 셀 구조 요건).
+    seen_tc2 = set()
+    for tc in filled_tcs:
+        if tc is None:
+            continue
+        tid = id(tc)
+        if tid in seen_tc2:
+            continue
+        seen_tc2.add(tid)
+        sub = tc.find(f"{{{HP_NS}}}subList")
+        if sub is None:
+            continue
+        ps = sub.findall(f"{{{HP_NS}}}p")
+        # 마지막 1개 빈 단락은 셀 구조 요건상 남김
+        empty_ps = []
+        for p in ps:
+            ts = list(p.iter(f"{{{HP_NS}}}t"))
+            stripped = "".join((t.text or "") for t in ts).strip()
+            if not stripped:
+                empty_ps.append(p)
+        # 마지막 1개 보존, 나머지 제거
+        to_remove = empty_ps[:-1] if empty_ps else []
+        for p in to_remove:
+            sub.remove(p)
+            released += 1
+        # 보존되는 마지막 빈 단락의 linesegarray 도 제거 (자리 안 잡게)
+        if empty_ps:
+            keeper = empty_ps[-1]
+            ls = keeper.find(f"{{{HP_NS}}}linesegarray")
+            if ls is not None:
+                keeper.remove(ls)
+                released += 1
+    return released
 
 
 def cleanup_residual_placeholders(section_root) -> int:
@@ -901,6 +1016,9 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
     # 단락 생성(주입)은 top-level 인덱스를 바꾸므로 여기 모았다가 *루프 후* 처리
     inject_jobs = []  # [(anchor_idx, [lines])]
 
+    # 채운 셀(tc) 추적 — 마지막에 height-lock 자동 해제 (표 페이지 초과 방지)
+    filled_tcs = []
+
     for entry in fills:
         cid = entry.get("id", "")
         operation = entry.get("operation", "replace_text")
@@ -939,6 +1057,7 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
             image_id, width_px, height_px = img_info
             if insert_image_to_cell(tc, image_id, width_px, height_px):
                 stats["filled_image"] = stats.get("filled_image", 0) + 1
+                filled_tcs.append(tc)
             continue
 
         # 자동 이미지 검색 (KB 기반)
@@ -962,6 +1081,7 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
             image_id, width_px, height_px = img_info
             if insert_image_to_cell(tc, image_id, width_px, height_px):
                 stats["filled_image_auto"] = stats.get("filled_image_auto", 0) + 1
+                filled_tcs.append(tc)
             continue
 
         if operation == "replace_text" and text == "":
@@ -979,6 +1099,7 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
             ps = sub.findall(f"{{{HP_NS}}}p")
             if p_sub < len(ps) and set_paragraph_text(ps[p_sub], str(text)):
                 stats["filled_cellpara"] = stats.get("filled_cellpara", 0) + 1
+                filled_tcs.append(tc)
             continue
 
         p_match = parse_para_id(cid)
@@ -998,6 +1119,7 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
         if operation in ("check", "uncheck"):
             if apply_cell_check(tc, operation):
                 stats["filled_check"] = stats.get("filled_check", 0) + 1
+                filled_tcs.append(tc)
         else:
             # 가드: standalone 작성요령(1×1 ※ 박스)은 내용으로 채우지 않음 — 양식 안내문 보존
             if _is_standalone_instruction_box(tc):
@@ -1014,6 +1136,7 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
                 continue
             if set_cell_text(tc, str(text)):
                 stats["filled_cell"] = stats.get("filled_cell", 0) + 1
+                filled_tcs.append(tc)
 
     # 단락 주입을 마지막에, anchor 내림차순으로 (높은 인덱스 삽입이 낮은 anchor 를 안 밀게)
     for anchor_idx, lines in sorted(inject_jobs, key=lambda j: -j[0]):
@@ -1024,6 +1147,11 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
     n_cleaned = cleanup_residual_placeholders(root)
     if n_cleaned:
         stats["cleaned_residual"] = stats.get("cleaned_residual", 0) + n_cleaned
+
+    # 채운 셀의 row 고정높이 lock 해제 — 표 페이지 초과·빈공간 잔존 방지 (일반 가드)
+    n_released = release_cell_height_locks(filled_tcs)
+    if n_released:
+        stats["released_cell_height"] = stats.get("released_cell_height", 0) + n_released
 
     body = etree.tostring(root, encoding="unicode")
     header = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'
@@ -1215,6 +1343,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         f"셀안단락 {stats.get('filled_cellpara', 0)}",
         f"주입단락 {stats.get('injected_para', 0)}",
         f"잔존정리 {stats.get('cleaned_residual', 0)}",
+        f"높이해제 {stats.get('released_cell_height', 0)}",
         f"체크 {stats.get('filled_check', 0)}",
         f"이미지 {img_total} (명시 {stats.get('filled_image', 0)} + 자동 {stats.get('filled_image_auto', 0)})",
     ]
