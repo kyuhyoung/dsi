@@ -37,9 +37,12 @@ SCORE_FIELD_EXACT_BONUS = 50
 # build_unit_regexes(label_map) 가 (paren_re, label_re, standalone_re, divisor_map) 반환.
 
 
+YEAR_2DIGIT_PREFIX = "20"
+
+
 def load_label_map(project_root: Path) -> dict:
     """yaml 로드 + 모듈 전역 패턴·점수 갱신 (yaml 정본 보장)."""
-    global YEAR_LABEL_RE, SCORE_FIELD_BASE, SCORE_FIELD_EXACT_BONUS
+    global YEAR_LABEL_RE, SCORE_FIELD_BASE, SCORE_FIELD_EXACT_BONUS, YEAR_2DIGIT_PREFIX
     data = yaml.safe_load((project_root / "templates" / "finance_label_map.yaml").read_text(encoding="utf-8"))
     pat = data.get("patterns") or {}
     if pat.get("year_label"):
@@ -47,6 +50,8 @@ def load_label_map(project_root: Path) -> dict:
     sc = data.get("scoring") or {}
     SCORE_FIELD_BASE = int(sc.get("field_base", SCORE_FIELD_BASE))
     SCORE_FIELD_EXACT_BONUS = int(sc.get("field_exact_bonus", SCORE_FIELD_EXACT_BONUS))
+    if data.get("year_2digit_prefix"):
+        YEAR_2DIGIT_PREFIX = str(data["year_2digit_prefix"])
     return data
 
 
@@ -110,11 +115,18 @@ def match_field(row_label: str, fields: dict, strip_chars: list = None) -> str:
 
 
 def extract_year(label: str) -> str:
-    """라벨에서 4자리 연도 추출 ('2024년' → '2024'). 못 찾으면 None."""
+    """라벨에서 연도 추출. 4자리(2024) 또는 2자리('24) 모두 지원.
+    2자리는 YEAR_2DIGIT_PREFIX (yaml 정본) 사용해 4자리 변환.
+    """
     if not label:
         return None
     m = YEAR_LABEL_RE.search(str(label))
-    return m.group(1) if m else None
+    if not m:
+        return None
+    year = m.group(1)
+    if len(year) == 2:
+        year = YEAR_2DIGIT_PREFIX + year
+    return year
 
 
 def extract_unit_divisor(label_texts: list, unit_default: dict, unit_regexes: tuple) -> tuple:

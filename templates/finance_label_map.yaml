@@ -66,10 +66,15 @@ normalize:
 # === 정규식 패턴 (yaml 정본) ===
 # 코드에 정규식 박지 않음. 새 도메인은 *yaml만* 수정.
 patterns:
-  # 연도 라벨 — 양식 헤더 셀에서 추출 ('2024' '2024년' 'FY2024')
-  year_label: '(\d{4})\s*년?'
+  # 연도 라벨 — 양식 헤더 셀에서 추출 ('2024' '2024년' 'FY2024' "'24년" '~24년').
+  # 4자리(\d{4}) 또는 2자리(\d{2}) 매칭. 2자리는 *year_2digit_prefix* (yaml) 로 4자리 변환.
+  # 한국 양식 관행: ~'24년 형식 (2024년까지). 임의 양식의 2자리 표기 일반 흡수.
+  year_label: '(\d{4}|\d{2})\s*년?'
   # 연도 헤더 (xlsx) — 영문 'FY' 'fy' 'F/Y' 포함
   year_header: '(?:FY|fy|F/Y\s*)?(\d{4})\s*(?:년|FY|fy)?$'
+# 2자리 연도 → 4자리 변환 시 prefix (한국 RFP 관행: 2000년대 기본).
+# 다른 시대 데이터면 yaml 수정만으로 변경.
+year_2digit_prefix: '20'
 
 # === xlsx 스캔 범위 ===
 # 큰 시트에서 헤더·메타 찾을 때 스캔할 최대 행/열. 표준 양식은 작은 영역.
@@ -167,6 +172,22 @@ fields:
       - 순손익
       - Net Income
       - Net Profit
+
+  capital_raised:
+    exact_labels:
+      - 유상증자
+      - 투자유치
+      - 투자유치실적
+      - 투자금
+      - 외부투자
+    keywords:
+      - 유상증자
+      - 투자유치
+      - 투자금
+      - 외부투자
+      - Capital Raised
+      - Equity Issuance
+      - Paid-in Capital Increase
 
 # === 단위 인식 (양식 셀의 단위 표기 → 원 단위 변환 계수) ===
 # 빌더가 finance.yaml의 *원 단위* 값을 *셀이 요구하는 단위*로 나누어 표시.

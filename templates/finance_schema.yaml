@@ -30,6 +30,8 @@ required_fields:
   - revenue                   # 매출액
   - operating_income          # 영업이익
   - net_income                # 당기순이익
+  # 현금흐름표 (CF) — 외부 투자·자본 유입
+  - capital_raised            # 유상증자 (자본금/자본잉여금) — 외부 투자 유치 금액
 
 # 각 필드는 연도별로 저장. 보통 최근 3년 (RFP 표준 요구).
 # 필드별 의미 + 한국어 라벨 (사용자 검토용).
@@ -62,6 +64,10 @@ field_definitions:
     ko: 당기순이익
     description: 법인세 차감 후 당기순손익
     is_section: 손익
+  capital_raised:
+    ko: 유상증자
+    description: 외부 투자 유치 금액 (자본금 + 자본잉여금 유입) — 현금흐름표 재무활동
+    cf_section: 재무
 
 # === 회사별 yaml 작성 예시 (kb/company/<name>/finance.yaml) ===
 # 실제 회사 KB는 이 example_schema 의 records 부분을 채워서 사용.

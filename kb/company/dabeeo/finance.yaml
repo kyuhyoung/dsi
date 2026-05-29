@@ -12,6 +12,7 @@ records:
     revenue: 27501861442
     operating_income: 4955735928
     net_income: 2114586764
+    capital_raised: 2200490785
   '2024':
     capital: 3000130889
     total_assets: 29194613297
@@ -20,6 +21,7 @@ records:
     revenue: 14801304141
     operating_income: 1555370918
     net_income: 409214477
+    capital_raised: 0
   '2023':
     capital: 3000562275
     total_assets: 17804969521
@@ -28,3 +30,4 @@ records:
     revenue: 8501979724
     operating_income: 455299445
     net_income: 310071134
+    capital_raised: 0
