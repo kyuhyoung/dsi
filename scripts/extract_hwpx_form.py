@@ -81,18 +81,38 @@ class NoAliasDumper(yaml.SafeDumper):
 
 
 def _load_extract_patterns(project_root: Path = None):
-    """templates/system_defaults.yaml 의 hwpx_fill 정본 패턴으로 양식 인식 정규식 갱신.
-    yaml 로 안내 박스 표기 추가 (예: '[작성요령]')만으로 코드 수정 0 으로 인식 가능.
+    """templates/system_defaults.yaml 의 hwpx_fill 정본 패턴으로 *모든* 양식 인식 정규식 갱신.
+    원본 코드의 정규식들은 *yaml 로드 실패 안전망* (한국 양식 fallback). yaml 정본이 우선.
+    새 양식·표기는 *yaml만* 수정 — 코드 변경 0.
     """
-    global INSTRUCTION_HINT_RE
+    global INSTRUCTION_HINT_RE, SECTION_MARKER_RE
+    global PLACEHOLDER_RE, HEADER_RE, CHECKBOX_RE
+    global EXAMPLE_RE, SUBORDINATE_RE, INSTRUCTION_PLACEHOLDER_RE
     try:
         if project_root is None:
             project_root = Path(__file__).parent.parent
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
         hf = cfg.get("hwpx_fill") or {}
+        # 안내 박스 패턴 (별도 키)
         if hf.get("instruction_hint_pattern"):
             INSTRUCTION_HINT_RE = re.compile(hf["instruction_hint_pattern"])
+        # 양식 인식 정규식 그룹 (form_patterns)
+        fp = hf.get("form_patterns") or {}
+        if fp.get("section_marker"):
+            SECTION_MARKER_RE = re.compile(fp["section_marker"], re.MULTILINE)
+        if fp.get("placeholder"):
+            PLACEHOLDER_RE = re.compile(fp["placeholder"])
+        if fp.get("header"):
+            HEADER_RE = re.compile(fp["header"])
+        if fp.get("checkbox"):
+            CHECKBOX_RE = re.compile(fp["checkbox"])
+        if fp.get("example"):
+            EXAMPLE_RE = re.compile(fp["example"])
+        if fp.get("subordinate"):
+            SUBORDINATE_RE = re.compile(fp["subordinate"])
+        if fp.get("instruction_placeholder"):
+            INSTRUCTION_PLACEHOLDER_RE = re.compile(fp["instruction_placeholder"])
     except Exception:
         pass  # fallback 유지
 
