@@ -143,16 +143,25 @@ def _cell_text_is_unit(text: str, unit_regexes: tuple) -> bool:
     return False
 
 
-def _has_adjacent_unit_cell(parsed: list, value_cell: dict, unit_regexes: tuple) -> bool:
-    """value_cell 의 *오른쪽 인접 셀* (같은 row, c+1) 이 단위 셀이면 True.
-    한국 양식 관행: 값 셀과 단위 셀 분리 배치. T7 매출액 (값 / 백만원) 등.
+def _adjacent_unit_info(parsed: list, value_cell: dict, unit_regexes: tuple):
+    """value_cell 의 *오른쪽 인접 셀* (same row, c+1) 이 단위 셀이면 (unit, divisor) 반환.
+    한국 양식 관행: 값 셀과 단위 셀 분리 배치 (T7 매출액 ⊕ 백만원).
+    빌더는 이 단위로 *양식 의도 단위 변환* + *값만 표기* (옆 단위 셀이 단위 명시).
+    yaml unit_patterns 정본 (코드 박힘 0).
     """
+    paren_re, label_re, standalone_re, divisor_map = unit_regexes
     for q in parsed:
         if q["r"] == value_cell["r"] and q["c"] == value_cell["c"] + 1:
-            if _cell_text_is_unit(q.get("text", ""), unit_regexes):
-                return True
+            txt = str(q.get("text", ""))
+            for rx in (paren_re, label_re):
+                m = rx.search(txt)
+                if m and m.group(1) in divisor_map:
+                    return m.group(1), divisor_map[m.group(1)]
+            m = standalone_re.match(txt)
+            if m and m.group(1) in divisor_map:
+                return m.group(1), divisor_map[m.group(1)]
             break
-    return False
+    return None
 
 
 def extract_unit_divisor(label_texts: list, unit_default: dict, unit_regexes: tuple) -> tuple:
@@ -300,9 +309,20 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
     finance = yaml.safe_load(finance_yaml.read_text(encoding="utf-8"))
     label_map = load_label_map(project_root)
     fields = label_map.get("fields") or {}
-    unit_default = label_map.get("unit_default") or {"pattern": "백만원", "divisor": 1000000}
     # yaml strip_chars 정본 — 모든 normalize 호출에 전달
     strip_chars = (label_map.get("normalize") or {}).get("strip_chars") or []
+    # === default 단위 결정 (yaml 박힘 0) ===
+    # finance.yaml meta.currency_unit (재무제표 엑셀에서 추출된 단위) 가 *최우선*.
+    # 양식이 단위 명시 안 한 셀은 *재무제표 단위 그대로* 표기 — 추측·가정 0.
+    # finance.yaml 에 단위 없으면 label_map 의 unit_default fallback.
+    finance_meta = finance.get("meta") or {}
+    finance_unit = (finance_meta.get("currency_unit") or "").strip()
+    # divisor_map 은 build_unit_regexes 가 yaml unit_patterns 에서 구축
+    _, _, _, divisor_map_preview = build_unit_regexes(label_map)
+    if finance_unit and finance_unit in divisor_map_preview:
+        unit_default = {"pattern": finance_unit, "divisor": divisor_map_preview[finance_unit]}
+    else:
+        unit_default = label_map.get("unit_default") or {"pattern": "원", "divisor": 1}
 
     records = finance.get("records") or {}
     if not records:
@@ -331,8 +351,17 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
                 continue
             row_lbl = row_labels.get(p["r"], "")
             col_lbl = col_labels.get(p["c"], "")
-            # 표 단위 적용 (셀별 단위 오버라이드는 향후 필요시 추가)
-            cell_unit, cell_divisor = unit_str, divisor
+            # 단위 결정 우선순위:
+            # 1) 옆 인접 단위 셀 (양식이 명시한 셀별 단위 — 가장 강함)
+            # 2) 표 라벨에서 추출된 단위 (표 전체)
+            # 3) finance.yaml meta default (재무제표 엑셀 단위)
+            adj = _adjacent_unit_info(parsed, p, unit_regexes)
+            if adj:
+                cell_unit, cell_divisor = adj
+                has_adjacent_unit = True
+            else:
+                cell_unit, cell_divisor = unit_str, divisor
+                has_adjacent_unit = False
             # 양방향 매칭: 가로형(row=field, col=year) + 세로형(row=year, col=field).
             # 라벨 한쪽에 field, 다른쪽에 year 가 있으면 매칭. yaml 정본·일반 룰.
             field = match_field(row_lbl, fields, strip_chars)
@@ -359,7 +388,7 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
                 continue
             # 단위 변환 + 단위 표기 자동 추가 (옆 단위 셀 없으면 값+단위)
             converted = int(round(value / cell_divisor))
-            if _has_adjacent_unit_cell(parsed, p, unit_regexes):
+            if has_adjacent_unit:
                 text = f"{converted:,}"
             else:
                 text = f"{converted:,} {cell_unit}"
