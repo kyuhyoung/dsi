@@ -77,6 +77,13 @@ MARKER_ONLY_MAX_LEN = 5
 # 작성요령 박스 인식 prefix list — yaml hwpx_fill.instruction_box_prefixes 정본.
 INSTRUCTION_BOX_PREFIXES = ("※",)  # fallback — yaml 로드 실패 시 한국 양식 기본
 
+# 체크박스 toggle 사전 — yaml hwpx_fill.checkbox_toggle 정본.
+# 새 글리프(◇·◆ 등) 자동 처리는 yaml만 수정.
+CHECKBOX_TOGGLE = {
+    "check": {"□": "☑", "☐": "☑"},
+    "uncheck": {"☑": "□", "☒": "□"},
+}
+
 
 def parse_cell_id(cell_id: str):
     m = CELL_ID_RE.match(cell_id)
@@ -638,23 +645,23 @@ def set_cell_text(tc_el, text: str):
 
 
 def apply_cell_check(tc_el, mode: str = "check"):
-    """체크박스 셀의 *원본 텍스트 보존* + □/☐ → ☑ (또는 ☑/☒ → □) 만 부분 교체.
-
+    """체크박스 셀의 *원본 텍스트 보존* + 글리프 변환만 부분 교체.
+    변환 사전은 *yaml 정본* (CHECKBOX_TOGGLE). 새 글리프(◇·◆ 등) yaml로 추가만으로 지원.
     양식 라벨 절대 안 변경. 예: "□ 여" → "☑ 여" (라벨 "여" 보존).
     """
     subList = tc_el.find(f"{{{HP_NS}}}subList")
     if subList is None:
         return False
+    mapping = CHECKBOX_TOGGLE.get(mode, {})
+    if not mapping:
+        return False
     changed = False
     for t in tc_el.iter(f"{{{HP_NS}}}t"):
         if t.text is None:
             continue
-        if mode == "check":
-            new = t.text.replace("□", "☑").replace("☐", "☑")
-        elif mode == "uncheck":
-            new = t.text.replace("☑", "□").replace("☒", "□")
-        else:
-            new = t.text
+        new = t.text
+        for src, dst in mapping.items():
+            new = new.replace(src, dst)
         if new != t.text:
             t.text = new
             changed = True
@@ -780,7 +787,7 @@ def _load_fill_config(project_root: Path):
     """templates/system_defaults.yaml 의 hwpx_fill 설정 로드 (정본)."""
     global PLACEHOLDER_FILLER_RE, MARKER_ONLY_RE
     global CELL_HEIGHT_RELEASE_ENABLED, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN
-    global MARKER_ONLY_MAX_LEN, INSTRUCTION_BOX_PREFIXES
+    global MARKER_ONLY_MAX_LEN, INSTRUCTION_BOX_PREFIXES, CHECKBOX_TOGGLE
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
@@ -793,6 +800,12 @@ def _load_fill_config(project_root: Path):
             MARKER_ONLY_MAX_LEN = int(hf["marker_only_max_len"])
         if hf.get("instruction_box_prefixes"):
             INSTRUCTION_BOX_PREFIXES = tuple(hf["instruction_box_prefixes"])
+        if hf.get("checkbox_toggle"):
+            ct = hf["checkbox_toggle"]
+            CHECKBOX_TOGGLE = {
+                "check": dict(ct.get("check") or {}),
+                "uncheck": dict(ct.get("uncheck") or {}),
+            }
         rel = hf.get("cell_height_release") or {}
         if "enabled" in rel:
             CELL_HEIGHT_RELEASE_ENABLED = bool(rel["enabled"])
