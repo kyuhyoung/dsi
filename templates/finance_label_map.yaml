@@ -58,6 +58,39 @@ normalize:
   strip_words: ['최근', '당기', '전기', '전전기', '직전', '년도', '연도', '기준']
   # 연도 표기 (2022·'24·24년 등) → 별도 처리 (year_extract)
   # 빌더가 라벨에서 연도 추출 후 records[year] 조회
+  # 회계 양식의 *prefix 패턴* 제거 (예: 'Ⅰ. 자산', 'I. Assets' 등). 정규식 list.
+  strip_prefix_patterns:
+    - '^[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]+\.\s*'   # 한국 회계 표준: 로마숫자 + 점
+    - '^[IVX]+\.\s+'                # 영문 회계: I./II./III. + 공백 (한 글자 영문자는 너무 광범위)
+
+# === 정규식 패턴 (yaml 정본) ===
+# 코드에 정규식 박지 않음. 새 도메인은 *yaml만* 수정.
+patterns:
+  # 연도 라벨 — 양식 헤더 셀에서 추출 ('2024' '2024년' 'FY2024')
+  year_label: '(\d{4})\s*년?'
+  # 연도 헤더 (xlsx) — 영문 'FY' 'fy' 'F/Y' 포함
+  year_header: '(?:FY|fy|F/Y\s*)?(\d{4})\s*(?:년|FY|fy)?$'
+
+# === xlsx 스캔 범위 ===
+# 큰 시트에서 헤더·메타 찾을 때 스캔할 최대 행/열. 표준 양식은 작은 영역.
+# 변경 가이드: 더 큰 양식이면 늘림. 너무 크면 매칭 모호성 증가.
+scan_limits:
+  max_header_row: 30   # 헤더 행 (FY20XX) 검색 범위 — find_year_columns
+  max_meta_row: 15     # 메타 (회사명·단위) 검색 범위 — extract_meta
+  max_meta_col: 8
+
+# === 매칭 점수 가중치 ===
+# extract_finance.py · fill_finance_cells.py 가 keyword 매칭 시 사용.
+# 같은 *필드*에 *여러 후보 행*이 매칭될 때 점수 비교로 best 선택 (합계 행 > 항목 행).
+# 변경 가이드: 합계 우선 강화하려면 total_bonus 늘림.
+scoring:
+  base: 100              # 매칭 기본 점수
+  total_bonus: 50        # 합계/총계 행 보너스
+  indent_penalty_per_char: 2  # 들여쓰기 1글자 당 페널티 (세부 항목 < 대분류)
+  exact_label_bonus: 30  # 정규화 후 정확 일치 보너스
+  # match_field (fill_finance_cells) 용
+  field_base: 10         # 부분 일치 기본 점수
+  field_exact_bonus: 50  # 전체 일치 보너스
 
 # === 필드별 라벨 사전 ===
 fields:

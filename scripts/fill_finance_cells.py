@@ -28,14 +28,26 @@ from pathlib import Path
 import yaml
 
 
-YEAR_LABEL_RE = re.compile(r"(\d{4})\s*년?")
+# 모든 패턴·점수 yaml 정본 (load_label_map 에서 갱신).
+YEAR_LABEL_RE = None
+# 매칭 점수 (fill_finance_cells.match_field 용)
+SCORE_FIELD_BASE = 10
+SCORE_FIELD_EXACT_BONUS = 50
 # 단위 검출 정규식은 yaml unit_patterns 에서 *동적 생성* (코드에 단위 박지 않음).
 # build_unit_regexes(label_map) 가 (paren_re, label_re, standalone_re, divisor_map) 반환.
-# 우선순위: 괄호 안 단위 > '단위: X' 표기 > 단독 라벨 셀.
 
 
 def load_label_map(project_root: Path) -> dict:
-    return yaml.safe_load((project_root / "templates" / "finance_label_map.yaml").read_text(encoding="utf-8"))
+    """yaml 로드 + 모듈 전역 패턴·점수 갱신 (yaml 정본 보장)."""
+    global YEAR_LABEL_RE, SCORE_FIELD_BASE, SCORE_FIELD_EXACT_BONUS
+    data = yaml.safe_load((project_root / "templates" / "finance_label_map.yaml").read_text(encoding="utf-8"))
+    pat = data.get("patterns") or {}
+    if pat.get("year_label"):
+        YEAR_LABEL_RE = re.compile(pat["year_label"])
+    sc = data.get("scoring") or {}
+    SCORE_FIELD_BASE = int(sc.get("field_base", SCORE_FIELD_BASE))
+    SCORE_FIELD_EXACT_BONUS = int(sc.get("field_exact_bonus", SCORE_FIELD_EXACT_BONUS))
+    return data
 
 
 def build_unit_regexes(label_map: dict):
@@ -59,29 +71,38 @@ def build_unit_regexes(label_map: dict):
     return paren_re, label_re, standalone_re, divisor_map
 
 
-def normalize(text: str) -> str:
+def normalize(text: str, strip_chars: list = None) -> str:
+    """라벨 정규화: 잡음 문자 제거 + 공백 압축.
+    strip_chars 는 yaml normalize.strip_chars 정본 (코드에 문자 박지 않음).
+    """
     if not text:
         return ""
-    s = text.strip()
-    s = re.sub(r"[（）()\[\]※\*:,]", "", s)
+    s = str(text).strip()
+    if strip_chars:
+        # yaml 의 strip_chars 로 동적 문자 클래스 생성
+        cls = "".join(re.escape(c) for c in strip_chars)
+        s = re.sub(rf"[{cls}]", "", s)
     s = re.sub(r"\s+", "", s)
     return s
 
 
-def match_field(row_label: str, fields: dict) -> str:
-    """행 라벨 → finance 필드명. 매칭 없으면 None."""
-    norm = normalize(row_label)
+def match_field(row_label: str, fields: dict, strip_chars: list = None) -> str:
+    """행 라벨 → finance 필드명. 매칭 없으면 None.
+    점수: SCORE_FIELD_BASE + keyword 길이 + (정확 일치 시 SCORE_FIELD_EXACT_BONUS).
+    가중치·strip_chars 모두 yaml 정본.
+    """
+    norm = normalize(row_label, strip_chars)
     if not norm:
         return None
     best_field = None
     best_score = -1
     for field, defn in fields.items():
         for kw in defn.get("keywords") or []:
-            nk = normalize(kw)
+            nk = normalize(kw, strip_chars)
             if nk and nk in norm:
-                score = 10 + len(nk)  # 긴 keyword 우선 (전체 일치 가까움)
+                score = SCORE_FIELD_BASE + len(nk)
                 if norm == nk:
-                    score += 50
+                    score += SCORE_FIELD_EXACT_BONUS
                 if score > best_score:
                     best_score = score
                     best_field = field
@@ -227,6 +248,8 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
     label_map = load_label_map(project_root)
     fields = label_map.get("fields") or {}
     unit_default = label_map.get("unit_default") or {"pattern": "백만원", "divisor": 1000000}
+    # yaml strip_chars 정본 — 모든 normalize 호출에 전달
+    strip_chars = (label_map.get("normalize") or {}).get("strip_chars") or []
 
     records = finance.get("records") or {}
     if not records:
@@ -257,8 +280,8 @@ def build_finance_fills(form_yaml: Path, finance_yaml: Path, project_root: Path,
             col_lbl = col_labels.get(p["c"], "")
             # 표 단위 적용 (셀별 단위 오버라이드는 향후 필요시 추가)
             cell_unit, cell_divisor = unit_str, divisor
-            # row 라벨 → field
-            field = match_field(row_lbl, fields)
+            # row 라벨 → field (strip_chars yaml 정본)
+            field = match_field(row_lbl, fields, strip_chars)
             if not field:
                 continue
             # col 라벨 → year

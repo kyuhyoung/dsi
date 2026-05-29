@@ -22,31 +22,63 @@ import yaml
 import openpyxl
 
 
-# 연도 헤더 패턴 — 'FY2024' '2024' '2024년' 등 일반 흡수
-YEAR_HEADER_RE = re.compile(r"(?:FY|fy|F/Y\s*)?(\d{4})\s*(?:년|FY|fy)?$")
-
-# 합계/총계 키워드 — yaml 정본 (finance_label_map.yaml.total_row_keywords)에서 로드.
-# 빈 list = fallback (yaml 로드 실패 시 0개). 안전 default 없음 — yaml 누락이 더 큰 문제.
+# 모든 패턴·키워드·임계는 yaml 정본 (finance_label_map.yaml) 에서 로드.
+# 모듈 전역은 *비어 있는 초기값* — 빈 변수 박지 마라.
+YEAR_HEADER_RE = None
 TOTAL_KEYWORDS = []
+STRIP_PREFIX_RES = []
+# 스캔 범위
+MAX_HEADER_ROW = 30
+MAX_META_ROW = 15
+MAX_META_COL = 8
+# 점수 가중치
+SCORE_BASE = 100
+SCORE_TOTAL_BONUS = 50
+SCORE_INDENT_PENALTY_PER_CHAR = 2
+SCORE_EXACT_LABEL_BONUS = 30
 
 
 def load_label_map(project_root: Path) -> dict:
-    """templates/finance_label_map.yaml 로드 + 모듈 전역 TOTAL_KEYWORDS 갱신."""
-    global TOTAL_KEYWORDS
+    """templates/finance_label_map.yaml 로드 + *모든* 모듈 전역 갱신.
+    코드에 박힌 default 가 있어도 yaml 값이 우선 (yaml 정본).
+    """
+    global YEAR_HEADER_RE, TOTAL_KEYWORDS, STRIP_PREFIX_RES
+    global MAX_HEADER_ROW, MAX_META_ROW, MAX_META_COL
+    global SCORE_BASE, SCORE_TOTAL_BONUS, SCORE_INDENT_PENALTY_PER_CHAR, SCORE_EXACT_LABEL_BONUS
     p = project_root / "templates" / "finance_label_map.yaml"
     data = yaml.safe_load(p.read_text(encoding="utf-8"))
+    # 패턴
+    pat = data.get("patterns") or {}
+    if pat.get("year_header"):
+        YEAR_HEADER_RE = re.compile(pat["year_header"])
+    # 합계 키워드
     TOTAL_KEYWORDS = list(data.get("total_row_keywords") or [])
+    # 정규화 prefix 패턴
+    norm = data.get("normalize") or {}
+    STRIP_PREFIX_RES = [re.compile(p) for p in (norm.get("strip_prefix_patterns") or [])]
+    # 스캔 범위
+    sl = data.get("scan_limits") or {}
+    MAX_HEADER_ROW = int(sl.get("max_header_row", MAX_HEADER_ROW))
+    MAX_META_ROW = int(sl.get("max_meta_row", MAX_META_ROW))
+    MAX_META_COL = int(sl.get("max_meta_col", MAX_META_COL))
+    # 점수
+    sc = data.get("scoring") or {}
+    SCORE_BASE = int(sc.get("base", SCORE_BASE))
+    SCORE_TOTAL_BONUS = int(sc.get("total_bonus", SCORE_TOTAL_BONUS))
+    SCORE_INDENT_PENALTY_PER_CHAR = int(sc.get("indent_penalty_per_char", SCORE_INDENT_PENALTY_PER_CHAR))
+    SCORE_EXACT_LABEL_BONUS = int(sc.get("exact_label_bonus", SCORE_EXACT_LABEL_BONUS))
     return data
 
 
 def normalize_label(text: str) -> str:
-    """라벨 정규화: 들여쓰기·괄호·기호 제거 + 소문자."""
+    """라벨 정규화: prefix 패턴 + 괄호 내용 제거 (prefix 패턴은 yaml 정본)."""
     if not text:
         return ""
     s = text.strip()
-    # 로마숫자 + 점 + 공백 제거 ('Ⅰ. ', 'Ⅱ.' 등)
-    s = re.sub(r"^[ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ]+\.\s*", "", s)
-    # 괄호와 안 내용 제거 ('(GPM%)' 등)
+    # 회계 양식 prefix (로마숫자 등) — yaml strip_prefix_patterns 정본
+    for rx in STRIP_PREFIX_RES:
+        s = rx.sub("", s)
+    # 괄호와 안 내용 제거 ('(GPM%)' 등) — 기본 알고리즘
     s = re.sub(r"\([^)]*\)", "", s)
     return s.strip()
 
@@ -59,10 +91,11 @@ def is_indented(text: str) -> int:
 
 
 def find_year_columns(ws) -> dict:
-    """header 행 검색 → 연도 컬럼 → 'YYYY' 매핑 반환."""
-    # header 가 어디 있는지 모름 — 첫 30행 안에서 *FY20XX 가 가장 많은 행* 을 header 로 추정
+    """header 행 검색 → 연도 컬럼 → 'YYYY' 매핑 반환.
+    스캔 행 수는 yaml scan_limits.max_header_row 정본.
+    """
     best_row, best_map = 0, {}
-    for r in range(1, min(ws.max_row + 1, 30)):
+    for r in range(1, min(ws.max_row + 1, MAX_HEADER_ROW)):
         col_to_year = {}
         for c in range(1, ws.max_column + 1):
             v = ws.cell(r, c).value
@@ -74,23 +107,20 @@ def find_year_columns(ws) -> dict:
         if len(col_to_year) > len(best_map):
             best_map = col_to_year
             best_row = r
-    return best_map  # {col_idx: 'YYYY'}
+    return best_map
 
 
 def score_row_match(label: str, keyword: str) -> int:
-    """라벨이 keyword 를 포함하는지. 합계 행이면 보너스, 들여쓰기 페널티."""
+    """라벨이 keyword 를 포함하는지. 가중치는 yaml scoring 정본."""
     norm = normalize_label(label)
     if keyword not in norm:
         return -1  # 매칭 실패
-    score = 100
-    # 합계 행 보너스
+    score = SCORE_BASE
     if any(t in norm for t in TOTAL_KEYWORDS):
-        score += 50
-    # 들여쓰기 페널티
-    score -= is_indented(label) * 2
-    # 정확 일치 보너스 (keyword 가 라벨 전체)
+        score += SCORE_TOTAL_BONUS
+    score -= is_indented(label) * SCORE_INDENT_PENALTY_PER_CHAR
     if norm.strip() == keyword:
-        score += 30
+        score += SCORE_EXACT_LABEL_BONUS
     return score
 
 
@@ -150,8 +180,8 @@ def extract_meta(wb, label_map: dict) -> dict:
     meta = {"currency": "KRW"}
     for sn in wb.sheetnames:
         ws = wb[sn]
-        for r in range(1, min(ws.max_row + 1, 15)):
-            for c in range(1, min(ws.max_column + 1, 8)):
+        for r in range(1, min(ws.max_row + 1, MAX_META_ROW)):
+            for c in range(1, min(ws.max_column + 1, MAX_META_COL)):
                 v = ws.cell(r, c).value
                 if not isinstance(v, str):
                     continue
