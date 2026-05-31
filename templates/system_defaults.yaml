@@ -45,7 +45,8 @@ hwpx_fill:
 
     # 예시 표기 (양식 작성자가 *값 자리 예시*로 박아둔 더미). placeholder 와 비슷하지만
     # 더미가 *그럴듯한 회사명·숫자* 형태. 다른 도메인 예시 추가.
-    example: '(0+\.?0*\.?0+|OO법인|OO\s|XX법인|A주식회사|B주식회사|예시:|\(예\)|\([0-9]+\s*社\))'
+    # ○{2,} : 한국 양식 표준 더미 마커 (○○마트·○○○백만원·○○○천원 등).
+    example: '(0+\.?0*\.?0+|○{2,}|OO법인|OO\s|XX법인|A주식회사|B주식회사|예시:|\(예\)|\([0-9]+\s*社\))'
 
     # 종속(↳) 표시 — 상위 셀 종속 자식 셀. 한국 양식 관행. 다른 표기는 alt.
     subordinate: '^\s*↳'
@@ -61,6 +62,35 @@ hwpx_fill:
     # 한국 공공 양식 표준. 다른 양식(붙임 N·첨부 N) 도 자동 인식.
     section_marker: '\[?\s*(별\s*지|붙\s*임|첨\s*부)\s*제?\s*\d+(?:\s*-\s*\d+)?\s*호?\s*\]?'
 
+    # 표 안 *생략 행 (terminator)* 식별 — 한국 양식 관행: example 행 아래
+    # "더 많은 행 있음" 표시 (···/.../…/·). colspan 전체인 단일 셀이 이 패턴
+    # 전부 매칭하면 terminator. fill 대상 아님.
+    table_row_ellipsis: '^[\s·\.…]+$'
+
+  # === 표 안 *예시 행* 자동 감지 정책 (extract_hwpx_form._classify_example_rows) ===
+  # 한국 양식 관행: 헤더 + 예시 행 (1~2개, 양식 가이드용) + 빈 채움 행 (N개) + 생략 행 ···
+  # 이 구조를 "fillable-list 표" 로 인식, 예시 행 셀들을 example_row 로 마킹.
+  # 빌더는 예시 행을 *양식 가이드*로 인지 — fills 처리 시 KB 매칭으로 실데이터 교체 또는 비움.
+  # *임의 양식·회사·RFP* 에 동일 룰. 셀 ID·표 매핑·키워드·도메인 하드코딩 0.
+  example_row_detection:
+    enabled: true
+    # fillable-list 표 판별: 헤더 이후 *모든 셀 빈* 데이터 행이 이 개수 이상.
+    # (1 = 최소 1개 빈 채움 행. 한국 양식 표준)
+    min_empty_data_rows: 1
+    # terminator(···) 행 *동시* 요구 여부. false = 빈 행만으로 충분 (더 관대).
+    # true = 빈 행 + terminator 둘 다 필요 (더 보수적).
+    require_terminator: false
+    # 헤더 이후 *비-empty* 데이터 행 중 example_row 최대 개수.
+    # 한국 양식 관행: 보통 1~2 예시 행. 이 값 초과면 example 행 아닐 가능성 (실데이터 표).
+    max_example_rows: 3
+    # 표가 fillable-list 인지 *최소* 행 수 (이 미만이면 적용 안 함, 작은 표는 헤더-only 등).
+    min_table_rows: 3
+    # 최소 컬럼 수 — 단일 컬럼 표(자유 텍스트 박스·title block)는 fillable-list 아님.
+    min_table_cols: 2
+    # 후보 행에 *example 패턴 셀이 하나라도* 존재해야 example_row 로 마킹.
+    # 구조 신호(빈 행/terminator) + 내용 신호(example 패턴) 둘 다 요구 → false positive 차단.
+    require_example_cell_in_candidate: true
+
   # === 체크박스 글리프 변환 사전 (apply_cell_check 가 사용) ===
   # check: 빈 글리프 → 체크 글리프. uncheck: 체크 → 빈.
   # yaml만 수정으로 새 글리프 (예: ◇→◆) 자동 처리.
@@ -71,6 +101,15 @@ hwpx_fill:
     uncheck:
       '☑': '□'
       '☒': '□'
+
+  # === fills 매칭 없는 example_row 셀 자동 비움 정책 ===
+  # extract_hwpx_form 이 example_row 로 마킹한 셀(○○마트·0000원·언어 모델 개발 등 양식 더미)
+  # 이 fills 에서 *명시 채워지지 않으면* fill_hwpx 가 자동으로 비움.
+  # 이유: 양식 더미는 *발주처 가이드용 예시* — 제출 시 그대로 노출되면 안 됨.
+  # agent 가 KB 매칭으로 채우면 그 값, 안 채우면 빈 셀 (사람이 채워야 함을 명시).
+  # *임의 양식·회사·RFP* 에 동일 룰 (보편 양식 관행). yaml 만 false 로 두면 비활성.
+  # 활성에는 fill_hwpx CLI 4번째 인자로 form.yaml 전달 필요 (example_row id 출처).
+  auto_clear_unfilled_example_row: true
 
   # 채운 셀의 *고정 row 높이* 자동 해제 — 표가 페이지를 넘어가는 근본 원인 가드.
   # 원본 양식은 cellSz/@height 에 placeholder 분량 기준 *명시 절대 높이*를 박아둠

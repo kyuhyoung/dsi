@@ -79,13 +79,13 @@ def build_company_fills(form_yaml: Path, profile_yaml: Path, project_root: Path)
     fills = []
     matched_keys = set()  # (field) — 같은 필드 여러 셀 매칭 시 중복 채움 방지
 
-    # 채움 대상 cell 판정 — 빈 셀 + example intent.
-    # 예시 텍스트(00법인·홍길동·0000.00.00)도 *값 자리* 이므로 KB값으로 교체.
-    # 임의 양식의 예시 표기를 *override* 하는 일반 룰.
+    # 채움 대상 cell 판정 — 빈 셀 + example/example_row intent.
+    # 예시 텍스트(00법인·홍길동·0000.00.00·○○마트·언어 모델 개발)도 *값 자리* 이므로
+    # KB값으로 교체. 임의 양식의 예시 표기·예시 행을 *override* 하는 일반 룰.
     def _is_fillable(c):
         if c.get("is_empty"):
             return True
-        if c.get("intent") == "example":
+        if c.get("intent") in ("example", "example_row"):
             return True
         return False
 

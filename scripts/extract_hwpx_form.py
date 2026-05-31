@@ -73,6 +73,18 @@ SUBORDINATE_RE = re.compile(r"^\s*\u21B3")
 INSTRUCTION_PLACEHOLDER_RE = re.compile(
     r"^[\*※○]\s+.{2,80}(명칭|작성|기재|소개|삽입|입력|쓰시오|적으시오|개수|매출|건수)\s*$"
 )
+# 표 안 생략 행 (terminator) — fallback. yaml 정본: system_defaults.yaml.hwpx_fill.form_patterns.table_row_ellipsis
+TABLE_ROW_ELLIPSIS_RE = re.compile(r"^[\s·\.…]+$")
+# 표 안 예시 행 감지 정책 — fallback. yaml 정본: system_defaults.yaml.hwpx_fill.example_row_detection
+EXAMPLE_ROW_POLICY = {
+    "enabled": True,
+    "min_empty_data_rows": 1,
+    "require_terminator": False,
+    "max_example_rows": 3,
+    "min_table_rows": 3,
+    "min_table_cols": 2,
+    "require_example_cell_in_candidate": True,
+}
 
 
 class NoAliasDumper(yaml.SafeDumper):
@@ -88,6 +100,7 @@ def _load_extract_patterns(project_root: Path = None):
     global INSTRUCTION_HINT_RE, SECTION_MARKER_RE
     global PLACEHOLDER_RE, HEADER_RE, CHECKBOX_RE
     global EXAMPLE_RE, SUBORDINATE_RE, INSTRUCTION_PLACEHOLDER_RE
+    global TABLE_ROW_ELLIPSIS_RE, EXAMPLE_ROW_POLICY
     try:
         if project_root is None:
             project_root = Path(__file__).parent.parent
@@ -113,6 +126,12 @@ def _load_extract_patterns(project_root: Path = None):
             SUBORDINATE_RE = re.compile(fp["subordinate"])
         if fp.get("instruction_placeholder"):
             INSTRUCTION_PLACEHOLDER_RE = re.compile(fp["instruction_placeholder"])
+        if fp.get("table_row_ellipsis"):
+            TABLE_ROW_ELLIPSIS_RE = re.compile(fp["table_row_ellipsis"])
+        # example_row_detection 정책 (hwpx_fill 직속)
+        erd = hf.get("example_row_detection") or {}
+        if erd:
+            EXAMPLE_ROW_POLICY.update({k: v for k, v in erd.items() if k in EXAMPLE_ROW_POLICY})
     except Exception:
         pass  # fallback 유지
 
@@ -257,6 +276,120 @@ def _classify_cell_intent(cell, table_label):
     return "label_or_content"
 
 
+def _classify_example_rows(tables):
+    """fillable-list 표 구조 인식 → example_row + table_terminator 마킹.
+
+    한국 양식 관행: 헤더 + 예시 행 (1~2) + 빈 채움 행 (N) + 생략 행(···)
+    이 구조의 표는 예시 행이 *양식 가이드용*. 빌더가 KB 매칭으로 실데이터 교체 또는 비움.
+    *구조 신호*만 사용 — 셀 ID·키워드·도메인 식별자 0. yaml 정책 EXAMPLE_ROW_POLICY 만 참조.
+
+    조건 (and):
+      1. table.rows >= min_table_rows, cols >= min_table_cols
+      2. *헤더 행* 명시적 검출 — 모든 셀 non-empty label_or_content 인 첫 행
+      3. terminator(···) 행 ≥ 1 OR 헤더 이후 모든-셀-빈 데이터 행 ≥ min_empty_data_rows
+      4. require_terminator=true 면 terminator 도 동시 필수
+      5. 헤더 이후 ~ 첫 빈/terminator 행 *이전* 비-empty 행 수 ≤ max_example_rows
+      6. require_example_cell_in_candidate=true 면 후보 행에 ≥1 example 셀 필수
+    조건 충족 시 헤더 다음 ~ 첫 빈/term 행 *이전* 의 비-empty 행 셀들을 example_row 마킹.
+    terminator 행은 별도 table_terminator 마킹.
+    """
+    if not EXAMPLE_ROW_POLICY.get("enabled", True):
+        return
+    min_empty = EXAMPLE_ROW_POLICY["min_empty_data_rows"]
+    require_term = EXAMPLE_ROW_POLICY["require_terminator"]
+    max_ex = EXAMPLE_ROW_POLICY["max_example_rows"]
+    min_rows = EXAMPLE_ROW_POLICY["min_table_rows"]
+    min_cols = EXAMPLE_ROW_POLICY["min_table_cols"]
+    require_ex_cell = EXAMPLE_ROW_POLICY["require_example_cell_in_candidate"]
+
+    for t in tables:
+        if t["rows"] < min_rows or t["cols"] < min_cols:
+            continue
+        cells = t["cells"]
+        by_row = {}
+        for c in cells:
+            by_row.setdefault(c["row"], []).append(c)
+
+        # terminator 행 식별: 행에 셀 1개이며 텍스트가 ellipsis 패턴.
+        # (colspan 은 추출기 quirk 로 cols-1 등 다양 — 행 내 단일 셀 + ellipsis 만으로 판정)
+        terminator_rows = set()
+        for r, rc in by_row.items():
+            if len(rc) == 1 and TABLE_ROW_ELLIPSIS_RE.match(rc[0].get("text") or ""):
+                terminator_rows.add(r)
+
+        # 헤더 행 명시적 검출: 첫 *모든 셀 non-empty label_or_content* 행.
+        # 한국 양식: 헤더 행은 양식 라벨 (label_or_content) 가득. 그 위에 caption 일 수 있음.
+        # 헤더 없으면 fillable-list 아님 (자유 텍스트 박스 등) — skip.
+        header_row = None
+        for r in sorted(by_row):
+            rc = by_row[r]
+            if not rc:
+                continue
+            if all((not c.get("is_empty")) and c.get("intent") == "label_or_content" for c in rc):
+                header_row = r
+                break
+        if header_row is None:
+            continue
+
+        # 모든-셀-빈 데이터 행 식별 (헤더 이전·terminator 제외)
+        all_empty_rows = set()
+        for r, rc in by_row.items():
+            if r <= header_row or r in terminator_rows:
+                continue
+            if all(c.get("is_empty") for c in rc):
+                all_empty_rows.add(r)
+
+        has_term = len(terminator_rows) >= 1
+        has_empty = len(all_empty_rows) >= min_empty
+        if require_term:
+            is_fillable_list = has_term and has_empty
+        else:
+            is_fillable_list = has_term or has_empty
+        if not is_fillable_list:
+            continue
+
+        # 첫 빈/terminator 행 (헤더 이후, 그 이전 비-empty 가 example 후보)
+        boundary_rows = {r for r in (all_empty_rows | terminator_rows) if r > header_row}
+        if not boundary_rows:
+            continue
+        first_boundary = min(boundary_rows)
+        if first_boundary <= header_row + 1:
+            continue  # 헤더 바로 다음이 boundary → example 후보 없음
+
+        # example 후보 행 수집 (header_row+1 ~ first_boundary-1, 비-empty 행만)
+        ex_candidates = []
+        for r in range(header_row + 1, first_boundary):
+            if r in terminator_rows:
+                continue
+            rc = by_row.get(r, [])
+            if not rc or all(c.get("is_empty") for c in rc):
+                continue
+            ex_candidates.append(r)
+
+        # 너무 많은 example 후보 → 실데이터 표 가능성 (안전 abort)
+        if not ex_candidates or len(ex_candidates) > max_ex:
+            continue
+
+        # 후보 행 중 ≥1 셀이 intent=example 인지 확인 (내용 신호 검증)
+        # 구조 신호(빈 행/terminator) + 내용 신호(example 패턴) 둘 다 요구
+        if require_ex_cell:
+            has_example_cell = any(
+                c.get("intent") == "example"
+                for r in ex_candidates
+                for c in by_row.get(r, [])
+            )
+            if not has_example_cell:
+                continue
+
+        # 마킹
+        for r in ex_candidates:
+            for c in by_row.get(r, []):
+                c["intent"] = "example_row"
+        for r in terminator_rows:
+            for c in by_row.get(r, []):
+                c["intent"] = "table_terminator"
+
+
 def walk_section(root, tbl_idx_map):
     """section XML 의 *최상위 hp:p* 만 순회 (셀 안 단락 제외).
 
@@ -398,6 +531,10 @@ def analyze_hwpx(hwpx_path: Path):
 
         sections = detect_sections(walked_all, total_tables=t_offset)
 
+        # 표 후처리: fillable-list 패턴 인식 → example_row + table_terminator 마킹
+        # (셀 단위 intent 분류 후, fill_targets 산출 *전* 단계)
+        _classify_example_rows(all_tables)
+
         for t in all_tables:
             label = ""
             for s in sections:
@@ -421,7 +558,7 @@ def analyze_hwpx(hwpx_path: Path):
             for c in t["cells"]:
                 intent = c.get("intent", "")
                 hints = c.get("hints") or {"left": "", "up": "", "table_label": ""}
-                if intent in ("empty_input", "example", "checkbox", "instruction_placeholder"):
+                if intent in ("empty_input", "example", "example_row", "checkbox", "instruction_placeholder"):
                     fill_targets.append({
                         "id": c["id"],
                         "type": "cell",

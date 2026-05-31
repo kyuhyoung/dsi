@@ -258,7 +258,10 @@ def build_row_col_labels(cells: list) -> tuple:
         r = int(m.group(2))
         col = int(m.group(3))
         txt = (c.get("text") or "").strip()
-        is_empty = bool(c.get("is_empty")) or bool(c.get("fill_target"))
+        # 채움 대상: 빈 셀 + fill_target 마킹 + example/example_row intent (양식 예시 셀).
+        # example_row: 양식의 예시 행 셀 (○○마트·○○○백만원 등) — KB값으로 override.
+        intent = c.get("intent") or ""
+        is_empty = bool(c.get("is_empty")) or bool(c.get("fill_target")) or intent in ("example", "example_row")
         parsed.append({"id": cid, "r": r, "c": col, "text": txt, "is_empty": is_empty})
 
     if not parsed:

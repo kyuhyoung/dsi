@@ -84,6 +84,9 @@ CHECKBOX_TOGGLE = {
     "uncheck": {"☑": "□", "☒": "□"},
 }
 
+# fills 매칭 없는 example_row 셀 자동 비움 — yaml hwpx_fill.auto_clear_unfilled_example_row 정본.
+AUTO_CLEAR_UNFILLED_EXAMPLE_ROW = True
+
 
 def parse_cell_id(cell_id: str):
     m = CELL_ID_RE.match(cell_id)
@@ -788,6 +791,7 @@ def _load_fill_config(project_root: Path):
     global PLACEHOLDER_FILLER_RE, MARKER_ONLY_RE
     global CELL_HEIGHT_RELEASE_ENABLED, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN
     global MARKER_ONLY_MAX_LEN, INSTRUCTION_BOX_PREFIXES, CHECKBOX_TOGGLE
+    global AUTO_CLEAR_UNFILLED_EXAMPLE_ROW
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
@@ -813,6 +817,8 @@ def _load_fill_config(project_root: Path):
             CELL_HEIGHT_RELEASE_THRESHOLD = int(rel["threshold"])
         if "min_height" in rel:
             CELL_HEIGHT_RELEASE_MIN = int(rel["min_height"])
+        if "auto_clear_unfilled_example_row" in hf:
+            AUTO_CLEAR_UNFILLED_EXAMPLE_ROW = bool(hf["auto_clear_unfilled_example_row"])
     except Exception:
         pass  # fallback 유지
 
@@ -1036,11 +1042,14 @@ def inject_paragraphs(section_root, anchor_idx: int, lines: list) -> int:
     return made
 
 
-def fill_section(section_path: Path, fills: list, stats: dict, image_registry: dict = None):
+def fill_section(section_path: Path, fills: list, stats: dict, image_registry: dict = None,
+                 auto_clear_cell_ids: set = None):
     """section XML 파일을 in-place 편집. fills 적용 + stats 갱신.
 
     Args:
         image_registry: {cell_id: (image_id, width_px, height_px)} 이미지 삽입 정보
+        auto_clear_cell_ids: fills 매칭 없는 example_row 셀 id set — *비움* 대상.
+                            fill_hwpx() 가 form.yaml example_row id - fills id 차집합으로 계산해 전달.
     """
     parser = etree.XMLParser(remove_blank_text=False)
     tree = etree.parse(str(section_path), parser)
@@ -1184,6 +1193,25 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
         n = inject_paragraphs(root, anchor_idx, lines)
         stats["injected_para"] = stats.get("injected_para", 0) + n
 
+    # fills 매칭 없는 example_row 셀 자동 비움 — 양식 더미(○○마트·0000원 등) 제거.
+    # 정책 출처: system_defaults.yaml hwpx_fill.auto_clear_unfilled_example_row.
+    # caller (fill_hwpx) 가 form.yaml 의 example_row id - fills id 차집합을 auto_clear_cell_ids 로 전달.
+    if AUTO_CLEAR_UNFILLED_EXAMPLE_ROW and auto_clear_cell_ids:
+        cleared = 0
+        for cid in auto_clear_cell_ids:
+            m = CELL_ID_RE.match(cid)
+            if not m:
+                continue
+            t, r, c = int(m.group(1)), int(m.group(2)), int(m.group(3))
+            tc = cell_idx.get((t, r, c))
+            if tc is None:
+                continue
+            if set_cell_text(tc, ""):
+                cleared += 1
+                filled_tcs.append(tc)  # height-release 대상 포함
+        if cleared:
+            stats["cleared_example_row"] = stats.get("cleared_example_row", 0) + cleared
+
     # 모든 fill·inject 완료 후 *잔존 placeholder*(가나다·단독 마커) 자동 정리 — 일반 가드
     n_cleaned = cleanup_residual_placeholders(root)
     if n_cleaned:
@@ -1259,12 +1287,16 @@ def add_green_char_style(header_path: Path) -> int:
     return new_id
 
 
-def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path = None):
+def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path = None,
+              form_yaml_path: str = None):
     """HWPX 양식에 fills.yaml 내용 적용.
 
     Args:
         project_root: 이미지 상대 경로 해석을 위한 프로젝트 루트.
                      None이면 스크립트 부모 폴더 사용.
+        form_yaml_path: extract_hwpx_form 결과 (form.yaml) 경로 (선택).
+                       제공 시 example_row 셀 중 fills 미매칭은 *자동 비움*
+                       (system_defaults.yaml hwpx_fill.auto_clear_unfilled_example_row 정책).
     """
     global GREEN_CHAR_PR_ID
 
@@ -1277,6 +1309,25 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
     fills = fills_data.get("fills", [])
     if not fills:
         print("WARN: fills 비어있음", file=sys.stderr)
+
+    # form.yaml 의 example_row 셀 id → fills 매칭 없는 것만 auto_clear 대상
+    auto_clear_cell_ids = set()
+    if form_yaml_path and AUTO_CLEAR_UNFILLED_EXAMPLE_ROW:
+        try:
+            form_data = yaml.safe_load(Path(form_yaml_path).read_text(encoding="utf-8"))
+            ex_ids = {
+                c.get("id")
+                for t in (form_data.get("tables") or [])
+                for c in (t.get("cells") or [])
+                if c.get("intent") == "example_row" and c.get("id")
+            }
+            fills_ids = {e.get("id") for e in fills if e.get("id")}
+            auto_clear_cell_ids = ex_ids - fills_ids
+            print(f"example_row 자동 비움 대상: {len(auto_clear_cell_ids)} 셀 "
+                  f"(form.yaml example_row {len(ex_ids)} - fills 매칭 {len(ex_ids & fills_ids)})",
+                  file=sys.stderr)
+        except Exception as e:
+            print(f"WARN: form.yaml 로드 실패 ({e}) — auto_clear 비활성", file=sys.stderr)
 
     with tempfile.TemporaryDirectory() as td:
         td_path = Path(td)
@@ -1360,7 +1411,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
 
         stats = {"filled": 0}
         for sf in section_files:
-            fill_section(sf, fills, stats, image_registry)
+            fill_section(sf, fills, stats, image_registry, auto_clear_cell_ids)
 
         # 3단계: ZIP으로 다시 묶기
         out_abs = Path(out_path).resolve()
@@ -1384,6 +1435,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         f"셀안단락 {stats.get('filled_cellpara', 0)}",
         f"주입단락 {stats.get('injected_para', 0)}",
         f"잔존정리 {stats.get('cleaned_residual', 0)}",
+        f"예시행비움 {stats.get('cleared_example_row', 0)}",
         f"높이해제 {stats.get('released_cell_height', 0)}",
         f"체크 {stats.get('filled_check', 0)}",
         f"이미지 {img_total} (명시 {stats.get('filled_image', 0)} + 자동 {stats.get('filled_image_auto', 0)})",
@@ -1394,9 +1446,11 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
 
 def main():
     if len(sys.argv) < 4:
-        print("사용: python scripts/fill_hwpx_form.py <form.hwpx> <fills.yaml> <output.hwpx>")
+        print("사용: python scripts/fill_hwpx_form.py <form.hwpx> <fills.yaml> <output.hwpx> [form.yaml]")
+        print("  form.yaml: extract_hwpx_form 결과 (선택). 제공 시 example_row 자동 비움 활성.")
         sys.exit(1)
-    fill_hwpx(sys.argv[1], sys.argv[2], sys.argv[3])
+    form_yaml = sys.argv[4] if len(sys.argv) >= 5 else None
+    fill_hwpx(sys.argv[1], sys.argv[2], sys.argv[3], form_yaml_path=form_yaml)
 
 
 if __name__ == "__main__":
