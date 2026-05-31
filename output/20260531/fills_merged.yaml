@@ -1,0 +1,271 @@
+fills:
+- id: T2_R2_C2
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T3_R0_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T5_R15_C9
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T7_R1_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T7_R1_C5
+  text: '2012-02-28'
+  source: kb profile.yaml (establishment_date)
+- id: T7_R2_C1
+  text: 박주흠
+  source: kb profile.yaml (representative)
+- id: T7_R2_C5
+  text: (미확인)
+  source: kb profile.yaml (finance_officer)
+- id: T7_R3_C1
+  text: 105-87-68437
+  source: kb profile.yaml (business_no)
+- id: T7_R3_C5
+  text: 소프트웨어 개발 및 공급업 (정보통신업)
+  source: kb profile.yaml (industry)
+- id: T7_R4_C1
+  text: Eartheye Plantation — AI 기반 위성·드론·모바일 통합 정밀농업 솔루션
+  source: kb profile.yaml (main_product)
+- id: T7_R13_C2
+  text: (미확인)
+  source: kb profile.yaml (address_office)
+- id: T7_R14_C2
+  text: (미확인)
+  source: kb profile.yaml (address_research)
+- id: T7_R15_C2
+  text: 해당 없음
+  source: kb profile.yaml (address_factory)
+- id: T10_R1_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T10_R1_C7
+  text: '2012-02-28'
+  source: kb profile.yaml (establishment_date)
+- id: T10_R4_C1
+  text: 박주흠
+  source: kb profile.yaml (representative)
+- id: T10_R4_C7
+  text: (미확인)
+  source: kb profile.yaml (finance_officer)
+- id: T10_R5_C1
+  text: 105-87-68437
+  source: kb profile.yaml (business_no)
+- id: T10_R5_C7
+  text: 소프트웨어 개발 및 공급업 (정보통신업)
+  source: kb profile.yaml (industry)
+- id: T10_R6_C1
+  text: Eartheye Plantation — AI 기반 위성·드론·모바일 통합 정밀농업 솔루션
+  source: kb profile.yaml (main_product)
+- id: T10_R13_C2
+  text: (미확인)
+  source: kb profile.yaml (address_office)
+- id: T10_R14_C2
+  text: (미확인)
+  source: kb profile.yaml (address_research)
+- id: T10_R15_C2
+  text: 해당 없음
+  source: kb profile.yaml (address_factory)
+- id: T14_R1_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T14_R1_C3
+  text: '2012-02-28'
+  source: kb profile.yaml (establishment_date)
+- id: T14_R2_C1
+  text: 박주흠
+  source: kb profile.yaml (representative)
+- id: T14_R2_C3
+  text: 105-87-68437
+  source: kb profile.yaml (business_no)
+- id: T14_R3_C1
+  text: 소프트웨어 개발 및 공급업 (정보통신업)
+  source: kb profile.yaml (industry)
+- id: T14_R3_C3
+  text: (미확인)
+  source: kb profile.yaml (corporate_reg_no)
+- id: T18_R2_C2
+  text: (미확인)
+  source: kb profile.yaml (address_office)
+- id: T18_R7_C0
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T41_R2_C10
+  text: (미확인)
+  source: kb profile.yaml (address_office)
+- id: T43_R0_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T62_R2_C3
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T63_R2_C2
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T64_R13_C5
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T66_R1_C7
+  text: 박주흠
+  source: kb profile.yaml (representative)
+- id: T69_R1_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T71_R1_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T75_R4_C1
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T75_R9_C1
+  text: 105-87-68437
+  source: kb profile.yaml (business_no)
+- id: T75_R14_C1
+  text: (미확인)
+  source: kb profile.yaml (website)
+- id: T84_R3_C1
+  text: (미확인)
+  source: kb profile.yaml (phone)
+- id: T85_R1_C2
+  text: 주식회사 다비오
+  source: kb profile.yaml (company_name)
+- id: T7_R5_C2
+  text: 8,502
+  source: kb finance.yaml (2023, revenue, ÷1000000)
+- id: T7_R7_C2
+  text: 14,801
+  source: kb finance.yaml (2024, revenue, ÷1000000)
+- id: T7_R8_C2
+  text: 27,502
+  source: kb finance.yaml (2025, revenue, ÷1000000)
+- id: T7_R11_C2
+  text: '0'
+  source: kb finance.yaml (2024, capital_raised, ÷1000000)
+- id: T7_R12_C2
+  text: 2,200
+  source: kb finance.yaml (2025, capital_raised, ÷1000000)
+- id: T8_R2_C3
+  text: 17,805 백만원
+  source: kb finance.yaml (2023, total_assets, ÷1000000)
+- id: T8_R2_C10
+  text: 29,195 백만원
+  source: kb finance.yaml (2024, total_assets, ÷1000000)
+- id: T8_R2_C14
+  text: 49,584 백만원
+  source: kb finance.yaml (2025, total_assets, ÷1000000)
+- id: T8_R3_C3
+  text: 6,445 백만원
+  source: kb finance.yaml (2023, total_liabilities, ÷1000000)
+- id: T8_R3_C10
+  text: 9,546 백만원
+  source: kb finance.yaml (2024, total_liabilities, ÷1000000)
+- id: T8_R3_C14
+  text: 14,713 백만원
+  source: kb finance.yaml (2025, total_liabilities, ÷1000000)
+- id: T8_R4_C3
+  text: 11,360 백만원
+  source: kb finance.yaml (2023, total_equity, ÷1000000)
+- id: T8_R4_C10
+  text: 19,649 백만원
+  source: kb finance.yaml (2024, total_equity, ÷1000000)
+- id: T8_R4_C14
+  text: 34,871 백만원
+  source: kb finance.yaml (2025, total_equity, ÷1000000)
+- id: T8_R5_C3
+  text: 8,502 백만원
+  source: kb finance.yaml (2023, revenue, ÷1000000)
+- id: T8_R5_C10
+  text: 14,801 백만원
+  source: kb finance.yaml (2024, revenue, ÷1000000)
+- id: T8_R5_C14
+  text: 27,502 백만원
+  source: kb finance.yaml (2025, revenue, ÷1000000)
+- id: T8_R6_C3
+  text: 455 백만원
+  source: kb finance.yaml (2023, operating_income, ÷1000000)
+- id: T8_R6_C10
+  text: 1,555 백만원
+  source: kb finance.yaml (2024, operating_income, ÷1000000)
+- id: T8_R6_C14
+  text: 4,956 백만원
+  source: kb finance.yaml (2025, operating_income, ÷1000000)
+- id: T8_R7_C3
+  text: 310 백만원
+  source: kb finance.yaml (2023, net_income, ÷1000000)
+- id: T8_R7_C10
+  text: 409 백만원
+  source: kb finance.yaml (2024, net_income, ÷1000000)
+- id: T8_R7_C14
+  text: 2,115 백만원
+  source: kb finance.yaml (2025, net_income, ÷1000000)
+- id: T10_R7_C2
+  text: 8,502 백만원
+  source: kb finance.yaml (2023, revenue, ÷1000000)
+- id: T10_R8_C2
+  text: 14,801 백만원
+  source: kb finance.yaml (2024, revenue, ÷1000000)
+- id: T10_R9_C2
+  text: 27,502 백만원
+  source: kb finance.yaml (2025, revenue, ÷1000000)
+- id: T10_R11_C2
+  text: 0 백만원
+  source: kb finance.yaml (2024, capital_raised, ÷1000000)
+- id: T10_R12_C2
+  text: 2,200 백만원
+  source: kb finance.yaml (2025, capital_raised, ÷1000000)
+- id: T11_R2_C1
+  text: 17,805 백만원
+  source: kb finance.yaml (2023, total_assets, ÷1000000)
+- id: T11_R2_C2
+  text: 29,195 백만원
+  source: kb finance.yaml (2024, total_assets, ÷1000000)
+- id: T11_R2_C3
+  text: 49,584 백만원
+  source: kb finance.yaml (2025, total_assets, ÷1000000)
+- id: T11_R3_C1
+  text: 6,445 백만원
+  source: kb finance.yaml (2023, total_liabilities, ÷1000000)
+- id: T11_R3_C2
+  text: 9,546 백만원
+  source: kb finance.yaml (2024, total_liabilities, ÷1000000)
+- id: T11_R3_C3
+  text: 14,713 백만원
+  source: kb finance.yaml (2025, total_liabilities, ÷1000000)
+- id: T11_R4_C1
+  text: 11,360 백만원
+  source: kb finance.yaml (2023, total_equity, ÷1000000)
+- id: T11_R4_C2
+  text: 19,649 백만원
+  source: kb finance.yaml (2024, total_equity, ÷1000000)
+- id: T11_R4_C3
+  text: 34,871 백만원
+  source: kb finance.yaml (2025, total_equity, ÷1000000)
+- id: T11_R5_C1
+  text: 8,502 백만원
+  source: kb finance.yaml (2023, revenue, ÷1000000)
+- id: T11_R5_C2
+  text: 14,801 백만원
+  source: kb finance.yaml (2024, revenue, ÷1000000)
+- id: T11_R5_C3
+  text: 27,502 백만원
+  source: kb finance.yaml (2025, revenue, ÷1000000)
+- id: T11_R6_C1
+  text: 455 백만원
+  source: kb finance.yaml (2023, operating_income, ÷1000000)
+- id: T11_R6_C2
+  text: 1,555 백만원
+  source: kb finance.yaml (2024, operating_income, ÷1000000)
+- id: T11_R6_C3
+  text: 4,956 백만원
+  source: kb finance.yaml (2025, operating_income, ÷1000000)
+- id: T11_R7_C1
+  text: 310 백만원
+  source: kb finance.yaml (2023, net_income, ÷1000000)
+- id: T11_R7_C2
+  text: 409 백만원
+  source: kb finance.yaml (2024, net_income, ÷1000000)
+- id: T11_R7_C3
+  text: 2,115 백만원
+  source: kb finance.yaml (2025, net_income, ÷1000000)

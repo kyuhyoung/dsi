@@ -13,7 +13,7 @@ description: RFP(제안요청서) 문서를 분석하여 요구사항, 평가항
 
 - **B (RFP 본문)**: `.pdf` / `.docx` / `.hwp` / `.hwpx` (공고문·제안요청서)
 - **C (별첨 양식)**: *RFP가 양식 파일을 별도 제공*하면 *반드시 함께 받음*. `.hwp` / `.hwpx` / `.docx`
-- *C 양식 시각 구조*: `samples/.../<양식>.form.yaml` (`scripts/extract_hwp_form.py` 산출)
+- *C 양식 시각 구조*: `samples/.../<양식>.form.yaml` (`scripts/extract_hwpx_form.py` 산출)
 
 ## 핵심 원칙 — B + C *함께* 분석
 
