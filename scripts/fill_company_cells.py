@@ -41,23 +41,41 @@ def normalize(text: str, strip_chars: list = None) -> str:
     return s
 
 
+def _tokenize(text: str, strip_chars: list = None) -> list:
+    """라벨을 *공백 경계* 로 분리 후 각 토큰을 normalize (토큰 내부엔 공백 없음).
+    keyword 부분매칭이 공백을 넘지 못하게 하는 일반 장치 — "본사"(HQ) 가
+    "본 사업"(→본사업) 에 substring 으로 박히는 오매칭을 차단. 양식·회사 식별자 0."""
+    if not text:
+        return []
+    out = []
+    for tok in str(text).split():
+        nt = normalize(tok, strip_chars)
+        if nt:
+            out.append(nt)
+    return out
+
+
 def match_field(label: str, fields_map: dict, strip_chars: list = None) -> str:
     """라벨 → profile field. exact_labels 우선, keywords 부분 매칭."""
     norm = normalize(label, strip_chars)
     if not norm:
         return None
-    # exact_labels 매칭 (우선)
+    # exact_labels 매칭 (우선) — 공백 변형은 exact_labels 에 명시 (예: "대 표 자")
     for field, defn in fields_map.items():
         for lbl in (defn.get("exact_labels") or []):
             if normalize(lbl, strip_chars) == norm:
                 return field
-    # keywords 부분 매칭 (가장 긴 keyword 우선)
+    # keywords 부분 매칭 — *공백 토큰 경계 내* 에서만 (가장 긴 keyword 우선).
+    # 한국 양식은 라벨에 공백을 둔다 ("본 사업"). 공백을 넘는 substring 매칭은
+    # "본사" ⊂ "본 사업" 같은 오매칭을 낳으므로 keyword 는 *한 토큰 안* 에 들어와야 한다.
+    # "본사 소재지"·"본사소재지" 등 정당 케이스는 토큰 안 매칭이라 그대로 유지.
+    tokens = _tokenize(label, strip_chars)
     best_field = None
     best_kw_len = 0
     for field, defn in fields_map.items():
         for kw in (defn.get("keywords") or []):
             nkw = normalize(kw, strip_chars)
-            if nkw and nkw in norm and len(nkw) > best_kw_len:
+            if nkw and any(nkw in tok for tok in tokens) and len(nkw) > best_kw_len:
                 best_kw_len = len(nkw)
                 best_field = field
     return best_field
@@ -133,11 +151,11 @@ def build_company_fills(form_yaml: Path, profile_yaml: Path, project_root: Path)
             if label_came_from == "cell_text":
                 # 값 자리 아닌 라벨 셀 (예: "주관기업명")
                 continue
-            if not _is_fillable(c) and label_came_from == "hint":
-                # 라벨 매칭 + 빈 아님 + example 아님 = *맥락상 예시일 가능성*
-                # → fill 대상으로 확장 (override 허용). 실제 라벨 텍스트가 들어있다면
-                # 위 cell_text 매칭에서 걸렸을 것.
-                pass  # 진행
+            if not _is_fillable(c):
+                # instruction_placeholder(※ 작성요령)·checkbox·placeholder·table_terminator
+                # 등은 회사 메타 *값 자리* 가 아니다. 라벨이 hint 로 우연히 매칭돼도 채우지
+                # 않음 — 긴 안내문에 섞인 "연락처"·"본사" 등이 빈 안내·체크 셀을 오염시키는 것 차단.
+                continue
             value = profile_values.get(field)
             if value is None or value == "":
                 continue
