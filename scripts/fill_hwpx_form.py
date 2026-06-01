@@ -606,17 +606,21 @@ def find_char_style_ref(tc_el):
 
 
 def set_cell_text(tc_el, text: str):
-    """hp:tc 안 첫 hp:p 의 텍스트 *통째 교체*.
+    """hp:tc 안 셀 텍스트 *전체 교체*. `\\n` 으로 분리된 여러 줄은 *각각 별도 단락*으로.
 
-    set_paragraph_text 와 동일 원칙:
-      - 기존 run 전부 제거 (원본 라벨·안내문 placeholder 잔존 방지)
-      - 새 run 1개 생성 후 텍스트 박음
-      - stale linesegarray 삭제 → 한컴이 열 때 줄바꿈 재계산
-        (안 지우면 짧은 placeholder 기준 1줄 세그먼트에 긴 텍스트를 욱여넣어 글자 겹침)
+    원칙:
+      - `\\n` = 단락 경계 → 번호·불릿 목록이 *항목당 한 단락* 으로 렌더 (줄·들여쓰기
+        정렬 일관). 한 hp:t 에 `\\n` 을 넣으면 한컴이 줄바꿈으로 렌더 안 함 → 단락 분리 필수.
+      - 첫 hp:p 재사용, 추가 줄은 첫 단락 *복제* 후 채움 (paraPr 서식 유지).
+      - 각 단락 기존 run 전부 제거 후 새 run 1개 (원본 라벨·placeholder 잔존 방지).
+      - stale linesegarray 삭제 → 한컴이 열 때 줄바꿈 재계산.
+      - 셀의 *잔여 단락* (양식 예시 등) 전부 제거 → base 셀 fill = "셀의 완전한 내용".
+        다단락 양식 예시(정성 "1.…2.…3.…4.…") 중 일부만 덮고 나머지 예시가 남는 것 차단.
+        단락별 *부분* 제어가 필요하면 _P 단락 fill (set_paragraph_text) 사용. 임의 양식 동일.
 
-    주의: 양식 원본 텍스트 (라벨 등) 도 통째로 덮어씀.
-    체크박스 셀처럼 원본 일부만 바꾸려면 apply_cell_check 사용.
+    주의: 양식 원본 텍스트(라벨 등) 통째 덮어씀. 체크박스는 apply_cell_check 사용.
     """
+    from copy import deepcopy
     subList = tc_el.find(f"{{{HP_NS}}}subList")
     if subList is None:
         return False
@@ -624,33 +628,31 @@ def set_cell_text(tc_el, text: str):
     if p is None:
         p = etree.SubElement(subList, f"{{{HP_NS}}}p")
 
-    # 기존 run charPrIDRef 백업 (녹색 미사용 시 원본 서식 유지)
+    # charPrIDRef: 녹색 우선, 없으면 원본 서식 유지
     first_run = p.find(f"{{{HP_NS}}}run")
     orig_char_pr = first_run.get("charPrIDRef") if first_run is not None else None
-
-    # 기존 run 전부 제거 (placeholder 잔존 방지)
-    for old_run in p.findall(f"{{{HP_NS}}}run"):
-        p.remove(old_run)
-
-    run = etree.SubElement(p, f"{{{HP_NS}}}run")
     char_pr = str(GREEN_CHAR_PR_ID) if GREEN_CHAR_PR_ID is not None else orig_char_pr
-    if char_pr is not None:
-        run.set("charPrIDRef", char_pr)
 
-    t = etree.SubElement(run, f"{{{HP_NS}}}t")
-    t.text = text
+    def _fill_para(pel, line):
+        for old_run in pel.findall(f"{{{HP_NS}}}run"):
+            pel.remove(old_run)
+        r = etree.SubElement(pel, f"{{{HP_NS}}}run")
+        if char_pr is not None:
+            r.set("charPrIDRef", char_pr)
+        tt = etree.SubElement(r, f"{{{HP_NS}}}t")
+        tt.text = line
+        lsx = pel.find(f"{{{HP_NS}}}linesegarray")
+        if lsx is not None:
+            pel.remove(lsx)
 
-    # stale linesegarray 삭제 (한컴 재계산)
-    ls = p.find(f"{{{HP_NS}}}linesegarray")
-    if ls is not None:
-        p.remove(ls)
-
-    # *셀 전체 교체* — 첫 단락 외 나머지 hp:p 제거. base 셀 fill 은 "셀의 완전한
-    # 내용" 이므로, 양식의 다단락 예시(예: 정성 목표 "1.…2.…3.…4.…" 4단락) 중
-    # 첫 단락만 덮고 나머지 예시 단락(기술인력 0명·0건 등)이 남는 것을 차단.
-    # 단락별 제어가 필요하면 _P 단락 fill 을 쓴다(set_paragraph_text). 임의 양식 동일.
-    for extra_p in subList.findall(f"{{{HP_NS}}}p")[1:]:
+    lines = str(text).split("\n")
+    _fill_para(p, lines[0])                                   # 첫 단락 = 첫 줄
+    for extra_p in subList.findall(f"{{{HP_NS}}}p")[1:]:       # 잔여 단락 제거
         subList.remove(extra_p)
+    for line in lines[1:]:                                    # 추가 줄 = 단락 복제
+        newp = deepcopy(p)
+        _fill_para(newp, line)
+        subList.append(newp)
     return True
 
 
