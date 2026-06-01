@@ -54,6 +54,11 @@ SECTION_MARKER_RE = re.compile(
     r"\[?\s*(별\s*지|붙\s*임|첨\s*부)\s*제?\s*\d+(?:\s*-\s*\d+)?\s*호?\s*\]?",
     re.MULTILINE,
 )
+# 별지 마커가 *섹션 경계* 로 인정되려면 단락 *시작부* 에 와야 함 (제목이지 문장 중
+# 참조가 아님). 선행 공백 제외 후 마커 시작 위치가 이 값 이하여야 경계로 채택.
+# 예: "※…본 사업공고 [별지 4] 지원금…" 같은 *지침문 중간 참조* 오인 차단.
+# yaml 정본: system_defaults.yaml.hwpx_fill.form_patterns.section_marker_max_start.
+SECTION_MARKER_MAX_START = 4
 
 PLACEHOLDER_RE = re.compile(
     r"^\s*[○\-\*·\u25CF\u25CB\u25E6\u274D\u274C\u25A0\u25A1]?\s*(가나다|ㅇㅇ+|[XＸxｘ]{2,}|예시\s*내용|내용\s*작성|여기에\s*작성|작성하시오|\(작성\))\s*$"
@@ -97,7 +102,7 @@ def _load_extract_patterns(project_root: Path = None):
     원본 코드의 정규식들은 *yaml 로드 실패 안전망* (한국 양식 fallback). yaml 정본이 우선.
     새 양식·표기는 *yaml만* 수정 — 코드 변경 0.
     """
-    global INSTRUCTION_HINT_RE, SECTION_MARKER_RE
+    global INSTRUCTION_HINT_RE, SECTION_MARKER_RE, SECTION_MARKER_MAX_START
     global PLACEHOLDER_RE, HEADER_RE, CHECKBOX_RE
     global EXAMPLE_RE, SUBORDINATE_RE, INSTRUCTION_PLACEHOLDER_RE
     global TABLE_ROW_ELLIPSIS_RE, EXAMPLE_ROW_POLICY
@@ -114,6 +119,8 @@ def _load_extract_patterns(project_root: Path = None):
         fp = hf.get("form_patterns") or {}
         if fp.get("section_marker"):
             SECTION_MARKER_RE = re.compile(fp["section_marker"], re.MULTILINE)
+        if fp.get("section_marker_max_start") is not None:
+            SECTION_MARKER_MAX_START = int(fp["section_marker_max_start"])
         if fp.get("placeholder"):
             PLACEHOLDER_RE = re.compile(fp["placeholder"])
         if fp.get("header"):
@@ -432,7 +439,14 @@ def detect_sections(walked, total_tables):
     for item in walked:
         if item["first_tbl_idx"] is not None:
             last_tbl_idx = item["first_tbl_idx"]
-        if not SECTION_MARKER_RE.search(item["text"]):
+        text = item["text"]
+        m = SECTION_MARKER_RE.search(text)
+        if not m:
+            continue
+        # 마커는 단락 *시작부* 에 와야 섹션 경계 (제목). 선행 공백 제외 후 시작 위치
+        # 가 임계 초과면 *문장 중 참조* (예: 지침문 안 "[별지 4]") 로 보고 제외.
+        lead = len(text) - len(text.lstrip())
+        if (m.start() - lead) > SECTION_MARKER_MAX_START:
             continue
         key = _normalize_label(item["text"])
         if key in seen:
