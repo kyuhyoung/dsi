@@ -16,12 +16,31 @@
 """
 import io
 import os
+import re
 import shutil
 import subprocess
 import sys
 import zipfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
+
+# 표 유실 표지 — hwp5txt 등 구식 추출기가 표를 버리고 남기는 stub 패턴.
+# 추출 결과에 이게 많으면 표 내용이 통째로 날아간 것 (한국 RFP는 핵심이 표 안).
+# 도구·포맷 무관 일반 진단 — 특정 사업/회사 식별자 아님.
+_TABLE_LOSS_RE = re.compile(r"<\s*표\s*>|\[\s*표\s*\]|\[\s*table\s*\]", re.IGNORECASE)
+
+
+def _warn_if_table_loss(text, path):
+    """추출 텍스트에 표 placeholder stub 이 있으면 경고 (표 유실 가능성)."""
+    hits = len(_TABLE_LOSS_RE.findall(text or ""))
+    if hits:
+        print(
+            f"  ⚠ 경고: 표 placeholder {hits}개 발견 ({path}). 표 내용 유실 의심 — "
+            f"표 보존 추출(hwp5html/python-docx)인지 확인. RFP 핵심은 표 안에 있음.",
+            file=sys.stderr,
+        )
+    return hits
 
 
 def extract_md_or_txt(path):
@@ -261,7 +280,9 @@ def extract(path):
         raise ValueError(
             f"지원하지 않는 포맷: {ext} (지원: {', '.join(_EXTRACTORS.keys())})"
         )
-    return _EXTRACTORS[ext](p)
+    text = _EXTRACTORS[ext](p)
+    _warn_if_table_loss(text, p)
+    return text
 
 
 def main():

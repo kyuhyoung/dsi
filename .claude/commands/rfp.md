@@ -27,8 +27,9 @@ description: RFP 파일 경로를 받아 분석 → 제안서(.docx) → 발표�
 
 
 ### 1. RFP 분석
-- `rfp-analyst` 에이전트 호출
-- 파일 읽고 구조화된 YAML 생성
+- **먼저 표 보존 추출 (필수)**: `.hwp`/`.hwpx`/`.docx` 는 `python scripts/extract_proposal.py <RFP> <out.txt>` 로 추출(표 행·셀 보존). 사용자 사전 변환 `.txt` 를 그대로 신뢰하지 마라 — 표 버리는 구식 추출일 수 있음(`<표>` placeholder 발견 시 재추출). 한국 RFP는 평가배점·자격·성과목표 등 **핵심이 표 안**에 있어 표 유실 = 요건 누락.
+- `rfp-analyst` 에이전트 호출 — 추출된 *표 포함* 텍스트 + (있으면) 양식 `form.yaml` 전달
+- 구조화된 YAML 생성
 
 ### ✋ 검토 지점 1
 사용자에게 분석 결과 표시, 검토 후 *진행* 응답 대기:
