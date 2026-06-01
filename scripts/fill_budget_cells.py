@@ -200,9 +200,10 @@ def build_budget_fills(form, rfp, vocab, gov_eok, sel_type):
 
         cid = f"T{tidx}_R{dr}_C{hc}"
         src = f"RFP 예산규칙 (국고 {_fmt(amt['gov'])}억 × {role}) — fill_budget_cells"
-        # P0 = 숫자줄
-        fills.append({"id": cid, "text": _expand(spec.get("num")), "source": src})
-        # P1 = 주석줄 (note=''  이면 예시 주석 비움). 단락 없으면 무해 no-op.
+        # *단락별 fill 사용* (base 셀 fill 회피) — 총괄 셀은 보통 [숫자줄 / 주석줄] 2단락.
+        # base 를 쓰면 set_cell_text 가 셀 전체를 1단락으로 합쳐 주석줄이 사라지므로
+        # P0(숫자)·P1(주석) 단락을 각각 채운다. 단락 없으면 set_paragraph_text 가 무해 skip.
+        fills.append({"id": cid + "_P0", "text": _expand(spec.get("num")), "source": src})
         if "note" in spec:
             fills.append({"id": cid + "_P1", "text": _expand(spec.get("note")), "source": src})
     return fills, amt, r

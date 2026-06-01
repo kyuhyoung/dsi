@@ -644,6 +644,13 @@ def set_cell_text(tc_el, text: str):
     ls = p.find(f"{{{HP_NS}}}linesegarray")
     if ls is not None:
         p.remove(ls)
+
+    # *셀 전체 교체* — 첫 단락 외 나머지 hp:p 제거. base 셀 fill 은 "셀의 완전한
+    # 내용" 이므로, 양식의 다단락 예시(예: 정성 목표 "1.…2.…3.…4.…" 4단락) 중
+    # 첫 단락만 덮고 나머지 예시 단락(기술인력 0명·0건 등)이 남는 것을 차단.
+    # 단락별 제어가 필요하면 _P 단락 fill 을 쓴다(set_paragraph_text). 임의 양식 동일.
+    for extra_p in subList.findall(f"{{{HP_NS}}}p")[1:]:
+        subList.remove(extra_p)
     return True
 
 
