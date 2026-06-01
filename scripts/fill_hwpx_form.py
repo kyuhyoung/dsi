@@ -87,6 +87,10 @@ CHECKBOX_TOGGLE = {
 # fills 매칭 없는 example_row 셀 자동 비움 — yaml hwpx_fill.auto_clear_unfilled_example_row 정본.
 AUTO_CLEAR_UNFILLED_EXAMPLE_ROW = True
 
+# 분량 명시 독립 섹션(요약 등) 새 페이지 시작 — yaml hwpx_fill.page_break_before_sized_section 정본.
+SIZED_SECTION_PAGE_BREAK_ENABLED = True
+SIZED_SECTION_HEADER_RE = re.compile(r"\d+\s*(페이지|쪽)\s*(내외|이내|내)\s*작성")
+
 
 def parse_cell_id(cell_id: str):
     m = CELL_ID_RE.match(cell_id)
@@ -801,6 +805,7 @@ def _load_fill_config(project_root: Path):
     global CELL_HEIGHT_RELEASE_ENABLED, CELL_HEIGHT_RELEASE_THRESHOLD, CELL_HEIGHT_RELEASE_MIN
     global MARKER_ONLY_MAX_LEN, INSTRUCTION_BOX_PREFIXES, CHECKBOX_TOGGLE
     global AUTO_CLEAR_UNFILLED_EXAMPLE_ROW
+    global SIZED_SECTION_PAGE_BREAK_ENABLED, SIZED_SECTION_HEADER_RE
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
@@ -828,6 +833,11 @@ def _load_fill_config(project_root: Path):
             CELL_HEIGHT_RELEASE_MIN = int(rel["min_height"])
         if "auto_clear_unfilled_example_row" in hf:
             AUTO_CLEAR_UNFILLED_EXAMPLE_ROW = bool(hf["auto_clear_unfilled_example_row"])
+        pbs = hf.get("page_break_before_sized_section") or {}
+        if "enabled" in pbs:
+            SIZED_SECTION_PAGE_BREAK_ENABLED = bool(pbs["enabled"])
+        if pbs.get("header_pattern"):
+            SIZED_SECTION_HEADER_RE = re.compile(pbs["header_pattern"])
     except Exception:
         pass  # fallback 유지
 
@@ -943,6 +953,29 @@ def _own_texts(p_el):
     for run in p_el.findall(f"{{{HP_NS}}}run"):
         for t in run.findall(f"{{{HP_NS}}}t"):
             yield t
+
+
+def apply_sized_section_page_breaks(section_root) -> int:
+    """*분량 명시 독립 섹션*(요약 등) 시작 top-level 단락에 pageBreak=1.
+
+    한국 공공 양식은 "(N페이지 내외/이내/내 작성)" 으로 분량을 못박은 섹션을 독립
+    단위로 둔다. 양식이 그런 섹션 *일부* 에만 pageBreak 를 주는 불일치를, *모든*
+    분량명시 섹션에 일관 적용 (양식의 자체 관행을 일반화). 이미 pageBreak=1 이면 그대로.
+
+    신호 = 양식의 분량 annotation (SIZED_SECTION_HEADER_RE) 뿐 — 특정 섹션명·표번호
+    하드코딩 0. 임의 양식·회사·RFP 동일 동작. 정본: yaml hwpx_fill.page_break_before_sized_section.
+    """
+    if not SIZED_SECTION_PAGE_BREAK_ENABLED:
+        return 0
+    n = 0
+    for p in section_root.findall(f"{{{HP_NS}}}p"):
+        if p.get("pageBreak") == "1":
+            continue
+        txt = "".join(t.text or "" for t in p.iter(f"{{{HP_NS}}}t"))
+        if SIZED_SECTION_HEADER_RE.search(txt):
+            p.set("pageBreak", "1")
+            n += 1
+    return n
 
 
 def cleanup_residual_placeholders(section_root) -> int:
@@ -1220,6 +1253,11 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
                 filled_tcs.append(tc)  # height-release 대상 포함
         if cleared:
             stats["cleared_example_row"] = stats.get("cleared_example_row", 0) + cleared
+
+    # 분량 명시 독립 섹션(요약 등) 새 페이지 시작 — top-level 단락에 pageBreak=1.
+    n_pb = apply_sized_section_page_breaks(root)
+    if n_pb:
+        stats["page_break_sized_section"] = stats.get("page_break_sized_section", 0) + n_pb
 
     # 모든 fill·inject 완료 후 *잔존 placeholder*(가나다·단독 마커) 자동 정리 — 일반 가드
     n_cleaned = cleanup_residual_placeholders(root)

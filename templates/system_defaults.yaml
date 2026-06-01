@@ -115,6 +115,16 @@ hwpx_fill:
   # 활성에는 fill_hwpx CLI 4번째 인자로 form.yaml 전달 필요 (example_row id 출처).
   auto_clear_unfilled_example_row: true
 
+  # *분량 명시 독립 섹션*(요약 등)은 새 페이지에서 시작 — 양식 자체 관행 일관화.
+  # 한국 공공 양식은 "(N페이지 내외/이내/내 작성)" 으로 분량을 못박은 섹션을 *독립 단위*
+  # 로 둔다 (요약·차별점 등). 일부 양식이 그런 섹션 *일부* 에만 pageBreak 를 줘(불일치),
+  # 같은 섹션 종류인데 어떤 건 새 페이지, 어떤 건 이어붙는다. 룰: "(N페이지…작성)" 패턴을
+  # 가진 *섹션 시작 top-level 단락* 에 pageBreak=1 일관 적용 (이미 1이면 그대로).
+  # 양식·회사·RFP 식별자 0 — 양식의 자체 분량 annotation 만 신호로 사용.
+  page_break_before_sized_section:
+    enabled: true
+    header_pattern: '\d+\s*(페이지|쪽)\s*(내외|이내|내)\s*작성'
+
   # 채운 셀의 *고정 row 높이* 자동 해제 — 표가 페이지를 넘어가는 근본 원인 가드.
   # 원본 양식은 cellSz/@height 에 placeholder 분량 기준 *명시 절대 높이*를 박아둠
   # (예: 본문 셀 height=63498 ≈ 10인치). AI가 짧게 채워도 한컴이 이 값을 *최소+선호*
