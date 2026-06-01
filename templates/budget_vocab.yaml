@@ -1,0 +1,48 @@
+# 정부 R&D 사업비(지원금 구성) 표준 어휘 — 범부처 표준 스키마.
+# 특정 사업·회사·양식 식별자 0. 새 표기는 *이 yaml 에만* 추가 (코드 수정 0).
+#
+# 현재 범위: 총괄(지원금 합계) 표 — 국고/자부담/현금/현물 합계 (결정적·완전일반).
+# 비목별 배분(T62~T64 류)은 2차 — cross-form 검증용 R&D 양식 확보 후.
+
+schema_version: 1
+
+# 라벨 정규화 (fill_company/finance 와 동일 정책).
+normalize:
+  strip_chars: ['(', ')', '[', ']', '※', '*', ':', ',', '/', ' ', '　', '·']
+
+# ── 총괄(지원금 합계) 표 ──
+summary_table:
+  # 헤더 라벨(정규화) → 역할. 다양한 표기 흡수.
+  roles:
+    지원금합계: total
+    사업비합계: total
+    사업비총계: total
+    총사업비: total
+    국고지원금: gov
+    정부지원금: gov
+    보조금: gov
+    자기부담금: self
+    자부담금: self
+    현금: cash
+    현물: in_kind
+  # 1단 헤더(최상위 행) vs 2단 헤더(자부담 하위). 값은 헤더 레벨별 데이터 행에 매핑.
+  primary_roles: [total, gov, self]
+  sub_roles: [cash, in_kind]
+  # 이 역할이 모두 있는 표만 총괄표로 인식 (false positive 차단).
+  recognize_required: [gov, self]
+  # 값 표기 포맷 — 셀이 2단락(숫자 / 주석)일 때 num=P0, note=P1 분리 출력.
+  # (양식 총괄 셀 관행: 숫자줄 + "(…%)" 주석줄). 단락 1개면 note 무시.
+  format:
+    total:   {num: '{amt}억원', note: '(국고+자기부담금)'}        # 총액 — 예시 주석(총 N社 등) 대체
+    gov:     {num: '{amt}억원', note: '(지원금 합계의 {pct}%)'}
+    self:    {num: '{amt}억원', note: '(지원금 합계의 {pct}%)'}
+    cash:    {num: '{amt}억원', note: '(자기부담금의 {pct}%)'}
+    in_kind: {num: '{amt}억원', note: '(자기부담금의 {pct}%)'}
+
+# ── 비율 기본값 (RFP 분석에 명시 없을 때 fallback) ──
+# RFP 분석(사업개요.예산)이 비율을 주면 *그것 우선*. 여기는 표준 정부 R&D 매칭 fallback.
+ratio_defaults:
+  gov_pct: 70      # 국고 비율
+  self_pct: 30     # 자기부담 비율
+  cash_pct: 10     # 자부담 중 현금 최소 비율
+  in_kind_pct: 90  # 자부담 중 현물 최대 비율
