@@ -151,10 +151,14 @@ def build_company_fills(form_yaml: Path, profile_yaml: Path, project_root: Path)
             if label_came_from == "cell_text":
                 # 값 자리 아닌 라벨 셀 (예: "주관기업명")
                 continue
-            if not _is_fillable(c):
-                # instruction_placeholder(※ 작성요령)·checkbox·placeholder·table_terminator
-                # 등은 회사 메타 *값 자리* 가 아니다. 라벨이 hint 로 우연히 매칭돼도 채우지
-                # 않음 — 긴 안내문에 섞인 "연락처"·"본사" 등이 빈 안내·체크 셀을 오염시키는 것 차단.
+            # 여기까지 왔으면 *hint(left/up=필드 라벨)로 매칭된 셀* = 의미상 *값 자리*.
+            # 값 자리면 그 안에 양식 더미(홍길동·○○○·0000 등)가 있든, label_or_content 로
+            # 분류됐든 *채움 대상*. 더미를 일일이 나열(홍길동·김철수…)할 필요 없음 — 라벨이
+            # 값 자리임을 증명한다.
+            # 단 *비-value 셀* (체크박스·작성요령 ※박스·placeholder·생략행 등) 은 hint 가
+            # 우연히 매칭돼도 제외 — 긴 안내문 속 "연락처"·"본사" 가 안내·체크 셀을 오염시키는 것 차단.
+            if c.get("intent") in ("checkbox", "instruction_placeholder", "instruction",
+                                    "placeholder", "subordinate", "table_terminator"):
                 continue
             value = profile_values.get(field)
             if value is None or value == "":
