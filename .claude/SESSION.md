@@ -26,7 +26,8 @@
 **비전 검증 자동화 + gen-AI fallback 완성** (둘 다 구축·테스트):
 - **비전 자동화**: 빌더가 내용불확실 후보(추출·생성)를 `<out>.image_review.yaml` 로 emit → *비전 서브에이전트*가 이미지를 실제로 보고 `vision_approved: <경로>|false` 판정(자율) → 재빌드 시 승인분만 삽입. 실증: 후보(객체탐지 앱 스크린샷)를 에이전트가 "도메인 맞지만 UI 노출 → 격식 부적합" 거부.
 - **gen-AI fallback**: KB 텍스트게이트 None(적합 이미지 전무) → 설명을 프롬프트로 생성. 생성물도 비전 검증 대상. **실제 생성기 = 사내 Gemini/Imagen 연결**(`scripts/gen_image.py`, `generation.command` 배선, `enabled:true`). 키는 env `GEMINI_API_KEY` 에서만(커밋 0), 모델 `GEN_IMAGE_MODEL` env 교체(imagen-3.0-generate-002 / gemini-2.5-flash-image-preview). `generation.prompt_prefix` 로 격식 제안서 스타일 유도. **사용 전 준비: `pip install google-genai pillow` + `GEMINI_API_KEY` 설정** — 미설정 시 빈칸 graceful(검증됨, 크래시 0). 실제 생성 테스트는 키 보유자(사용자)가 수행: `python scripts/gen_image.py --out /tmp/t.png --prompt "..."`.
-- 분류: py(게이트·`meaningful_tokens`·`_is_curated_image`·`generate_image`·emission)·yaml(`index_min_score:3`·`use_weak_fallback:false`·`require_vision_approval_for_extracted:true`·`generation`)·md(proposal-writer §5-2).
+- **내용 기반 선택(파일명 무관)**: 사람이 넣은/생성 이미지를 *비전 캡션 인덱스*(`images/index.yaml`, content_text=비전이 이미지 보고 만든 내용묘사)로 검색. `_search_index_image`가 루트 `images/index.yaml`(내용) + `extracted/index.yaml`(슬라이드텍스트) 둘 다 검색. 실증: 의미없는 파일명(`Gemini_Generated_Image_n9vy...png`)을 정밀농업 설명이 *내용으로* 정확히 선택, 아키텍처 설명은 dsi_architecture, 무관설명은 빈칸(변별).
+- 분류: py(게이트·`meaningful_tokens`·`_is_curated_image`·`generate_image`·내용인덱스검색·emission)·yaml(`index_min_score:3`·`use_weak_fallback:false`·`require_vision_approval_for_extracted:true`·`generation`)·md(proposal-writer §5-2). 비전 캡션은 서브에이전트가 이미지 보고 작성.
 - **dabeeo+정밀농업 = KB에 시각적합 이미지 없음 → 빈칸**(사용자 결정; 게이트가 후보를 비전대기/거부로 정확히 보류). 임의 회사/RFP 공통, 특정 셀·이미지·모델 하드코딩 0.
 
 **잔존 확인필요 6건 = 일반정책대로 `(확인 필요)` 확정** (비-PII 미확정 수치): 장비 단가 4(T36)·매출액 2(T46/T47). §5 정책(KB 미수록 값 → 확인필요)이 이미 규정하는 케이스 — v6의 `비움`은 *이 케이스만의 overfit*이라 폐기. 빈 셀은 0·누락 오인 + 양식 정합성 훼손. **§5에 "미확정 수치 비우지 말고 일관되게 확인필요" 일반규칙 명시** (특정 표만 비우는 예외 금지). 제출 직전 실값 교체.

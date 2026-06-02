@@ -333,12 +333,16 @@ _RASTER_EXTS = [".png", ".jpg", ".jpeg", ".bmp", ".gif"]
 
 def _search_index_image(keywords: list, company: str, project_root: Path,
                         search_config: dict = None):
-    """extracted/index.yaml 에서 키워드 매칭으로 최적 이미지 검색.
+    """이미지 *내용/출처텍스트* index 에서 설명 토큰 매칭으로 최적 이미지 검색.
 
-    일반화: 추출 이미지의 출처 슬라이드 텍스트(context_text)에 스키마 키워드가
-    몇 개 나타나는지로 점수. 특정 이미지명·회사 하드코딩 없음 — 임의 회사 KB 동작.
-    점수 우선, 동점이면 큰 파일(주요 도식일 확률 높음).
-    크기 bound 는 image_schema.yaml 의 search_config 에서 로드 (매직넘버 박지 않음).
+    두 종류 index 를 모두 검색 (둘 다 entry = {file, content_text|context_text}):
+      - `images/index.yaml` (루트): **비전 캡션**(이미지 *내용* 묘사). 파일명 무관 —
+        사람이 넣은/생성된 이미지를 *내용 기준* 으로 선택. (이름 의미 없어도 동작.)
+      - `images/extracted/index.yaml`: 과거 PPT 추출 이미지의 *출처 슬라이드 텍스트*.
+
+    일반화: 설명 토큰이 각 이미지의 텍스트에 몇 개 겹치는지로 점수(관련성 게이트).
+    특정 이미지명·회사 하드코딩 없음 — 임의 회사 KB 동작. 점수 우선, 동점이면 큰 파일.
+    크기 bound·임계는 image_schema.yaml search_config 에서 로드 (매직넘버 박지 않음).
     """
     search_config = search_config or {}
     min_bytes = search_config.get("index_min_bytes", 0)
@@ -357,30 +361,34 @@ def _search_index_image(keywords: list, company: str, project_root: Path,
 
     best_path, best_score, best_size = None, 0, -1
     for c in _company_list(company, project_root):
-        extracted = project_root / "kb" / "company" / c / "images" / "extracted"
-        index_path = extracted / "index.yaml"
-        if not index_path.exists():
-            continue
-        try:
-            with open(index_path, encoding="utf-8") as f:
-                data = yaml.safe_load(f) or {}
-        except Exception:
-            continue
-        for entry in data.get("images", []):
-            ctx = normalize_keyword(entry.get("context_text", ""))
-            if not ctx:
+        images_root = project_root / "kb" / "company" / c / "images"
+        # 루트 내용 index(비전 캡션) 먼저, 그다음 추출 index(슬라이드 텍스트).
+        for base in (images_root, images_root / "extracted"):
+            index_path = base / "index.yaml"
+            if not index_path.exists():
                 continue
-            score = sum(1 for k in norm_kws if k in ctx)
-            if score == 0:
+            try:
+                with open(index_path, encoding="utf-8") as f:
+                    data = yaml.safe_load(f) or {}
+            except Exception:
                 continue
-            img_file = extracted / entry.get("file", "")
-            if img_file.suffix.lower() not in _RASTER_EXTS or not img_file.exists():
-                continue
-            size = img_file.stat().st_size
-            if size < min_bytes or size > max_bytes:
-                continue
-            if score > best_score or (score == best_score and size > best_size):
-                best_path, best_score, best_size = img_file, score, size
+            for entry in data.get("images", []):
+                # content_text(비전 캡션) 우선, 없으면 context_text(출처 슬라이드)
+                ctx = normalize_keyword(entry.get("content_text")
+                                        or entry.get("context_text") or "")
+                if not ctx:
+                    continue
+                score = sum(1 for k in norm_kws if k in ctx)
+                if score == 0:
+                    continue
+                img_file = base / entry.get("file", "")
+                if img_file.suffix.lower() not in _RASTER_EXTS or not img_file.exists():
+                    continue
+                size = img_file.stat().st_size
+                if size < min_bytes or size > max_bytes:
+                    continue
+                if score > best_score or (score == best_score and size > best_size):
+                    best_path, best_score, best_size = img_file, score, size
     # 관련성 게이트: 최고점이 임계 미만이면 '관련 이미지 없음' → None (빈칸).
     if best_score < min_score:
         return None
