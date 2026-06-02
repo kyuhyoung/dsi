@@ -21,7 +21,13 @@
 
 **서술 셀 구조 일관 (추가 수정)**: 요약표 "설명"(T18_R2_C2, content_extra 출처)이 평문 한 단락 — 형제 셀(상용화 배경 R5·확산계획 R10)은 ❍ 3-tier인데 혼자 평문. 전수 스캔으로 *진짜 위반 1건만* 확정(T38·T41 등 단일진술 셀은 평문 정당). ❍ 3-tier로 재구성(내용·명사형 보존). 근본: content_extra가 §3-tier 정책 우회 → **proposal-writer.md 에 "문체·구조는 fills 소스 불문 동일, 보충파일 면제 없음" 일반규칙 추가**.
 
-**이미지 자동채움 — 텍스트 게이트 + 비전 검증 게이트 (일반 기능)**: 요약표 "이미지" 셀에 설명-매칭 KB 이미지 자동삽입 기능. 핵심 통찰 = `index.yaml`의 context_text는 *이미지 내용*이 아니라 *출처 슬라이드 텍스트* → 텍스트만으론 오삽입(image85 = 'AI기술' 슬라이드에서 추출된 *도심 위성사진*이 정밀농업 설명에 통과). **2단 게이트 구축**: ① 텍스트 관련성(`index_min_score`, 설명토큰 겹침 ≥ 임계, 실내지도 2<3 차단) ② 비전 검증(추출이미지는 LLM이 이미지 보고 설명과 일치 판정 통과해야 삽입; 큐레이트는 신뢰·면제). 부적합/미검증 → **빈칸 유지**(오삽입 < 빈칸). py(게이트 알고리즘+`meaningful_tokens`+`_is_curated_image`)·yaml(`index_min_score:3`·`use_weak_fallback:false`·`require_vision_approval_for_extracted:true`)·md(proposal-writer §5-2). **dabeeo+정밀농업 = KB에 시각적합 이미지 없음 → 빈칸**(사용자 결정, 게이트가 image85 비전대기로 정확히 보류). gen-AI 생성은 외부 hook(미설정). 임의 회사/RFP 공통, 하드코딩 0.
+**이미지 자동채움 — 텍스트 게이트 + 비전 검증 게이트 (일반 기능)**: 요약표 "이미지" 셀에 설명-매칭 KB 이미지 자동삽입 기능. 핵심 통찰 = `index.yaml`의 context_text는 *이미지 내용*이 아니라 *출처 슬라이드 텍스트* → 텍스트만으론 오삽입(image85 = 'AI기술' 슬라이드에서 추출된 *도심 위성사진*이 정밀농업 설명에 통과). **2단 게이트 구축**: ① 텍스트 관련성(`index_min_score`, 설명토큰 겹침 ≥ 임계, 실내지도 2<3 차단) ② 비전 검증(추출이미지는 LLM이 이미지 보고 설명과 일치 판정 통과해야 삽입; 큐레이트는 신뢰·면제). 부적합/미검증 → **빈칸 유지**(오삽입 < 빈칸).
+
+**비전 검증 자동화 + gen-AI fallback 완성** (둘 다 구축·테스트):
+- **비전 자동화**: 빌더가 내용불확실 후보(추출·생성)를 `<out>.image_review.yaml` 로 emit → *비전 서브에이전트*가 이미지를 실제로 보고 `vision_approved: <경로>|false` 판정(자율) → 재빌드 시 승인분만 삽입. 실증: 후보(객체탐지 앱 스크린샷)를 에이전트가 "도메인 맞지만 UI 노출 → 격식 부적합" 거부.
+- **gen-AI fallback**: KB 텍스트게이트 None(적합 이미지 전무) → 설명을 프롬프트로 생성(`generation` config, pluggable argv command, `{prompt}`·`{out}` 치환). 생성물도 비전 검증 대상. 기본 `enabled:false` → 미설정 시 빈칸 graceful. 실증: stub 생성기로 무매칭 context→생성→비전대기 확인. (실제 생성기는 사용자가 command 연결.)
+- 분류: py(게이트·`meaningful_tokens`·`_is_curated_image`·`generate_image`·emission)·yaml(`index_min_score:3`·`use_weak_fallback:false`·`require_vision_approval_for_extracted:true`·`generation`)·md(proposal-writer §5-2).
+- **dabeeo+정밀농업 = KB에 시각적합 이미지 없음 → 빈칸**(사용자 결정; 게이트가 후보를 비전대기/거부로 정확히 보류). 임의 회사/RFP 공통, 특정 셀·이미지·모델 하드코딩 0.
 
 **잔존 확인필요 6건 = 일반정책대로 `(확인 필요)` 확정** (비-PII 미확정 수치): 장비 단가 4(T36)·매출액 2(T46/T47). §5 정책(KB 미수록 값 → 확인필요)이 이미 규정하는 케이스 — v6의 `비움`은 *이 케이스만의 overfit*이라 폐기. 빈 셀은 0·누락 오인 + 양식 정합성 훼손. **§5에 "미확정 수치 비우지 말고 일관되게 확인필요" 일반규칙 명시** (특정 표만 비우는 예외 금지). 제출 직전 실값 교체.
 

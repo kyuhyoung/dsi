@@ -281,6 +281,48 @@ def _is_curated_image(path) -> bool:
     return "extracted" not in Path(path).parts
 
 
+def _is_generated_image(path) -> bool:
+    """gen-AI 가 생성한 이미지 여부 (.../images/generated/...). 생성물도 내용 검증 대상."""
+    return "generated" in Path(path).parts
+
+
+def generate_image(prompt: str, out_path, gen_config: dict, project_root: Path = None):
+    """gen-AI 이미지 생성 — *pluggable hook*. 특정 모델/API 하드코딩 없음.
+
+    gen_config.command 템플릿(`{prompt}`·`{out}` 치환)을 subprocess 로 실행.
+    사용자가 임의 생성기(OpenAI images CLI, 사내 모델, ComfyUI 등)를 command 로 연결.
+    미설정(enabled=false 또는 command 없음)·실패 시 None → 빈칸으로 graceful degrade.
+
+    일반화: 어느 회사/RFP/양식이든 동일. 생성 프롬프트 = 셀의 설명(context) 그대로.
+    """
+    if not gen_config or not gen_config.get("enabled"):
+        return None
+    cmd_tmpl = gen_config.get("command")
+    if not cmd_tmpl:
+        print("WARN: 이미지 생성 enabled 이나 command 미설정 → 빈칸", file=sys.stderr)
+        return None
+    import subprocess, os
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    def _sub(s):
+        return str(s).replace("{prompt}", prompt).replace("{out}", str(out_path))
+
+    # command 는 리스트(argv, 권장 — 크로스플랫폼·공백/백슬래시 안전) 또는 문자열.
+    if isinstance(cmd_tmpl, (list, tuple)):
+        argv = [_sub(a) for a in cmd_tmpl]
+    else:
+        import shlex
+        # Windows 경로 백슬래시 보존 위해 posix=False (비-Windows는 posix=True)
+        argv = [_sub(a) for a in shlex.split(str(cmd_tmpl), posix=(os.name != "nt"))]
+    try:
+        subprocess.run(argv, check=True, timeout=gen_config.get("timeout", 180))
+    except Exception as e:
+        print(f"WARN: 이미지 생성 실패({e}) → 빈칸", file=sys.stderr)
+        return None
+    return out_path if out_path.exists() else None
+
+
 # 한컴이 직접 렌더 가능한 래스터 형식만 (wdp/emf/svg 등 제외)
 _RASTER_EXTS = [".png", ".jpg", ".jpeg", ".bmp", ".gif"]
 
@@ -1457,7 +1499,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
                     continue
 
             elif operation == "auto_image":
-                # KB에서 자동 검색 (텍스트 관련성 게이트 → 비전 검증 게이트)
+                # KB 텍스트게이트 → (없으면) gen-AI → 비전 검증 게이트 → 삽입/빈칸
                 context = entry.get("context", "")
                 if not context:
                     # hints에서 컨텍스트 추출
@@ -1467,6 +1509,10 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
                 if not context:
                     print(f"WARN: auto_image 컨텍스트 없음: {cid}", file=sys.stderr)
                     continue
+
+                schema_full = load_image_schema(project_root)
+                schema_cfg = schema_full.get("search_config", {})
+                gen_cfg = schema_full.get("generation", {})
 
                 # 비전 검증 결과가 entry 에 있으면 우선: vision_approved == False(거부) | <경로>(승인)
                 va = entry.get("vision_approved", None)
@@ -1479,17 +1525,25 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
                         print(f"WARN: 비전승인 이미지 경로 없음: {va}", file=sys.stderr)
                         continue
                 else:
-                    # 미검증 — 텍스트 게이트로 후보 선정
+                    # 1) KB 텍스트 관련성 게이트로 후보 선정
                     src_path = search_kb_image(context, company=company, project_root=project_root)
+                    # 2) KB에 적합 이미지 전무 → gen-AI fallback (pluggable hook, 미설정 시 None)
                     if src_path is None:
-                        print(f"WARN: KB 관련 이미지 없음(텍스트게이트) → 빈칸: {cid} (컨텍스트: {context[:30]}...)", file=sys.stderr)
-                        continue
-                    # 추출 이미지(내용 불확실)는 비전 검증 필수 — 미검증이면 삽입 보류(빈칸).
-                    schema_cfg = load_image_schema(project_root).get("search_config", {})
+                        c0 = (company or (_company_list(None, project_root) or [None])[0])
+                        gen_out = (project_root / "kb" / "company" / str(c0)
+                                   / "images" / "generated" / f"{cid}.png") if c0 else None
+                        if gen_out is not None:
+                            src_path = generate_image(context, gen_out, gen_cfg, project_root)
+                        if src_path is None:
+                            print(f"WARN: KB·gen 모두 적합 이미지 없음 → 빈칸: {cid} (컨텍스트: {context[:30]}...)", file=sys.stderr)
+                            continue
+                    # 3) 내용 불확실 이미지(추출·생성)는 비전 검증 필수 — 미검증이면 삽입 보류(빈칸).
                     need_vision = schema_cfg.get("require_vision_approval_for_extracted", True)
-                    if need_vision and not _is_curated_image(src_path):
+                    uncertain = (not _is_curated_image(src_path)) or _is_generated_image(src_path)
+                    if need_vision and uncertain:
+                        kind = "생성" if _is_generated_image(src_path) else "추출"
                         vision_review_needed.append((cid, context, str(src_path)))
-                        print(f"이미지 비전검증 대기(추출이미지) → 빈칸 유지: {cid} 후보={Path(src_path).name}", file=sys.stderr)
+                        print(f"이미지 비전검증 대기({kind}이미지) → 빈칸 유지: {cid} 후보={Path(src_path).name}", file=sys.stderr)
                         continue
                     # 큐레이트 이미지는 신뢰 → 그대로 삽입
 
@@ -1510,13 +1564,25 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
             mode = "자동" if operation == "auto_image" else "명시"
             print(f"이미지 등록({mode}): {cid} → {image_id} ({width_px}x{height_px}px)", file=sys.stderr)
 
-        # 비전 검증 대기 후보 요약 — 추출이미지(내용 불확실)는 비전 통과 전까지 빈칸.
-        #   다음 단계(비전 리뷰)에서 각 후보 이미지를 보고 entry 에 vision_approved 기입:
+        # 비전 검증 대기 후보 — 내용 불확실 이미지(추출·생성)는 비전 통과 전까지 빈칸.
+        #   사이드카(<out>.image_review.yaml)로 emit → 비전 리뷰(LLM이 이미지 보고 판정)가
+        #   각 후보에 대해 fills entry 의 vision_approved 기입 후 재빌드:
         #   vision_approved: <승인 이미지 경로>  (삽입)  |  vision_approved: false  (거부=빈칸)
         if vision_review_needed:
-            print(f"\n[비전 검증 필요] 추출이미지 후보 {len(vision_review_needed)}건 — 검증 전 빈칸 유지:", file=sys.stderr)
+            print(f"\n[비전 검증 필요] 내용불확실 이미지 후보 {len(vision_review_needed)}건 — 검증 전 빈칸 유지:", file=sys.stderr)
+            review_items = []
             for cid, ctx, cand in vision_review_needed:
                 print(f"  - {cid}: 후보={cand} (설명: {ctx[:40]}…)", file=sys.stderr)
+                review_items.append({"id": cid, "context": ctx, "candidate": cand,
+                                     "vision_approved": None})
+            try:
+                review_path = Path(out_path).with_suffix(".image_review.yaml")
+                with open(review_path, "w", encoding="utf-8") as rf:
+                    yaml.dump({"image_review": review_items}, rf,
+                              allow_unicode=True, sort_keys=False)
+                print(f"  → 비전 리뷰 후보 파일: {review_path}", file=sys.stderr)
+            except Exception as e:
+                print(f"  WARN: 리뷰 파일 기록 실패: {e}", file=sys.stderr)
 
         # 2단계: section XML 편집
         section_dir = td_path / "Contents"

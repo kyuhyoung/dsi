@@ -132,3 +132,20 @@ search_config:
   # 짧은 영문 키워드(ci, logo 등)는 공백 제거된 텍스트에서 substring 오탐을 유발.
   # 한글 키워드는 길이 무관 유지, 순수 영문 키워드는 이 길이 미만이면 검색서 제외.
   index_latin_min_len: 4
+
+
+# ──────────────────────────────────────────────────────
+# gen-AI 이미지 생성 — KB·비전 검증 다 실패 시 *최후 fallback* (pluggable hook)
+# ──────────────────────────────────────────────────────
+#   - KB에 적합 이미지가 전무할 때만 동작 (KB 우선 원칙).
+#   - 생성 프롬프트 = 셀의 설명(context) 그대로. 특정 모델/문구 하드코딩 없음.
+#   - 생성 이미지도 *비전 검증 대상* (gen 모델이 빗나갈 수 있음) → 통과해야 삽입.
+#   - 기본 enabled=false → 미설정 시 빈칸으로 graceful degrade (오삽입 없음).
+generation:
+  enabled: false
+  # command = argv 리스트(권장 — 공백·백슬래시·크로스플랫폼 안전) 또는 문자열.
+  # {prompt}·{out} 치환. 사용자가 실제 생성기로 교체:
+  #   command: ['python', 'scripts/your_image_gen.py', '--out', '{out}', '--prompt', '{prompt}']
+  #   command: ['openai', 'images', 'generate', '--prompt', '{prompt}', '--output', '{out}']
+  command: null
+  timeout: 180
