@@ -162,6 +162,17 @@ python scripts/hwpx_to_pdf.py "output/20260601/별지_v6/05_[별지_제3호]_사
 python scripts/pdf_to_text.py "output/20260601/별지3호_v6.pdf" "output/20260601/별지3호_v6.txt"
 ```
 
+### 20260602 최종본(문체 명사형 + PII 익명화) 재현 — *LLM 재호출 불필요*
+
+`output/20260602/fills_*.yaml`·`통합양식.form.yaml` 가 **이제 git 추적**되므로(이 라운드에 커밋), 다른 PC 에서 git pull 후 에이전트 재호출 없이 fill 단계부터 바로 재현 가능. (이미지 셀은 KB 시각적합 이미지 없음 → 빈칸 유지가 정상; `fills_image.yaml` 는 빈 채움이라 결과 동일.)
+
+```bash
+python scripts/fill_hwpx_form.py "output/20260531/농식품AI_양식.hwpx" "output/20260602/fills_total.yaml" "output/20260602/농식품AI_최종.hwpx" "output/20260602/통합양식.form.yaml"
+python scripts/split_hwpx_by_section.py "output/20260602/농식품AI_최종.hwpx" "output/20260602/통합양식.form.yaml" "output/20260602/별지_최종"
+python scripts/hwpx_to_pdf.py "output/20260602/별지_최종/05_[별지_제3호]_사업계획서.hwpx" "output/20260602/별지3호_최종.pdf"
+```
+검증 기준: 본문 서술체 0 · OOO 21 · 양식더미 0 · KORINDO 17 · 예산 28.571억.
+
 ---
 
 ## 인수받은 Claude 행동 지침

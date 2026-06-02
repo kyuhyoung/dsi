@@ -1,0 +1,23 @@
+# fills_image.yaml — 이미지 placeholder 셀 auto_image 명세 (proposal-writer §5-2)
+# 통합양식.form.yaml 의 fill_targets 를 순회해, hint(안내문)에 "참고 사진(이미지)·설계도
+#   삽입" 류 이미지 삽입 안내가 있는 *입력 셀(empty_input)* 만 탐지.
+# 탐지 근거는 셀 위치(R/C)가 아니라 *안내문 의미* — 임의 양식에 동일 동작.
+#
+# 탐지 결과 (별지 제3호, 현재 작업 포커스):
+#   · T18_R3_C3 — empty_input, hints.left = "※ 제품(서비스)의 특징을 나타낼 수 있는
+#     참고 사진(이미지) 또는 설계도 삽입" → 제품 특징 시각화 이미지 placeholder.
+#
+# 제외 (fill_targets 아님 → 양식 라벨, 채움 대상 아님):
+#   · T39_R0_C0 / T44_R0_C0 ("조직도 삽입") = intent label_or_content, 1x1 단일셀.
+#     셀 텍스트 자체가 양식 안내 라벨이며 fill_targets 명단에 *없음* → auto_image 미작성
+#     (출력 원칙 #1: fill_targets 에 없는 id 추가 금지). 조직도는 발주처가 한글 편집 단계에서
+#     직접 삽입하는 양식 자리이며, 본 시스템의 KB 이미지 검색 대상 아님.
+#
+# context 도출: T18_R3_C3 이 보조하는 *형제 설명 셀* = 같은 요약표의 "설명"(상용화 대상상세)
+#   셀 T18_R2_C2 의 *실제 채워진 내용*(fills_content_extra.yaml). 이미지는 그 제품·서비스를
+#   시각적으로 묘사해야 하므로, 안내문이 아니라 그 설명 본문을 context 로 사용.
+
+fills:
+  - id: T18_R3_C3
+    operation: auto_image
+    context: "위성·드론·모바일 영상을 단일 파이프라인으로 통합 분석하는 GeoAI 정밀농업 솔루션. 팜나무 객체 탐지(F1-Score 0.98)·식생 건강도 분류·16개 유형 변화 탐지·영상 초해상화를 자동 수행. 대규모 플랜테이션의 작황·병해·수확량 모니터링 및 현장 의사결정 연계."

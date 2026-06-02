@@ -1,0 +1,31 @@
+fills:
+- id: T61_R2_C0_P0
+  text: 28.571억원
+  source: RFP 예산규칙 (국고 20억 × total) — fill_budget_cells
+- id: T61_R2_C0_P1
+  text: (국고+자기부담금)
+  source: RFP 예산규칙 (국고 20억 × total) — fill_budget_cells
+- id: T61_R2_C1_P0
+  text: 20억원
+  source: RFP 예산규칙 (국고 20억 × gov) — fill_budget_cells
+- id: T61_R2_C1_P1
+  text: (지원금 합계의 70%)
+  source: RFP 예산규칙 (국고 20억 × gov) — fill_budget_cells
+- id: T61_R2_C2_P0
+  text: 8.571억원
+  source: RFP 예산규칙 (국고 20억 × self) — fill_budget_cells
+- id: T61_R2_C2_P1
+  text: (지원금 합계의 30%)
+  source: RFP 예산규칙 (국고 20억 × self) — fill_budget_cells
+- id: T61_R3_C2_P0
+  text: 0.857억원
+  source: RFP 예산규칙 (국고 20억 × cash) — fill_budget_cells
+- id: T61_R3_C2_P1
+  text: (자기부담금의 10%)
+  source: RFP 예산규칙 (국고 20억 × cash) — fill_budget_cells
+- id: T61_R3_C3_P0
+  text: 7.714억원
+  source: RFP 예산규칙 (국고 20억 × in_kind) — fill_budget_cells
+- id: T61_R3_C3_P1
+  text: (자기부담금의 90%)
+  source: RFP 예산규칙 (국고 20억 × in_kind) — fill_budget_cells
