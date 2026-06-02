@@ -97,6 +97,23 @@ search_config:
   # 키워드 매칭 시 정규화 (공백/특수문자 제거, 소문자화)
   normalize_keywords: true
 
+  # 관련성 게이트 — 추출이미지(index) 검색 시, *설명 토큰* 이 이미지 출처텍스트에
+  # 이 개수 이상 겹쳐야 '관련 이미지'로 인정. 미만이면 None → 빈칸(오삽입 금지).
+  # 보수적 기본값: 우연한 generic 토큰 1~2개 겹침을 관련으로 오인하지 않도록.
+  # 낮추면 오삽입↑(엉뚱한 도메인 이미지), 높이면 미삽입↑(빈칸). 임의 회사/RFP 공통.
+  index_min_score: 3
+
+  # 약한 추정 fallback(common_mappings 의 fallback_paths) 사용 여부.
+  # 기본 false — 약한 추정 이미지 삽입은 빈칸보다 나쁨. true 로 명시 opt-in 시에만.
+  use_weak_fallback: false
+
+  # 추출 이미지(.../images/extracted/) 비전 검증 필수 여부.
+  # 추출 이미지는 *출처 슬라이드 텍스트* 로만 매칭돼 이미지 *내용* 이 불확실
+  # (텍스트는 'AI 기술'이어도 실제 이미지는 도심 위성사진일 수 있음).
+  # 기본 true — 비전 검증(LLM이 이미지 보고 설명과 일치 판정) 통과 전까지 빈칸 유지.
+  # 큐레이트 이미지(사람 배치, 내용 확정)는 이 게이트 면제(신뢰).
+  require_vision_approval_for_extracted: true
+
   # 매칭 안 될 경우 동작
   on_no_match: skip  # skip | placeholder_text | generate
 

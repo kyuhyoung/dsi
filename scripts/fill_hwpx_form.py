@@ -164,6 +164,28 @@ def normalize_keyword(text: str) -> str:
     return text.lower()
 
 
+def meaningful_tokens(text: str, min_latin_len: int = 2) -> list:
+    """서술 텍스트를 *의미 토큰* 으로 분리 (이미지 관련성 점수용).
+
+    normalize_keyword 는 공백을 전부 지워 문자열 1개로 만들므로 점수 매칭이 불가능.
+    관련성 게이트는 '설명이 실제로 묘사하는 대상' 토큰이 이미지 출처텍스트에
+    몇 개나 겹치는지로 판단해야 한다 → 토큰 단위 분리가 필수.
+
+    일반화: 특정 도메인 단어 하드코딩 없음. 공백·구두점으로 쪼갠 뒤 각 토큰 정규화,
+    한글 포함 또는 영문 min_latin_len 이상만 유지(짧은 영문 substring 오탐 방지).
+    """
+    raw = re.split(r"[\s,./·:;()\[\]<>«»「」『』•\-–—~%‧·]+", text)
+    out, seen = [], set()
+    for w in raw:
+        nk = normalize_keyword(w)
+        if not nk or nk in seen:
+            continue
+        if re.search(r"[가-힣]", nk) or len(nk) >= min_latin_len:
+            seen.add(nk)
+            out.append(nk)
+    return out
+
+
 def search_kb_image(context: str, company: str = None, project_root: Path = None) -> Path:
     """KB에서 컨텍스트에 맞는 이미지 검색.
 
@@ -185,44 +207,44 @@ def search_kb_image(context: str, company: str = None, project_root: Path = None
     if not schema:
         return None
 
-    # 컨텍스트 정규화
+    search_config = schema.get("search_config", {})
+    # 컨텍스트 정규화 (카테고리 매칭용) + 토큰 분리 (관련성 점수용)
     norm_context = normalize_keyword(context)
+    ctx_tokens = meaningful_tokens(context)
 
-    # 공통 매핑에서 검색
-    mappings = schema.get("common_mappings", [])
-
+    # 카테고리 매칭 — *큐레이트 경로 lookup 용* (의미명 파일이 있는지 확인)
     best_match = None
     best_priority = float("inf")
-
-    for mapping in mappings:
-        keywords = mapping.get("keywords", [])
-        for kw in keywords:
+    for mapping in schema.get("common_mappings", []):
+        for kw in mapping.get("keywords", []):
             norm_kw = normalize_keyword(kw)
-            if norm_kw in norm_context or norm_context in norm_kw:
+            if norm_kw and (norm_kw in norm_context or norm_context in norm_kw):
                 priority = mapping.get("priority", 10)
                 if priority < best_priority:
                     best_match = mapping
                     best_priority = priority
 
-    if best_match is None:
-        return None
+    # 1순위: 큐레이트된 의미명 파일 (사람이 배치한 정확한 이미지 — 신뢰)
+    if best_match:
+        primary = _resolve_kb_path(best_match.get("image_path", ""), company, project_root)
+        if primary:
+            return primary
 
-    # 1순위: 큐레이트된 의미명 파일 (사람이 배치한 정확한 이미지)
-    primary = _resolve_kb_path(best_match.get("image_path", ""), company, project_root)
-    if primary:
-        return primary
-
-    # 2순위: extracted/index.yaml 컨텍스트 매칭 (deck 자체 텍스트로 일반 검색)
-    indexed = _search_index_image(best_match.get("keywords", []), company,
-                                  project_root, schema.get("search_config", {}))
+    # 2순위: extracted/index.yaml — *설명 토큰* 으로 점수 + 관련성 게이트.
+    #   카테고리 generic 키워드가 아니라 '설명이 실제로 묘사하는 토큰' 으로 매칭해야
+    #   엉뚱한 도메인 이미지(예: 정밀농업 설명에 실내지도 슬라이드) 오삽입을 막음.
+    #   점수가 search_config.index_min_score 미만이면 None → 빈칸(빌더가 미삽입).
+    indexed = _search_index_image(ctx_tokens, company, project_root, search_config)
     if indexed:
         return indexed
 
-    # 3순위: 스키마 fallback 경로 (약한 추정)
-    for path_template in best_match.get("fallback_paths", []):
-        fb = _resolve_kb_path(path_template, company, project_root)
-        if fb:
-            return fb
+    # 3순위: 스키마 fallback (약한 추정) — 기본 차단. 약한 추정 삽입은 빈칸보다 나쁨.
+    #   use_weak_fallback=true 로 명시 opt-in 한 경우에만 사용.
+    if search_config.get("use_weak_fallback", False) and best_match:
+        for path_template in best_match.get("fallback_paths", []):
+            fb = _resolve_kb_path(path_template, company, project_root)
+            if fb:
+                return fb
 
     return None
 
@@ -248,6 +270,17 @@ def _resolve_kb_path(path_template: str, company: str, project_root: Path):
     return None
 
 
+def _is_curated_image(path) -> bool:
+    """큐레이트 이미지 여부 — 사람이 의미명으로 배치한 *내용 확정* 이미지.
+
+    추출 이미지(.../images/extracted/...)는 *출처 슬라이드 텍스트* 로만 매칭되어
+    이미지 *내용* 이 불확실 → 비전 검증 대상. (예: 'AI 기술' 슬라이드에서 추출됐지만
+    실제 이미지는 도심 위성사진일 수 있음.) 큐레이트는 신뢰 → 비전 생략 가능.
+    일반화: 'extracted' 디렉터리 규약으로만 판별 (특정 파일명·회사 하드코딩 없음).
+    """
+    return "extracted" not in Path(path).parts
+
+
 # 한컴이 직접 렌더 가능한 래스터 형식만 (wdp/emf/svg 등 제외)
 _RASTER_EXTS = [".png", ".jpg", ".jpeg", ".bmp", ".gif"]
 
@@ -265,6 +298,9 @@ def _search_index_image(keywords: list, company: str, project_root: Path,
     min_bytes = search_config.get("index_min_bytes", 0)
     max_bytes = search_config.get("index_max_bytes", float("inf"))
     latin_min = search_config.get("index_latin_min_len", 0)
+    # 관련성 게이트 — 설명 토큰이 이미지 출처텍스트에 이 개수 이상 겹쳐야 매칭 인정.
+    # 미달이면 None(빈칸). 우연한 generic 토큰 1~2개 겹침을 '관련'으로 오인하지 않음.
+    min_score = search_config.get("index_min_score", 3)
 
     norm_kws = [normalize_keyword(k) for k in keywords if k]
     # 순수 영문 짧은 키워드 제외 (substring 오탐 방지). 한글 포함 키워드는 유지.
@@ -299,6 +335,9 @@ def _search_index_image(keywords: list, company: str, project_root: Path,
                 continue
             if score > best_score or (score == best_score and size > best_size):
                 best_path, best_score, best_size = img_file, score, size
+    # 관련성 게이트: 최고점이 임계 미만이면 '관련 이미지 없음' → None (빈칸).
+    if best_score < min_score:
+        return None
     return best_path
 
 
@@ -1394,6 +1433,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         image_registry = {}
         # meta.company 없으면 None → 검색이 kb/company/* 전체를 탐색 (특정 회사 기본값 박지 않음)
         company = fills_data.get("meta", {}).get("company") or None
+        vision_review_needed = []  # (cid, context, 후보경로) — 추출이미지·비전 미검증 → 빈칸 유지
 
         for entry in fills:
             operation = entry.get("operation", "")
@@ -1417,7 +1457,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
                     continue
 
             elif operation == "auto_image":
-                # KB에서 자동 검색
+                # KB에서 자동 검색 (텍스트 관련성 게이트 → 비전 검증 게이트)
                 context = entry.get("context", "")
                 if not context:
                     # hints에서 컨텍스트 추출
@@ -1428,10 +1468,30 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
                     print(f"WARN: auto_image 컨텍스트 없음: {cid}", file=sys.stderr)
                     continue
 
-                src_path = search_kb_image(context, company=company, project_root=project_root)
-                if src_path is None:
-                    print(f"WARN: KB에서 이미지 못 찾음: {cid} (컨텍스트: {context[:30]}...)", file=sys.stderr)
+                # 비전 검증 결과가 entry 에 있으면 우선: vision_approved == False(거부) | <경로>(승인)
+                va = entry.get("vision_approved", None)
+                if va is False:
+                    print(f"이미지 비전검증 거부 → 빈칸: {cid}", file=sys.stderr)
                     continue
+                if isinstance(va, str) and va:
+                    src_path = resolve_image_path(va, project_root)
+                    if src_path is None:
+                        print(f"WARN: 비전승인 이미지 경로 없음: {va}", file=sys.stderr)
+                        continue
+                else:
+                    # 미검증 — 텍스트 게이트로 후보 선정
+                    src_path = search_kb_image(context, company=company, project_root=project_root)
+                    if src_path is None:
+                        print(f"WARN: KB 관련 이미지 없음(텍스트게이트) → 빈칸: {cid} (컨텍스트: {context[:30]}...)", file=sys.stderr)
+                        continue
+                    # 추출 이미지(내용 불확실)는 비전 검증 필수 — 미검증이면 삽입 보류(빈칸).
+                    schema_cfg = load_image_schema(project_root).get("search_config", {})
+                    need_vision = schema_cfg.get("require_vision_approval_for_extracted", True)
+                    if need_vision and not _is_curated_image(src_path):
+                        vision_review_needed.append((cid, context, str(src_path)))
+                        print(f"이미지 비전검증 대기(추출이미지) → 빈칸 유지: {cid} 후보={Path(src_path).name}", file=sys.stderr)
+                        continue
+                    # 큐레이트 이미지는 신뢰 → 그대로 삽입
 
             if src_path is None:
                 continue
@@ -1449,6 +1509,14 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
             image_registry[cid] = (image_id, width_px, height_px)
             mode = "자동" if operation == "auto_image" else "명시"
             print(f"이미지 등록({mode}): {cid} → {image_id} ({width_px}x{height_px}px)", file=sys.stderr)
+
+        # 비전 검증 대기 후보 요약 — 추출이미지(내용 불확실)는 비전 통과 전까지 빈칸.
+        #   다음 단계(비전 리뷰)에서 각 후보 이미지를 보고 entry 에 vision_approved 기입:
+        #   vision_approved: <승인 이미지 경로>  (삽입)  |  vision_approved: false  (거부=빈칸)
+        if vision_review_needed:
+            print(f"\n[비전 검증 필요] 추출이미지 후보 {len(vision_review_needed)}건 — 검증 전 빈칸 유지:", file=sys.stderr)
+            for cid, ctx, cand in vision_review_needed:
+                print(f"  - {cid}: 후보={cand} (설명: {ctx[:40]}…)", file=sys.stderr)
 
         # 2단계: section XML 편집
         section_dir = td_path / "Contents"
