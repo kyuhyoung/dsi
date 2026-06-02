@@ -25,7 +25,7 @@
 
 **비전 검증 자동화 + gen-AI fallback 완성** (둘 다 구축·테스트):
 - **비전 자동화**: 빌더가 내용불확실 후보(추출·생성)를 `<out>.image_review.yaml` 로 emit → *비전 서브에이전트*가 이미지를 실제로 보고 `vision_approved: <경로>|false` 판정(자율) → 재빌드 시 승인분만 삽입. 실증: 후보(객체탐지 앱 스크린샷)를 에이전트가 "도메인 맞지만 UI 노출 → 격식 부적합" 거부.
-- **gen-AI fallback**: KB 텍스트게이트 None(적합 이미지 전무) → 설명을 프롬프트로 생성(`generation` config, pluggable argv command, `{prompt}`·`{out}` 치환). 생성물도 비전 검증 대상. 기본 `enabled:false` → 미설정 시 빈칸 graceful. 실증: stub 생성기로 무매칭 context→생성→비전대기 확인. (실제 생성기는 사용자가 command 연결.)
+- **gen-AI fallback**: KB 텍스트게이트 None(적합 이미지 전무) → 설명을 프롬프트로 생성. 생성물도 비전 검증 대상. **실제 생성기 = 사내 Gemini/Imagen 연결**(`scripts/gen_image.py`, `generation.command` 배선, `enabled:true`). 키는 env `GEMINI_API_KEY` 에서만(커밋 0), 모델 `GEN_IMAGE_MODEL` env 교체(imagen-3.0-generate-002 / gemini-2.5-flash-image-preview). `generation.prompt_prefix` 로 격식 제안서 스타일 유도. **사용 전 준비: `pip install google-genai pillow` + `GEMINI_API_KEY` 설정** — 미설정 시 빈칸 graceful(검증됨, 크래시 0). 실제 생성 테스트는 키 보유자(사용자)가 수행: `python scripts/gen_image.py --out /tmp/t.png --prompt "..."`.
 - 분류: py(게이트·`meaningful_tokens`·`_is_curated_image`·`generate_image`·emission)·yaml(`index_min_score:3`·`use_weak_fallback:false`·`require_vision_approval_for_extracted:true`·`generation`)·md(proposal-writer §5-2).
 - **dabeeo+정밀농업 = KB에 시각적합 이미지 없음 → 빈칸**(사용자 결정; 게이트가 후보를 비전대기/거부로 정확히 보류). 임의 회사/RFP 공통, 특정 셀·이미지·모델 하드코딩 0.
 

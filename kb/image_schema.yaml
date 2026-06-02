@@ -142,10 +142,14 @@ search_config:
 #   - 생성 이미지도 *비전 검증 대상* (gen 모델이 빗나갈 수 있음) → 통과해야 삽입.
 #   - 기본 enabled=false → 미설정 시 빈칸으로 graceful degrade (오삽입 없음).
 generation:
-  enabled: false
-  # command = argv 리스트(권장 — 공백·백슬래시·크로스플랫폼 안전) 또는 문자열.
-  # {prompt}·{out} 치환. 사용자가 실제 생성기로 교체:
-  #   command: ['python', 'scripts/your_image_gen.py', '--out', '{out}', '--prompt', '{prompt}']
-  #   command: ['openai', 'images', 'generate', '--prompt', '{prompt}', '--output', '{out}']
-  command: null
+  # 사내 Gemini/Imagen 연결 (scripts/gen_image.py). 키는 env GEMINI_API_KEY 에서만 읽음.
+  # 사용 전: `pip install google-genai pillow` + GEMINI_API_KEY env 설정.
+  # 모델 교체: GEN_IMAGE_MODEL env 또는 gen_image.py --model (imagen-3.0-generate-002 / gemini-2.5-flash-image-preview).
+  # 키·SDK 미설정 시 생성 실패 → 빈칸 graceful (오삽입 없음).
+  enabled: true
+  # command = argv 리스트(공백·백슬래시·크로스플랫폼 안전). {prompt}·{out} 치환.
+  command: ['python', 'scripts/gen_image.py', '--out', '{out}', '--prompt', '{prompt}']
   timeout: 180
+  # 생성 프롬프트 앞에 붙는 스타일 가이드 — 격식 제안서용 깔끔한 이미지 유도(UI·텍스트 오버레이 배제).
+  # 특정 사업 키워드 없음(주제는 셀 설명이 결정). 임의 회사/RFP 공통.
+  prompt_prefix: '공공 사업계획서에 들어갈 깔끔하고 전문적인 일러스트레이션 또는 도식. UI·버튼·워터마크·텍스트 오버레이 없이 주제를 명확히 표현. 주제: '

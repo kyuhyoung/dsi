@@ -305,8 +305,12 @@ def generate_image(prompt: str, out_path, gen_config: dict, project_root: Path =
     out_path = Path(out_path)
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
+    # 격식 제안서용 스타일 가이드를 프롬프트 앞뒤에 부착 (yaml 정의, 특정 사업 키워드 없음)
+    prompt_full = (str(gen_config.get("prompt_prefix", "")) + prompt
+                   + str(gen_config.get("prompt_suffix", "")))
+
     def _sub(s):
-        return str(s).replace("{prompt}", prompt).replace("{out}", str(out_path))
+        return str(s).replace("{prompt}", prompt_full).replace("{out}", str(out_path))
 
     # command 는 리스트(argv, 권장 — 크로스플랫폼·공백/백슬래시 안전) 또는 문자열.
     if isinstance(cmd_tmpl, (list, tuple)):
