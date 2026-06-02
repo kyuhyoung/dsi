@@ -125,9 +125,9 @@ template-analyzer가 추출한 `template.chapters` 정보는 두 용도:
 
 ### 한국어·격식체
 - 모든 산출물은 한국어
-- 제안서·발표자료는 격식체 사용 ("당사는~합니다")
+- 제안서 본문은 **격식체 + 개조식·명사형 종결("~함"·"~임") 우세** (공공 사업계획서 표준). 서술체 "~합니다"는 *표지·인사말·요약*에 한정. 1인칭은 "당사" 통일.
 - 외래어·약어는 첫 등장 시 풀이 ("RFP(제안요청서)")
-- 상세 규칙은 `proposal-korean-style` skill 참조
+- **문체 정본 = `proposal-korean-style` skill** (명사형 종결·3-tier bullet 등). 모든 문체 판단은 이 skill 기준 — 충돌 시 skill 우선.
 
 ### 검증·근거
 - 회사 수치·실적은 `dabeeo-profile` skill의 KB 검증 정보만 사용
