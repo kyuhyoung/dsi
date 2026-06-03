@@ -117,6 +117,44 @@ def _cells_grid(table):
     return grid
 
 
+def _norm_contains_role(norm_text, role_map):
+    """정규화 텍스트에 role_map 의 어떤 key 가 substring 으로 포함되면 그 role 반환."""
+    for k, role in role_map.items():
+        if k and k in norm_text:
+            return role
+    return None
+
+
+def find_detail_tables(tables, vocab):
+    """비목별 표 *일반 인식* (배치 라운드의 전제). 셀 id·표번호 하드코딩 0.
+
+    인식 신호 (구조 + 어휘, 양식 무관):
+      1. table_terminator(···) 보유 = fillable-list 확정 (extract 가 마킹).
+      2. item_roles(인건비/재료비/…) 어휘 매칭 셀 ≥ 2 (여러 비목 나열).
+      3. detail_axes.fund(국고/자부담) 어휘 매칭 셀 ≥ 1 (재원 구분 존재).
+    → 총괄표(비목 나열 없음)·인건비 상세(비목 1종)·안내표(terminator 없음) 자연 배제.
+
+    반환: 인식된 표 idx 리스트.
+    """
+    item_roles = vocab.get("item_roles") or {}
+    fund = (vocab.get("detail_axes") or {}).get("fund") or {}
+    strip = (vocab.get("normalize") or {}).get("strip_chars") or []
+    out = []
+    for tbl in tables:
+        cells = [c for c in (tbl.get("cells") or []) if isinstance(c, dict)]
+        if not cells:
+            continue
+        has_term = any(c.get("intent") == "table_terminator" for c in cells)
+        if not has_term:
+            continue
+        norms = [normalize(c.get("text", ""), strip) for c in cells]
+        item_hits = sum(1 for nt in norms if _norm_contains_role(nt, item_roles))
+        fund_hits = sum(1 for nt in norms if _norm_contains_role(nt, fund))
+        if item_hits >= 2 and fund_hits >= 1:
+            out.append({"idx": tbl.get("idx"), "item_hits": item_hits, "fund_hits": fund_hits})
+    return out
+
+
 def find_summary_table(tables, vocab):
     """헤더 어휘로 총괄표 인식. recognize_required 역할이 모두 있어야."""
     st = vocab["summary_table"]
@@ -211,11 +249,28 @@ def build_budget_fills(form, rfp, vocab, gov_eok, sel_type):
 
 def main():
     args = sys.argv[1:]
-    if len([a for a in args if not a.startswith("--")]) < 3:
+    pos = [a for a in args if not a.startswith("--")]
+
+    # --detect-detail: 비목별 표 *일반 인식* 검증 모드 (form.yaml 1개만 필요).
+    # B 배치 라운드의 전제 — 인식 일반성을 cross-form 으로 확인. 배치는 양식 확보 후.
+    if "--detect-detail" in args:
+        if not pos:
+            print("사용: python scripts/fill_budget_cells.py <form.yaml> --detect-detail", file=sys.stderr)
+            sys.exit(1)
+        form = yaml.safe_load(Path(pos[0]).read_text(encoding="utf-8"))
+        vocab = load_vocab(Path(__file__).parent.parent)
+        detected = find_detail_tables(form.get("tables") or [], vocab)
+        print(f"[detect] 비목별 표 인식: {len(detected)} 개  ({Path(pos[0]).name})", file=sys.stderr)
+        for d in detected:
+            print(f"  T{d['idx']}: 비목어휘 {d['item_hits']} · 재원어휘 {d['fund_hits']}", file=sys.stderr)
+        return
+
+    if len(pos) < 3:
         print("사용: python scripts/fill_budget_cells.py <form.yaml> <rfp_analysis.yaml> "
               "<out_fills.yaml> --gov-eok 20 [--type 타입1]", file=sys.stderr)
+        print("  또는: python scripts/fill_budget_cells.py <form.yaml> --detect-detail "
+              "(비목별 표 인식 검증)", file=sys.stderr)
         sys.exit(1)
-    pos = [a for a in args if not a.startswith("--")]
     form_path, rfp_path, out_path = Path(pos[0]), Path(pos[1]), Path(pos[2])
     gov_eok = None
     sel_type = None

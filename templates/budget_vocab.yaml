@@ -39,6 +39,50 @@ summary_table:
     cash:    {num: '{amt}억원', note: '(자기부담금의 {pct}%)'}
     in_kind: {num: '{amt}억원', note: '(자기부담금의 {pct}%)'}
 
+# ── 비목별 표 어휘 (B 비목 명세 배치용) ──
+# 표준 정부 R&D 연구개발비 비목 — 범부처 공통. 특정 사업·양식 식별자 0.
+# 새 표기는 *이 yaml 에만* 추가 (코드 0). 정규화(strip_chars) 후 substring 매칭.
+item_roles:
+  인건비: labor
+  인력비: labor
+  재료비: materials
+  연구재료비: materials
+  시설장비비: equipment
+  연구시설장비비: equipment
+  연구장비재료비: equipment
+  기자재비: equipment
+  연구활동비: activity
+  용역비: service
+  위탁연구개발비: consign
+  위탁비: consign
+  간접비: overhead
+  회계정산비: settlement
+  수용비: misc
+
+# 비목별 표의 *구분 축* 어휘 — 금액 셀이 어느 (재원/형태/주체)인지 판정.
+# 배치 라운드(양식 확보 후)에서 셀의 행/열 라벨 매칭에 사용. 인식 단계는 fund 만 사용.
+detail_axes:
+  fund:          # 재원
+    국고지원금: gov
+    국고: gov
+    정부지원금: gov
+    보조금: gov
+    자기부담금: self
+    자부담금: self
+    자부담: self
+  form:          # 형태
+    현금: cash
+    현물: in_kind
+  org:           # 주체
+    주관기업: lead
+    주관: lead
+    참여기업: partner
+    참여: partner
+  aggregate:     # 집계 행
+    소계: subtotal
+    합계: total
+    총계: total
+
 # ── 비율 기본값 (RFP 분석에 명시 없을 때 fallback) ──
 # RFP 분석(사업개요.예산)이 비율을 주면 *그것 우선*. 여기는 표준 정부 R&D 매칭 fallback.
 ratio_defaults:
