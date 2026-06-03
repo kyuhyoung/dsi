@@ -54,8 +54,12 @@ CELL_ID_RE = re.compile(r"^T(\d+)_R(\d+)_C(\d+)$")
 # 1 inch = 7200 hwpunit, 1 pixel (96dpi) = 75 hwpunit
 HWPUNIT_PER_PIXEL = 75
 
-# 녹색 글자 스타일 ID (fill_hwpx에서 header.xml에 추가 후 설정)
+# 채움 텍스트 글자색 스타일 ID (fill_hwpx에서 header.xml에 추가 후 설정).
+# 변수명은 호환 위해 GREEN_ 유지하나, 실제 색은 FILLED_TEXT_COLOR (검토=녹색/제출=검정).
 GREEN_CHAR_PR_ID = None
+# 채운 셀·단락 텍스트 글자색. 기본 = 검토용 녹색(#00AA00, 양식 원본 검정과 구분).
+# 제출본은 CLI --submit 으로 검정(#000000). yaml 정본: system_defaults.yaml hwpx_fill.filled_text_color.
+FILLED_TEXT_COLOR = "#00AA00"
 CELL_PARA_ID_RE = re.compile(r"^T(\d+)_R(\d+)_C(\d+)_P(\d+)$")
 PARA_ID_RE = re.compile(r"^P(\d+)$")
 
@@ -899,10 +903,13 @@ def _load_fill_config(project_root: Path):
     global MARKER_ONLY_MAX_LEN, INSTRUCTION_BOX_PREFIXES, CHECKBOX_TOGGLE
     global AUTO_CLEAR_UNFILLED_EXAMPLE_ROW
     global SIZED_SECTION_PAGE_BREAK_ENABLED, SIZED_SECTION_HEADER_RE
+    global FILLED_TEXT_COLOR
     try:
         cfg_path = project_root / "templates" / "system_defaults.yaml"
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) or {}
         hf = cfg.get("hwpx_fill") or {}
+        if hf.get("filled_text_color"):
+            FILLED_TEXT_COLOR = str(hf["filled_text_color"])
         if hf.get("placeholder_filler_pattern"):
             PLACEHOLDER_FILLER_RE = re.compile(hf["placeholder_filler_pattern"])
         if hf.get("marker_only_pattern"):
@@ -1367,15 +1374,20 @@ def fill_section(section_path: Path, fills: list, stats: dict, image_registry: d
     section_path.write_bytes((header + body).encode("utf-8"))
 
 
-def add_green_char_style(header_path: Path) -> int:
-    """header.xml에 녹색(#00AA00) 글자 스타일 추가, 새 id 반환.
+def add_green_char_style(header_path: Path, color: str = None) -> int:
+    """header.xml에 채움 텍스트용 글자색 스타일 추가, 새 id 반환.
 
-    *의도된* 기능: AI가 채운 셀·단락 텍스트를 녹색으로 표시해 양식 원본(검정)과
-    구분한다 (디버그·검토용). 버그 아님 — 제거하거나 "검정으로 고쳐야 한다"고
-    문제삼지 말 것. 발주처 실제 제출 시에만 검정 버전을 별도 생성한다.
+    *의도된* 기능: AI가 채운 셀·단락 텍스트를 *검토 모드*에선 녹색(#00AA00)으로
+    표시해 양식 원본(검정)과 구분한다 (디버그·검토용). 버그 아님 — 녹색을
+    "검정으로 고쳐야 한다"고 문제삼지 말 것. 발주처 *실제 제출 시에만* 검정
+    버전을 별도 생성한다 (CLI --submit → color='#000000').
     (자세히: .claude/CLAUDE.md "AI가 채운 셀 텍스트는 *녹색*" 절)
+
+    color: 적용할 글자색 (None 이면 FILLED_TEXT_COLOR = yaml 정본 또는 녹색 기본).
     """
     global GREEN_CHAR_PR_ID
+    if color is None:
+        color = FILLED_TEXT_COLOR
     parser = etree.XMLParser(remove_blank_text=False)
     tree = etree.parse(str(header_path), parser)
     root = tree.getroot()
@@ -1400,7 +1412,7 @@ def add_green_char_style(header_path: Path) -> int:
         new_cp = etree.Element(f"{{{HH_NS}}}charPr")
         new_cp.set("id", str(new_id))
         new_cp.set("height", first_cp.get("height", "1000"))
-        new_cp.set("textColor", "#00AA00")  # 녹색
+        new_cp.set("textColor", color)  # 검토=녹색(#00AA00) / 제출=검정(#000000)
         new_cp.set("shadeColor", first_cp.get("shadeColor", "#FFFFFFFF"))
         new_cp.set("useFontSpace", first_cp.get("useFontSpace", "0"))
         new_cp.set("useKerning", first_cp.get("useKerning", "0"))
@@ -1428,7 +1440,7 @@ def add_green_char_style(header_path: Path) -> int:
 
 
 def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path = None,
-              form_yaml_path: str = None):
+              form_yaml_path: str = None, text_color: str = None):
     """HWPX 양식에 fills.yaml 내용 적용.
 
     Args:
@@ -1437,6 +1449,8 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         form_yaml_path: extract_hwpx_form 결과 (form.yaml) 경로 (선택).
                        제공 시 example_row 셀 중 fills 미매칭은 *자동 비움*
                        (system_defaults.yaml hwpx_fill.auto_clear_unfilled_example_row 정책).
+        text_color: 채운 텍스트 글자색 (예 '#000000' 제출본). None 이면 FILLED_TEXT_COLOR
+                    (yaml 정본 또는 검토용 녹색 기본).
     """
     global GREEN_CHAR_PR_ID
 
@@ -1444,6 +1458,7 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         project_root = Path(__file__).parent.parent
 
     _load_fill_config(project_root)  # filler 패턴 등 (단락 주입용)
+    fill_color = text_color if text_color else FILLED_TEXT_COLOR
 
     fills_data = yaml.safe_load(Path(fills_path).read_text(encoding="utf-8"))
     fills = fills_data.get("fills", [])
@@ -1474,11 +1489,12 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
         with zipfile.ZipFile(form_path, "r") as zin:
             zin.extractall(td_path)
 
-        # header.xml에 녹색 글자 스타일 추가
+        # header.xml에 채움 텍스트 글자색 스타일 추가 (검토=녹색 / 제출=검정)
         header_file = td_path / "Contents" / "header.xml"
         if header_file.exists():
-            green_id = add_green_char_style(header_file)
-            print(f"녹색 글자 스타일 추가: charPrIDRef={green_id}", file=sys.stderr)
+            green_id = add_green_char_style(header_file, fill_color)
+            _mode = "검정(제출본)" if fill_color == "#000000" else f"{fill_color}(검토)"
+            print(f"채움 글자색 스타일 추가: charPrIDRef={green_id} → {_mode}", file=sys.stderr)
 
         # 1단계: 이미지 삽입 사전 처리
         # - 이미지 파일을 BinData에 복사
@@ -1638,12 +1654,28 @@ def fill_hwpx(form_path: str, fills_path: str, out_path: str, project_root: Path
 
 
 def main():
-    if len(sys.argv) < 4:
-        print("사용: python scripts/fill_hwpx_form.py <form.hwpx> <fills.yaml> <output.hwpx> [form.yaml]")
+    # 위치 인자 + 옵션 수동 파싱 (--submit / --color #RRGGBB).
+    raw = sys.argv[1:]
+    pos, text_color, i = [], None, 0
+    while i < len(raw):
+        a = raw[i]
+        if a == "--submit":
+            text_color = "#000000"          # 제출본: 검정
+        elif a == "--color" and i + 1 < len(raw):
+            text_color = raw[i + 1]; i += 1  # 임의 색 지정
+        elif a.startswith("--"):
+            pass                             # 알 수 없는 옵션 무시
+        else:
+            pos.append(a)
+        i += 1
+    if len(pos) < 3:
+        print("사용: python scripts/fill_hwpx_form.py <form.hwpx> <fills.yaml> <output.hwpx> [form.yaml] [--submit | --color #RRGGBB]")
         print("  form.yaml: extract_hwpx_form 결과 (선택). 제공 시 example_row 자동 비움 활성.")
+        print("  --submit: 채움 텍스트를 검정(#000000) 제출본으로 (기본=검토용 녹색).")
+        print("  --color #RRGGBB: 채움 텍스트 색 직접 지정.")
         sys.exit(1)
-    form_yaml = sys.argv[4] if len(sys.argv) >= 5 else None
-    fill_hwpx(sys.argv[1], sys.argv[2], sys.argv[3], form_yaml_path=form_yaml)
+    form_yaml = pos[3] if len(pos) >= 4 else None
+    fill_hwpx(pos[0], pos[1], pos[2], form_yaml_path=form_yaml, text_color=text_color)
 
 
 if __name__ == "__main__":
