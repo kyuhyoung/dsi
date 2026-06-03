@@ -94,6 +94,13 @@ hwpx_fill:
     # 후보 행에 *example 패턴 셀이 하나라도* 존재해야 example_row 로 마킹.
     # 구조 신호(빈 행/terminator) + 내용 신호(example 패턴) 둘 다 요구 → false positive 차단.
     require_example_cell_in_candidate: true
+    # terminator(···) 행 = fillable-list 확정 신호. true 면 그런 표에 한해 max_example_rows
+    # 가드를 면제하고 후보를 표 끝까지 확장 (비목별 표 등 다단·반복 블록 더미 인식).
+    # terminator 없는 표는 영향 없음(보수 로직 유지) → 안내·기준표 오비움 차단.
+    terminator_exempts_row_cap: true
+    # terminator 보유 표에선 후보 행의 *example intent 셀만* example_row 로 마킹
+    # (label_or_content 비목명·항목명 보존). 같은 표 내 일관 + 양식 라벨 유지.
+    mark_only_example_cells_in_terminator_table: true
 
   # === 체크박스 글리프 변환 사전 (apply_cell_check 가 사용) ===
   # check: 빈 글리프 → 체크 글리프. uncheck: 체크 → 빈.

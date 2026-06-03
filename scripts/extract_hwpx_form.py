@@ -89,6 +89,12 @@ EXAMPLE_ROW_POLICY = {
     "min_table_rows": 3,
     "min_table_cols": 2,
     "require_example_cell_in_candidate": True,
+    # terminator(···) 보유 표 = fillable-list 확정 신호. 다단·반복 블록(비목별 표 등)을
+    # 위해 행 수 가드(max_example_rows)를 면제하고 후보를 표 끝까지 확장.
+    "terminator_exempts_row_cap": True,
+    # terminator 보유 표에선 후보 행의 *example intent 셀만* 마킹 (label_or_content 라벨 보존).
+    # 같은 표 내 일관성 + 비목명 등 양식 라벨 유지. 비-terminator 표는 기존 행 전체 마킹.
+    "mark_only_example_cells_in_terminator_table": True,
 }
 
 
@@ -355,30 +361,54 @@ def _classify_example_rows(tables):
         if not is_fillable_list:
             continue
 
-        # 첫 빈/terminator 행 (헤더 이후, 그 이전 비-empty 가 example 후보)
-        boundary_rows = {r for r in (all_empty_rows | terminator_rows) if r > header_row}
-        if not boundary_rows:
-            continue
-        first_boundary = min(boundary_rows)
-        if first_boundary <= header_row + 1:
-            continue  # 헤더 바로 다음이 boundary → example 후보 없음
-
-        # example 후보 행 수집 (header_row+1 ~ first_boundary-1, 비-empty 행만)
-        ex_candidates = []
-        for r in range(header_row + 1, first_boundary):
-            if r in terminator_rows:
+        # example 후보 행 수집 — terminator 보유 여부로 분기.
+        # 핵심 일반 신호 = *후보 행 수* (max_ex 임계):
+        #   - 작은 예시 행 표 (후보 ≤ max_ex): 행 전체가 교체용 예시 → 행 전체 비움.
+        #   - 큰 항목 나열 표 (후보 > max_ex, 비목별 표 등): 항목 라벨 고정 + 값 더미
+        #     → *example 셀만* 비움 (라벨 보존). terminator = fillable-list 확정 신호라
+        #     실데이터 표 오인 abort 대신 example 셀만 정확히 제거.
+        term_exempt = EXAMPLE_ROW_POLICY.get("terminator_exempts_row_cap", False)
+        mark_example_only = False
+        if has_term and term_exempt:
+            # terminator 보유 → 후보를 표 끝까지 확장 (반복 블록·다단 포함). term/전부-빈 제외.
+            ex_candidates = []
+            for r in sorted(by_row):
+                if r <= header_row or r in terminator_rows or r in all_empty_rows:
+                    continue
+                rc = by_row.get(r, [])
+                if not rc or all(c.get("is_empty") for c in rc):
+                    continue
+                ex_candidates.append(r)
+            if len(ex_candidates) > max_ex:
+                # 큰 항목 나열 표: 라벨 보존, example 셀만 비움 (같은 표 내 일관).
+                mark_example_only = EXAMPLE_ROW_POLICY.get(
+                    "mark_only_example_cells_in_terminator_table", False)
+            # else: 작은 예시 표 → 행 전체 마킹 (mark_example_only=False, 기존 동작).
+        else:
+            # terminator 없음: 기존 보수 로직 — 첫 빈 행 *이전* 비-empty 행만, max_ex 가드.
+            boundary_rows = {r for r in (all_empty_rows | terminator_rows) if r > header_row}
+            if not boundary_rows:
                 continue
-            rc = by_row.get(r, [])
-            if not rc or all(c.get("is_empty") for c in rc):
+            first_boundary = min(boundary_rows)
+            if first_boundary <= header_row + 1:
+                continue  # 헤더 바로 다음이 boundary → example 후보 없음
+            ex_candidates = []
+            for r in range(header_row + 1, first_boundary):
+                if r in terminator_rows:
+                    continue
+                rc = by_row.get(r, [])
+                if not rc or all(c.get("is_empty") for c in rc):
+                    continue
+                ex_candidates.append(r)
+            # 너무 많은 example 후보 → 실데이터 표 가능성 (안전 abort)
+            if len(ex_candidates) > max_ex:
                 continue
-            ex_candidates.append(r)
-
-        # 너무 많은 example 후보 → 실데이터 표 가능성 (안전 abort)
-        if not ex_candidates or len(ex_candidates) > max_ex:
+        if not ex_candidates:
             continue
 
-        # 후보 행 중 ≥1 셀이 intent=example 인지 확인 (내용 신호 검증)
-        # 구조 신호(빈 행/terminator) + 내용 신호(example 패턴) 둘 다 요구
+        # 후보 행 중 ≥1 셀이 intent=example 인지 확인 (내용 신호 검증).
+        # 구조 신호(빈 행/terminator) + 내용 신호(example 패턴) 둘 다 요구.
+        # *양쪽 분기 공통 방어선* — example 셀 없는 terminator 표(장비·인력 등) 보호.
         if require_ex_cell:
             has_example_cell = any(
                 c.get("intent") == "example"
@@ -388,9 +418,12 @@ def _classify_example_rows(tables):
             if not has_example_cell:
                 continue
 
-        # 마킹
+        # 마킹. mark_example_only(큰 항목 표)면 example 셀만, 그 외엔 후보 행 전체.
+        # terminator 행은 table_terminator.
         for r in ex_candidates:
             for c in by_row.get(r, []):
+                if mark_example_only and c.get("intent") != "example":
+                    continue
                 c["intent"] = "example_row"
         for r in terminator_rows:
             for c in by_row.get(r, []):

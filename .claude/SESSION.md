@@ -6,7 +6,30 @@
 
 ---
 
-## 마지막 라운드 (2026-06-02) — 문체 정본 근본수정 + PII 익명화 md정책
+## 마지막 라운드 (2026-06-04) — 사업비 비목별 표 더미 비움 일반화
+
+**한 줄 결과**: 비목별 표(T62 자부담뷰·T63 국고뷰·T64 통합뷰·T66 인건비)의 *양식 더미값*(재료비 300,000·DMD소켓 등)이 최종본에 잔존하던 문제를 *일반 신호(terminator)* 로 근본 수정. **비목 라벨(재료비/인건비/시설장비비) 보존 + 금액·산출근거 더미만 비움.** 최종 산출물 `output/20260604/별지3호.pdf`.
+
+**이번 라운드 변경 (코드 1 + yaml 1, 전부 일반·cross-form 검증):**
+- `scripts/extract_hwpx_form.py` `_classify_example_rows` — terminator(`···`) 보유 표 = *fillable-list 확정 신호*. 그런 표에 한해 ① `max_example_rows` 가드 면제 ② 후보를 표 끝까지 확장(반복 블록·다단 포함) ③ **후보 행 수로 마킹 방식 결정**: 작은 예시행 표(≤max_ex)는 *행 전체* 비움(기존), 큰 항목 나열 표(>max_ex, 비목별)는 *example 셀만* 비움(라벨 보존). terminator 없는 표는 기존 로직 *완전 유지*.
+- `templates/system_defaults.yaml` `example_row_detection` — `terminator_exempts_row_cap`·`mark_only_example_cells_in_terminator_table` 플래그 (정본 정책).
+
+**핵심 일반 신호 (검증)**: terminator 보유 = fillable-list, 미보유 = 안내·기준표(T17 총괄·T76 단가기준·T75 집행안내·T60/65/67/68 ※안내). terminator가 "더미 채울 행" vs "양식이 주는 정보"를 가르는 일반 판별자. 셀 id·표번호·비목명 하드코딩 0.
+
+**Cross-form 검증 (사용자 3회 강조 "overfit 금지"에 대한 직접 응답)**:
+- mingun·F16PBU_계약·F16PBU_규격 양식 = **변경 0셀** (ellipsis 보유표 0 → blast radius 밖).
+- T43/46/47/48/49 작은 예시행 표 = **회귀 0** (데이터 행 전체가 example라 행전체/example셀만 동일 결과).
+- nongsik 변경 75셀 = T62/T63/T64/T66 *만*.
+
+**검증 기준 충족**: 비목더미 0 · 비목라벨 유지 · OOO 21 · KORINDO 17 · 28.571억 · (확인 필요) 6(T36장비4 줄바꿈렌더 "(확인 \n필요)" + T46/47매출2) · (미확인) 1(법인등록번호).
+
+**중요 함정 기록**: PDF text 의 "(확인 필요)" 는 `(확인 \n필요)` 로 줄바꿈 렌더될 수 있음 → `count('확인 필요')` 로 세면 누락. 정규식 `확인\s*필요` 로 검증할 것.
+
+**(B) 비목 명세 배치 엔진 — 연기 결정 (사용자 2026-06-04)**: 비목 금액 미확정 + 양식별 3뷰(자부담/국고/통합) 구조라 *합성 데이터로 지금 만들면 현재 양식·합성값에 overfit*. 실제 비목 예산 확정 시 그 양식 구조에 맞춰 구현하기로 연기. (A) 더미 비움으로 비목 표는 "라벨+빈칸" 정상 상태.
+
+---
+
+## (이전) 라운드 (2026-06-02) — 문체 정본 근본수정 + PII 익명화 md정책
 
 **한 줄 결과**: 문체(명사형 종결) 불일치의 *근본 원인 = 정본 SKILL.md 내부 모순* 을 제거하고, PII 익명화를 *py 키워드 하드코딩 대신 md 정책(§5-1)* 으로 구현. 별지3호를 명사형·OOO 로 재생성. **최종 산출물 `output/20260602/별지3호_최종.pdf`** (검증: 본문 서술체 0 · OOO 21 · 양식더미 0 · KORINDO 17 · 예산 28.571억).
 
@@ -92,10 +115,11 @@
 - **별지 분할 버그 수정 완료** ✅ `section_marker_max_start`(yaml 정본) — 마커가 단락 시작부일 때만 섹션 경계. 커밋 `167413f`.
   7장 사업비가 별지 제3호에서 잘못 분리되던 것 → **별지 제3호에 정상 포함**. cross-form(F16PBU·민군) 검증.
 - **최종 산출물**: `output/20260601/별지3호_v6_최종.pdf` (7장 사업비 포함, 928KB). 검증: 확인필요 0·더미 0·OOO 21·미확인 1(법인등록번호만)·7장 총괄 28.571억.
+- **비목별 표 더미 비움 완료** ✅ (2026-06-04) terminator 기반 일반화. T62/63/64/66 더미 0, 비목 라벨 유지, cross-form 3양식 변경 0. 커밋 예정.
 - **다음 후보**:
-  - **B (사업비 비목별, 2차)** — 7-2~7-4 비목별 배분(표준 R&D 비율 자동). *전제*: cross-form 검증용 다른 R&D 사업비 양식 1~2개 확보 (단일 양식 overfit 방지).
+  - **B (비목 명세 배치 엔진)** — *연기됨*. 실제 비목별 국고/자부담 금액이 확정되면, 그 양식 구조(자부담뷰/국고뷰/통합뷰)에 맞춰 명세→결정적 배치 + 소계/합계 자동. *전제*: 사용자 비목 예산 확정 (가정 금지). 지금 합성으로 만들면 overfit이라 연기.
   - **C 분할 버그** — 7장이 양식 안 "[별지 4]" 문구 때문에 별지 제3호에서 잘못 분리됨. split_hwpx 별지 마커 인식 정밀화 (마커가 셀/단락 *제목*인지, 문장 중 참조인지 구분).
-  - **D T66 인건비 상세** — 사용자 결정 "비움" (인사 확정 후).
+  - **D T66 인건비 상세** — 사용자 결정 "비움" (인사 확정 후). (단 양식 더미는 이번 라운드에 비워짐.)
 - **B** T62-류 multi-block 표 (한 표 안 여러 example 블록) 일반화 — 별지4 등 부속(현재 focus 밖)
 - **C** v6 페이지별 전수 시각 검토 — 19p 중 인력(p12)·판로(p10) 확인됨, 나머지 미검
 - **D** 검은색 제출본 출력 (녹색 디버그 → 검정) — 발주처 실제 제출 시점
@@ -172,6 +196,30 @@ python scripts/split_hwpx_by_section.py "output/20260602/농식품AI_최종.hwpx
 python scripts/hwpx_to_pdf.py "output/20260602/별지_최종/05_[별지_제3호]_사업계획서.hwpx" "output/20260602/별지3호_최종.pdf"
 ```
 검증 기준: 본문 서술체 0 · OOO 21 · 양식더미 0 · KORINDO 17 · 예산 28.571억.
+
+### 20260604 최종본(비목별 표 더미 비움) 재현 — *LLM 재호출 불필요*
+
+이번 라운드는 *extract 만 변경* → **양식 재추출(form.yaml) 후 같은 fills 로 재빌드**. fills 는 20260602 그대로 재사용 (변경 없음). form.yaml 만 새로 추출(`output/20260604/통합양식.form.yaml`, git 추적).
+
+```bash
+# 1. 양식 재추출 (terminator 기반 더미 비움 일반화 반영)
+python scripts/extract_hwpx_form.py "output/20260531/농식품AI_양식.hwpx" "output/20260604/통합양식.form.yaml"
+# 2. 재빌드 (fills 는 20260602 재사용, form 은 20260604 신규)
+python scripts/fill_hwpx_form.py "output/20260531/농식품AI_양식.hwpx" "output/20260602/fills_total.yaml" "output/20260604/농식품AI_최종.hwpx" "output/20260604/통합양식.form.yaml"
+python scripts/split_hwpx_by_section.py "output/20260604/농식품AI_최종.hwpx" "output/20260604/통합양식.form.yaml" "output/20260604/별지_최종"
+python scripts/hwpx_to_pdf.py "output/20260604/별지_최종/05_[별지_제3호]_사업계획서.hwpx" "output/20260604/별지3호.pdf"
+python scripts/pdf_to_text.py "output/20260604/별지3호.pdf" "output/20260604/별지3호.txt"
+```
+검증 기준: 비목더미(300,000·DMD소켓·전원IC·000시험장치) 0 · 비목라벨(재료비·인건비·시설장비비) 유지 · OOO 21 · KORINDO 17 · 28.571억 · 정규식 `확인\s*필요` 6 · 미확인 1.
+
+### Cross-form 검증 재현 (일반성 보장)
+
+```bash
+# 변경 전후 form.yaml 의 셀 intent diff — terminator 미보유 양식은 변경 0 이어야.
+python scripts/extract_hwpx_form.py "samples/rfp_downloaded/26년_민군규격표준화_제안서양식.hwpx" "/tmp/mingun.form.yaml"
+python scripts/extract_hwpx_form.py "samples/rfp_downloaded/F16PBU_계약특수조건.hwpx" "/tmp/f16_gye.form.yaml"
+# (Windows: python 의 / tmp 경로는 프로젝트 _work/ 권장 — git-bash /tmp 와 다름)
+```
 
 ---
 

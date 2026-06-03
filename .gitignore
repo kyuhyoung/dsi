@@ -78,3 +78,6 @@ kb/company/*/images/extracted/
 # 잡파일
 nul
 install.ps1.log
+
+# 작업용 임시 (검증·diff 등, 재현 가능)
+/_work/
