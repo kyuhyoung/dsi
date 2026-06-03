@@ -4,7 +4,7 @@ _purpose: 양식 셀 구조 + 빈 셀 + 별지 분할. proposal-writer 가 본�
 _principle: 양식 절대 안 만짐. 한컴 COM 변환 1회. 본체 별지 산출. 농식품AI/특정 사업 하드코딩 0.
 title: ''
 table_count: 86
-fill_target_count: 974
+fill_target_count: 986
 sections:
 - label: '[별지 제1호] 자가진단서'
   label_full: '[별지 제1호] 자가진단서'
@@ -3158,7 +3158,7 @@ tables:
       intent: instruction
     id: T7_R11_C4
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 백만원
       up: 주요 투자처
@@ -6041,7 +6041,7 @@ tables:
       intent: instruction
     id: T10_R11_C6
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 백만원
       up: 주요 투자처
@@ -8740,7 +8740,7 @@ tables:
       intent: instruction
     id: T17_R4_C7
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 투자
       up: 1건
@@ -8791,7 +8791,7 @@ tables:
       intent: instruction
     id: T17_R5_C7
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 국내
       up: ※ 목표수치 작성  (백만원)
@@ -8825,7 +8825,7 @@ tables:
       intent: instruction
     id: T17_R6_C7
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 수출
       up: ※ 목표수치 작성  (백만원)
@@ -9154,7 +9154,7 @@ tables:
       intent: content
     id: T18_R6_C2
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 주관기업-참여기업협업 추진배경 및 역할
       up: ※ 위 상용화 대상의 선정 이유 및 그 필요성 등 기재
@@ -9192,7 +9192,7 @@ tables:
       intent: content
     id: T18_R7_C2
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 추진전략
       up: '※ 협업을 추진하게 된 계기, 지향점, 예상하는 협업 성과물※ 상용화를 위한 각 주체의 역량, 구체적인 역할   - 주관기업 :
@@ -9227,7 +9227,7 @@ tables:
       intent: instruction
     id: T18_R8_C2
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 목표시장 및 주요 고객층
       up: ※ 상용화 대상에 접목된 핵심기술과 이 기술의 차별성 및 경쟁력, 시장 진입 및 상용화 전략 등 작성  (“AI 응용제품”으로서
@@ -9262,7 +9262,7 @@ tables:
       intent: instruction
     id: T18_R9_C2
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 실현가능성
       up: ※ 상용화 제품 최종 목표 시장의 규모, 현황, 전망, 주요 고객층
@@ -13581,7 +13581,7 @@ tables:
       intent: instruction
     id: T52_R2_C5
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 투자
       up: 1건
@@ -13632,7 +13632,7 @@ tables:
       intent: instruction
     id: T52_R3_C5
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 국내
       up: ※ 목표수치 작성  (백만원)
@@ -13666,7 +13666,7 @@ tables:
       intent: instruction
     id: T52_R4_C5
     is_empty: false
-    intent: instruction
+    intent: instruction_placeholder
     hints:
       left: 수출
       up: ※ 목표수치 작성  (백만원)
@@ -29958,6 +29958,15 @@ fill_targets:
     up: 투자금
     table_label: 1. 기업정보
     section_label: '[별지 제2-2호] 사업신청서'
+- id: T7_R11_C4
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 주요 투자이력 관련, 연도/금액/투자처 기입
+  section_label: '[별지 제2-2호] 사업신청서'
+  hints:
+    left: 백만원
+    up: 주요 투자처
+    table_label: 1. 기업정보
 - id: T7_R12_C2
   type: cell
   intent: empty_input
@@ -30875,6 +30884,15 @@ fill_targets:
     up: 투자금
     table_label: 1. 기업정보
     section_label: '[별지 제2-3호] 사업신청서'
+- id: T10_R11_C6
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 주요 투자이력 관련, 연도/금액/투자처 기입
+  section_label: '[별지 제2-3호] 사업신청서'
+  hints:
+    left: 백만원
+    up: 주요 투자처
+    table_label: 1. 기업정보
 - id: T10_R12_C2
   type: cell
   intent: empty_input
@@ -31683,6 +31701,33 @@ fill_targets:
     up: ''
     table_label: 사업비 구성 계획
     cell_text: 합  계(100%)
+- id: T17_R4_C7
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 목표수치 작성  (백만원)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 투자
+    up: 1건
+    table_label: 사업비 구성 계획
+- id: T17_R5_C7
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 목표수치 작성  (백만원)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 국내
+    up: ※ 목표수치 작성  (백만원)
+    table_label: 사업비 구성 계획
+- id: T17_R6_C7
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 목표수치 작성   (백만원)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 수출
+    up: ※ 목표수치 작성  (백만원)
+    table_label: 사업비 구성 계획
 - id: T17_R7_C3
   type: cell
   intent: example
@@ -31760,6 +31805,46 @@ fill_targets:
   hints:
     left: 상용화 배경 및 필요성
     up: < 사진(이미지) 또는 설계도 제목 >
+    table_label: 사업계획서 요약(2페이지 내외 작성)
+- id: T18_R6_C2
+  type: cell
+  intent: instruction_placeholder
+  current_text: '※ 협업을 추진하게 된 계기, 지향점, 예상하는 협업 성과물※ 상용화를 위한 각 주체의 역량, 구체적인 역할   -
+    주관기업 : ~~~~   - 참여기업 : ~~~~'
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 주관기업-참여기업협업 추진배경 및 역할
+    up: ※ 위 상용화 대상의 선정 이유 및 그 필요성 등 기재
+    table_label: 사업계획서 요약(2페이지 내외 작성)
+- id: T18_R7_C2
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 상용화 대상에 접목된 핵심기술과 이 기술의 차별성 및 경쟁력, 시장 진입 및 상용화 전략 등 작성  (“AI 응용제품”으로서
+    내용 작성)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 추진전략
+    up: '※ 협업을 추진하게 된 계기, 지향점, 예상하는 협업 성과물※ 상용화를 위한 각 주체의 역량, 구체적인 역할   - 주관기업 : ~~~~   -
+      참여기업 : ~~~~'
+    table_label: 사업계획서 요약(2페이지 내외 작성)
+- id: T18_R8_C2
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 상용화 제품 최종 목표 시장의 규모, 현황, 전망, 주요 고객층
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 목표시장 및 주요 고객층
+    up: ※ 상용화 대상에 접목된 핵심기술과 이 기술의 차별성 및 경쟁력, 시장 진입 및 상용화 전략 등 작성  (“AI 응용제품”으로서 내용
+      작성)
+    table_label: 사업계획서 요약(2페이지 내외 작성)
+- id: T18_R9_C2
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 사업 및 협약 기간 내 상용화 결과 도출 가능성
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 실현가능성
+    up: ※ 상용화 제품 최종 목표 시장의 규모, 현황, 전망, 주요 고객층
     table_label: 사업계획서 요약(2페이지 내외 작성)
 - id: T18_R10_C2
   type: cell
@@ -33107,6 +33192,33 @@ fill_targets:
     up: ''
     table_label: 5. 성과 실현 가능성
     section_label: '[별지 제3호] 사업계획서'
+- id: T52_R2_C5
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 목표수치 작성  (백만원)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 투자
+    up: 1건
+    table_label: 성과목표
+- id: T52_R3_C5
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 목표수치 작성  (백만원)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 국내
+    up: ※ 목표수치 작성  (백만원)
+    table_label: 성과목표
+- id: T52_R4_C5
+  type: cell
+  intent: instruction_placeholder
+  current_text: ※ 목표수치 작성   (백만원)
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 수출
+    up: ※ 목표수치 작성  (백만원)
+    table_label: 성과목표
 - id: T52_R5_C3
   type: cell
   intent: example

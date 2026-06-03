@@ -97,6 +97,12 @@ EXAMPLE_ROW_POLICY = {
     "mark_only_example_cells_in_terminator_table": True,
 }
 
+# 다중 셀 표 안의 ※ 안내(instruction) 는 *입력칸*(instruction_placeholder) 으로 본다.
+# 표 셀 수가 이 값 이상이면 승격 (1×1 standalone 안내박스는 instruction 유지).
+# proposal-writer.md "다중 셀 표의 instruction_placeholder = 입력칸" 정책과 일치.
+# yaml 정본: system_defaults.yaml hwpx_fill.instruction_placeholder_min_table_cells.
+INSTRUCTION_PLACEHOLDER_MIN_TABLE_CELLS = 2
+
 
 class NoAliasDumper(yaml.SafeDumper):
     def ignore_aliases(self, data):
@@ -112,6 +118,7 @@ def _load_extract_patterns(project_root: Path = None):
     global PLACEHOLDER_RE, HEADER_RE, CHECKBOX_RE
     global EXAMPLE_RE, SUBORDINATE_RE, INSTRUCTION_PLACEHOLDER_RE
     global TABLE_ROW_ELLIPSIS_RE, EXAMPLE_ROW_POLICY
+    global INSTRUCTION_PLACEHOLDER_MIN_TABLE_CELLS
     try:
         if project_root is None:
             project_root = Path(__file__).parent.parent
@@ -145,6 +152,8 @@ def _load_extract_patterns(project_root: Path = None):
         erd = hf.get("example_row_detection") or {}
         if erd:
             EXAMPLE_ROW_POLICY.update({k: v for k, v in erd.items() if k in EXAMPLE_ROW_POLICY})
+        if hf.get("instruction_placeholder_min_table_cells") is not None:
+            INSTRUCTION_PLACEHOLDER_MIN_TABLE_CELLS = int(hf["instruction_placeholder_min_table_cells"])
     except Exception:
         pass  # fallback 유지
 
@@ -213,6 +222,11 @@ def build_table(t_idx, tbl_el):
             c["intent"] = "placeholder"
         elif "example" in inner_intents and c["intent"] == "label_or_content":
             c["intent"] = "example"
+        # 다중 셀 표 안의 ※ 안내(instruction) = *입력칸* → instruction_placeholder 승격.
+        # 1×1 standalone 안내박스(별지 참조·섹션 안내)는 instruction 유지 → fill_target 제외.
+        # 표 크기 신호 (proposal-writer.md "다중 셀 표 instruction_placeholder=입력칸" 일치).
+        if c["intent"] == "instruction" and len(flat) >= INSTRUCTION_PLACEHOLDER_MIN_TABLE_CELLS:
+            c["intent"] = "instruction_placeholder"
 
     # hints: *모든 셀* 에 생성 (이전엔 is_empty 만). example 셀·label_or_content 셀의
     # *값 자리* 도 빌더가 KB lookup 으로 채울 수 있게 — 임의 양식의 *예시 텍스트* 가

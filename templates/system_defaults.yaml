@@ -107,6 +107,11 @@ hwpx_fill:
     # (label_or_content 비목명·항목명 보존). 같은 표 내 일관 + 양식 라벨 유지.
     mark_only_example_cells_in_terminator_table: true
 
+  # 다중 셀 표 안의 ※ 안내(instruction) 셀 = *입력칸*(instruction_placeholder) 으로 승격.
+  # 표 셀 수가 이 값 이상이면 입력칸으로 본다 (사업계획서 요약표 등 라벨+안내 입력 행).
+  # 1×1 standalone 안내박스(별지 참조·섹션 작성요령)는 instruction 유지 → 채움 대상 제외.
+  instruction_placeholder_min_table_cells: 2
+
   # === 체크박스 글리프 변환 사전 (apply_cell_check 가 사용) ===
   # check: 빈 글리프 → 체크 글리프. uncheck: 체크 → 빈.
   # yaml만 수정으로 새 글리프 (예: ◇→◆) 자동 처리.
