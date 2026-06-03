@@ -245,20 +245,21 @@ python scripts/hwpx_to_pdf.py "output/20260602/별지_최종/05_[별지_제3호]
 ```
 검증 기준: 본문 서술체 0 · OOO 21 · 양식더미 0 · KORINDO 17 · 예산 28.571억.
 
-### 20260604 최종본(비목별 표 더미 비움) 재현 — *LLM 재호출 불필요*
+### 20260604 최종본(비목더미+요약표+오배치+단독신청+fill_company 누적) 재현 — *LLM 재호출 불필요*
 
-이번 라운드는 *extract 만 변경* → **양식 재추출(form.yaml) 후 같은 fills 로 재빌드**. fills 는 20260602 그대로 재사용 (변경 없음). form.yaml 만 새로 추출(`output/20260604/통합양식.form.yaml`, git 추적).
+**정본 fills = `output/20260604/fills_total.yaml`** (498셀, patch 병합 + 오배치 제거 반영, git 추적). form.yaml·fills_total·fills_patch 모두 추적되므로 다른 PC 는 git pull 후 *에이전트 재호출 없이* 아래로 PDF 재생성.
 
 ```bash
-# 1. 양식 재추출 (terminator 기반 더미 비움 일반화 반영)
+# (form.yaml 은 추적본 그대로 사용 가능. 코드 변경 검증하려면 재추출해 추적본과 일치 확인)
 python scripts/extract_hwpx_form.py "output/20260531/농식품AI_양식.hwpx" "output/20260604/통합양식.form.yaml"
-# 2. 재빌드 (fills 는 20260602 재사용, form 은 20260604 신규)
-python scripts/fill_hwpx_form.py "output/20260531/농식품AI_양식.hwpx" "output/20260602/fills_total.yaml" "output/20260604/농식품AI_최종.hwpx" "output/20260604/통합양식.form.yaml"
+# 정본 fills(20260604) 로 빌드
+python scripts/fill_hwpx_form.py "output/20260531/농식품AI_양식.hwpx" "output/20260604/fills_total.yaml" "output/20260604/농식품AI_최종.hwpx" "output/20260604/통합양식.form.yaml"
 python scripts/split_hwpx_by_section.py "output/20260604/농식품AI_최종.hwpx" "output/20260604/통합양식.form.yaml" "output/20260604/별지_최종"
 python scripts/hwpx_to_pdf.py "output/20260604/별지_최종/05_[별지_제3호]_사업계획서.hwpx" "output/20260604/별지3호.pdf"
 python scripts/pdf_to_text.py "output/20260604/별지3호.pdf" "output/20260604/별지3호.txt"
+# 제출본(검정) 필요 시: 위 fill_hwpx 에 --submit 추가
 ```
-검증 기준: 비목더미(300,000·DMD소켓·전원IC·000시험장치) 0 · 비목라벨(재료비·인건비·시설장비비) 유지 · OOO 21 · KORINDO 17 · 28.571억 · 정규식 `확인\s*필요` 6 · 미확인 1.
+검증 기준: 비목더미(300,000·DMD소켓) 0 · 비목라벨(재료비·인건비·시설장비비) 유지 · **추진전략/목표시장/실현가능성 ❍채움** · **협업="해당 없음"** · 라벨 회사명 오배치 0 · OOO 21 · KORINDO 20 · 28.571억 · 정규식 `확인\s*필요` 10(장비4+매출2+투자/국내목표4) · 미확인 1.
 
 ### Cross-form 검증 재현 (일반성 보장)
 
