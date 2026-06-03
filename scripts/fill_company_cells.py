@@ -160,6 +160,12 @@ def build_company_fills(form_yaml: Path, profile_yaml: Path, project_root: Path)
             if c.get("intent") in ("checkbox", "instruction_placeholder", "instruction",
                                     "placeholder", "subordinate", "table_terminator"):
                 continue
+            # *값 자리만* 채움 — 빈 셀 또는 example/example_row(양식 더미·예시값) 만.
+            # label_or_content(양식 라벨: "사업책임자"·"이름"·"서명" 등)는 left hint 가
+            # 우연히 회사 필드와 매칭돼도 *제외* — 라벨 셀에 회사정보 오매칭 차단.
+            # (예시 인명 "홍길동" 은 EXAMPLE_RE 로 example 분류되어 값 자리로 채워짐.)
+            if not _is_fillable(c):
+                continue
             value = profile_values.get(field)
             if value is None or value == "":
                 continue

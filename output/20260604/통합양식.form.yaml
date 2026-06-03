@@ -4,7 +4,7 @@ _purpose: 양식 셀 구조 + 빈 셀 + 별지 분할. proposal-writer 가 본�
 _principle: 양식 절대 안 만짐. 한컴 COM 변환 1회. 본체 별지 산출. 농식품AI/특정 사업 하드코딩 0.
 title: ''
 table_count: 86
-fill_target_count: 986
+fill_target_count: 992
 sections:
 - label: '[별지 제1호] 자가진단서'
   label_full: '[별지 제1호] 자가진단서'
@@ -2580,10 +2580,10 @@ tables:
     inner_ps:
     - sub_idx: 0
       text: 홍 길 동
-      intent: content
+      intent: example
     id: T7_R2_C1
     is_empty: false
-    intent: label_or_content
+    intent: example
     hints:
       left: 대 표 자
       up: 00법인 주식회사
@@ -5460,10 +5460,10 @@ tables:
     inner_ps:
     - sub_idx: 0
       text: 홍 길 동
-      intent: content
+      intent: example
     id: T10_R4_C1
     is_empty: false
-    intent: label_or_content
+    intent: example
     hints:
       left: 대 표 자
       up: 가나다가나다
@@ -8021,10 +8021,10 @@ tables:
     inner_ps:
     - sub_idx: 0
       text: 홍 길 동
-      intent: content
+      intent: example
     id: T14_R2_C1
     is_empty: false
-    intent: label_or_content
+    intent: example
     hints:
       left: 대 표 자
       up: 00법인 주식회사
@@ -29878,6 +29878,25 @@ fill_targets:
     up: ''
     table_label: 1. 기업정보
     cell_text: 0000.00.00
+- id: T7_R2_C1
+  type: cell
+  intent: example
+  current_text: 홍 길 동
+  section_label: '[별지 제2-2호] 사업신청서'
+  hints:
+    left: 대 표 자
+    up: 00법인 주식회사
+    table_label: 1. 기업정보
+- id: T7_R2_C1_P0
+  type: cell_paragraph
+  intent: example
+  current_text: 홍 길 동
+  section_label: '[별지 제2-2호] 사업신청서'
+  hints:
+    left: 대 표 자
+    up: 00법인 주식회사
+    table_label: 1. 기업정보
+    cell_text: 홍 길 동
 - id: T7_R2_C5
   type: cell
   intent: empty_input
@@ -30804,6 +30823,25 @@ fill_targets:
     up: □ 대
     table_label: 1. 기업정보
     cell_text: 가나다가나다
+- id: T10_R4_C1
+  type: cell
+  intent: example
+  current_text: 홍 길 동
+  section_label: '[별지 제2-3호] 사업신청서'
+  hints:
+    left: 대 표 자
+    up: 가나다가나다
+    table_label: 1. 기업정보
+- id: T10_R4_C1_P0
+  type: cell_paragraph
+  intent: example
+  current_text: 홍 길 동
+  section_label: '[별지 제2-3호] 사업신청서'
+  hints:
+    left: 대 표 자
+    up: 가나다가나다
+    table_label: 1. 기업정보
+    cell_text: 홍 길 동
 - id: T10_R4_C7
   type: cell
   intent: empty_input
@@ -31577,6 +31615,25 @@ fill_targets:
     up: ''
     table_label: 농식품 부분 「AI 응용제품 신속상용화 지원사업」 사업계획서
     cell_text: 0000.00.00
+- id: T14_R2_C1
+  type: cell
+  intent: example
+  current_text: 홍 길 동
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 대 표 자
+    up: 00법인 주식회사
+    table_label: 농식품 부분 「AI 응용제품 신속상용화 지원사업」 사업계획서
+- id: T14_R2_C1_P0
+  type: cell_paragraph
+  intent: example
+  current_text: 홍 길 동
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 대 표 자
+    up: 00법인 주식회사
+    table_label: 농식품 부분 「AI 응용제품 신속상용화 지원사업」 사업계획서
+    cell_text: 홍 길 동
 - id: T14_R2_C3
   type: cell
   intent: empty_input
