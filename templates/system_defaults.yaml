@@ -105,9 +105,13 @@ hwpx_fill:
     # 가드를 면제하고 후보를 표 끝까지 확장 (비목별 표 등 다단·반복 블록 더미 인식).
     # terminator 없는 표는 영향 없음(보수 로직 유지) → 안내·기준표 오비움 차단.
     terminator_exempts_row_cap: true
-    # terminator 보유 표에선 후보 행의 *example intent 셀만* example_row 로 마킹
-    # (label_or_content 비목명·항목명 보존). 같은 표 내 일관 + 양식 라벨 유지.
-    mark_only_example_cells_in_terminator_table: true
+    # 데이터 입력 열 신호 — 후보 행에서 example 패턴에 안 걸린 양식 예시값(직위·기간·합계 등)도
+    # *헤더 이후 빈 입력칸이 있는 열*(=데이터 입력 열)에 있고 *비병합* 셀이면 example_row 로 비움.
+    # 세로/가로 병합된 분류축 라벨(비목·구분·인력구분)과 빈칸 없는 골격 열은 보존.
+    # 비목 배분표(라벨 보존)와 인건비 명세표(데이터값 비움)를 *같은 규칙*으로 가르는 구조 신호.
+    # caption(헤더 이전) 빈 셀은 데이터 열 계산에서 제외 — 분류축 열 오염 방지.
+    # 키워드·셀ID·위치·표 종류 하드코딩 0. 임의 양식·회사·RFP 동일 적용.
+    data_column_clear: true
 
   # 다중 셀 표 안의 ※ 안내(instruction) 셀 = *입력칸*(instruction_placeholder) 으로 승격.
   # 표 셀 수가 이 값 이상이면 입력칸으로 본다 (사업계획서 요약표 등 라벨+안내 입력 행).

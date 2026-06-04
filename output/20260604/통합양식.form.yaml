@@ -4,7 +4,7 @@ _purpose: 양식 셀 구조 + 빈 셀 + 별지 분할. proposal-writer 가 본�
 _principle: 양식 절대 안 만짐. 한컴 COM 변환 1회. 본체 별지 산출. 농식품AI/특정 사업 하드코딩 0.
 title: ''
 table_count: 86
-fill_target_count: 992
+fill_target_count: 1012
 sections:
 - label: '[별지 제1호] 자가진단서'
   label_full: '[별지 제1호] 자가진단서'
@@ -12614,7 +12614,7 @@ tables:
       intent: empty
     id: T46_R1_C2
     is_empty: true
-    intent: example_row
+    intent: empty_input
     hints:
       left: 2019.2.14.∼2019.2.22.
       up: 판매 아이템
@@ -20413,7 +20413,7 @@ tables:
       intent: content
     id: T64_R2_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- (현금) DMD소켓 구입(00개×0000원)'
       up: 집행시기
@@ -20447,7 +20447,7 @@ tables:
       intent: content
     id: T64_R3_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- (현물)'
       up: ∼’26.2.
@@ -20515,7 +20515,7 @@ tables:
       intent: content
     id: T64_R4_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- 전원IC류 구입(00개×000원)'
       up: '-'
@@ -20617,7 +20617,7 @@ tables:
       intent: content
     id: T64_R5_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- (현금) 신규 채용 인력(0명×000원)'
       up: ’26.3.
@@ -20651,7 +20651,7 @@ tables:
       intent: content
     id: T64_R6_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- (현물) 사업 책임자 인건비(0명×000원)'
       up: ’26.3∼5.
@@ -20719,7 +20719,7 @@ tables:
       intent: content
     id: T64_R7_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- 신규 채용 인력(0명×000원)'
       up: 매월
@@ -20821,7 +20821,7 @@ tables:
       intent: content
     id: T64_R8_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- (현금) 000시험장치(0식×000원)'
       up: ’26.6∼12.
@@ -20924,7 +20924,7 @@ tables:
       intent: content
     id: T64_R10_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- 000시험장치(0식×000원)'
       up: ∼’26.5.
@@ -21026,7 +21026,7 @@ tables:
       intent: content
     id: T64_R11_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- (현금) 000용역(0식×000원)'
       up: ∼’26.8.
@@ -21094,7 +21094,7 @@ tables:
       intent: content
     id: T64_R12_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '- 000용역(0식×000원)'
       up: ∼’26.7.
@@ -21182,7 +21182,7 @@ tables:
       intent: content
     id: T64_R13_C5
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '* 고정금액, 추후 변경될 수 있음  (기업 단독 또는 주관기업 기준으로 책정)'
       up: ∼’26.9.
@@ -21549,7 +21549,7 @@ tables:
       intent: content
     id: T66_R1_C4
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: 현물
       up: 채용시기
@@ -21583,7 +21583,7 @@ tables:
       intent: content
     id: T66_R1_C6
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '000'
       up: 직위
@@ -21617,7 +21617,7 @@ tables:
       intent: content
     id: T66_R1_C8
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: 4,000
       up: 참여기간(B)
@@ -21634,7 +21634,7 @@ tables:
       intent: content
     id: T66_R1_C9
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: 12개월
       up: 참여율(%)(C)
@@ -21651,7 +21651,7 @@ tables:
       intent: content
     id: T66_R1_C10
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '80'
       up: 합계(A×B×C)
@@ -22000,7 +22000,7 @@ tables:
       intent: content
     id: T66_R5_C4
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: 국고지원금
       up: '-'
@@ -22034,7 +22034,7 @@ tables:
       intent: content
     id: T66_R5_C6
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: '000'
       up: 대표
@@ -22068,7 +22068,7 @@ tables:
       intent: content
     id: T66_R5_C8
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: 2,000
       up: 12개월
@@ -22085,7 +22085,7 @@ tables:
       intent: content
     id: T66_R5_C9
     is_empty: false
-    intent: label_or_content
+    intent: example_row
     hints:
       left: 8개월
       up: '80'
@@ -32982,7 +32982,7 @@ fill_targets:
     table_label: 유통채널명
 - id: T46_R1_C2
   type: cell
-  intent: example_row
+  intent: empty_input
   current_text: ''
   section_label: '[별지 제3호] 사업계획서'
   hints:
@@ -35998,6 +35998,24 @@ fill_targets:
     left: 150,000
     up: 산출근거
     table_label: '(단위: 천원)'
+- id: T64_R2_C5
+  type: cell
+  intent: example_row
+  current_text: ∼’26.2.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- (현금) DMD소켓 구입(00개×0000원)'
+    up: 집행시기
+    table_label: '(단위: 천원)'
+- id: T64_R3_C5
+  type: cell
+  intent: example_row
+  current_text: '-'
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- (현물)'
+    up: ∼’26.2.
+    table_label: '(단위: 천원)'
 - id: T64_R4_C3
   type: cell
   intent: example_row
@@ -36015,6 +36033,15 @@ fill_targets:
   hints:
     left: 150,000
     up: '- (현물)'
+    table_label: '(단위: 천원)'
+- id: T64_R4_C5
+  type: cell
+  intent: example_row
+  current_text: ’26.3.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- 전원IC류 구입(00개×000원)'
+    up: '-'
     table_label: '(단위: 천원)'
 - id: T64_R5_C1
   type: cell
@@ -36043,6 +36070,15 @@ fill_targets:
     left: 100,000
     up: '- 전원IC류 구입(00개×000원)'
     table_label: '(단위: 천원)'
+- id: T64_R5_C5
+  type: cell
+  intent: example_row
+  current_text: ’26.3∼5.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- (현금) 신규 채용 인력(0명×000원)'
+    up: ’26.3.
+    table_label: '(단위: 천원)'
 - id: T64_R6_C4
   type: cell
   intent: example_row
@@ -36051,6 +36087,15 @@ fill_targets:
   hints:
     left: ''
     up: '- (현금) 신규 채용 인력(0명×000원)'
+    table_label: '(단위: 천원)'
+- id: T64_R6_C5
+  type: cell
+  intent: example_row
+  current_text: 매월
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- (현물) 사업 책임자 인건비(0명×000원)'
+    up: ’26.3∼5.
     table_label: '(단위: 천원)'
 - id: T64_R7_C3
   type: cell
@@ -36069,6 +36114,15 @@ fill_targets:
   hints:
     left: 100,000
     up: '- (현물) 사업 책임자 인건비(0명×000원)'
+    table_label: '(단위: 천원)'
+- id: T64_R7_C5
+  type: cell
+  intent: example_row
+  current_text: ’26.6∼12.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- 신규 채용 인력(0명×000원)'
+    up: 매월
     table_label: '(단위: 천원)'
 - id: T64_R8_C1
   type: cell
@@ -36096,6 +36150,15 @@ fill_targets:
   hints:
     left: 300,000
     up: '- 신규 채용 인력(0명×000원)'
+    table_label: '(단위: 천원)'
+- id: T64_R8_C5
+  type: cell
+  intent: example_row
+  current_text: ∼’26.5.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- (현금) 000시험장치(0식×000원)'
+    up: ’26.6∼12.
     table_label: '(단위: 천원)'
 - id: T64_R9_C4
   type: cell
@@ -36134,6 +36197,15 @@ fill_targets:
     left: 700,000
     up: '- (현물) 000시험장치(0식×000원)'
     table_label: '(단위: 천원)'
+- id: T64_R10_C5
+  type: cell
+  intent: example_row
+  current_text: ∼’26.8.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- 000시험장치(0식×000원)'
+    up: ∼’26.5.
+    table_label: '(단위: 천원)'
 - id: T64_R11_C1
   type: cell
   intent: example_row
@@ -36161,6 +36233,15 @@ fill_targets:
     left: 100,000
     up: '- 000시험장치(0식×000원)'
     table_label: '(단위: 천원)'
+- id: T64_R11_C5
+  type: cell
+  intent: example_row
+  current_text: ∼’26.7.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- (현금) 000용역(0식×000원)'
+    up: ∼’26.8.
+    table_label: '(단위: 천원)'
 - id: T64_R12_C3
   type: cell
   intent: example_row
@@ -36179,6 +36260,15 @@ fill_targets:
     left: 300,000
     up: '- (현금) 000용역(0식×000원)'
     table_label: '(단위: 천원)'
+- id: T64_R12_C5
+  type: cell
+  intent: example_row
+  current_text: ∼’26.9.
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '- 000용역(0식×000원)'
+    up: ∼’26.7.
+    table_label: '(단위: 천원)'
 - id: T64_R13_C1
   type: cell
   intent: example_row
@@ -36187,6 +36277,15 @@ fill_targets:
   hints:
     left: 회계정산비
     up: 400,000
+    table_label: '(단위: 천원)'
+- id: T64_R13_C5
+  type: cell
+  intent: example_row
+  current_text: ∼협약종료
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '* 고정금액, 추후 변경될 수 있음  (기업 단독 또는 주관기업 기준으로 책정)'
+    up: ∼’26.9.
     table_label: '(단위: 천원)'
 - id: T64_R15_C2
   type: cell
@@ -36208,6 +36307,15 @@ fill_targets:
     up: ''
     table_label: ※ 신규 인력은 협약 종료일 2개월 이전까지 채용된 자에 한하며, 인력당 참여율은 최대 100%를 넘길 수 없음※ 아래
       표에 기재되지 않은 인력에 대한 인건비 지급은 불가※ 컨소시엄의 경우 주관기업 및 참여기업 전체의 집행계획을 각각 작성 및 제출해야 함
+- id: T66_R1_C4
+  type: cell
+  intent: example_row
+  current_text: '-'
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 현물
+    up: 채용시기
+    table_label: 비목
 - id: T66_R1_C5
   type: cell
   intent: example_row
@@ -36217,6 +36325,15 @@ fill_targets:
     left: '-'
     up: 성명
     table_label: 비목
+- id: T66_R1_C6
+  type: cell
+  intent: example_row
+  current_text: 대표
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '000'
+    up: 직위
+    table_label: 비목
 - id: T66_R1_C7
   type: cell
   intent: example_row
@@ -36225,6 +36342,33 @@ fill_targets:
   hints:
     left: 대표
     up: 월급여(A)
+    table_label: 비목
+- id: T66_R1_C8
+  type: cell
+  intent: example_row
+  current_text: 12개월
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 4,000
+    up: 참여기간(B)
+    table_label: 비목
+- id: T66_R1_C9
+  type: cell
+  intent: example_row
+  current_text: '80'
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 12개월
+    up: 참여율(%)(C)
+    table_label: 비목
+- id: T66_R1_C10
+  type: cell
+  intent: example_row
+  current_text: 3,840
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '80'
+    up: 합계(A×B×C)
     table_label: 비목
 - id: T66_R2_C4
   type: cell
@@ -36366,6 +36510,15 @@ fill_targets:
     up: 3,840
     table_label: 비목
     section_label: '[별지 제3호] 사업계획서'
+- id: T66_R5_C4
+  type: cell
+  intent: example_row
+  current_text: ’26.7.예정
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 국고지원금
+    up: '-'
+    table_label: 비목
 - id: T66_R5_C5
   type: cell
   intent: example_row
@@ -36375,6 +36528,15 @@ fill_targets:
     left: ’26.7.예정
     up: '000'
     table_label: 비목
+- id: T66_R5_C6
+  type: cell
+  intent: example_row
+  current_text: 대리
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: '000'
+    up: 대표
+    table_label: 비목
 - id: T66_R5_C7
   type: cell
   intent: example_row
@@ -36383,6 +36545,24 @@ fill_targets:
   hints:
     left: 대리
     up: 4,000
+    table_label: 비목
+- id: T66_R5_C8
+  type: cell
+  intent: example_row
+  current_text: 8개월
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 2,000
+    up: 12개월
+    table_label: 비목
+- id: T66_R5_C9
+  type: cell
+  intent: example_row
+  current_text: '20'
+  section_label: '[별지 제3호] 사업계획서'
+  hints:
+    left: 8개월
+    up: '80'
     table_label: 비목
 - id: T66_R5_C10
   type: cell

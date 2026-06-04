@@ -89,12 +89,17 @@ EXAMPLE_ROW_POLICY = {
     "min_table_rows": 3,
     "min_table_cols": 2,
     "require_example_cell_in_candidate": True,
+    # 헤더 행은 *여러 라벨 셀*. 단일 셀 행(단위표기 등 caption)은 헤더 아님 → 진짜 헤더 탐색 계속.
+    "header_min_cells": 2,
     # terminator(···) 보유 표 = fillable-list 확정 신호. 다단·반복 블록(비목별 표 등)을
     # 위해 행 수 가드(max_example_rows)를 면제하고 후보를 표 끝까지 확장.
     "terminator_exempts_row_cap": True,
-    # terminator 보유 표에선 후보 행의 *example intent 셀만* 마킹 (label_or_content 라벨 보존).
-    # 같은 표 내 일관성 + 비목명 등 양식 라벨 유지. 비-terminator 표는 기존 행 전체 마킹.
-    "mark_only_example_cells_in_terminator_table": True,
+    # 데이터 입력 열 신호: 후보 행에서 example 패턴에 안 걸린 양식 예시값(직위·기간·합계 등)도
+    # *헤더 이후 빈 입력칸이 있는 열*(=데이터 입력 열)에 있고 *비병합* 셀이면 example_row 로 비움.
+    # 세로/가로 병합된 분류축 라벨(비목·구분·인력구분)은 보존 — 빈칸 없는 골격 열도 보존.
+    # 비목 배분표(라벨 보존)와 인건비 명세표(데이터값 비움)를 *같은 규칙*으로 가르는 구조 신호.
+    # 키워드·셀ID·위치·표 종류 하드코딩 0.
+    "data_column_clear": True,
 }
 
 # 다중 셀 표 안의 ※ 안내(instruction) 는 *입력칸*(instruction_placeholder) 으로 본다.
@@ -345,12 +350,14 @@ def _classify_example_rows(tables):
                 terminator_rows.add(r)
 
         # 헤더 행 명시적 검출: 첫 *모든 셀 non-empty label_or_content* 행.
-        # 한국 양식: 헤더 행은 양식 라벨 (label_or_content) 가득. 그 위에 caption 일 수 있음.
-        # 헤더 없으면 fillable-list 아님 (자유 텍스트 박스 등) — skip.
+        # 한국 양식: 헤더 행은 양식 라벨 (label_or_content) *다수*. 그 위 단일 셀 행은 caption
+        # (단위표기 "(단위: 천원)" 등) — 헤더로 오인 금지. header_min_cells 미만 행은 건너뛰고
+        # 진짜 헤더(라벨 다수) 탐색 계속. 헤더 없으면 fillable-list 아님 — skip.
+        header_min = EXAMPLE_ROW_POLICY.get("header_min_cells", 2)
         header_row = None
         for r in sorted(by_row):
             rc = by_row[r]
-            if not rc:
+            if not rc or len(rc) < header_min:
                 continue
             if all((not c.get("is_empty")) and c.get("intent") == "label_or_content" for c in rc):
                 header_row = r
@@ -376,13 +383,15 @@ def _classify_example_rows(tables):
             continue
 
         # example 후보 행 수집 — terminator 보유 여부로 분기.
-        # 핵심 일반 신호 = *후보 행 수* (max_ex 임계):
-        #   - 작은 예시 행 표 (후보 ≤ max_ex): 행 전체가 교체용 예시 → 행 전체 비움.
-        #   - 큰 항목 나열 표 (후보 > max_ex, 비목별 표 등): 항목 라벨 고정 + 값 더미
-        #     → *example 셀만* 비움 (라벨 보존). terminator = fillable-list 확정 신호라
-        #     실데이터 표 오인 abort 대신 example 셀만 정확히 제거.
+        # terminator 보유 표는 후보를 표 끝까지 확장 (반복 블록·다단 포함).
+        # 마킹은 *후보 행 수*가 아니라 *데이터 입력 열* 신호로 결정 (아래 data_cols).
         term_exempt = EXAMPLE_ROW_POLICY.get("terminator_exempts_row_cap", False)
-        mark_example_only = False
+        # 분류축 골격 표(비목별·인건비 명세 등) 여부 — 마킹 방식 결정.
+        # *후보 행 수* 임의 임계(max_ex)가 아니라 *구조 신호 = 세로 병합(rowspan>1) 분류축 열*로 판정.
+        #   - 세로 병합 분류축 있음 = 골격 표 → 분류축 라벨 보존, 데이터 입력 열 예시값만 비움.
+        #   - 병합 없는 단순 그리드(실적표 등) = 후보 행이 독립 레코드 예시 → 행 전체 비움.
+        # 임계·example 개수 의존 제거 → 예시 행이 3개든 4개든, 임의 양식에서 동일 동작.
+        has_merged_axis = False
         if has_term and term_exempt:
             # terminator 보유 → 후보를 표 끝까지 확장 (반복 블록·다단 포함). term/전부-빈 제외.
             ex_candidates = []
@@ -393,11 +402,8 @@ def _classify_example_rows(tables):
                 if not rc or all(c.get("is_empty") for c in rc):
                     continue
                 ex_candidates.append(r)
-            if len(ex_candidates) > max_ex:
-                # 큰 항목 나열 표: 라벨 보존, example 셀만 비움 (같은 표 내 일관).
-                mark_example_only = EXAMPLE_ROW_POLICY.get(
-                    "mark_only_example_cells_in_terminator_table", False)
-            # else: 작은 예시 표 → 행 전체 마킹 (mark_example_only=False, 기존 동작).
+            has_merged_axis = any((c.get("rowspan", 1) or 1) > 1
+                                  for r in ex_candidates for c in by_row.get(r, []))
         else:
             # terminator 없음: 기존 보수 로직 — 첫 빈 행 *이전* 비-empty 행만, max_ex 가드.
             boundary_rows = {r for r in (all_empty_rows | terminator_rows) if r > header_row}
@@ -432,13 +438,36 @@ def _classify_example_rows(tables):
             if not has_example_cell:
                 continue
 
-        # 마킹. mark_example_only(큰 항목 표)면 example 셀만, 그 외엔 후보 행 전체.
+        # 데이터 입력 열 = *헤더 행 이후* 빈 입력칸(empty_input)이 존재하는 열.
+        # caption(헤더 이전) 빈 셀은 제외 — 분류축 열 오염 방지. 이 열들은 행마다 값이
+        # 바뀌는 입력 열이므로, 후보 행의 양식 예시값(example 패턴 미검출 포함)은 더미.
+        data_clear = EXAMPLE_ROW_POLICY.get("data_column_clear", False)
+        data_cols = set()
+        if data_clear:
+            for c in cells:
+                if c.get("row", -1) > header_row and c.get("intent") == "empty_input":
+                    data_cols.add(c.get("col"))
+
+        # 셀별 마킹:
+        #   - 병합 분류축 없는 단순 그리드 표: 후보 행 전체 비움 (레코드 전체가 교체용 예시).
+        #   - 분류축 골격 표: ① example 패턴 셀 + ② 데이터 입력 열의 *비병합* 셀만 비움.
+        #     병합된 분류축 라벨(비목·구분·인력구분)·빈칸 없는 골격 열은 보존.
+        #     → 비목 배분표(라벨 보존)와 인건비 명세표(예시값 비움)를 *같은 규칙*으로 구분.
         # terminator 행은 table_terminator.
         for r in ex_candidates:
             for c in by_row.get(r, []):
-                if mark_example_only and c.get("intent") != "example":
+                if c.get("is_empty"):
                     continue
-                c["intent"] = "example_row"
+                if c.get("intent") in ("example", "example_row"):
+                    c["intent"] = "example_row"
+                elif not has_merged_axis:
+                    # 병합 분류축 없는 단순 그리드: 행 전체 비움.
+                    c["intent"] = "example_row"
+                elif (data_clear and c.get("col") in data_cols
+                      and (c.get("rowspan", 1) or 1) == 1
+                      and (c.get("colspan", 1) or 1) == 1):
+                    # 큰 표: 데이터 입력 열의 비병합 예시값만 비움 (분류축 라벨 보존).
+                    c["intent"] = "example_row"
         for r in terminator_rows:
             for c in by_row.get(r, []):
                 c["intent"] = "table_terminator"
