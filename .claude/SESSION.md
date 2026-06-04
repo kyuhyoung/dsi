@@ -6,7 +6,24 @@
 
 ---
 
-## 마지막 라운드 (2026-06-04 심야) — 이미지/전역일관성 md정책 + 정책 실증 재생성 + F16PBU cross-form
+## 마지막 라운드 (2026-06-04 심야2) — overfit 전수 감사 + #1 사업비 비율 가정 제거
+
+**한 줄 결과**: 전체 md/py/yaml overfit 4영역 병렬 감사 → 의심 목록 도출. 최우선 **#1(사업비 비율 70:30 *조용한 가정*)** 수정 — `ratio_defaults` fallback 제거, 비율은 RFP/CLI 명시만, 미지정 시 `(확인 필요)`+가정 금지(CLAUDE.md "명시 안 한 결정 물어라").
+
+**overfit 감사 우선순위 (남은 작업 = #2~7, 사용자 지정 대기):**
+- 🔴 **#1~4 정부 R&D 매칭펀드 전제** (비R&D RFP서 깨짐): **#1 비율 70:30 fallback ✅완료** · #2 rfp 예산스키마 국고/자부담 키 전제 · #3 fill_finance/budget 단위리터럴("백만원")·RFP키경로 PY박힘 · #4 budget_vocab 비목 R&D전용(비R&D 매칭0).
+- 🟡 **#5~7 다비오 정체성/예시 답습**: #5 CLAUDE.md "다비오 전문가"/"별지3호"/"dabeeo-profile만" · #6 dabeeo-profile 메타·메시지템플릿 md본문 박힘(회사교체 시 md수정) · #7 여러 md 예시 `제안사:다비오`·실수치(특허51·369억).
+- 🟢 R&D용어(연구방안·End-to-End)·다국어 미지원(한국 더미정규식)·슬라이드수 매직. **✅ 깨끗**: korean-public-rfp, 빌더 PY 전반(키워드·임계 yaml로드), label_map/schema.
+
+**#1 수정 (fill_budget_cells.py + budget_vocab.yaml)**: `ratio_defaults: {}`(fallback 제거). `ratios_from_rfp(rfp,vocab,cli)`는 RFP+CLI만, 미지정 None(한쪽만 있으면 100-보완). `compute_totals` None 가드. 비율 미지정 총괄셀 `(확인 필요)`. CLI `--gov-pct/--self-pct/--cash-pct/--in-kind-pct` 추가. 검증: ①농식품 미지정→확인필요(가정제거) ②농식품 CLI명시→28.571(회귀0) ③F16PBU→0 fills. **농식품 70:30은 이제 CLI 명시로** (조용한 가정 아님). fills_total 값 동일(영향0).
+
+**🔧 재현 명령 변경 — fill_budget_cells 에 비율 CLI 필수**:
+`python scripts/fill_budget_cells.py <form> <rfp_analysis> <out> --gov-eok 20 --type 타입1 --self-pct 30 --cash-pct 10 --in-kind-pct 90`
+(비율 생략 시 총괄표 `(확인 필요)` — 정상. 농식품 비즈니스결정 70:30/현금10:현물90 명시.)
+
+---
+
+## (이전) 라운드 (2026-06-04 심야) — 이미지/전역일관성 md정책 + 정책 실증 재생성 + F16PBU cross-form
 
 **한 줄 결과**: 사용자 지적(단독신청인데 4-4 컨소 섹션에 "컨소시엄 대체/IP공유 60:40" 모순, 이미지 2칸 처리)을 *개별 손수정 대신 md 정책으로 일반화* → proposal-writer 재호출로 **손수정 0 일관 재생성 실증**. 별도로 F16PBU(군수) 양식 전체 흐름 **코드수정0 완주**. 최종 `output/20260604/별지3호.pdf`.
 

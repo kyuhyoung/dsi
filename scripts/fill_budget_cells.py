@@ -50,13 +50,14 @@ def _first_eok(text):
     return float(m.group(1)) if m else None
 
 
-def ratios_from_rfp(rfp: dict, vocab: dict) -> dict:
-    """RFP 분석에서 비율 추출. 없으면 ratio_defaults fallback."""
-    d = vocab.get("ratio_defaults") or {}
-    out = {
-        "gov_pct": d.get("gov_pct"), "self_pct": d.get("self_pct"),
-        "cash_pct": d.get("cash_pct"), "in_kind_pct": d.get("in_kind_pct"),
-    }
+def ratios_from_rfp(rfp: dict, vocab: dict, cli: dict = None) -> dict:
+    """비율 추출 — *RFP 명시 또는 CLI 명시만*. 미지정은 None (가정 금지).
+
+    ratio_defaults fallback 제거: 국고/자부담 비율은 사업유형·공고마다 다른 전략적
+    결정이라 코드 default 로 채우면 임의 사업에서 틀린 값을 낳는다. 미지정 → None →
+    빌더가 해당 총괄표 값 셀을 '(확인 필요)'로 (CLAUDE.md "명시 안 한 결정은 물어라").
+    """
+    out = {"gov_pct": None, "self_pct": None, "cash_pct": None, "in_kind_pct": None}
     go = (rfp.get("사업개요") or {})
     budget = (go.get("예산") or {})
     if _first_pct(budget.get("국고비율")) is not None:
@@ -68,6 +69,15 @@ def ratios_from_rfp(rfp: dict, vocab: dict) -> dict:
         out["cash_pct"] = _first_pct(sj.get("현금"))
     if _first_pct(sj.get("현물")) is not None:
         out["in_kind_pct"] = _first_pct(sj.get("현물"))
+    # CLI 명시 override (사용자 결정 — RFP 미명시 비율의 명시적 입력 경로)
+    for k in out:
+        if cli and cli.get(k) is not None:
+            out[k] = cli[k]
+    # 국고/자부담은 합 100 — 한쪽만 명시되면 보완 (가정 아님, 산술 보수)
+    if out["gov_pct"] is None and out["self_pct"] is not None:
+        out["gov_pct"] = 100 - out["self_pct"]
+    if out["self_pct"] is None and out["gov_pct"] is not None:
+        out["self_pct"] = 100 - out["gov_pct"]
     return out
 
 
@@ -91,17 +101,28 @@ def gov_base_eok(rfp: dict, sel_type: str, cli_eok: float) -> float:
 
 
 def _fmt(x):
+    if x is None:
+        return "(확인 필요)"
     return f"{x:.3f}".rstrip("0").rstrip(".")
 
 
 def compute_totals(gov_eok: float, r: dict) -> dict:
-    """국고 base + 비율 → 역할별 금액(억). 결정적."""
+    """국고 base + 비율 → 역할별 금액(억). 비율 미지정 항목은 None (→ 빌더가 '(확인 필요)').
+
+    가정 금지: gov/self 비율이 없으면 self·total·cash·in_kind 모두 산정 불가 → None.
+    cash/in_kind 비율이 없으면 그 항목만 None.
+    """
     gov = gov_eok
-    self_ = gov * (r["self_pct"] / r["gov_pct"])
-    cash = self_ * (r["cash_pct"] / 100.0)
-    in_kind = self_ * (r["in_kind_pct"] / 100.0)
-    total = gov + self_
-    return {"total": total, "gov": gov, "self": self_, "cash": cash, "in_kind": in_kind}
+    out = {"gov": gov, "total": None, "self": None, "cash": None, "in_kind": None}
+    if r.get("gov_pct") and r.get("self_pct"):
+        self_ = gov * (r["self_pct"] / r["gov_pct"])
+        out["self"] = self_
+        out["total"] = gov + self_
+        if r.get("cash_pct") is not None:
+            out["cash"] = self_ * (r["cash_pct"] / 100.0)
+        if r.get("in_kind_pct") is not None:
+            out["in_kind"] = self_ * (r["in_kind_pct"] / 100.0)
+    return out
 
 
 def _cells_grid(table):
@@ -173,7 +194,7 @@ def find_summary_table(tables, vocab):
     return None
 
 
-def build_budget_fills(form, rfp, vocab, gov_eok, sel_type):
+def build_budget_fills(form, rfp, vocab, gov_eok, sel_type, cli_ratios=None):
     st = vocab["summary_table"]
     roles = st["roles"]
     strip = (vocab.get("normalize") or {}).get("strip_chars") or []
@@ -181,7 +202,7 @@ def build_budget_fills(form, rfp, vocab, gov_eok, sel_type):
     primary = set(st.get("primary_roles") or [])
     sub = set(st.get("sub_roles") or [])
 
-    r = ratios_from_rfp(rfp, vocab)
+    r = ratios_from_rfp(rfp, vocab, cli_ratios)
     amt = compute_totals(gov_eok, r)
     pct = {"total": None, "gov": r["gov_pct"], "self": r["self_pct"],
            "cash": r["cash_pct"], "in_kind": r["in_kind_pct"]}
@@ -223,8 +244,12 @@ def build_budget_fills(form, rfp, vocab, gov_eok, sel_type):
         # 값 셀이 grid 에 존재해야 (병합 빈칸 회피)
         if (dr, hc) not in grid:
             continue
+        cid = f"T{tidx}_R{dr}_C{hc}"
         a = amt.get(role)
         if a is None:
+            # 비율 미지정 → 가정 금지, 확인필요 (CLAUDE.md). 주석줄 생략(값 없음).
+            fills.append({"id": cid + "_P0", "text": "(확인 필요)",
+                          "source": f"{role} 비율 미지정 — RFP 또는 CLI(--self-pct 등) 명시 필요 (가정 금지)"})
             continue
         spec = fmt.get(role, {"num": "{amt}억원"})
         if not isinstance(spec, dict):
@@ -236,7 +261,6 @@ def build_budget_fills(form, rfp, vocab, gov_eok, sel_type):
                 s = s.replace("{pct}", _fmt(pct[role]))
             return s
 
-        cid = f"T{tidx}_R{dr}_C{hc}"
         src = f"RFP 예산규칙 (국고 {_fmt(amt['gov'])}억 × {role}) — fill_budget_cells"
         # *단락별 fill 사용* (base 셀 fill 회피) — 총괄 셀은 보통 [숫자줄 / 주석줄] 2단락.
         # base 를 쓰면 set_cell_text 가 셀 전체를 1단락으로 합쳐 주석줄이 사라지므로
@@ -278,6 +302,12 @@ def main():
         gov_eok = float(args[args.index("--gov-eok") + 1])
     if "--type" in args:
         sel_type = args[args.index("--type") + 1]
+    # 비율 CLI 명시 — RFP 미명시 비율의 *사용자 입력 경로* (코드 가정 대신 명시).
+    cli_ratios = {}
+    for opt, key in (("--gov-pct", "gov_pct"), ("--self-pct", "self_pct"),
+                     ("--cash-pct", "cash_pct"), ("--in-kind-pct", "in_kind_pct")):
+        if opt in args:
+            cli_ratios[key] = float(args[args.index(opt) + 1])
     project_root = Path(__file__).parent.parent
 
     form = yaml.safe_load(form_path.read_text(encoding="utf-8"))
@@ -289,7 +319,12 @@ def main():
         print("ERROR: 국고 base 미확정 — --gov-eok 지정 필요", file=sys.stderr)
         sys.exit(1)
 
-    fills, amt, r = build_budget_fills(form, rfp, vocab, base, sel_type)
+    fills, amt, r = build_budget_fills(form, rfp, vocab, base, sel_type, cli_ratios)
+    missing = [k for k in ("gov_pct", "self_pct") if r.get(k) is None]
+    if missing:
+        print("WARN: 사업비 비율 미지정 — 총괄표 값 '(확인 필요)'로 채움. "
+              "RFP(사업개요.예산) 명시 또는 CLI(--self-pct/--cash-pct/--in-kind-pct) 지정 필요. "
+              "가정 금지 (CLAUDE.md '명시 안 한 결정은 물어라').", file=sys.stderr)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(yaml.dump({"fills": fills}, allow_unicode=True, sort_keys=False),
                         encoding="utf-8")
