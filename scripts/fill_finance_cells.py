@@ -7,7 +7,7 @@
     열 라벨 = 같은 표 첫 텍스트 행에서 같은(또는 합쳐진) col 의 텍스트 셀.
   - 매핑: templates/finance_label_map.yaml 의 keywords → field.
   - 단위: 셀·행 라벨에서 단위 표기 (백만원/억원/천원/원) 추출.
-          미표기 시 unit_default (한국 RFP 관행: 백만원).
+          미표기 시 unit_default (yaml proposal_output_unit 정본; PY 는 백만원 가정 안 함).
   - 데이터 없으면 fill 안 생성 → 빈 셀 그대로 (빌더가 '확인 필요' 표기 가능).
 
 용법:
@@ -186,7 +186,9 @@ def extract_unit_divisor(label_texts: list, unit_default: dict, unit_regexes: tu
             u = m.group(1)
             if u in divisor_map:
                 return u, divisor_map[u]
-    return unit_default.get("pattern", "백만원"), int(unit_default.get("divisor", 1000000))
+    # 한국 백만원 default 는 yaml proposal_output_unit 정본이 담당(호출처에서 채워 옴).
+    # 여기 최종 방어는 *무변환*(원·divisor 1) — PY 가 백만원을 가정하지 않음(단위 미상 시 자릿수 오류 방지).
+    return unit_default.get("pattern", "원"), int(unit_default.get("divisor", 1) or 1)
 
 
 def find_finance_tables(form: dict, fields: dict, target_section_label: str = None,
