@@ -1,0 +1,7146 @@
+_extracted_from: samples\rfp_downloaded\F16PBU_규격입찰요청서.hwpx
+_purpose: 양식 셀 구조 + 빈 셀 + 별지 분할. proposal-writer 가 본체 별지(rfp_analysis 의 본체_별지) fill_targets
+  만 채움.
+_principle: 양식 절대 안 만짐. 한컴 COM 변환 1회. 본체 별지 산출. 농식품AI/특정 사업 하드코딩 0.
+title: ''
+table_count: 25
+fill_target_count: 97
+sections:
+- label: 붙임1  납품물 및 제출서류 목록
+  label_full: 붙임1 납품물 및 제출서류 목록
+  marker_key: 붙임1
+  paragraph_range:
+  - 355
+  - 368
+  table_idx_range:
+  - 10
+  - 13
+  cell_count: 40
+  empty_cell_count: 1
+- label: 붙임2  규격입찰서 서식 및 작성 목차
+  label_full: 붙임2 규격입찰서 서식 및 작성 목차
+  marker_key: 붙임2
+  paragraph_range:
+  - 368
+  - 374
+  table_idx_range:
+  - 13
+  - 16
+  cell_count: 34
+  empty_cell_count: 1
+- label: 붙임 3  규격평가 기준표
+  label_full: 붙임 3 규격평가 기준표
+  marker_key: 붙임3
+  paragraph_range:
+  - 374
+  - 397
+  table_idx_range:
+  - 16
+  - 20
+  cell_count: 90
+  empty_cell_count: 2
+- label: 붙임 4  각 종 서식
+  label_full: 붙임 4 각 종 서식
+  marker_key: 붙임4
+  paragraph_range:
+  - 397
+  - null
+  table_idx_range:
+  - 20
+  - 25
+  cell_count: 72
+  empty_cell_count: 55
+tables:
+- idx: 0
+  rows: 3
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T0_R0_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: ''
+      table_label: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+      section_label: ''
+    section_label: ''
+  - row: 1
+    col: 0
+    text: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: <현존전력 성능 극대화 사업>
+      intent: content
+    - sub_idx: 1
+      text: F-16 PBU 모의비행장비 성능개선 사업
+      intent: content
+    - sub_idx: 2
+      text: 규격입찰요청서
+      intent: content
+    id: T0_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+    section_label: ''
+  - row: 2
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    - sub_idx: 1
+      text: ''
+      intent: empty
+    id: T0_R2_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+      table_label: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+      section_label: ''
+    section_label: ''
+- idx: 1
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T1_R0_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: ''
+      table_label: ''
+      section_label: ''
+    section_label: ''
+- idx: 2
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: 국방기술품질원성능개량연구실
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 국방기술품질원
+      intent: content
+    - sub_idx: 1
+      text: 성능개량연구실
+      intent: content
+    id: T2_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 국방기술품질원성능개량연구실
+    section_label: ''
+- idx: 3
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: '1'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '1'
+      intent: content
+    id: T3_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '1'
+    section_label: ''
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T3_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '1'
+      up: ''
+      table_label: '1'
+      section_label: ''
+    section_label: ''
+  - row: 0
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T3_R0_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '1'
+      up: ''
+      table_label: '1'
+      section_label: ''
+    section_label: ''
+- idx: 4
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: 공군 F-16PBU 전투기 조종사의 조종훈련 효과 증대를 위한 모의비행장비 소프트웨어 기능 개선 및 단종/노후화에 따른 구성품 교체
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 공군 F-16PBU 전투기 조종사의 조종훈련 효과 증대를 위한 모의비행장비 소프트웨어 기능 개선 및 단종/노후화에 따른 구성품
+        교체
+      intent: content
+    id: T4_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 공군 F-16PBU 전투기 조종사의 조종훈련 효과 증대를 위한 모의비행장비 소프트웨어 기능 개선 및 단종/노후화에
+        따른 구성품 교체
+    section_label: ''
+- idx: 5
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: '2'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '2'
+      intent: content
+    id: T5_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '2'
+    section_label: ''
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T5_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '2'
+      up: ''
+      table_label: '2'
+      section_label: ''
+    section_label: ''
+  - row: 0
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T5_R0_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '2'
+      up: ''
+      table_label: '2'
+      section_label: ''
+    section_label: ''
+- idx: 6
+  rows: 23
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: 구분
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 구분
+      intent: content
+    id: T6_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 구분
+    section_label: ''
+  - row: 0
+    col: 1
+    text: 항목
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 항목
+      intent: content
+    id: T6_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 구분
+      up: ''
+      table_label: 구분
+    section_label: ''
+  - row: 0
+    col: 3
+    text: 제원 및 요구성능
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 제원 및 요구성능
+      intent: content
+    id: T6_R0_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 항목
+      up: ''
+      table_label: 구분
+    section_label: ''
+  - row: 1
+    col: 0
+    text: 영상시스템
+    colspan: 1
+    rowspan: 14
+    inner_ps:
+    - sub_idx: 0
+      text: 영상
+      intent: content
+    - sub_idx: 1
+      text: 시스템
+      intent: content
+    id: T6_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 구분
+      table_label: 구분
+    section_label: ''
+  - row: 1
+    col: 1
+    text: 프로젝터 해상도
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 프로젝터 해상도
+      intent: content
+    id: T6_R1_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 영상시스템
+      up: 항목
+      table_label: 구분
+    section_label: ''
+  - row: 1
+    col: 3
+    text: '- 4K'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 4K'
+      intent: content
+    id: T6_R1_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 프로젝터 해상도
+      up: 제원 및 요구성능
+      table_label: 구분
+    section_label: ''
+  - row: 2
+    col: 1
+    text: 프로젝터 광원
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 프로젝터 광원
+      intent: content
+    id: T6_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 프로젝터 해상도
+      table_label: 구분
+    section_label: ''
+  - row: 2
+    col: 3
+    text: '- 레이저 타입'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 레이저 타입'
+      intent: content
+    id: T6_R2_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 프로젝터 광원
+      up: '- 4K'
+      table_label: 구분
+    section_label: ''
+  - row: 3
+    col: 1
+    text: 스크린 형태
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 스크린 형태
+      intent: content
+    id: T6_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 프로젝터 광원
+      table_label: 구분
+    section_label: ''
+  - row: 3
+    col: 3
+    text: '- SIM: Full Dome- CPT: Half Dome'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- SIM: Full Dome'
+      intent: content
+    - sub_idx: 1
+      text: '- CPT: Half Dome'
+      intent: content
+    id: T6_R3_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 스크린 형태
+      up: '- 레이저 타입'
+      table_label: 구분
+    section_label: ''
+  - row: 4
+    col: 1
+    text: 시현범위
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 시현범위
+      intent: content
+    id: T6_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 스크린 형태
+      table_label: 구분
+    section_label: ''
+  - row: 4
+    col: 3
+    text: '- SIM: 수평 300°(±150°), 수직 130°(+90°, -40°) 이상- CPT: 수평 210°(±105°), 수직
+      110°(+80°, -30°) 이상'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- SIM: 수평 300°(±150°), 수직 130°(+90°, -40°) 이상'
+      intent: example
+    - sub_idx: 1
+      text: '- CPT: 수평 210°(±105°), 수직 110°(+80°, -30°) 이상'
+      intent: content
+    id: T6_R4_C3
+    is_empty: false
+    intent: example
+    hints:
+      left: 시현범위
+      up: '- SIM: Full Dome- CPT: Half Dome'
+      table_label: 구분
+    section_label: ''
+  - row: 5
+    col: 1
+    text: 표면 해상도
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 표면 해상도
+      intent: content
+    id: T6_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 시현범위
+      table_label: 구분
+    section_label: ''
+  - row: 5
+    col: 3
+    text: '- 6 arcmin/OLP 이하 (전 영역 평균)  * arc-minutes(각분) : 각도의 계산 단위인 °[도(度)]의       보조계량
+      단위로 1°의 1/60을 의미함'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 6 arcmin/OLP 이하 (전 영역 평균)'
+      intent: content
+    - sub_idx: 1
+      text: '* arc-minutes(각분) : 각도의 계산 단위인 °[도(度)]의'
+      intent: content
+    - sub_idx: 2
+      text: 보조계량 단위로 1°의 1/60을 의미함
+      intent: content
+    id: T6_R5_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 표면 해상도
+      up: '- SIM: 수평 300°(±150°), 수직 130°(+90°, -40°) 이상- CPT: 수평 210°(±105°), 수직
+        110°(+80°, -30°) 이상'
+      table_label: 구분
+    section_label: ''
+  - row: 6
+    col: 1
+    text: 표면 밝기
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 표면 밝기
+      intent: content
+    id: T6_R6_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 표면 해상도
+      table_label: 구분
+    section_label: ''
+  - row: 6
+    col: 3
+    text: '- 7 foot lambert 이상 (전 영역 평균)  * foot-lambert(ft-L) : 화면(표면)의 밝기(Luminance)를     나타내는
+      광도 단위'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 7 foot lambert 이상 (전 영역 평균)'
+      intent: content
+    - sub_idx: 1
+      text: '* foot-lambert(ft-L) : 화면(표면)의 밝기(Luminance)를'
+      intent: content
+    - sub_idx: 2
+      text: 나타내는 광도 단위
+      intent: content
+    id: T6_R6_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 표면 밝기
+      up: '- 6 arcmin/OLP 이하 (전 영역 평균)  * arc-minutes(각분) : 각도의 계산 단위인 °[도(度)]의       보조계량
+        단위로 1°의 1/60을 의미함'
+      table_label: 구분
+    section_label: ''
+  - row: 7
+    col: 1
+    text: 표면 대조비
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 표면 대조비
+      intent: content
+    id: T6_R7_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 표면 밝기
+      table_label: 구분
+    section_label: ''
+  - row: 7
+    col: 3
+    text: '- 8:1 이상'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 8:1 이상'
+      intent: content
+    id: T6_R7_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 표면 대조비
+      up: '- 7 foot lambert 이상 (전 영역 평균)  * foot-lambert(ft-L) : 화면(표면)의 밝기(Luminance)를     나타내는
+        광도 단위'
+      table_label: 구분
+    section_label: ''
+  - row: 8
+    col: 1
+    text: 갱신율(Refresh Rate)
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 갱신율(Refresh Rate)
+      intent: content
+    id: T6_R8_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 표면 대조비
+      table_label: 구분
+    section_label: ''
+  - row: 8
+    col: 3
+    text: '- 60Hz 이상'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 60Hz 이상'
+      intent: content
+    id: T6_R8_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 갱신율(Refresh Rate)
+      up: '- 8:1 이상'
+      table_label: 구분
+    section_label: ''
+  - row: 9
+    col: 1
+    text: 시현전달지연
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 시현전달지연
+      intent: content
+    id: T6_R9_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 갱신율(Refresh Rate)
+      table_label: 구분
+    section_label: ''
+  - row: 9
+    col: 3
+    text: '- 150msec 이내'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 150msec 이내'
+      intent: content
+    id: T6_R9_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 시현전달지연
+      up: '- 60Hz 이상'
+      table_label: 구분
+    section_label: ''
+  - row: 10
+    col: 1
+    text: 처리 속도(Update Rate)
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 처리 속도
+      intent: content
+    - sub_idx: 1
+      text: (Update Rate)
+      intent: content
+    id: T6_R10_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 시현전달지연
+      table_label: 구분
+    section_label: ''
+  - row: 10
+    col: 3
+    text: '- 60Hz 이상'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 60Hz 이상'
+      intent: content
+    id: T6_R10_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 처리 속도(Update Rate)
+      up: '- 150msec 이내'
+      table_label: 구분
+    section_label: ''
+  - row: 11
+    col: 1
+    text: 영상발생장치(IG)
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 영상발생장치(IG)
+      intent: content
+    id: T6_R11_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 처리 속도(Update Rate)
+      table_label: 구분
+    section_label: ''
+  - row: 11
+    col: 3
+    text: '- 해상도: 4K UHD/채널 이상- 영상 갱신율(Update Rate): 60Hz 이상- 고도 데이터: DTED III (10m급
+      고도 데이터) 이상  * DTED : Digital Terrain Elevation Data- 위성/항공사진: 한반도 전역 1M급 적용-
+      다각형(Polygon) 수: 1,000,000개/채널 이상- 왜곡 방지(Anti-Aliasing): 8 Sub-Pixel 이상- 이방성
+      필터(Anisotropic Filter): 8단계 이상- 영상DB 저장장치: 4TB 이상 M.2 NVMe 방식'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 해상도: 4K UHD/채널 이상'
+      intent: content
+    - sub_idx: 1
+      text: '- 영상 갱신율(Update Rate): 60Hz 이상'
+      intent: content
+    - sub_idx: 2
+      text: '- 고도 데이터: DTED III (10m급 고도 데이터) 이상'
+      intent: content
+    - sub_idx: 3
+      text: '* DTED : Digital Terrain Elevation Data'
+      intent: content
+    - sub_idx: 4
+      text: '- 위성/항공사진: 한반도 전역 1M급 적용'
+      intent: content
+    - sub_idx: 5
+      text: '- 다각형(Polygon) 수: 1,000,000개/채널 이상'
+      intent: example
+    - sub_idx: 6
+      text: '- 왜곡 방지(Anti-Aliasing): 8 Sub-Pixel 이상'
+      intent: content
+    - sub_idx: 7
+      text: '- 이방성 필터(Anisotropic Filter): 8단계 이상'
+      intent: content
+    - sub_idx: 8
+      text: '- 영상DB 저장장치: 4TB 이상 M.2 NVMe 방식'
+      intent: content
+    id: T6_R11_C3
+    is_empty: false
+    intent: example
+    hints:
+      left: 영상발생장치(IG)
+      up: '- 60Hz 이상'
+      table_label: 구분
+    section_label: ''
+  - row: 12
+    col: 1
+    text: 영상 DB
+    colspan: 1
+    rowspan: 3
+    inner_ps:
+    - sub_idx: 0
+      text: 영상 DB
+      intent: content
+    id: T6_R12_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 영상발생장치(IG)
+      table_label: 구분
+    section_label: ''
+  - row: 12
+    col: 2
+    text: 구현범위
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 구현범위
+      intent: content
+    id: T6_R12_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 영상 DB
+      up: ''
+      table_label: 구분
+    section_label: ''
+  - row: 12
+    col: 3
+    text: '- 북위 33.0° ~ 44.0°, 동경 124.0° ~ 132.0°  (이어도, 독도 포함)'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 북위 33.0° ~ 44.0°, 동경 124.0° ~ 132.0°'
+      intent: content
+    - sub_idx: 1
+      text: (이어도, 독도 포함)
+      intent: content
+    id: T6_R12_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 구현범위
+      up: '- 해상도: 4K UHD/채널 이상- 영상 갱신율(Update Rate): 60Hz 이상- 고도 데이터: DTED III (10m급
+        고도 데이터) 이상  * DTED : Digital Terrain Elevation Data- 위성/항공사진: 한반도 전역 1M급 적용-
+        다각형(Polygon) 수: 1,000,000개/채널 이상- 왜곡 방지(Anti-Aliasing): 8 Sub-Pixel 이상- 이방성
+        필터(Anisotropic Filter): 8단계 이상- 영상DB 저장장치: 4TB 이상 M.2 NVMe 방식'
+      table_label: 구분
+    section_label: ''
+  - row: 13
+    col: 2
+    text: 좌표체계
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 좌표체계
+      intent: content
+    id: T6_R13_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 구현범위
+      table_label: 구분
+    section_label: ''
+  - row: 13
+    col: 3
+    text: '- WGS-84 적용  * WGS-84 : World Geodetic System 1984'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- WGS-84 적용'
+      intent: content
+    - sub_idx: 1
+      text: '* WGS-84 : World Geodetic System 1984'
+      intent: content
+    id: T6_R13_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 좌표체계
+      up: '- 북위 33.0° ~ 44.0°, 동경 124.0° ~ 132.0°  (이어도, 독도 포함)'
+      table_label: 구분
+    section_label: ''
+  - row: 14
+    col: 2
+    text: 위성영상 및 항공사진
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 위성영상 및
+      intent: content
+    - sub_idx: 1
+      text: 항공사진
+      intent: content
+    id: T6_R14_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 좌표체계
+      table_label: 구분
+    section_label: ''
+  - row: 14
+    col: 3
+    text: '- 1m급'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 1m급'
+      intent: content
+    id: T6_R14_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 위성영상 및 항공사진
+      up: '- WGS-84 적용  * WGS-84 : World Geodetic System 1984'
+      table_label: 구분
+    section_label: ''
+  - row: 15
+    col: 0
+    text: 컴퓨터시스템
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 컴퓨터
+      intent: content
+    - sub_idx: 1
+      text: 시스템
+      intent: content
+    id: T6_R15_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 영상시스템
+      table_label: 구분
+    section_label: ''
+  - row: 15
+    col: 1
+    text: CPU 및 RAM
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: CPU 및 RAM
+      intent: content
+    id: T6_R15_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 컴퓨터시스템
+      up: 영상 DB
+      table_label: 구분
+    section_label: ''
+  - row: 15
+    col: 3
+    text: '- 울트라7 시리즈2 265K(동등 또는 이상) - 16GB RAM 이상- 6GB 이상 Graphic Card- 64비트 OS'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 울트라7 시리즈2 265K(동등 또는 이상)'
+      intent: content
+    - sub_idx: 1
+      text: '- 16GB RAM 이상'
+      intent: content
+    - sub_idx: 2
+      text: '- 6GB 이상 Graphic Card'
+      intent: content
+    - sub_idx: 3
+      text: '- 64비트 OS'
+      intent: content
+    id: T6_R15_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: CPU 및 RAM
+      up: '- 1m급'
+      table_label: 구분
+    section_label: ''
+  - row: 16
+    col: 0
+    text: 음향시스템
+    colspan: 1
+    rowspan: 2
+    inner_ps:
+    - sub_idx: 0
+      text: 음향
+      intent: content
+    - sub_idx: 1
+      text: 시스템
+      intent: content
+    id: T6_R16_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 컴퓨터시스템
+      table_label: 구분
+    section_label: ''
+  - row: 16
+    col: 1
+    text: 효과음
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 효과음
+      intent: content
+    id: T6_R16_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 음향시스템
+      up: CPU 및 RAM
+      table_label: 구분
+    section_label: ''
+  - row: 16
+    col: 3
+    text: '- FAA AC 120-40B Level D급 충족'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- FAA AC 120-40B Level D급 충족'
+      intent: content
+    id: T6_R16_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 효과음
+      up: '- 울트라7 시리즈2 265K(동등 또는 이상) - 16GB RAM 이상- 6GB 이상 Graphic Card- 64비트 OS'
+      table_label: 구분
+    section_label: ''
+  - row: 17
+    col: 1
+    text: 통신 방식
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 통신 방식
+      intent: content
+    id: T6_R17_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 효과음
+      table_label: 구분
+    section_label: ''
+  - row: 17
+    col: 3
+    text: '- 이더넷(Ethernet)'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 이더넷(Ethernet)'
+      intent: content
+    id: T6_R17_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 통신 방식
+      up: '- FAA AC 120-40B Level D급 충족'
+      table_label: 구분
+    section_label: ''
+  - row: 18
+    col: 0
+    text: 모의소프트웨어
+    colspan: 1
+    rowspan: 3
+    inner_ps:
+    - sub_idx: 0
+      text: 모의
+      intent: content
+    - sub_idx: 1
+      text: 소프트웨어
+      intent: content
+    id: T6_R18_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 음향시스템
+      table_label: 구분
+    section_label: ''
+  - row: 18
+    col: 1
+    text: 비트 단위
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 비트 단위
+      intent: content
+    id: T6_R18_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 모의소프트웨어
+      up: 통신 방식
+      table_label: 구분
+    section_label: ''
+  - row: 18
+    col: 3
+    text: '- 64비트'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 64비트'
+      intent: content
+    id: T6_R18_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 비트 단위
+      up: '- 이더넷(Ethernet)'
+      table_label: 구분
+    section_label: ''
+  - row: 19
+    col: 1
+    text: 영상발생장치 인터페이스
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 영상발생장치 인터페이스
+      intent: content
+    id: T6_R19_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 비트 단위
+      table_label: 구분
+    section_label: ''
+  - row: 19
+    col: 3
+    text: '- HOST-IG 간 인터페이스 통합'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- HOST-IG 간 인터페이스 통합'
+      intent: content
+    id: T6_R19_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 영상발생장치 인터페이스
+      up: '- 64비트'
+      table_label: 구분
+    section_label: ''
+  - row: 20
+    col: 1
+    text: 항공기 신규기능 적용
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 항공기 신규기능 적용
+      intent: content
+    id: T6_R20_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 영상발생장치 인터페이스
+      table_label: 구분
+    section_label: ''
+  - row: 20
+    col: 3
+    text: '- IFF Mode-5 성능개선 사항- SATURN 성능개선 사항- LINK-16 성능개선 사항'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- IFF Mode-5 성능개선 사항'
+      intent: content
+    - sub_idx: 1
+      text: '- SATURN 성능개선 사항'
+      intent: content
+    - sub_idx: 2
+      text: '- LINK-16 성능개선 사항'
+      intent: content
+    id: T6_R20_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 항공기 신규기능 적용
+      up: '- HOST-IG 간 인터페이스 통합'
+      table_label: 구분
+    section_label: ''
+  - row: 21
+    col: 0
+    text: 교관석시스템
+    colspan: 1
+    rowspan: 2
+    inner_ps:
+    - sub_idx: 0
+      text: 교관석
+      intent: content
+    - sub_idx: 1
+      text: 시스템
+      intent: content
+    id: T6_R21_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 모의소프트웨어
+      table_label: 구분
+    section_label: ''
+  - row: 21
+    col: 1
+    text: 훈련 시나리오
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 훈련 시나리오
+      intent: content
+    id: T6_R21_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 교관석시스템
+      up: 항공기 신규기능 적용
+      table_label: 구분
+    section_label: ''
+  - row: 21
+    col: 3
+    text: '- 50개 이상'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 50개 이상'
+      intent: content
+    id: T6_R21_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 훈련 시나리오
+      up: '- IFF Mode-5 성능개선 사항- SATURN 성능개선 사항- LINK-16 성능개선 사항'
+      table_label: 구분
+    section_label: ''
+  - row: 22
+    col: 1
+    text: 훈련상황 녹화/재생 기능
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 훈련상황 녹화/재생 기능
+      intent: content
+    id: T6_R22_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 훈련 시나리오
+      table_label: 구분
+    section_label: ''
+  - row: 22
+    col: 3
+    text: '- 24회 이상, 1회당 60분 이상'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '- 24회 이상, 1회당 60분 이상'
+      intent: content
+    id: T6_R22_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 훈련상황 녹화/재생 기능
+      up: '- 50개 이상'
+      table_label: 구분
+    section_label: ''
+- idx: 7
+  rows: 7
+  cols: 2
+  cells:
+  - row: 0
+    col: 0
+    text: 지형모델
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 지형모델
+      intent: content
+    id: T7_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 지형모델
+    section_label: ''
+  - row: 0
+    col: 1
+    text: '󰠂구현범위: 북위 33.0°~44.0°, 동경 124.0°~132.0°󰠂위성, 항공사진: 한반도 전역 1m급 적용󰠂고도자료: 한반도
+      전역 DTED Level III 적용󰠂여름 및 겨울 지형 모델 제공󰠂외부영상, 센서영상 및 레이더 영상제공'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '󰠂구현범위: 북위 33.0°~44.0°, 동경 124.0°~132.0°'
+      intent: content
+    - sub_idx: 1
+      text: '󰠂위성, 항공사진: 한반도 전역 1m급 적용'
+      intent: content
+    - sub_idx: 2
+      text: '󰠂고도자료: 한반도 전역 DTED Level III 적용'
+      intent: content
+    - sub_idx: 3
+      text: 󰠂여름 및 겨울 지형 모델 제공
+      intent: content
+    - sub_idx: 4
+      text: 󰠂외부영상, 센서영상 및 레이더 영상제공
+      intent: content
+    id: T7_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 지형모델
+      up: ''
+      table_label: 지형모델
+    section_label: ''
+  - row: 1
+    col: 0
+    text: 비행장 모델
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 비행장 모델
+      intent: content
+    id: T7_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 지형모델
+      table_label: 지형모델
+    section_label: ''
+  - row: 1
+    col: 1
+    text: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현󰠂공군 발간 최신 FLIP(비행정보간행물)
+      기준 비상활주로 구현󰠂주 비행장 주변 비행참조물을 3차원 모델로 구현󰠂비행임무시 식별되는 위치에 있는 항법시설을 3차원 형상으로 구현
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현
+      intent: example
+    - sub_idx: 1
+      text: 󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현
+      intent: example
+    - sub_idx: 2
+      text: 󰠂공군 발간 최신 FLIP(비행정보간행물) 기준 비상활주로 구현
+      intent: content
+    - sub_idx: 3
+      text: 󰠂주 비행장 주변 비행참조물을 3차원 모델로 구현
+      intent: content
+    - sub_idx: 4
+      text: 󰠂비행임무시 식별되는 위치에 있는 항법시설을 3차원 형상으로 구현
+      intent: content
+    id: T7_R1_C1
+    is_empty: false
+    intent: example
+    hints:
+      left: 비행장 모델
+      up: '󰠂구현범위: 북위 33.0°~44.0°, 동경 124.0°~132.0°󰠂위성, 항공사진: 한반도 전역 1m급 적용󰠂고도자료: 한반도
+        전역 DTED Level III 적용󰠂여름 및 겨울 지형 모델 제공󰠂외부영상, 센서영상 및 레이더 영상제공'
+      table_label: 지형모델
+    section_label: ''
+  - row: 2
+    col: 0
+    text: 훈련장 모델
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 훈련장 모델
+      intent: content
+    id: T7_R2_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 비행장 모델
+      table_label: 지형모델
+    section_label: ''
+  - row: 2
+    col: 1
+    text: 󰠂공군이 사용하는 사격장 0개소를 3차원 모델로 구현
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 󰠂공군이 사용하는 사격장 0개소를 3차원 모델로 구현
+      intent: content
+    id: T7_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 훈련장 모델
+      up: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현󰠂공군 발간 최신 FLIP(비행정보간행물)
+        기준 비상활주로 구현󰠂주 비행장 주변 비행참조물을 3차원 모델로 구현󰠂비행임무시 식별되는 위치에 있는 항법시설을 3차원 형상으로 구현
+      table_label: 지형모델
+    section_label: ''
+  - row: 3
+    col: 0
+    text: 표적모델
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 표적모델
+      intent: content
+    id: T7_R3_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 훈련장 모델
+      table_label: 지형모델
+    section_label: ''
+  - row: 3
+    col: 1
+    text: 󰠂공중, 지상 및 해상 표적 구현󰠂공중/지상/해상 표적이 피격된 후, 피해정도에 따른 피격모델(반파/완파) 구현󰠂기존 이동가능 표적
+      구현
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 󰠂공중, 지상 및 해상 표적 구현
+      intent: content
+    - sub_idx: 1
+      text: 󰠂공중/지상/해상 표적이 피격된 후, 피해정도에 따른 피격모델(반파/완파) 구현
+      intent: content
+    - sub_idx: 2
+      text: 󰠂기존 이동가능 표적 구현
+      intent: content
+    id: T7_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 표적모델
+      up: 󰠂공군이 사용하는 사격장 0개소를 3차원 모델로 구현
+      table_label: 지형모델
+    section_label: ''
+  - row: 4
+    col: 0
+    text: 특수효과
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 특수효과
+      intent: content
+    id: T7_R4_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 표적모델
+      table_label: 지형모델
+    section_label: ''
+  - row: 4
+    col: 1
+    text: 󰠂폭발/화염효과 구현󰠂연기 및 먼지구름 효과 구현󰠂무장발사, 총구화염, 대공포화 구현󰠂미사일 궤적 효과 구현󰠂공중/지상/해상 표적이
+      피격된 후 피해 정도에 따른 피격모델 변화 구현
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 󰠂폭발/화염효과 구현
+      intent: content
+    - sub_idx: 1
+      text: 󰠂연기 및 먼지구름 효과 구현
+      intent: content
+    - sub_idx: 2
+      text: 󰠂무장발사, 총구화염, 대공포화 구현
+      intent: content
+    - sub_idx: 3
+      text: 󰠂미사일 궤적 효과 구현
+      intent: content
+    - sub_idx: 4
+      text: 󰠂공중/지상/해상 표적이 피격된 후 피해 정도에 따른 피격모델 변화 구현
+      intent: content
+    id: T7_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 특수효과
+      up: 󰠂공중, 지상 및 해상 표적 구현󰠂공중/지상/해상 표적이 피격된 후, 피해정도에 따른 피격모델(반파/완파) 구현󰠂기존 이동가능 표적
+        구현
+      table_label: 지형모델
+    section_label: ''
+  - row: 5
+    col: 0
+    text: 자함모델
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 자함모델
+      intent: content
+    id: T7_R5_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 특수효과
+      table_label: 지형모델
+    section_label: ''
+  - row: 5
+    col: 1
+    text: 󰠂현실감 있는 훈련 영상 구현을 위해 자함(OwnShip) 모델은 외부 조종면 (Flap, Rudder, Speed Brake 등)과
+      착륙장치의 동적 움직임 기능 모의󰠂조종사 수신호를 3차원 형상으로 구현 (향후 사업관리자회의 통해 결정)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 󰠂현실감 있는 훈련 영상 구현을 위해 자함(OwnShip) 모델은 외부 조종면 (Flap, Rudder, Speed Brake
+        등)과 착륙장치의 동적 움직임 기능 모의
+      intent: content
+    - sub_idx: 1
+      text: 󰠂조종사 수신호를 3차원 형상으로 구현 (향후 사업관리자회의 통해 결정)
+      intent: content
+    id: T7_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 자함모델
+      up: 󰠂폭발/화염효과 구현󰠂연기 및 먼지구름 효과 구현󰠂무장발사, 총구화염, 대공포화 구현󰠂미사일 궤적 효과 구현󰠂공중/지상/해상 표적이
+        피격된 후 피해 정도에 따른 피격모델 변화 구현
+      table_label: 지형모델
+    section_label: ''
+  - row: 6
+    col: 0
+    text: 비행조건에 따른 G효과
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 비행조건에 따른 G효과
+      intent: content
+    id: T7_R6_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 자함모델
+      table_label: 지형모델
+    section_label: ''
+  - row: 6
+    col: 1
+    text: 󰠂블랙아웃 및 레드아웃
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 󰠂블랙아웃 및 레드아웃
+      intent: content
+    id: T7_R6_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 비행조건에 따른 G효과
+      up: 󰠂현실감 있는 훈련 영상 구현을 위해 자함(OwnShip) 모델은 외부 조종면 (Flap, Rudder, Speed Brake 등)과
+        착륙장치의 동적 움직임 기능 모의󰠂조종사 수신호를 3차원 형상으로 구현 (향후 사업관리자회의 통해 결정)
+      table_label: 지형모델
+    section_label: ''
+- idx: 8
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: '3'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '3'
+      intent: content
+    id: T8_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '3'
+    section_label: ''
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T8_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '3'
+      up: ''
+      table_label: '3'
+      section_label: ''
+    section_label: ''
+  - row: 0
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T8_R0_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '3'
+      up: ''
+      table_label: '3'
+      section_label: ''
+    section_label: ''
+- idx: 9
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: '4'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '4'
+      intent: content
+    id: T9_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '4'
+    section_label: ''
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T9_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '4'
+      up: ''
+      table_label: '4'
+      section_label: ''
+    section_label: ''
+  - row: 0
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T9_R0_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: '4'
+      up: ''
+      table_label: '4'
+      section_label: ''
+    section_label: ''
+- idx: 10
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: 붙임1
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 붙임1
+      intent: content
+    id: T10_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 붙임1
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T10_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 붙임1
+      up: ''
+      table_label: 붙임1
+      section_label: 붙임1  납품물 및 제출서류 목록
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 0
+    col: 2
+    text: 납품물 및 제출서류 목록
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 납품물 및 제출서류 목록
+      intent: content
+    id: T10_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 붙임1
+      up: ''
+      table_label: 붙임1
+    section_label: 붙임1  납품물 및 제출서류 목록
+- idx: 11
+  rows: 7
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: 품 목
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 품 목
+      intent: content
+    id: T11_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 0
+    col: 1
+    text: 수 량
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 수 량
+      intent: content
+    id: T11_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 품 목
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 0
+    col: 2
+    text: 납 지
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 납 지
+      intent: content
+    id: T11_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 수 량
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 0
+    text: F-16PBU SIM 성능개선
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: F-16PBU SIM 성능개선
+      intent: content
+    id: T11_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 품 목
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 1
+    text: 1세트
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1세트
+      intent: content
+    id: T11_R1_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: F-16PBU SIM 성능개선
+      up: 수 량
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 2
+    text: 공군 제00전투비행단(충북지역)
+    colspan: 1
+    rowspan: 5
+    inner_ps:
+    - sub_idx: 0
+      text: 공군 제00전투비행단
+      intent: example
+    - sub_idx: 1
+      text: (충북지역)
+      intent: content
+    id: T11_R1_C2
+    is_empty: false
+    intent: example
+    hints:
+      left: 1세트
+      up: 납 지
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 2
+    col: 0
+    text: F-16PBU CPT 성능개선
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: F-16PBU CPT 성능개선
+      intent: content
+    id: T11_R2_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: F-16PBU SIM 성능개선
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 2
+    col: 1
+    text: 2세트
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 2세트
+      intent: content
+    id: T11_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: F-16PBU CPT 성능개선
+      up: 1세트
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 3
+    col: 0
+    text: 수리부속(3년 소요)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 수리부속
+      intent: content
+    - sub_idx: 1
+      text: (3년 소요)
+      intent: content
+    id: T11_R3_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: F-16PBU CPT 성능개선
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 3
+    col: 1
+    text: 1식
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1식
+      intent: content
+    id: T11_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 수리부속(3년 소요)
+      up: 2세트
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 4
+    col: 0
+    text: 기술교범
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기술교범
+      intent: content
+    id: T11_R4_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 수리부속(3년 소요)
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 4
+    col: 1
+    text: 1식
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1식
+      intent: content
+    id: T11_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 기술교범
+      up: 1식
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 5
+    col: 0
+    text: 테스트 벤치(운영자 매뉴얼 포함)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 테스트 벤치
+      intent: content
+    - sub_idx: 1
+      text: (운영자 매뉴얼 포함)
+      intent: content
+    id: T11_R5_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 기술교범
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 5
+    col: 1
+    text: 1세트
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1세트
+      intent: content
+    id: T11_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 테스트 벤치(운영자 매뉴얼 포함)
+      up: 1식
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 6
+    col: 0
+    text: 소프트웨어 통합개발환경
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 소프트웨어 통합개발환경
+      intent: content
+    id: T11_R6_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 테스트 벤치(운영자 매뉴얼 포함)
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 6
+    col: 1
+    text: 1세트
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1세트
+      intent: content
+    id: T11_R6_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 소프트웨어 통합개발환경
+      up: 1세트
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 6
+    col: 2
+    text: 공군 항공소프트웨어지원소(충남지역)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 공군 항공소프트웨어지원소
+      intent: content
+    - sub_idx: 1
+      text: (충남지역)
+      intent: content
+    id: T11_R6_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1세트
+      up: 공군 제00전투비행단(충북지역)
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+- idx: 12
+  rows: 6
+  cols: 4
+  cells:
+  - row: 0
+    col: 0
+    text: 품 목
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 품 목
+      intent: content
+    id: T12_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 0
+    col: 2
+    text: 수 량
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 수 량
+      intent: content
+    id: T12_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 품 목
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 0
+    col: 3
+    text: 납 지
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 납 지
+      intent: content
+    id: T12_R0_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 수 량
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 0
+    text: 보고서
+    colspan: 1
+    rowspan: 3
+    inner_ps:
+    - sub_idx: 0
+      text: 보고서
+      intent: content
+    id: T12_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 품 목
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 1
+    text: 사업수행계획서, 품질보증계획서(계약체결 후 30일 이내)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 사업수행계획서, 품질보증계획서
+      intent: content
+    - sub_idx: 1
+      text: (계약체결 후 30일 이내)
+      intent: content
+    id: T12_R1_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 보고서
+      up: ''
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 2
+    text: 1부
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1부
+      intent: content
+    id: T12_R1_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 사업수행계획서, 품질보증계획서(계약체결 후 30일 이내)
+      up: 수 량
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 1
+    col: 3
+    text: 기품원 성능개량연구실
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기품원 성능개량연구실
+      intent: content
+    id: T12_R1_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1부
+      up: 납 지
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 2
+    col: 1
+    text: 입증시험 계획서/결과 보고서수락시험 절차서
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 입증시험 계획서/결과 보고서
+      intent: content
+    - sub_idx: 1
+      text: 수락시험 절차서
+      intent: content
+    id: T12_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 사업수행계획서, 품질보증계획서(계약체결 후 30일 이내)
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 2
+    col: 2
+    text: 1부
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1부
+      intent: content
+    id: T12_R2_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 입증시험 계획서/결과 보고서수락시험 절차서
+      up: 1부
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 2
+    col: 3
+    text: 기품원 성능개량연구실
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기품원 성능개량연구실
+      intent: content
+    id: T12_R2_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1부
+      up: 기품원 성능개량연구실
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 3
+    col: 1
+    text: 초도운용요원 교육결과 보고서
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 초도운용요원 교육결과 보고서
+      intent: content
+    id: T12_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 입증시험 계획서/결과 보고서수락시험 절차서
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 3
+    col: 2
+    text: 1부
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1부
+      intent: content
+    id: T12_R3_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 초도운용요원 교육결과 보고서
+      up: 1부
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 3
+    col: 3
+    text: 기품원 성능개량연구실
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기품원 성능개량연구실
+      intent: content
+    id: T12_R3_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1부
+      up: 기품원 성능개량연구실
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 4
+    col: 0
+    text: 기술자료
+    colspan: 1
+    rowspan: 2
+    inner_ps:
+    - sub_idx: 0
+      text: 기술자료
+      intent: content
+    id: T12_R4_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 보고서
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 4
+    col: 1
+    text: 규격서, 도면, BOM, 품질보증요구서(QAR)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 규격서, 도면, BOM, 품질보증요구서(QAR)
+      intent: content
+    id: T12_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 기술자료
+      up: 초도운용요원 교육결과 보고서
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 4
+    col: 2
+    text: 1식
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1식
+      intent: content
+    id: T12_R4_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 규격서, 도면, BOM, 품질보증요구서(QAR)
+      up: 1부
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 4
+    col: 3
+    text: 기품원 성능개량연구실
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기품원 성능개량연구실
+      intent: content
+    id: T12_R4_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1식
+      up: 기품원 성능개량연구실
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 5
+    col: 1
+    text: 소프트웨어 소스코드 및 산출물
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 소프트웨어 소스코드 및 산출물
+      intent: content
+    id: T12_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 규격서, 도면, BOM, 품질보증요구서(QAR)
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 5
+    col: 2
+    text: 1식
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1식
+      intent: content
+    id: T12_R5_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 소프트웨어 소스코드 및 산출물
+      up: 1식
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+  - row: 5
+    col: 3
+    text: 공군 항공소프트웨어지원소
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 공군 항공소프트웨어지원소
+      intent: content
+    id: T12_R5_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1식
+      up: 기품원 성능개량연구실
+      table_label: 품 목
+    section_label: 붙임1  납품물 및 제출서류 목록
+- idx: 13
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: 붙임2
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 붙임2
+      intent: content
+    id: T13_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 붙임2
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T13_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 붙임2
+      up: ''
+      table_label: 붙임2
+      section_label: 붙임2  규격입찰서 서식 및 작성 목차
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 0
+    col: 2
+    text: 규격입찰서 서식 및 작성 목차
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 규격입찰서 서식 및 작성 목차
+      intent: content
+    id: T13_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 붙임2
+      up: ''
+      table_label: 붙임2
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+- idx: 14
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: F-16 PBU 모의비행장비 성능개선 규격입찰서2026. 00. 00 (제출일자)국방기술품질원       성능개량연구실 (귀중)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: F-16 PBU 모의비행장비 성능개선
+      intent: content
+    - sub_idx: 1
+      text: 규격입찰서
+      intent: content
+    - sub_idx: 2
+      text: ''
+      intent: empty
+    - sub_idx: 3
+      text: ''
+      intent: empty
+    - sub_idx: 4
+      text: ''
+      intent: empty
+    - sub_idx: 5
+      text: ''
+      intent: empty
+    - sub_idx: 6
+      text: ''
+      intent: empty
+    - sub_idx: 7
+      text: 2026. 00. 00 (제출일자)
+      intent: example
+    - sub_idx: 8
+      text: ''
+      intent: empty
+    - sub_idx: 9
+      text: ''
+      intent: empty
+    - sub_idx: 10
+      text: ''
+      intent: empty
+    - sub_idx: 11
+      text: 국방기술품질원
+      intent: content
+    - sub_idx: 12
+      text: 성능개량연구실 (귀중)
+      intent: content
+    id: T14_R0_C0
+    is_empty: false
+    intent: example
+    hints:
+      left: ''
+      up: ''
+      table_label: F-16 PBU 모의비행장비 성능개선 규격입찰서2026. 00. 00 (제출일자)국방기술품질원       성능개량연구실
+        (귀중)
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+- idx: 15
+  rows: 17
+  cols: 2
+  cells:
+  - row: 0
+    col: 0
+    text: 작 성 항 목
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 작 성 항 목
+      intent: content
+    id: T15_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 0
+    col: 1
+    text: 작 성 방 법
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 작 성 방 법
+      intent: content
+    id: T15_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 작 성 항 목
+      up: ''
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 1
+    col: 0
+    text: 표지
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 표지
+      intent: content
+    id: T15_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 작 성 항 목
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 2
+    col: 0
+    text: Ⅰ. 입찰업체 일반사항
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: Ⅰ. 입찰업체 일반사항
+      intent: content
+    id: T15_R2_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 표지
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 3
+    col: 0
+    text: 1. 일반현황
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1. 일반현황
+      intent: content
+    id: T15_R3_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: Ⅰ. 입찰업체 일반사항
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 3
+    col: 1
+    text: ㆍ입찰업체의 일반현황 및 주요 연혁 등을 간략히 제시
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ입찰업체의 일반현황 및 주요 연혁 등을 간략히 제시
+      intent: content
+    id: T15_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1. 일반현황
+      up: 작 성 방 법
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 4
+    col: 0
+    text: 2. 조직 및 인원현황
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 2. 조직 및 인원현황
+      intent: content
+    id: T15_R4_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 1. 일반현황
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 4
+    col: 1
+    text: ㆍ입찰업체의 현재 조직 및 인원현황(보유기술자)을 간략히 제시
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ입찰업체의 현재 조직 및 인원현황(보유기술자)을 간략히 제시
+      intent: content
+    id: T15_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 2. 조직 및 인원현황
+      up: ㆍ입찰업체의 일반현황 및 주요 연혁 등을 간략히 제시
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 5
+    col: 0
+    text: 3. 입찰업체 신인도
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 3. 입찰업체 신인도
+      intent: content
+    id: T15_R5_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 2. 조직 및 인원현황
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 5
+    col: 1
+    text: ㆍ정량적 평가기준을 참고하여 제출
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ정량적 평가기준을 참고하여 제출
+      intent: content
+    id: T15_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 3. 입찰업체 신인도
+      up: ㆍ입찰업체의 현재 조직 및 인원현황(보유기술자)을 간략히 제시
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 6
+    col: 0
+    text: Ⅱ. 개요 및 기술지식 능력
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: Ⅱ. 개요 및 기술지식 능력
+      intent: content
+    id: T15_R6_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 3. 입찰업체 신인도
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 7
+    col: 0
+    text: 1. 개 요
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1. 개 요
+      intent: content
+    id: T15_R7_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: Ⅱ. 개요 및 기술지식 능력
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 7
+    col: 1
+    text: ㆍ입찰업체는 본 사업의 내용을 명확하게 이해하고 본 사업의 목적 및 배경, 범위, 조건 등을 간략히 기술
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ입찰업체는 본 사업의 내용을 명확하게 이해하고 본 사업의 목적 및 배경, 범위, 조건 등을 간략히 기술
+      intent: content
+    id: T15_R7_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1. 개 요
+      up: ㆍ정량적 평가기준을 참고하여 제출
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 8
+    col: 0
+    text: 2. 입찰업체 기술지식 능력
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 2. 입찰업체 기술지식 능력
+      intent: content
+    id: T15_R8_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 1. 개 요
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 8
+    col: 1
+    text: ㆍ본 사업을 위한 입찰업체의 기술, 지식능력을 간략히 기술ㆍ본 사업과 관련하여 입찰업체만의 특징 및 장점을 간략히 기술
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ본 사업을 위한 입찰업체의 기술, 지식능력을 간략히 기술
+      intent: content
+    - sub_idx: 1
+      text: ㆍ본 사업과 관련하여 입찰업체만의 특징 및 장점을 간략히 기술
+      intent: content
+    id: T15_R8_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 2. 입찰업체 기술지식 능력
+      up: ㆍ입찰업체는 본 사업의 내용을 명확하게 이해하고 본 사업의 목적 및 배경, 범위, 조건 등을 간략히 기술
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 9
+    col: 0
+    text: Ⅲ. 사업수행계획 및 내용
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: Ⅲ. 사업수행계획 및 내용
+      intent: content
+    id: T15_R9_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 2. 입찰업체 기술지식 능력
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 10
+    col: 0
+    text: 1. 추진전략 및 기대효과
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 1. 추진전략 및 기대효과
+      intent: content
+    id: T15_R10_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: Ⅲ. 사업수행계획 및 내용
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 10
+    col: 1
+    text: ㆍ본 사업수행의 추진전략 및 기대효과를 상세히 기술
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ본 사업수행의 추진전략 및 기대효과를 상세히 기술
+      intent: content
+    id: T15_R10_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 1. 추진전략 및 기대효과
+      up: ㆍ본 사업을 위한 입찰업체의 기술, 지식능력을 간략히 기술ㆍ본 사업과 관련하여 입찰업체만의 특징 및 장점을 간략히 기술
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 11
+    col: 0
+    text: 2. 시스템 구성 및 공정계획
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 2. 시스템 구성 및 공정계획
+      intent: content
+    id: T15_R11_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 1. 추진전략 및 기대효과
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 11
+    col: 1
+    text: ㆍ본 사업의 요구사항을 만족시키는 시스템 구성도 및 기능 구성 체계 등을 제시ㆍ본 사업수행을 위한 일정계획을 제시
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ본 사업의 요구사항을 만족시키는 시스템 구성도 및 기능 구성 체계 등을 제시
+      intent: content
+    - sub_idx: 1
+      text: ㆍ본 사업수행을 위한 일정계획을 제시
+      intent: content
+    id: T15_R11_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 2. 시스템 구성 및 공정계획
+      up: ㆍ본 사업수행의 추진전략 및 기대효과를 상세히 기술
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 12
+    col: 0
+    text: 3. 제원 및 요구성능 구현
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 3. 제원 및 요구성능 구현
+      intent: content
+    id: T15_R12_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 2. 시스템 구성 및 공정계획
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 12
+    col: 1
+    text: ㆍ제안하는 장비의 주요 구성품의 제조사, 품명, 규격, 수량 등을 상세히 기술  * 2.2. 제원 및 요구성능 내용 포함 2.3.
+      통합체계지원요소 내용 포함
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ제안하는 장비의 주요 구성품의 제조사, 품명, 규격, 수량 등을 상세히 기술
+      intent: content
+    - sub_idx: 1
+      text: '* 2.2. 제원 및 요구성능 내용 포함 2.3. 통합체계지원요소 내용 포함'
+      intent: content
+    id: T15_R12_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 3. 제원 및 요구성능 구현
+      up: ㆍ본 사업의 요구사항을 만족시키는 시스템 구성도 및 기능 구성 체계 등을 제시ㆍ본 사업수행을 위한 일정계획을 제시
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 13
+    col: 0
+    text: 4. 통합체계지원
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 4. 통합체계지원
+      intent: content
+    id: T15_R13_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 3. 제원 및 요구성능 구현
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 13
+    col: 1
+    text: ㆍ본 사업수행을 위한 통합체계지원 방안을 상세히 기술    * 2.3. 통합체계지원요소 내용 포함
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ본 사업수행을 위한 통합체계지원 방안을 상세히 기술
+      intent: content
+    - sub_idx: 1
+      text: '* 2.3. 통합체계지원요소 내용 포함'
+      intent: content
+    id: T15_R13_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 4. 통합체계지원
+      up: ㆍ제안하는 장비의 주요 구성품의 제조사, 품명, 규격, 수량 등을 상세히 기술  * 2.2. 제원 및 요구성능 내용 포함 2.3.
+        통합체계지원요소 내용 포함
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 14
+    col: 0
+    text: 5. 납품 및 설치 방안
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 5. 납품 및 설치 방안
+      intent: content
+    id: T15_R14_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 4. 통합체계지원
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 14
+    col: 1
+    text: ㆍ본 사업수행을 위한 납품, 설치 범위, 설치방안(철거 포함) 및 단계별 공정계획 등을 상세히 수립하여 제시  * 2.6. 납품
+      및 설치 내용 포함
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ본 사업수행을 위한 납품, 설치 범위, 설치방안(철거 포함) 및 단계별 공정계획 등을 상세히 수립하여 제시
+      intent: content
+    - sub_idx: 1
+      text: '* 2.6. 납품 및 설치 내용 포함'
+      intent: content
+    id: T15_R14_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 5. 납품 및 설치 방안
+      up: ㆍ본 사업수행을 위한 통합체계지원 방안을 상세히 기술    * 2.3. 통합체계지원요소 내용 포함
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 15
+    col: 0
+    text: 6. 시험 및 품질보증방안
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 6. 시험 및 품질보증방안
+      intent: content
+    id: T15_R15_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 5. 납품 및 설치 방안
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 15
+    col: 1
+    text: ㆍ성능검사 방법 및 설치(완료)와 관련된 이행방안(성능평가 등)을 상세히 기술ㆍ품질보증방안 및 품질보증을 위한 방법, 절차, 내용
+      등을 상세히 기술  * 2.4. 검사와 시험 및 품질보증 내용 포함
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ성능검사 방법 및 설치(완료)와 관련된 이행방안(성능평가 등)을 상세히 기술
+      intent: content
+    - sub_idx: 1
+      text: ㆍ품질보증방안 및 품질보증을 위한 방법, 절차, 내용 등을 상세히 기술
+      intent: content
+    - sub_idx: 2
+      text: '* 2.4. 검사와 시험 및 품질보증 내용 포함'
+      intent: content
+    id: T15_R15_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 6. 시험 및 품질보증방안
+      up: ㆍ본 사업수행을 위한 납품, 설치 범위, 설치방안(철거 포함) 및 단계별 공정계획 등을 상세히 수립하여 제시  * 2.6. 납품
+        및 설치 내용 포함
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 16
+    col: 0
+    text: 7. 포장 및 표시, 기타사항
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 7. 포장 및 표시, 기타사항
+      intent: content
+    id: T15_R16_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 6. 시험 및 품질보증방안
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  - row: 16
+    col: 1
+    text: ㆍ2.5.(포장 및 표시), 2.7.(기타 사항)을 참조하여 본 사업과 관련된 내용 기술ㆍ추가로 제시하고자 하는 항목과 내용 기술
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ2.5.(포장 및 표시), 2.7.(기타 사항)을 참조하여 본 사업과 관련된 내용 기술
+      intent: content
+    - sub_idx: 1
+      text: ㆍ추가로 제시하고자 하는 항목과 내용 기술
+      intent: content
+    id: T15_R16_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 7. 포장 및 표시, 기타사항
+      up: ㆍ성능검사 방법 및 설치(완료)와 관련된 이행방안(성능평가 등)을 상세히 기술ㆍ품질보증방안 및 품질보증을 위한 방법, 절차, 내용
+        등을 상세히 기술  * 2.4. 검사와 시험 및 품질보증 내용 포함
+      table_label: 작 성 항 목
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+- idx: 16
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: 붙임 3
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 붙임 3
+      intent: content
+    id: T16_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 붙임 3
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T16_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 붙임 3
+      up: ''
+      table_label: 붙임 3
+      section_label: 붙임 3  규격평가 기준표
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 2
+    text: 규격평가 기준표
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 규격평가 기준표
+      intent: content
+    id: T16_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 붙임 3
+      up: ''
+      table_label: 붙임 3
+    section_label: 붙임 3  규격평가 기준표
+- idx: 17
+  rows: 13
+  cols: 4
+  cells:
+  - row: 0
+    col: 0
+    text: 구 분
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 구 분
+      intent: content
+    id: T17_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 1
+    text: 평가부문
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 평가부문
+      intent: content
+    id: T17_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 구 분
+      up: ''
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 2
+    text: 평 가 항 목
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 평 가 항 목
+      intent: content
+    id: T17_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 평가부문
+      up: ''
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 3
+    text: 배점
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 배점
+      intent: content
+    id: T17_R0_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 평 가 항 목
+      up: ''
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 0
+    text: 정량평가(15)
+    colspan: 1
+    rowspan: 2
+    inner_ps:
+    - sub_idx: 0
+      text: 정량평가
+      intent: content
+    - sub_idx: 1
+      text: (15)
+      intent: content
+    id: T17_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 구 분
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 1
+    text: 경영상태(10)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 경영상태
+      intent: content
+    - sub_idx: 1
+      text: (10)
+      intent: content
+    id: T17_R1_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 정량평가(15)
+      up: 평가부문
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 2
+    text: '① 신용평가등급 확인서의 신용평가등급     ※ 첨부서류: 신용평가등급 확인서'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ① 신용평가등급 확인서의 신용평가등급
+      intent: content
+    - sub_idx: 1
+      text: '※ 첨부서류: 신용평가등급 확인서'
+      intent: instruction
+    id: T17_R1_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 경영상태(10)
+      up: 평 가 항 목
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 3
+    text: '10'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '10'
+      intent: content
+    id: T17_R1_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: '① 신용평가등급 확인서의 신용평가등급     ※ 첨부서류: 신용평가등급 확인서'
+      up: 배점
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 1
+    text: 납품실적(5)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 납품실적
+      intent: content
+    - sub_idx: 1
+      text: (5)
+      intent: content
+    id: T17_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 경영상태(10)
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 2
+    text: '② 납품실적 배점  ※ 첨부서류: 실적증명서'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ② 납품실적 배점
+      intent: content
+    - sub_idx: 1
+      text: '※ 첨부서류: 실적증명서'
+      intent: instruction
+    id: T17_R2_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 납품실적(5)
+      up: '① 신용평가등급 확인서의 신용평가등급     ※ 첨부서류: 신용평가등급 확인서'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 3
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T17_R2_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: '② 납품실적 배점  ※ 첨부서류: 실적증명서'
+      up: '10'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 0
+    text: 정성평가(85)
+    colspan: 1
+    rowspan: 9
+    inner_ps:
+    - sub_idx: 0
+      text: 정성평가
+      intent: content
+    - sub_idx: 1
+      text: (85)
+      intent: content
+    id: T17_R3_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 정량평가(15)
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 1
+    text: 사업수행계획(15)
+    colspan: 1
+    rowspan: 3
+    inner_ps:
+    - sub_idx: 0
+      text: 사업수행계획
+      intent: content
+    - sub_idx: 1
+      text: (15)
+      intent: content
+    id: T17_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 정성평가(85)
+      up: 납품실적(5)
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 2
+    text: ① 본 사업을 위한 기술, 지식 능력수준
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ① 본 사업을 위한 기술, 지식 능력수준
+      intent: content
+    id: T17_R3_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 사업수행계획(15)
+      up: '② 납품실적 배점  ※ 첨부서류: 실적증명서'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 3
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T17_R3_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ① 본 사업을 위한 기술, 지식 능력수준
+      up: '5'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 2
+    text: ② 사업수행을 위한 추진전략 및 기대효과
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ② 사업수행을 위한 추진전략 및 기대효과
+      intent: content
+    id: T17_R4_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ① 본 사업을 위한 기술, 지식 능력수준
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 3
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T17_R4_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ② 사업수행을 위한 추진전략 및 기대효과
+      up: '5'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 2
+    text: ③ 사업수행을 위한 체계구성도 및 공정계획의 적정성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ③ 사업수행을 위한 체계구성도 및 공정계획의 적정성
+      intent: content
+    id: T17_R5_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ② 사업수행을 위한 추진전략 및 기대효과
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 3
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T17_R5_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ③ 사업수행을 위한 체계구성도 및 공정계획의 적정성
+      up: '5'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 1
+    text: 사업수행능력(55)
+    colspan: 1
+    rowspan: 5
+    inner_ps:
+    - sub_idx: 0
+      text: 사업수행능력
+      intent: content
+    - sub_idx: 1
+      text: (55)
+      intent: content
+    id: T17_R6_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 사업수행계획(15)
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 2
+    text: ① 제원 및 요구성능 구현의 적정성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ① 제원 및 요구성능 구현의 적정성
+      intent: content
+    id: T17_R6_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 사업수행능력(55)
+      up: ③ 사업수행을 위한 체계구성도 및 공정계획의 적정성
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 3
+    text: '25'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '25'
+      intent: content
+    id: T17_R6_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ① 제원 및 요구성능 구현의 적정성
+      up: '5'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 7
+    col: 2
+    text: ② 납품 및 설치범위, 설치방안(철거포함)의 타당성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ② 납품 및 설치범위, 설치방안(철거포함)의 타당성
+      intent: content
+    id: T17_R7_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ① 제원 및 요구성능 구현의 적정성
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 7
+    col: 3
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T17_R7_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ② 납품 및 설치범위, 설치방안(철거포함)의 타당성
+      up: '25'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 8
+    col: 2
+    text: ③ 단계별 세부 공정계획의 적정성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ③ 단계별 세부 공정계획의 적정성
+      intent: content
+    id: T17_R8_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ② 납품 및 설치범위, 설치방안(철거포함)의 타당성
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 8
+    col: 3
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T17_R8_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ③ 단계별 세부 공정계획의 적정성
+      up: '5'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 9
+    col: 2
+    text: ④ 성능검사 방법 및 이행방안의 타당성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ④ 성능검사 방법 및 이행방안의 타당성
+      intent: content
+    id: T17_R9_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ③ 단계별 세부 공정계획의 적정성
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 9
+    col: 3
+    text: '10'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '10'
+      intent: content
+    id: T17_R9_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ④ 성능검사 방법 및 이행방안의 타당성
+      up: '5'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 10
+    col: 2
+    text: ⑤ 품질보증방안 및 품질보증계획의 적정성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ⑤ 품질보증방안 및 품질보증계획의 적정성
+      intent: content
+    id: T17_R10_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ④ 성능검사 방법 및 이행방안의 타당성
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 10
+    col: 3
+    text: '10'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '10'
+      intent: content
+    id: T17_R10_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ⑤ 품질보증방안 및 품질보증계획의 적정성
+      up: '10'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 11
+    col: 1
+    text: 기타사항(15)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기타사항
+      intent: content
+    - sub_idx: 1
+      text: (15)
+      intent: content
+    id: T17_R11_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 사업수행능력(55)
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 11
+    col: 2
+    text: ① 감독/검사 업무 협의, 보안업무 수행, 추가 제시사항 등의 적정성
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ① 감독/검사 업무 협의, 보안업무 수행, 추가 제시사항 등의 적정성
+      intent: content
+    id: T17_R11_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 기타사항(15)
+      up: ⑤ 품질보증방안 및 품질보증계획의 적정성
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 11
+    col: 3
+    text: '15'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '15'
+      intent: content
+    id: T17_R11_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ① 감독/검사 업무 협의, 보안업무 수행, 추가 제시사항 등의 적정성
+      up: '10'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 12
+    col: 0
+    text: 합계
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 합계
+      intent: content
+    id: T17_R12_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 정성평가(85)
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+  - row: 12
+    col: 1
+    text: ''
+    colspan: 2
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T17_R12_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 합계
+      up: 기타사항(15)
+      table_label: 구 분
+      section_label: 붙임 3  규격평가 기준표
+    section_label: 붙임 3  규격평가 기준표
+  - row: 12
+    col: 3
+    text: '100'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '100'
+      intent: example
+    id: T17_R12_C3
+    is_empty: false
+    intent: example
+    hints:
+      left: 합계
+      up: '15'
+      table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+- idx: 18
+  rows: 10
+  cols: 4
+  cells:
+  - row: 0
+    col: 0
+    text: 신 용 평 가 등 급
+    colspan: 3
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 신 용 평 가 등 급
+      intent: content
+    id: T18_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 3
+    text: 점수
+    colspan: 1
+    rowspan: 2
+    inner_ps:
+    - sub_idx: 0
+      text: 점수
+      intent: content
+    id: T18_R0_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 신 용 평 가 등 급
+      up: ''
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 0
+    text: 회사채
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채
+      intent: content
+    id: T18_R1_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 신 용 평 가 등 급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 1
+    text: 기업어음
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기업어음
+      intent: content
+    id: T18_R1_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채
+      up: ''
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 2
+    text: 기업신용평가
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 기업신용평가
+      intent: content
+    id: T18_R1_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 기업어음
+      up: ''
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 0
+    text: A-이상
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: A-이상
+      intent: content
+    id: T18_R2_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: 회사채
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 1
+    text: A2-이상
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: A2-이상
+      intent: content
+    id: T18_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: A-이상
+      up: 기업어음
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R2_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: A2-이상
+      up: 기업신용평가
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 3
+    text: '10.0'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '10.0'
+      intent: example
+    id: T18_R2_C3
+    is_empty: false
+    intent: example
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: 점수
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 0
+    text: BBB+
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: BBB+
+      intent: content
+    id: T18_R3_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: A-이상
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 1
+    text: A3+
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: A3+
+      intent: content
+    id: T18_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: BBB+
+      up: A2-이상
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R3_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: A3+
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 3
+    text: '9.5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '9.5'
+      intent: header
+    id: T18_R3_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '10.0'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 0
+    text: BBB0
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: BBB0
+      intent: content
+    id: T18_R4_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: BBB+
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 1
+    text: A30
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: A30
+      intent: content
+    id: T18_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: BBB0
+      up: A3+
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R4_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: A30
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 3
+    text: '9.0'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '9.0'
+      intent: header
+    id: T18_R4_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '9.5'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 0
+    text: BBB-
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: BBB-
+      intent: content
+    id: T18_R5_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: BBB0
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 1
+    text: A3-
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: A3-
+      intent: content
+    id: T18_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: BBB-
+      up: A30
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R5_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: A3-
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 3
+    text: '8.5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '8.5'
+      intent: header
+    id: T18_R5_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '9.0'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 0
+    text: BB+, BB0
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: BB+, BB0
+      intent: content
+    id: T18_R6_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: BBB-
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 1
+    text: B+
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: B+
+      intent: content
+    id: T18_R6_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: BB+, BB0
+      up: A3-
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R6_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: B+
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 3
+    text: '8.0'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '8.0'
+      intent: header
+    id: T18_R6_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '8.5'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 7
+    col: 0
+    text: BB-
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: BB-
+      intent: content
+    id: T18_R7_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: BB+, BB0
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 7
+    col: 1
+    text: B0
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: B0
+      intent: content
+    id: T18_R7_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: BB-
+      up: B+
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 7
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R7_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: B0
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 7
+    col: 3
+    text: '7.5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '7.5'
+      intent: header
+    id: T18_R7_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '8.0'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 8
+    col: 0
+    text: B+, B0, B-
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: B+, B0, B-
+      intent: content
+    id: T18_R8_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: BB-
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 8
+    col: 1
+    text: B-
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: B-
+      intent: content
+    id: T18_R8_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: B+, B0, B-
+      up: B0
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 8
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R8_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: B-
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 8
+    col: 3
+    text: '7.0'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '7.0'
+      intent: header
+    id: T18_R8_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '7.5'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 9
+    col: 0
+    text: CCC+ 이하
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: CCC+ 이하
+      intent: content
+    id: T18_R9_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: B+, B0, B-
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 9
+    col: 1
+    text: C 이하
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: C 이하
+      intent: content
+    id: T18_R9_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: CCC+ 이하
+      up: B-
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 9
+    col: 2
+    text: 회사채에 대한 신용평가등급
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 회사채에 대한 신용평가등급
+      intent: content
+    id: T18_R9_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: C 이하
+      up: 회사채에 대한 신용평가등급
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+  - row: 9
+    col: 3
+    text: '6.5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '6.5'
+      intent: header
+    id: T18_R9_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 회사채에 대한 신용평가등급
+      up: '7.0'
+      table_label: 신 용 평 가 등 급
+    section_label: 붙임 3  규격평가 기준표
+- idx: 19
+  rows: 7
+  cols: 2
+  cells:
+  - row: 0
+    col: 0
+    text: 납 품 실 적
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 납 품 실 적
+      intent: content
+    id: T19_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 0
+    col: 1
+    text: 배 점
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 배 점
+      intent: content
+    id: T19_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 납 품 실 적
+      up: ''
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 0
+    text: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT) 현존 전력
+      성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT) 현존
+        전력 성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+      intent: example
+    id: T19_R1_C0
+    is_empty: false
+    intent: example
+    hints:
+      left: ''
+      up: 납 품 실 적
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 1
+    col: 1
+    text: '5'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '5'
+      intent: content
+    id: T19_R1_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT) 현존
+        전력 성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+      up: 배 점
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 0
+    text: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+      intent: example
+    id: T19_R2_C0
+    is_empty: false
+    intent: example
+    hints:
+      left: ''
+      up: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT) 현존 전력
+        성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 2
+    col: 1
+    text: '4'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '4'
+      intent: content
+    id: T19_R2_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+      up: '5'
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 0
+    text: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+      intent: example
+    id: T19_R3_C0
+    is_empty: false
+    intent: example
+    hints:
+      left: ''
+      up: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 3
+    col: 1
+    text: '3'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '3'
+      intent: content
+    id: T19_R3_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+      up: '4'
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 0
+    text: ㆍ유사 장비 납품 실적이 본 사업예산의 50% 이상 ~ 70% 미만
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ유사 장비 납품 실적이 본 사업예산의 50% 이상 ~ 70% 미만
+      intent: content
+    id: T19_R4_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 4
+    col: 1
+    text: '2'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '2'
+      intent: content
+    id: T19_R4_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ㆍ유사 장비 납품 실적이 본 사업예산의 50% 이상 ~ 70% 미만
+      up: '3'
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 0
+    text: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 이상 ~ 50% 미만
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 이상 ~ 50% 미만
+      intent: content
+    id: T19_R5_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ㆍ유사 장비 납품 실적이 본 사업예산의 50% 이상 ~ 70% 미만
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 5
+    col: 1
+    text: '1'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '1'
+      intent: content
+    id: T19_R5_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 이상 ~ 50% 미만
+      up: '2'
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 0
+    text: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 미만
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 미만
+      intent: content
+    id: T19_R6_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 이상 ~ 50% 미만
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+  - row: 6
+    col: 1
+    text: '0'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '0'
+      intent: content
+    id: T19_R6_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ㆍ유사 장비 납품 실적이 본 사업예산의 20% 미만
+      up: '1'
+      table_label: 납 품 실 적
+    section_label: 붙임 3  규격평가 기준표
+- idx: 20
+  rows: 1
+  cols: 3
+  cells:
+  - row: 0
+    col: 0
+    text: 붙임 4
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 붙임 4
+      intent: content
+    id: T20_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 붙임 4
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T20_R0_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 붙임 4
+      up: ''
+      table_label: 붙임 4
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 2
+    text: 각 종 서식
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 각 종 서식
+      intent: content
+    id: T20_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 붙임 4
+      up: ''
+      table_label: 붙임 4
+    section_label: 붙임 4  각 종 서식
+- idx: 21
+  rows: 11
+  cols: 6
+  cells:
+  - row: 0
+    col: 0
+    text: 조건부호
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 조건
+      intent: content
+    - sub_idx: 1
+      text: 부호
+      intent: content
+    id: T21_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 1
+    text: ①(규격입찰요청서)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ①
+      intent: content
+    - sub_idx: 1
+      text: (규격입찰요청서)
+      intent: content
+    id: T21_R0_C1
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: 조건부호
+      up: ''
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 2
+    text: ②
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ②
+      intent: content
+    id: T21_R0_C2
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ①(규격입찰요청서)
+      up: ''
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 3
+    text: ③  (규격입찰서)
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ③
+      intent: content
+    - sub_idx: 1
+      text: (규격입찰서)
+      intent: content
+    id: T21_R0_C3
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ②
+      up: ''
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 4
+    text: ④증빙서류, 규격입찰서     해당쪽수
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ④증빙서류, 규격입찰서
+      intent: content
+    - sub_idx: 1
+      text: 해당쪽수
+      intent: content
+    id: T21_R0_C4
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ③  (규격입찰서)
+      up: ''
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 0
+    col: 5
+    text: 비고
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 비고
+      intent: content
+    id: T21_R0_C5
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ④증빙서류, 규격입찰서     해당쪽수
+      up: ''
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 1
+    col: 0
+    text: '2.2'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '2.2'
+      intent: header
+    id: T21_R1_C0
+    is_empty: false
+    intent: example_row
+    hints:
+      left: ''
+      up: 조건부호
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 1
+    col: 1
+    text: 2.2.1.
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 2.2.1.
+      intent: header
+    id: T21_R1_C1
+    is_empty: false
+    intent: example_row
+    hints:
+      left: '2.2'
+      up: ①(규격입찰요청서)
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 1
+    col: 2
+    text: 수용
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 수용
+      intent: content
+    id: T21_R1_C2
+    is_empty: false
+    intent: example_row
+    hints:
+      left: 2.2.1.
+      up: ②
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 1
+    col: 3
+    text: '000'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: '000'
+      intent: example
+    id: T21_R1_C3
+    is_empty: false
+    intent: example_row
+    hints:
+      left: 수용
+      up: ③  (규격입찰서)
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 1
+    col: 4
+    text: 규격입찰서 p2
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 규격입찰서 p2
+      intent: content
+    id: T21_R1_C4
+    is_empty: false
+    intent: example_row
+    hints:
+      left: '000'
+      up: ④증빙서류, 규격입찰서     해당쪽수
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 1
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R1_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 규격입찰서 p2
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 2
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R2_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 2
+    col: 1
+    text: 2.2.1.1.
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 2.2.1.1.
+      intent: header
+    id: T21_R2_C1
+    is_empty: false
+    intent: example_row
+    hints:
+      left: ''
+      up: 2.2.1.
+      table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+  - row: 2
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R2_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 2.2.1.1.
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 2
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R2_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 2.2.1.1.
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 2
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R2_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 2.2.1.1.
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 2
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R2_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: 2.2.1.1.
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 3
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R3_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 3
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R3_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 3
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R3_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 3
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R3_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 3
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R3_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 3
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R3_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 4
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R4_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 4
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R4_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 4
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R4_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 4
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R4_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 4
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R4_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 4
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R4_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 5
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R5_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 5
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R5_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 5
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R5_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 5
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R5_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 5
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R5_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 5
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R5_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 6
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R6_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 6
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R6_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 6
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R6_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 6
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R6_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 6
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R6_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 6
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R6_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 7
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R7_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 7
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R7_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 7
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R7_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 7
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R7_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 7
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R7_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 7
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R7_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 8
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R8_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 8
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R8_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 8
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R8_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 8
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R8_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 8
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R8_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 8
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R8_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 9
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R9_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 9
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R9_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 9
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R9_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 9
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R9_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 9
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R9_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 9
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R9_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 10
+    col: 0
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R10_C0
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '2.2'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 10
+    col: 1
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R10_C1
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 2.2.1.1.
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 10
+    col: 2
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R10_C2
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 수용
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 10
+    col: 3
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R10_C3
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: '000'
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 10
+    col: 4
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R10_C4
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 규격입찰서 p2
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+  - row: 10
+    col: 5
+    text: ''
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: ''
+      intent: empty
+    id: T21_R10_C5
+    is_empty: true
+    intent: empty_input
+    hints:
+      left: ''
+      up: 비고
+      table_label: 조건부호
+      section_label: 붙임 4  각 종 서식
+    section_label: 붙임 4  각 종 서식
+- idx: 22
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: '국방기술품질원 품질연구본부 성능개량연구실장 귀하  당사(입찰참가 업체명)는 F-16 PBU 모의비행장비 성능개선 사업에 참여하기
+      위해 규격입찰서(증빙서류 포함)를 제출함에 있어 제출된 모든 자료는 사실 및 신뢰성 있는 분석에 기초하여 작성되었음을 서약하며, 업체 간
+      상호 비난 또는 담합행위 등 불공정 거래행위를 하지 않을 것과 증빙서류의 미흡한 제출로 인한 평가상의 불이익을 포함하여 국방기술품질원 규격입찰서
+      평가결과에 대하여 민·행정소송 등 어떠한 이의도 제기하지 않을 것을 서약합니다.2026.   .    .업체명 :                     대표이사
+      :        (날인)'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 국방기술품질원 품질연구본부 성능개량연구실장 귀하
+      intent: content
+    - sub_idx: 1
+      text: ''
+      intent: empty
+    - sub_idx: 2
+      text: 당사(입찰참가 업체명)는 F-16 PBU 모의비행장비 성능개선 사업에 참여하기 위해 규격입찰서(증빙서류 포함)를 제출함에 있어
+        제출된 모든 자료는 사실 및 신뢰성 있는 분석에 기초하여 작성되었음을 서약하며, 업체 간 상호 비난 또는 담합행위 등 불공정 거래행위를
+        하지 않을 것과 증빙서류의 미흡한 제출로 인한 평가상의 불이익을 포함하여 국방기술품질원 규격입찰서 평가결과에 대하여 민·행정소송 등
+        어떠한 이의도 제기하지 않을 것을 서약합니다.
+      intent: content
+    - sub_idx: 3
+      text: 2026.   .    .
+      intent: content
+    - sub_idx: 4
+      text: '업체명 :                     대표이사 :        (날인)'
+      intent: content
+    - sub_idx: 5
+      text: ''
+      intent: empty
+    id: T22_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '국방기술품질원 품질연구본부 성능개량연구실장 귀하  당사(입찰참가 업체명)는 F-16 PBU 모의비행장비 성능개선
+        사업에 참여하기 위해 규격입찰서(증빙서류 포함)를 제출함에 있어 제출된 모든 자료는 사실 및 신뢰성 있는 분석에 기초하여 작성되었음을
+        서약하며, 업체 간 상호 비난 또는 담합행위 등 불공정 거래행위를 하지 않을 것과 증빙서류의 미흡한 제출로 인한 평가상의 불이익을 포함하여
+        국방기술품질원 규격입찰서 평가결과에 대하여 민·행정소송 등 어떠한 이의도 제기하지 않을 것을 서약합니다.2026.   .    .업체명
+        :                     대표이사 :        (날인)'
+    section_label: 붙임 4  각 종 서식
+- idx: 23
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: '우리 회사는 부패 없는 투명한 기업경영과 공정한 행정이 사회발전과 국가 경쟁력에 중요한 관건이 됨을 깊이 인식하고, 국제적으로도
+      경제협력개발기구(OECD) 뇌물방지 협약이 발효되고 부패기업 및 국가에 대한 제재가 강화되는 추세에 맞추어 청렴계약이행서약 취지에 적극적으로
+      호응하여 2026년   월   일 국방기술품질원에서 시행하는 F-16 PBU 모의비행장비 성능개선 사업의 입찰 및 계약에 참여함에 있어
+      다음 사항을 서약합니다. 1. 입찰가격의 사전공개 및 특정인의 낙찰을 위한 담합을 하거나 다른 업체와 협정․결의 또는 합의하여 입찰의 자유경쟁을
+      부당하게 저해하는 일체의 불공정한 행위를 하지 아니한다. 2. 입찰․계약체결 및 계약이행과정에서 관계직원에게 직․간접적으로 금품이나 향응
+      등의 뇌물을 제공하기로 약속하거나 제공하지 아니한다. 3. 위 제1호 및 제2호를 위반한 경우에는 낙찰자 결정 취소, 계약 취소․해제․해지,
+      또는 입찰참가자격의 제한 등 ｢방위사업법｣에서 규정한 조치를 받더라도 이를 감수하고 국방기술품질원장을 상대로 손해배상을 청구하거나 민․형사상의
+      이의를 제기하지 않는다.  4. 회사 임직원이 관계직원에게 뇌물을 제공하거나 담합 등 불공정 행위를 하지 않도록 하고, 내부 비리 제보자에
+      대해서도 일체의 불이익을 받지 않도록 한다. 5. 본 건과 관련한 하도급계약의 체결 및 이행에 있어서 원 도급자로서의 우월한 지위를 이용하여
+      하도급자로부터 금품을 수수하거나 부당 또는   6. 본 건과 관련한 특정정보의 제공을 관계직원에게 요구하거나 제공받지 않도록 하며, 계약이행과정에서
+      알게 된 연구 성과물 등 특정정보를 임의로 제3자에게 제공 또는 누설하지 아니한다. 7. 우리 회사가 낙찰자로 결정될 경우 위의 서약내용을
+      그대로 계약특수조건에 명시하고 이행한다.                                                    년    월    일서약자
+      :       회사(업체코드 :      ) 대표 또는 임원          (인) 국방기술품질원장 귀하'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 우리 회사는 부패 없는 투명한 기업경영과 공정한 행정이 사회발전과 국가 경쟁력에 중요한 관건이 됨을 깊이 인식하고, 국제적으로도
+        경제협력개발기구(OECD) 뇌물방지 협약이 발효되고 부패기업 및 국가에 대한 제재가 강화되는 추세에 맞추어 청렴계약이행서약 취지에 적극적으로
+        호응하여 2026년   월   일 국방기술품질원에서 시행하는 F-16 PBU 모의비행장비 성능개선 사업의 입찰 및 계약에 참여함에 있어
+        다음 사항을 서약합니다.
+      intent: content
+    - sub_idx: 1
+      text: 1. 입찰가격의 사전공개 및 특정인의 낙찰을 위한 담합을 하거나 다른 업체와 협정․결의 또는 합의하여 입찰의 자유경쟁을 부당하게
+        저해하는 일체의 불공정한 행위를 하지 아니한다.
+      intent: content
+    - sub_idx: 2
+      text: ''
+      intent: empty
+    - sub_idx: 3
+      text: 2. 입찰․계약체결 및 계약이행과정에서 관계직원에게 직․간접적으로 금품이나 향응 등의 뇌물을 제공하기로 약속하거나 제공하지 아니한다.
+      intent: content
+    - sub_idx: 4
+      text: ''
+      intent: empty
+    - sub_idx: 5
+      text: 3. 위 제1호 및 제2호를 위반한 경우에는 낙찰자 결정 취소, 계약 취소․해제․해지, 또는 입찰참가자격의 제한 등 ｢방위사업법｣에서
+        규정한 조치를 받더라도 이를 감수하고 국방기술품질원장을 상대로 손해배상을 청구하거나 민․형사상의 이의를 제기하지 않는다.
+      intent: content
+    - sub_idx: 6
+      text: ''
+      intent: empty
+    - sub_idx: 7
+      text: 4. 회사 임직원이 관계직원에게 뇌물을 제공하거나 담합 등 불공정 행위를 하지 않도록 하고, 내부 비리 제보자에 대해서도 일체의
+        불이익을 받지 않도록 한다.
+      intent: content
+    - sub_idx: 8
+      text: ''
+      intent: empty
+    - sub_idx: 9
+      text: 5. 본 건과 관련한 하도급계약의 체결 및 이행에 있어서 원 도급자로서의 우월한 지위를 이용하여 하도급자로부터 금품을 수수하거나
+        부당 또는
+      intent: content
+    - sub_idx: 10
+      text: ''
+      intent: empty
+    - sub_idx: 11
+      text: 6. 본 건과 관련한 특정정보의 제공을 관계직원에게 요구하거나 제공받지 않도록 하며, 계약이행과정에서 알게 된 연구 성과물 등
+        특정정보를 임의로 제3자에게 제공 또는 누설하지 아니한다.
+      intent: content
+    - sub_idx: 12
+      text: ''
+      intent: empty
+    - sub_idx: 13
+      text: 7. 우리 회사가 낙찰자로 결정될 경우 위의 서약내용을 그대로 계약특수조건에 명시하고 이행한다.
+      intent: content
+    - sub_idx: 14
+      text: ''
+      intent: empty
+    - sub_idx: 15
+      text: 년    월    일
+      intent: content
+    - sub_idx: 16
+      text: ''
+      intent: empty
+    - sub_idx: 17
+      text: '서약자 :       회사(업체코드 :      ) 대표 또는 임원          (인)'
+      intent: content
+    - sub_idx: 18
+      text: ''
+      intent: empty
+    - sub_idx: 19
+      text: 국방기술품질원장 귀하
+      intent: content
+    id: T23_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '우리 회사는 부패 없는 투명한 기업경영과 공정한 행정이 사회발전과 국가 경쟁력에 중요한 관건이 됨을 깊이 인식하고,
+        국제적으로도 경제협력개발기구(OECD) 뇌물방지 협약이 발효되고 부패기업 및 국가에 대한 제재가 강화되는 추세에 맞추어 청렴계약이행서약
+        취지에 적극적으로 호응하여 2026년   월   일 국방기술품질원에서 시행하는 F-16 PBU 모의비행장비 성능개선 사업의 입찰 및
+        계약에 참여함에 있어 다음 사항을 서약합니다. 1. 입찰가격의 사전공개 및 특정인의 낙찰을 위한 담합을 하거나 다른 업체와 협정․결의
+        또는 합의하여 입찰의 자유경쟁을 부당하게 저해하는 일체의 불공정한 행위를 하지 아니한다. 2. 입찰․계약체결 및 계약이행과정에서 관계직원에게
+        직․간접적으로 금품이나 향응 등의 뇌물을 제공하기로 약속하거나 제공하지 아니한다. 3. 위 제1호 및 제2호를 위반한 경우에는 낙찰자
+        결정 취소, 계약 취소․해제․해지, 또는 입찰참가자격의 제한 등 ｢방위사업법｣에서 규정한 조치를 받더라도 이를 감수하고 국방기술품질원장을
+        상대로 손해배상을 청구하거나 민․형사상의 이의를 제기하지 않는다.  4. 회사 임직원이 관계직원에게 뇌물을 제공하거나 담합 등 불공정
+        행위를 하지 않도록 하고, 내부 비리 제보자에 대해서도 일체의 불이익을 받지 않도록 한다. 5. 본 건과 관련한 하도급계약의 체결 및
+        이행에 있어서 원 도급자로서의 우월한 지위를 이용하여 하도급자로부터 금품을 수수하거나 부당 또는   6. 본 건과 관련한 특정정보의
+        제공을 관계직원에게 요구하거나 제공받지 않도록 하며, 계약이행과정에서 알게 된 연구 성과물 등 특정정보를 임의로 제3자에게 제공 또는
+        누설하지 아니한다. 7. 우리 회사가 낙찰자로 결정될 경우 위의 서약내용을 그대로 계약특수조건에 명시하고 이행한다.                                                    년    월    일서약자
+        :       회사(업체코드 :      ) 대표 또는 임원          (인) 국방기술품질원장 귀하'
+    section_label: 붙임 4  각 종 서식
+- idx: 24
+  rows: 1
+  cols: 1
+  cells:
+  - row: 0
+    col: 0
+    text: '우리 회사는 F-16 PBU 모의비행장비 성능개선 사업에 관한 건을 취급함에 있어 다음 사항을 준수할 것을 서약합니다.   1.
+      제안요청서를 포함하여 취급하는 모든 군사자료가 국가안전보장에 관계될 수 있는 중요한 사항임을 명심하여 시간과 장소에 구애됨이 없이 제반
+      보안규정을 준수하여 군사자료를 보호하겠다.   2. 취급하는 업무 이외의 군사비밀을 알려고 하거나 부당한 방법으로 탐지, 수집하지 않겠다.   3.
+      군사비밀의 누설은 적을 이롭게 하는 것임을 자각하여 취급 또는 인지한 군사비밀을 누설하지 않겠다.   4. 군사비밀을 탐지, 수집 또는
+      누설행위가 반군 및 반국가적 행위임을 자인하고 제 법규에 따라 처벌을 감수할 것을 서약한다.      가. 군사기밀보호법      나.
+      국가보안법 제4조(목적 수행)      다. 형법 제 127조(공무상 비밀 누설)      라. 군형법 제80조(군사기밀 누설)   ※
+      ｢부패방지 및 국민권익위원회의 설치와 운영에 관한 법률｣에 따른 부패행위 신고와 ｢공익신고자 보호법｣에 따른 공익신고등의 경우에는 비밀준수
+      의무를 위반하지 않은 것으로 본다.                                             년    월    일서약자
+      :       회사(업체코드 :       ) 대표               (인) 국방기술품질원장 귀하'
+    colspan: 1
+    rowspan: 1
+    inner_ps:
+    - sub_idx: 0
+      text: 우리 회사는 F-16 PBU 모의비행장비 성능개선 사업에 관한 건을 취급함에 있어 다음 사항을 준수할 것을 서약합니다.
+      intent: content
+    - sub_idx: 1
+      text: ''
+      intent: empty
+    - sub_idx: 2
+      text: 1. 제안요청서를 포함하여 취급하는 모든 군사자료가 국가안전보장에 관계될 수 있는 중요한 사항임을 명심하여 시간과 장소에 구애됨이
+        없이 제반 보안규정을 준수하여 군사자료를 보호하겠다.
+      intent: content
+    - sub_idx: 3
+      text: ''
+      intent: empty
+    - sub_idx: 4
+      text: 2. 취급하는 업무 이외의 군사비밀을 알려고 하거나 부당한 방법으로 탐지, 수집하지 않겠다.
+      intent: content
+    - sub_idx: 5
+      text: ''
+      intent: empty
+    - sub_idx: 6
+      text: 3. 군사비밀의 누설은 적을 이롭게 하는 것임을 자각하여 취급 또는 인지한 군사비밀을 누설하지 않겠다.
+      intent: content
+    - sub_idx: 7
+      text: ''
+      intent: empty
+    - sub_idx: 8
+      text: 4. 군사비밀을 탐지, 수집 또는 누설행위가 반군 및 반국가적 행위임을 자인하고 제 법규에 따라 처벌을 감수할 것을 서약한다.
+      intent: content
+    - sub_idx: 9
+      text: 가. 군사기밀보호법
+      intent: header
+    - sub_idx: 10
+      text: 나. 국가보안법 제4조(목적 수행)
+      intent: header
+    - sub_idx: 11
+      text: 다. 형법 제 127조(공무상 비밀 누설)
+      intent: header
+    - sub_idx: 12
+      text: 라. 군형법 제80조(군사기밀 누설)
+      intent: header
+    - sub_idx: 13
+      text: ''
+      intent: empty
+    - sub_idx: 14
+      text: ※ ｢부패방지 및 국민권익위원회의 설치와 운영에 관한 법률｣에 따른 부패행위 신고와 ｢공익신고자 보호법｣에 따른 공익신고등의
+        경우에는 비밀준수 의무를 위반하지 않은 것으로 본다.
+      intent: instruction
+    - sub_idx: 15
+      text: ''
+      intent: empty
+    - sub_idx: 16
+      text: 년    월    일
+      intent: content
+    - sub_idx: 17
+      text: ''
+      intent: empty
+    - sub_idx: 18
+      text: '서약자 :       회사(업체코드 :       ) 대표               (인)'
+      intent: content
+    - sub_idx: 19
+      text: ''
+      intent: empty
+    - sub_idx: 20
+      text: 국방기술품질원장 귀하
+      intent: content
+    id: T24_R0_C0
+    is_empty: false
+    intent: label_or_content
+    hints:
+      left: ''
+      up: ''
+      table_label: '우리 회사는 F-16 PBU 모의비행장비 성능개선 사업에 관한 건을 취급함에 있어 다음 사항을 준수할 것을 서약합니다.   1.
+        제안요청서를 포함하여 취급하는 모든 군사자료가 국가안전보장에 관계될 수 있는 중요한 사항임을 명심하여 시간과 장소에 구애됨이 없이 제반
+        보안규정을 준수하여 군사자료를 보호하겠다.   2. 취급하는 업무 이외의 군사비밀을 알려고 하거나 부당한 방법으로 탐지, 수집하지 않겠다.   3.
+        군사비밀의 누설은 적을 이롭게 하는 것임을 자각하여 취급 또는 인지한 군사비밀을 누설하지 않겠다.   4. 군사비밀을 탐지, 수집 또는
+        누설행위가 반군 및 반국가적 행위임을 자인하고 제 법규에 따라 처벌을 감수할 것을 서약한다.      가. 군사기밀보호법      나.
+        국가보안법 제4조(목적 수행)      다. 형법 제 127조(공무상 비밀 누설)      라. 군형법 제80조(군사기밀 누설)   ※
+        ｢부패방지 및 국민권익위원회의 설치와 운영에 관한 법률｣에 따른 부패행위 신고와 ｢공익신고자 보호법｣에 따른 공익신고등의 경우에는 비밀준수
+        의무를 위반하지 않은 것으로 본다.                                             년    월    일서약자
+        :       회사(업체코드 :       ) 대표               (인) 국방기술품질원장 귀하'
+    section_label: 붙임 4  각 종 서식
+fill_targets:
+- id: T0_R0_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: ''
+    up: ''
+    table_label: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+    section_label: ''
+- id: T0_R2_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: ''
+    up: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+    table_label: <현존전력 성능 극대화 사업>F-16 PBU 모의비행장비 성능개선 사업 규격입찰요청서
+    section_label: ''
+- id: T1_R0_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: ''
+    up: ''
+    table_label: ''
+    section_label: ''
+- id: T3_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '1'
+    up: ''
+    table_label: '1'
+    section_label: ''
+- id: T3_R0_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '1'
+    up: ''
+    table_label: '1'
+    section_label: ''
+- id: T5_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '2'
+    up: ''
+    table_label: '2'
+    section_label: ''
+- id: T5_R0_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '2'
+    up: ''
+    table_label: '2'
+    section_label: ''
+- id: T6_R4_C3
+  type: cell
+  intent: example
+  current_text: '- SIM: 수평 300°(±150°), 수직 130°(+90°, -40°) 이상- CPT: 수평 210°(±105°),
+    수직 110°(+80°, -30°) 이상'
+  section_label: ''
+  hints:
+    left: 시현범위
+    up: '- SIM: Full Dome- CPT: Half Dome'
+    table_label: 구분
+- id: T6_R4_C3_P0
+  type: cell_paragraph
+  intent: example
+  current_text: '- SIM: 수평 300°(±150°), 수직 130°(+90°, -40°) 이상'
+  section_label: ''
+  hints:
+    left: 시현범위
+    up: '- SIM: Full Dome- CPT: Half Dome'
+    table_label: 구분
+    cell_text: '- SIM: 수평 300°(±150°), 수직 130°(+90°, -40°) 이상- CPT: 수평 210°(±105°),
+      수직 110°(+80°, -30°) 이상'
+- id: T6_R11_C3
+  type: cell
+  intent: example
+  current_text: '- 해상도: 4K UHD/채널 이상- 영상 갱신율(Update Rate): 60Hz 이상- 고도 데이터: DTED III
+    (10m급 고도 데이터) 이상  * DTED : Digital Terrain Elevation Data- 위성/항공사진: 한반도 전역 1M급
+    적용- 다각형(Polygon) 수: 1,000,000개/채널 이상- 왜곡 방지(Anti-Aliasing): 8 Sub-Pixel 이상- 이방성
+    필터(Anisotropic Filter): 8단계 이상- 영상DB 저장장치: 4TB 이상 M.2 NVMe 방식'
+  section_label: ''
+  hints:
+    left: 영상발생장치(IG)
+    up: '- 60Hz 이상'
+    table_label: 구분
+- id: T6_R11_C3_P5
+  type: cell_paragraph
+  intent: example
+  current_text: '- 다각형(Polygon) 수: 1,000,000개/채널 이상'
+  section_label: ''
+  hints:
+    left: 영상발생장치(IG)
+    up: '- 60Hz 이상'
+    table_label: 구분
+    cell_text: '- 해상도: 4K UHD/채널 이상- 영상 갱신율(Update Rate): 60Hz 이상- 고도 데이터: DTED III
+      (10m급 고도 데이터) 이상  * DTED : Digital Terrain Elevation Data- 위성/항공사진: 한반도 전역 1M급
+      적용- 다각형(Polygon) 수: 1,000,000개/채널 이상- 왜곡 방지(Anti-Aliasing): 8 Sub-Pixel 이상-
+      이방성 필터(Anisotropic Filter): 8단계 이상- 영상DB 저장장치: 4TB 이상 M.2 NVMe 방식'
+- id: T7_R1_C1
+  type: cell
+  intent: example
+  current_text: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현󰠂공군 발간 최신
+    FLIP(비행정보간행물) 기준 비상활주로 구현󰠂주 비행장 주변 비행참조물을 3차원 모델로 구현󰠂비행임무시 식별되는 위치에 있는 항법시설을 3차원
+    형상으로 구현
+  section_label: ''
+  hints:
+    left: 비행장 모델
+    up: '󰠂구현범위: 북위 33.0°~44.0°, 동경 124.0°~132.0°󰠂위성, 항공사진: 한반도 전역 1m급 적용󰠂고도자료: 한반도
+      전역 DTED Level III 적용󰠂여름 및 겨울 지형 모델 제공󰠂외부영상, 센서영상 및 레이더 영상제공'
+    table_label: 지형모델
+- id: T7_R1_C1_P0
+  type: cell_paragraph
+  intent: example
+  current_text: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현
+  section_label: ''
+  hints:
+    left: 비행장 모델
+    up: '󰠂구현범위: 북위 33.0°~44.0°, 동경 124.0°~132.0°󰠂위성, 항공사진: 한반도 전역 1m급 적용󰠂고도자료: 한반도
+      전역 DTED Level III 적용󰠂여름 및 겨울 지형 모델 제공󰠂외부영상, 센서영상 및 레이더 영상제공'
+    table_label: 지형모델
+    cell_text: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현󰠂공군 발간 최신 FLIP(비행정보간행물)
+      기준 비상활주로 구현󰠂주 비행장 주변 비행참조물을 3차원 모델로 구현󰠂비행임무시 식별되는 위치에 있는 항법시설을 3차원 형상으로 구현
+- id: T7_R1_C1_P1
+  type: cell_paragraph
+  intent: example
+  current_text: 󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현
+  section_label: ''
+  hints:
+    left: 비행장 모델
+    up: '󰠂구현범위: 북위 33.0°~44.0°, 동경 124.0°~132.0°󰠂위성, 항공사진: 한반도 전역 1m급 적용󰠂고도자료: 한반도
+      전역 DTED Level III 적용󰠂여름 및 겨울 지형 모델 제공󰠂외부영상, 센서영상 및 레이더 영상제공'
+    table_label: 지형모델
+    cell_text: 󰠂전 공군 비행장(00개소)을 3차원 형상으로 구현󰠂비 공군 비행장(00개소)을 3차원 형상으로 구현󰠂공군 발간 최신 FLIP(비행정보간행물)
+      기준 비상활주로 구현󰠂주 비행장 주변 비행참조물을 3차원 모델로 구현󰠂비행임무시 식별되는 위치에 있는 항법시설을 3차원 형상으로 구현
+- id: T8_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '3'
+    up: ''
+    table_label: '3'
+    section_label: ''
+- id: T8_R0_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '3'
+    up: ''
+    table_label: '3'
+    section_label: ''
+- id: T9_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '4'
+    up: ''
+    table_label: '4'
+    section_label: ''
+- id: T9_R0_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: ''
+  hints:
+    left: '4'
+    up: ''
+    table_label: '4'
+    section_label: ''
+- id: T10_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임1  납품물 및 제출서류 목록
+  hints:
+    left: 붙임1
+    up: ''
+    table_label: 붙임1
+    section_label: 붙임1  납품물 및 제출서류 목록
+- id: T11_R1_C2
+  type: cell
+  intent: example
+  current_text: 공군 제00전투비행단(충북지역)
+  section_label: 붙임1  납품물 및 제출서류 목록
+  hints:
+    left: 1세트
+    up: 납 지
+    table_label: 품 목
+- id: T11_R1_C2_P0
+  type: cell_paragraph
+  intent: example
+  current_text: 공군 제00전투비행단
+  section_label: 붙임1  납품물 및 제출서류 목록
+  hints:
+    left: 1세트
+    up: 납 지
+    table_label: 품 목
+    cell_text: 공군 제00전투비행단(충북지역)
+- id: T13_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  hints:
+    left: 붙임2
+    up: ''
+    table_label: 붙임2
+    section_label: 붙임2  규격입찰서 서식 및 작성 목차
+- id: T14_R0_C0
+  type: cell
+  intent: example
+  current_text: F-16 PBU 모의비행장비 성능개선 규격입찰서2026. 00. 00 (제출일자)국방기술품질원       성능개량연구실
+    (귀중)
+  section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  hints:
+    left: ''
+    up: ''
+    table_label: F-16 PBU 모의비행장비 성능개선 규격입찰서2026. 00. 00 (제출일자)국방기술품질원       성능개량연구실
+      (귀중)
+- id: T14_R0_C0_P7
+  type: cell_paragraph
+  intent: example
+  current_text: 2026. 00. 00 (제출일자)
+  section_label: 붙임2  규격입찰서 서식 및 작성 목차
+  hints:
+    left: ''
+    up: ''
+    table_label: F-16 PBU 모의비행장비 성능개선 규격입찰서2026. 00. 00 (제출일자)국방기술품질원       성능개량연구실
+      (귀중)
+    cell_text: F-16 PBU 모의비행장비 성능개선 규격입찰서2026. 00. 00 (제출일자)국방기술품질원       성능개량연구실
+      (귀중)
+- id: T16_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: 붙임 3
+    up: ''
+    table_label: 붙임 3
+    section_label: 붙임 3  규격평가 기준표
+- id: T17_R12_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: 합계
+    up: 기타사항(15)
+    table_label: 구 분
+    section_label: 붙임 3  규격평가 기준표
+- id: T17_R12_C3
+  type: cell
+  intent: example
+  current_text: '100'
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: 합계
+    up: '15'
+    table_label: 구 분
+- id: T17_R12_C3_P0
+  type: cell_paragraph
+  intent: example
+  current_text: '100'
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: 합계
+    up: '15'
+    table_label: 구 분
+    cell_text: '100'
+- id: T18_R2_C3
+  type: cell
+  intent: example
+  current_text: '10.0'
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: 회사채에 대한 신용평가등급
+    up: 점수
+    table_label: 신 용 평 가 등 급
+- id: T18_R2_C3_P0
+  type: cell_paragraph
+  intent: example
+  current_text: '10.0'
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: 회사채에 대한 신용평가등급
+    up: 점수
+    table_label: 신 용 평 가 등 급
+    cell_text: '10.0'
+- id: T19_R1_C0
+  type: cell
+  intent: example
+  current_text: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT)
+    현존 전력 성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: ''
+    up: 납 품 실 적
+    table_label: 납 품 실 적
+- id: T19_R1_C0_P0
+  type: cell_paragraph
+  intent: example
+  current_text: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT)
+    현존 전력 성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: ''
+    up: 납 품 실 적
+    table_label: 납 품 실 적
+    cell_text: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT)
+      현존 전력 성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+- id: T19_R2_C0
+  type: cell
+  intent: example
+  current_text: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: ''
+    up: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT) 현존 전력
+      성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+    table_label: 납 품 실 적
+- id: T19_R2_C0_P0
+  type: cell_paragraph
+  intent: example
+  current_text: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: ''
+    up: ㆍF-16PBU 모의비행장비(SIM/CPT) 납품 실적 또는 전투기/훈련기/회전익 등 항공기 모의비행장비(SIM/CPT) 현존 전력
+      성능 극대화 사업 납품 실적이 본 사업 예산의 100% 이상
+    table_label: 납 품 실 적
+    cell_text: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+- id: T19_R3_C0
+  type: cell
+  intent: example
+  current_text: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: ''
+    up: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+    table_label: 납 품 실 적
+- id: T19_R3_C0_P0
+  type: cell_paragraph
+  intent: example
+  current_text: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+  section_label: 붙임 3  규격평가 기준표
+  hints:
+    left: ''
+    up: ㆍ유사 장비 납품 실적이 본 사업예산의 100% 이상
+    table_label: 납 품 실 적
+    cell_text: ㆍ유사 장비 납품 실적이 본 사업예산의 70% 이상 ~ 100% 미만
+- id: T20_R0_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 붙임 4
+    up: ''
+    table_label: 붙임 4
+    section_label: 붙임 4  각 종 서식
+- id: T21_R1_C0
+  type: cell
+  intent: example_row
+  current_text: '2.2'
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 조건부호
+    table_label: 조건부호
+- id: T21_R1_C1
+  type: cell
+  intent: example_row
+  current_text: 2.2.1.
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: '2.2'
+    up: ①(규격입찰요청서)
+    table_label: 조건부호
+- id: T21_R1_C2
+  type: cell
+  intent: example_row
+  current_text: 수용
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 2.2.1.
+    up: ②
+    table_label: 조건부호
+- id: T21_R1_C3
+  type: cell
+  intent: example_row
+  current_text: '000'
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 수용
+    up: ③  (규격입찰서)
+    table_label: 조건부호
+- id: T21_R1_C4
+  type: cell
+  intent: example_row
+  current_text: 규격입찰서 p2
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: '000'
+    up: ④증빙서류, 규격입찰서     해당쪽수
+    table_label: 조건부호
+- id: T21_R1_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 규격입찰서 p2
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R2_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R2_C1
+  type: cell
+  intent: example_row
+  current_text: 2.2.1.1.
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.
+    table_label: 조건부호
+- id: T21_R2_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 2.2.1.1.
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R2_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 2.2.1.1.
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R2_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 2.2.1.1.
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R2_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: 2.2.1.1.
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R3_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R3_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R3_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R3_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R3_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R3_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R4_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R4_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R4_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R4_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R4_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R4_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R5_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R5_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R5_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R5_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R5_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R5_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R6_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R6_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R6_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R6_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R6_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R6_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R7_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R7_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R7_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R7_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R7_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R7_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R8_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R8_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R8_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R8_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R8_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R8_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R9_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R9_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R9_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R9_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R9_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R9_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R10_C0
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '2.2'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R10_C1
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 2.2.1.1.
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R10_C2
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 수용
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R10_C3
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: '000'
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R10_C4
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 규격입찰서 p2
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
+- id: T21_R10_C5
+  type: cell
+  intent: empty_input
+  current_text: ''
+  section_label: 붙임 4  각 종 서식
+  hints:
+    left: ''
+    up: 비고
+    table_label: 조건부호
+    section_label: 붙임 4  각 종 서식
