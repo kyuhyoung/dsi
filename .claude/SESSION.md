@@ -14,7 +14,7 @@
 - 🔴 **#1~4 정부 R&D 매칭펀드 전제 ✅완료**: #1 비율 70:30 fallback 제거(RFP/CLI 명시만, 미지정 확인필요) · #2 rfp-analyst 예산스키마 "[매칭펀드형만]"(비매칭펀드는 RFP 구조 그대로) · #3 fill_finance "백만원"/1000000 PY리터럴→무변환(한국 default=yaml proposal_output_unit) · #4 budget_vocab item_roles "R&D 전용·비R&D는 vocab 확장" 명시. 검증: 농식품 단위·비목인식·28.571 동일, F16PBU 0.
 - 🟡 **#5~7 다비오 정체성/예시 ✅완료**: #5 CLAUDE.md 정체성·검증→"제안사(KB 회사)"(다비오=현재 인스턴스, 운영포커스 별지3호 유지) · #6 dabeeo-profile skill 본문 LIG 데모 메타→*회사무관 KB 라우팅*(회사정보=kb/company/{회사}/, skill 수정0) · #7 md 예시 "제안사:다비오"→플레이스홀더(3곳).
 - 🟢 **저순위 잔여**(미수정): R&D용어(연구방안·End-to-End)·다국어 미지원(한국 더미정규식)·슬라이드수 매직. **✅ 깨끗**: korean-public-rfp, 빌더 PY 전반(yaml로드), label_map/schema.
-- ⚠️ **잔여 KB 정리 (사용자 결정)**: `kb/company/lig/`·`kb/projects/`(천궁·현궁)·`kb/tech/`(정밀유도무기)에 *LIG 데모 데이터* 잔존. `Glob "kb/**"` 광역검색 시 다비오 자료와 혼입 위험 → 분리/제거 권장(#6에서 "kb/company/{회사}/ 범위 우선" 가이드).
+- ✅ **회사별 KB 분리 완료**: LIG 데모(공용 `kb/projects/`·`kb/tech/`)를 `kb/company/lig/` 아래로 이동(`lig/projects/`·`lig/tech/`). **공용 실적/기술 폴더 폐지 — 회사 자료는 전부 `kb/company/{회사}/`**(다비오는 `dabeeo/projects.md`·`tech-core.md`로 이미 통합). 라우팅 갱신(CLAUDE.md·proposal-writer·rfp·dabeeo-profile·INDEX). 제안사 검색=해당 회사 폴더 범위→혼입 위험 제거. 임의 회사 추가=`kb/company/{새회사}/` 신설.
 
 **#1 수정 (fill_budget_cells.py + budget_vocab.yaml)**: `ratio_defaults: {}`(fallback 제거). `ratios_from_rfp(rfp,vocab,cli)`는 RFP+CLI만, 미지정 None(한쪽만 있으면 100-보완). `compute_totals` None 가드. 비율 미지정 총괄셀 `(확인 필요)`. CLI `--gov-pct/--self-pct/--cash-pct/--in-kind-pct` 추가. 검증: ①농식품 미지정→확인필요(가정제거) ②농식품 CLI명시→28.571(회귀0) ③F16PBU→0 fills. **농식품 70:30은 이제 CLI 명시로** (조용한 가정 아님). fills_total 값 동일(영향0).
 

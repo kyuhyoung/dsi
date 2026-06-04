@@ -1,15 +1,15 @@
 # DSI Knowledge Base — Index
 
-다비오 사내 지식베이스. RFP 제안서·발표자료 작성 시 Claude가 참조하는 회사 자산.
+RFP 제안서·발표자료 작성 시 Claude가 참조하는 회사 자산. **회사 자료는 회사별로 분리** — 각 회사의 정보·실적·기술이 *그 회사 폴더* 안에 모두 들어간다(공용 실적/기술 폴더 없음).
 
 ## 폴더 구조
 
-| 폴더 | 들어가는 것 | 예시 파일명 |
+| 폴더 | 들어가는 것 | 비고 |
 |---|---|---|
-| `company/` | 회사 정보, 인증, 자격 | `intro.md`, `certifications.md`, `financials.md` |
-| `projects/` | 과거 프로젝트 실적 | `2024-incheon-airport.md`, `2023-kac.md` |
-| `proposals/` | 과거 제안서 (참고용) | `rfp-2024-001/proposal.md` (+ `meta.yaml`) |
-| `tech/` | 기술 자료, 보유 기술 명세 | `indoor-positioning.md`, `ar-navigation.md` |
+| `company/<회사>/` | 그 회사의 **정보·인증·자격·실적·기술 전부** | 회사별 분리. 실적·기술도 이 폴더 안 (예: `projects.md`/`projects/`, `tech-core.md`/`tech/`) |
+| `proposals/` | 과거 제안서 (참고용, 회사 무관) | `rfp-2024-001/proposal.md` (+ `meta.yaml`) |
+
+> 임의 회사 추가 = `company/<새회사>/` 폴더 신설. 제안사 검색은 *해당 회사 폴더 범위*로 한정 — 다른 회사 자료 혼입 방지.
 
 ## 파일 형식 규칙
 

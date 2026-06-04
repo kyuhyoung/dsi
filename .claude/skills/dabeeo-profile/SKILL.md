@@ -16,12 +16,12 @@ description: 제안사(회사 KB에 정의된 회사)의 회사 정보·주요 �
 
 | 필요 정보 | 검색 위치 |
 |---|---|
-| 회사 일반·인증·자격 | `kb/company/{회사}/` |
-| 프로젝트 실적 | `kb/company/{회사}/` 또는 `kb/projects/` |
-| 기술 자료·보유 기술 | `kb/company/{회사}/` 또는 `kb/tech/` |
-| 과거 제안서 (참고) | `kb/proposals/` |
+| 회사 일반·인증·자격·**실적·기술** | `kb/company/{회사}/` (회사별 분리 — 그 회사 자료 전부 이 폴더 안) |
+| 과거 제안서 (참고, 회사 무관) | `kb/proposals/` |
 
-절차: `Glob "kb/company/{회사}/**/*"` 로 구조 파악 → `Grep "<키워드>"` 매칭 → `Read` → 인용 시 *KB 파일 경로*를 출처로 명시.
+> 회사 자료는 *전부* `kb/company/{회사}/` 아래 (예: `dabeeo/projects.md`·`tech-core.md`, `lig/projects/`·`tech/`). 공용 `kb/projects/`·`kb/tech/` 폴더는 폐지 — 회사별 폴더로 분리됨.
+
+절차: `Glob "kb/company/{회사}/**/*"` 로 *그 회사 폴더 범위만* 파악 → `Grep "<키워드>"` 매칭 → `Read` → 인용 시 *KB 파일 경로*를 출처로 명시. (다른 회사 폴더는 검색 안 함 — 혼입 방지.)
 
 ## 사용 지침 (proposal-writer 등 agent)
 
@@ -32,6 +32,6 @@ description: 제안사(회사 KB에 정의된 회사)의 회사 정보·주요 �
 
 ## 제안사 교체 절차 (담당자)
 
-새 제안사 자료가 오면 `kb/company/{회사}/`·`kb/projects/`·`kb/tech/` 에 저장 (각 파일 상단 frontmatter `title`·`client`·`keywords`·`source` 필수). `Glob`/`Grep` 으로 자동 활용 — **본 skill 수정 불필요**. 회사명만 바뀌면 위 "현재 제안사" 한 줄만 갱신.
+새 제안사 자료가 오면 `kb/company/{회사}/` 아래에 저장 (실적·기술도 그 폴더 안 — 예: `projects.md`/`projects/`, `tech-core.md`/`tech/`; 각 파일 상단 frontmatter `title`·`client`·`keywords`·`source` 필수). `Glob`/`Grep` 으로 자동 활용 — **본 skill 수정 불필요**. 회사명만 바뀌면 위 "현재 제안사" 한 줄만 갱신.
 
-> ⚠️ **KB 정리 메모**: `kb/company/lig/`·`kb/projects/`(천궁·현궁 등)·`kb/tech/`(정밀유도무기 등)에 *이전 LIG D&A 데모 데이터*가 남아 있을 수 있음. `Glob "kb/**"` 광역 검색 시 실제 제안사(다비오) 자료와 혼입되지 않도록, 제안사 검색은 *`kb/company/{회사}/` 범위 우선* + 데모 잔재 분리·정리 권장. (LIG 데모는 다른 회사 KB 교체가 정상 동작하는지 검증한 흔적 — 일반성 자체엔 무해하나 혼입 방지 필요.)
+> **회사별 분리 완료**: 이전 LIG D&A 데모 데이터(천궁·현궁·정밀유도무기)는 `kb/company/lig/` 아래로 이동됨(`lig/projects/`·`lig/tech/`). 다비오는 `kb/company/dabeeo/`. 제안사 검색을 *해당 회사 폴더 범위*로 한정하므로 회사 간 혼입 없음. (LIG 데모는 다른 회사 KB 교체가 정상 동작하는지 검증한 흔적 — 보존하되 분리됨.)

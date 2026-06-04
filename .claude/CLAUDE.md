@@ -156,14 +156,14 @@ template-analyzer가 추출한 `template.chapters` 정보는 두 용도:
 3. `Read` — 매치된 파일 읽기
 4. 인용 시 파일 경로를 출처로 명시
 
-폴더 라우팅:
+폴더 라우팅 — **회사 자료는 회사별로 분리**(`kb/company/<회사>/` 아래에 그 회사의 정보·실적·기술 *전부*):
 
 | 필요한 정보 | 검색할 폴더 |
 |---|---|
-| 회사 정보, 인증, 자격 | `kb/company/` |
-| 과거 프로젝트 실적 | `kb/projects/` |
-| 과거 제안서 (참고용) | `kb/proposals/` |
-| 기술 자료, 보유 기술 | `kb/tech/` |
+| 회사 정보·인증·자격·**실적·보유기술** | `kb/company/<회사>/` (현재 제안사: `kb/company/dabeeo/`) |
+| 과거 제안서 (참고용, 회사 무관) | `kb/proposals/` |
+
+> 회사별 분리 원칙: 실적·기술도 *공용 폴더가 아니라* 그 회사 폴더 안에 둔다 (예: `kb/company/dabeeo/projects.md`·`tech-core.md`, `kb/company/lig/projects/`·`tech/`). 임의 회사 추가 = `kb/company/<새회사>/` 폴더 신설. 제안사 검색은 *해당 회사 폴더 범위*로 한정 — 다른 회사(데모 LIG 등) 자료 혼입 방지.
 
 자세한 색인·작성 규칙은 `kb/INDEX.md` 참조.
 

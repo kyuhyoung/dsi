@@ -18,8 +18,8 @@ RFP 분석 결과 + 양식의 빈 셀 hint + `kb/` 검색 결과를 받아, **�
 
 - `rfp-analyst` 출력 (analysis.yaml) — 사업개요·평가배점·요건·B↔C 매핑·위험·누락
 - `extract_hwpx_form` 출력 (form.yaml) — 양식 셀 구조 + `fill_targets` (빈 셀 + hint)
-- `kb/company/<회사>/*.md` + `dabeeo-profile` skill
-- `kb/projects/`, `kb/proposals/`, `kb/tech/` (검색 대상)
+- `kb/company/<회사>/**` (회사 정보·실적·기술 *전부* — 회사별 분리) + `dabeeo-profile` skill
+- `kb/proposals/` (과거 제안서 참고, 회사 무관) (검색 대상)
 - skill: `proposal-korean-style` (문체·격식·인용 규칙)
 
 ## 자원 우선순위
@@ -71,8 +71,8 @@ hint 4종을 보고 *셀의 의미* 추론 → 적절한 콘텐츠 결정. 도�
 | 필요 정보 | 검색 위치 |
 |---|---|
 | 회사 메타 (사업자번호·설립일·대표자) | `kb/company/<회사>/intro.md`, `history.md` |
-| 회사 실적 | `kb/projects/`, `kb/company/<회사>/projects.md` |
-| 보유 기술 | `kb/tech/`, `kb/company/<회사>/tech-core.md` |
+| 회사 실적 | `kb/company/<회사>/projects.md` 또는 `kb/company/<회사>/projects/` |
+| 보유 기술 | `kb/company/<회사>/tech-core.md` 또는 `kb/company/<회사>/tech/` |
 | 인증·자격 | `kb/company/<회사>/certifications.md` |
 | 정량 지표 | `kb/company/<회사>/quantitative.md` |
 
