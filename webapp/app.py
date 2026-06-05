@@ -46,9 +46,31 @@ def _render_header(company: str) -> None:
     """좌측 제목·설명 + 우측 상단 로고 (배경 아님 — 실제 로고 자리)."""
     left, right = st.columns([4, 1], vertical_alignment="center")
     with left:
-        st.title("Dabeeo Super Intelligence")
-        st.caption("RFP + 비즈니스 결정 → 한국어 제안서 .hwpx / .pdf  ·  "
-                   "양식은 건드리지 않고 빈 셀만 채움(검토용 녹색).  ·  Claude Max 구독으로 생성.")
+        # 약자 DSI = 각 단어 첫 글자. D·S·I 를 크게·그라데이션·디스플레이 폰트로 강조.
+        st.markdown("""
+            <style>
+            @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+            .dsi-title { line-height: 1.05; margin: 0 0 .2rem 0; font-weight: 700; }
+            .dsi-title .cap {
+                font-family: 'Audiowide', system-ui, sans-serif;
+                font-size: 5rem;
+                background: linear-gradient(95deg, #FF6A00 0%, #EE0979 55%, #7A1FA2 100%);
+                -webkit-background-clip: text; background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 0 1px 0 rgba(0,0,0,0.04);
+                padding-right: .02em;
+            }
+            .dsi-title .rest {
+                font-size: 1.9rem; color: #2b2b2b; font-weight: 600;
+                font-family: system-ui, 'Segoe UI', sans-serif; margin-right: .6rem;
+            }
+            </style>
+            <div class="dsi-title">
+                <span class="cap">D</span><span class="rest">abeeo</span><span class="cap">S</span><span class="rest">uper</span><span class="cap">I</span><span class="rest">ntelligence</span>
+            </div>
+        """, unsafe_allow_html=True)
+        st.caption("RFP + 신청 정보 → 한국어 제안서 .hwpx / .pdf  ·  "
+                   "양식은 건드리지 않고 빈 셀만 채움(검토용 녹색).")
     with right:
         img = _find_logo(company)
         if img is not None:
@@ -112,12 +134,13 @@ with tab_gen:
     if not projects:
         st.error("등록된 과제가 없습니다. webapp/projects.yaml 에 과제(name·rfp·form)를 추가하세요.")
         st.stop()
+    st.markdown("#### 과제")
     proj_names = [p["name"] for p in projects]
-    proj_name = st.selectbox("과제 선택", proj_names, key="g_proj",
+    proj_name = st.selectbox("과제 선택", proj_names, key="g_proj", label_visibility="collapsed",
                              help="과제별 RFP·양식은 내부에 정의되어 있습니다 (webapp/projects.yaml).")
     _proj = P.get_project(proj_name)
 
-    st.markdown("#### 비즈니스 결정 (RFP·KB로 자동 안 되는 사람 결정)")
+    st.markdown("##### 신청 정보 (직접 입력 항목)")
     d1, d2, d3 = st.columns(3)
     with d1:
         apply_form = st.radio("신청 형태", ["단독", "컨소시엄"], key="g_apply")
