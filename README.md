@@ -1,6 +1,18 @@
 # DSI — Dabeeo Super Intelligence
 
-다비오 사내 AI 활용 공모전 산출물. RFP를 입력하면 제안서(`.docx`)와 발표자료(`.pptx`)를 자동 생성하는 시스템.
+다비오 사내 AI 활용 공모전 산출물. RFP를 입력하면 제안서(`.docx`/`.hwpx`)와 발표자료(`.pptx`)를 자동 생성하는 시스템.
+
+## 🖥️ 제안서 생성 웹앱 (webapp/)
+
+**과제**와 **신청 정보**만 고르면 제안서 `.hwpx`/`.pdf` 를 생성하는 로컬 웹앱. Claude Code 의
+`/rfp` 흐름을 **Claude Max 구독**(`claude-agent-sdk`)으로 옮긴 것 — 별도 API 키·크레딧 불필요.
+
+![DSI 웹앱 화면](webapp/screenshot.png)
+
+- **실행**: 루트의 **`제안서_웹앱_실행.bat`** 더블클릭 (또는 `python -m streamlit run webapp\app.py`)
+- **과제 선택** → **신청 정보**(단독/컨소·신청유형·사업비·제품명·PII) 입력 → **[제안서 생성]**
+- 양식은 건드리지 않고 빈 셀만 채움(검토용 녹색). 본체 별지 `.hwpx`/`.pdf` 산출.
+- 자세히: [`webapp/README.md`](webapp/README.md)
 
 ## 폴더 구조
 
