@@ -6,7 +6,27 @@
 
 ---
 
-## 마지막 라운드 (2026-06-04 심야2) — overfit 전수 감사 + #1~7 일반화 (매칭펀드 + 회사 정체성)
+## 마지막 라운드 (2026-06-05) — 풀 생성 웹앱 (webapp/) + Max 구독 인증 + 농식품 end-to-end 실증
+
+**한 줄 결과**: RFP 과제 드롭다운 → 제안서 .hwpx/.pdf 생성하는 **Streamlit 웹앱(`webapp/`)** 구축. `/rfp` 흐름을 **Claude Max 구독(claude-agent-sdk)** 으로 옮김 — **API 크레딧 0**. 농식품×다비오 1건 **end-to-end 완주 실증**(22분, 별지3호 PDF 27p).
+
+**구성**: `webapp/app.py`(UI) + `pipeline.py`(백엔드, 두 LLM 호출 + 기존 scripts 오케스트레이션) + `projects.yaml`(과제 정의) + `run_once.py`(실측 러너) + `README.md`. 제안사=다비오 **고정**(UI 회사칸 제거), 엔진은 `company` 변수 유지(일반성).
+
+**핵심 결정·함정 (메모리 [[webapp-full-generation]] 에 상세)**:
+- **인증 = Max 구독**, API 키 아님. **Claude Desktop $78.51 ≠ API Console 잔액**(별개 지갑 — API 키로 그 돈 못 씀; API 잔액은 소진됨). raw `anthropic` SDK → **`claude-agent-sdk`** 전환(Claude Code CLI 구독 로그인 사용). `ANTHROPIC_API_KEY` 가 env 에 있으면 (소진된)API 과금으로 새므로 **pop 필수**(app.py·run_once.py 둘 다 처리).
+- **Windows argv 한도(WinError 206)**: Agent SDK 가 `system_prompt`·string `prompt` 를 argv 로 전달 → 정책+KB(109K자) 시 실패. 해결: 정책·KB·form 을 **user 메시지에 접어 stdin 스트리밍**(`prompt=async제너레이터`, 메시지 dict `{"type":"user","message":{"role":"user","content":...},"parent_tool_use_id":None}`), system_prompt 는 짧게.
+- **resume**: 중간산출(rfp.txt·form.yaml·rfp_analysis·fills_profile/finance/budget) 있으면 재사용 — 실패 지점부터 이어받기(같은 outdir).
+- **proposal-writer 범위 = 본체 별지 표범위로 한정**(rfp_analysis `table_idxs_range`, 농식품 [13,73]=609셀) — 출력 토큰 절감 + CLAUDE.md 포커스 정합.
+- **과제 추가 = `webapp/projects.yaml` 한 항목**(name·rfp·form). 코드 수정 0. 현재 등록: 농식품AI·민군규격표준화(둘 다 rfp+양식 pair). F16PBU·피지컬AI·방산은 양식 불명확으로 제외.
+- 로고: `kb/company/<회사>/images/logo.*`(규칙 파일명) → 우측 상단 헤더 이미지(배경 워터마크는 사용자가 "으스스"하다고 반려).
+
+**실행 (사용자가 직접)**: `python -m streamlit run webapp/app.py` (streamlit 명령 PATH 없음 → `python -m`). pipeline.py 수정 후엔 Ctrl+C 후 재실행(모듈 캐시). 한컴 COM(Windows) 필요.
+
+**미완/다음 후보**: ① 한컴 PDF 변환 ~14분(제일 느림) 단축 ② 과제 더 추가(양식 확보 시) ③ 진행률 UI 개선. **B 비목 배치 엔진**(다른 R&D 양식 확보 후)은 여전히 대기.
+
+---
+
+## (이전) 라운드 (2026-06-04 심야2) — overfit 전수 감사 + #1~7 일반화 (매칭펀드 + 회사 정체성)
 
 **한 줄 결과**: 전체 md/py/yaml overfit 4영역 병렬 감사 → 의심 목록. **#1~7 전부 일반화** — ① 정부 R&D 매칭펀드 전제(#1~4: 비R&D RFP서 동작) ② 다비오 정체성/예시(#5~7: 임의 회사 교체=KB 폴더 교체, md 수정0). 농식품 회귀 0.
 

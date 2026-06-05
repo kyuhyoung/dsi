@@ -1,162 +1,102 @@
 ---
-description: RFP 파일 경로를 받아 분석 → 제안서(.docx) → 발표자료(.pptx) 까지 생성한다. 단계마다 사용자 검토를 받고 진행한다.
+description: RFP 공고와 채울 양식(.hwp/.hwpx)을 받아 → 분석 → 비즈니스 결정 확인 → 양식 자동채움(회사·재무·사업비) → 서술·실적 채움 → 제안서(.hwp/.pdf) 생성. 발표자료(.pptx)는 선택. 단계마다 검토.
 ---
 
-# /rfp 명령
+# /rfp 명령 — HWP 양식 채움 제안서 자동 생성
 
 ## 사용법
 
 ```
-/rfp <RFP 파일 경로>
+/rfp <RFP 공고 파일> [채울 양식 파일(.hwp/.hwpx)]
 ```
+- **양식 파일**: RFP에 동봉/별첨된 빈칸 양식. 주면 *양식 채움 모드*(이 문서), 없으면 자유 서술 `.docx` 모드(맨 끝 참조).
+- 입력 포맷: `.hwp`/`.hwpx`/`.pdf`/`.docx`.
 
-예시:
-```
-/rfp ~/Downloads/공항IT_2024.pdf
-/rfp ./examples/sample-rfp.pdf
-```
+> 원칙: 양식은 *절대 만지지 않고* 빈 셀에 텍스트만 채운다([[feedback_form_principle]]). 회사·RFP·양식은 모두 변수 — 임의 조합에 코드 수정 0으로 동작.
 
-## 동작 흐름 (6단계, 검토 지점 3개)
+---
 
-### 0단계: template 자동 점검 (조용히)
-
-빌드 전 *template style.yaml* 점검:
-- `templates/*.pptx` 중 `.style.yaml` 없거나 오래된 것 발견
-- 발견 시 사용자에게 안내: *"새 template 발견: <name>. /onboard-template 실행 권장."*
-- 모든 template 등록 상태 → 스킵
-
+## 흐름 (양식 채움 모드)
 
 ### 1. RFP 분석
-- **먼저 표 보존 추출 (필수)**: `.hwp`/`.hwpx`/`.docx` 는 `python scripts/extract_proposal.py <RFP> <out.txt>` 로 추출(표 행·셀 보존). 사용자 사전 변환 `.txt` 를 그대로 신뢰하지 마라 — 표 버리는 구식 추출일 수 있음(`<표>` placeholder 발견 시 재추출). 한국 RFP는 평가배점·자격·성과목표 등 **핵심이 표 안**에 있어 표 유실 = 요건 누락.
-- `rfp-analyst` 에이전트 호출 — 추출된 *표 포함* 텍스트 + (있으면) 양식 `form.yaml` 전달
-- 구조화된 YAML 생성
+- **표 보존 추출 (필수)**: `python scripts/extract_proposal.py <RFP> <공고.txt>` — 표 행·셀 보존(`<표>` placeholder 발견 시 재추출). 한국 RFP는 평가배점·자격·성과목표·예산비율이 *표 안*에 있음.
+- `rfp-analyst` 에이전트 호출 → `rfp_analysis.yaml` (요건·평가·일정·예산). 예산 비율(국고/자부담·현금/현물)이 공고에 명시되면 추출, 없으면 생략(가정 금지).
 
-### ✋ 검토 지점 1
-사용자에게 분석 결과 표시, 검토 후 *진행* 응답 대기:
-- 누락 항목 / 위험 신호가 있으면 강조 표시
-- 사용자 피드백·수정 요청 반영 후 다음 단계
+### ✋ 검토 1: 분석 결과 — 누락·위험신호 강조. *진행* 대기.
 
-### 2. 제안서 본문 작성
-- `proposal-writer` 에이전트 호출
-- `kb/` 검색하며 본문 마크다운 작성
+### 2. 비즈니스 결정 확인 (한 번에 질문 — RFP·KB로 자동 안 되는 *사람 결정*)
+분석 후, 채움 *전*에 아래를 **한 번에** 묻는다 (사용자가 한 답변으로 답):
+1. **신청 형태** — 단독 / 컨소시엄(참여기업·역할)
+2. **신청유형** — RFP에 유형 구분(예: 타입1/2)이 있으면 어느 것 (없으면 해당없음)
+3. **사업비** — ① 총액(또는 국고 신청액) ② (매칭펀드형이면) 국고:자부담 비율 ③ 현금:현물 비율. *RFP에 명시돼 있으면 "RFP대로"*, 없으면 결정(미지정 시 `(확인 필요)`로 비움)
+4. **제품·솔루션 공식명**
+5. **참여인력 PII** — 실명 / `OOO` 익명(제출 직전 실명)
 
-### ✋ 검토 지점 2
-사용자에게 본문(.md) 표시, *진행* 응답 대기:
-- 톤·내용·평가항목 매핑 점검
-- 수정 요청 반영 후 다음 단계
+→ 답을 `output/<날짜>/decisions.yaml` 에 기록하고 이후 단계에 주입. (사업명·발주처·예산한도·배점·일정·요구사항은 RFP에서 자동 추출, 회사 실적·기술·인증은 KB에서 자동 인용 — 묻지 않음.)
 
-### 3. Word 출력 — *입력 포맷별 분기*
-- 공식 `docx` skill 호출 → `.docx` 생성
-- `output/<YYYYMMDD>/제안서_<사업명>_v<버전>.docx`
+### 3. 양식 준비
+- `.hwp`면 변환(한컴, 1회): `python scripts/hwp_to_hwpx.py <양식> <양식.hwpx>`
+- 양식 분석: `python scripts/extract_hwpx_form.py <양식.hwpx> <form.yaml>` (빈칸·라벨·example행·별지 구조 자동 인식)
 
-**입력 RFP 포맷에 따른 *최종 제안서 포맷 안내***:
-
-| RFP 입력 | 출력 산출물 | 사용자 행동 |
-|---|---|---|
-| `.docx` | `.docx` 그대로 사용 | 변환 불필요 |
-| `.hwp` / `.hwpx` | `.docx` 생성 후 한컴 변환 필요 | *한컴 오피스에서 .docx 열기 → 다른 이름 저장 → .hwp 선택* |
-| `.pdf` | RFP가 .pdf 원본이면 *어떤 포맷이든 OK*. 발주처 가이드 확인 | 가이드에 맞춰 변환 |
-
-사용자에게 보고:
+### 4. 자동 채움 (회사메타·재무·사업비 — 결정적, LLM 불필요)
 ```
-제안서 .docx 생성 완료: <경로>
-
-⚠ RFP 입력이 .hwp 였습니다. 발주처에 .hwp로 제출하려면:
-  1. 한컴 오피스에서 위 .docx 파일 열기
-  2. 파일 → 다른 이름으로 저장 → 파일 형식 "한글 문서 (*.hwp)" 선택
-  3. 한컴이 자동 변환 (서식·표·이미지 거의 무손실)
-
-또는 .hwpx 직접 출력 옵션 (실험적, 사용자 요청 시 진행).
+python scripts/fill_company_cells.py <form.yaml> kb/company/<회사>/profile.yaml <fills_profile.yaml>
+python scripts/fill_finance_cells.py <form.yaml> kb/company/<회사>/finance.yaml <fills_finance.yaml>
+python scripts/fill_budget_cells.py <form.yaml> <rfp_analysis.yaml> <fills_budget.yaml> \
+    --gov-eok <국고억> --type <유형> [--self-pct <%> --cash-pct <%> --in-kind-pct <%>]
 ```
+- 사업비 비율: RFP 명시 시 `rfp_analysis.yaml`에서 자동, 아니면 decisions의 비율을 CLI로 명시. *미지정 시 총괄표 `(확인 필요)`* (가정 금지, CLAUDE.md "명시 안 한 결정은 물어라").
 
-### 4. 슬라이드 구성
-- *template 결정*: 사용할 `templates/<name>.pptx` 결정 (5단계의 `--template` 인자 미리 확정). template은 *외형만* 제공 (CLAUDE.md "Template은 껍데기다" 원칙).
-- `templates/visual_element_schema.yaml` 참조 (시각요소 키 정확)
-- `ppt-designer` 에이전트 호출 — *visual schema*만 입력으로 전달. **template chapters는 전달 안 함** (콘텐츠 흐름은 제안서가 결정).
-- 제안서 본문 기반 YAML 구성안 작성 — 챕터 구성은 자율.
+### 5. 서술·실적·이미지 채움
+- `proposal-writer` 에이전트 호출 → `fills_본체.yaml`
+  - 서술 셀(추진전략·목표시장·실현가능성 등 ❍ 3-tier·명사형), example_row(인력·실적 KB 인용), 이미지 셀(상보/중복 판단·캡션·없으면 명세)
+  - decisions 적용: 단독신청 전 섹션 일관(컨소/공동 모순 0), PII `OOO`, 제품명, 미확정 수치 `(확인 필요)`
 
-### ✋ 검토 지점 3
-사용자에게 구성안(.yaml) 표시, *진행* 응답 대기:
-- 슬라이드 흐름·시간 배분 점검
-- 수정 요청 반영 후 다음 단계
+### ✋ 검토 2: 채움 명세 — 문체·단독신청 일관·미채움 점검. *진행* 대기.
 
-### 5. PPT 출력
-- `scripts/yaml_to_pptx.py` 호출 → `output/<YYYYMMDD>/발표자료_<사업명>_v<버전>.pptx`
-- 빌드 성공 시 LibreOffice headless로 *자동 PDF 변환*:
-  ```
-  "/mnt/c/Program Files/LibreOffice/program/soffice.exe" \
-      --headless --convert-to pdf \
-      --outdir output/<YYYYMMDD>/ \
-      output/<YYYYMMDD>/발표자료_<사업명>_v<버전>.pptx
-  ```
-  (Linux: `libreoffice` 또는 `soffice`. 없으면 PDF 스킵 + 경고)
-
-### 5-1. 자동 시각 검증 (필수)
-
-PDF 생성 후 *visual-validator subagent 자동 호출*. 모든 슬라이드 PNG를 직접 보고 `templates/visual_validation_checklist.yaml` 의 8개 카테고리로 검증.
-
-- **critical** (텍스트 겹침·콘텐츠 누락) → 사용자에게 보고, 수정 후 재빌드 결정 받음
-- **high·medium** → 보고만, 사용자 결정
-
-### 6. 결과 보고
-
-모든 산출물 경로를 정리해 출력:
+### 6. 빌드 → 제안서 hwp / pdf
 ```
-완료. 산출물:
-- output/<YYYYMMDD>/analysis.yaml
-- output/<YYYYMMDD>/제안서_<사업명>_v<버전>.docx
-- output/<YYYYMMDD>/발표자료_<사업명>_v<버전>.pptx
-- output/<YYYYMMDD>/발표자료_<사업명>_v<버전>.pdf       # 자동 변환
+# fills 병합 (본체 + profile + finance + budget; id 중복 제거)
+python scripts/fill_hwpx_form.py <양식.hwpx> <fills_total.yaml> <채움.hwpx> <form.yaml>
+python scripts/split_hwpx_by_section.py <채움.hwpx> <form.yaml> <별지폴더>
+# 본체 별지(보통 사업계획서)만 PDF — CLAUDE.md 작업 포커스 별지 따름
+python scripts/hwpx_to_pdf.py "<별지폴더>/<본체별지.hwpx>" <별지.pdf>
 ```
+- 검토용은 채움 글자 *녹색*([[green-text-must-be-optin]]). 발주처 제출본은 `fill_hwpx_form ... --submit`(검정).
 
-(선택) 시각 검토하고 싶으면 `/preview <pptx 경로>` 안내.
+### 7. (선택) 발표자료 .pptx — RFP가 발표를 요구할 때만
+- `ppt-designer` → `scripts/yaml_to_pptx.py` → `.pptx` + LibreOffice PDF + `visual-validator` 검증. (기존 PPT 흐름 — 발표 불요 시 스킵.)
 
-## 출력 폴더 구조
+### 8. 결과 보고
+산출물 경로 정리: `decisions.yaml`·`rfp_analysis.yaml`·`form.yaml`·`fills_total.yaml`·`채움.hwpx`·`별지.pdf` (+ `.pptx` 선택).
+- `.hwp` 입력이면: "한컴에서 채움.hwpx 열어 .hwp로 저장" 안내.
 
-```
-output/<YYYYMMDD>/
-├── analysis.yaml                    # rfp-analyst 결과 (재현용)
-├── 제안서_<사업명>_v<버전>.md       # 본문 마크다운
-├── 제안서_<사업명>_v<버전>.docx
-├── slides_<사업명>_v<버전>.yaml     # ppt-designer 구성안
-├── 발표자료_<사업명>_v<버전>.pptx
-└── 발표자료_<사업명>_v<버전>.pdf    # LibreOffice 자동 변환
-```
+---
 
-같은 사업명 재실행 시 버전 자동 증가 (v1 → v2 → v3).
+## 재현 (LLM 재호출 없이 — `fills_total.yaml`이 이미 있으면)
+무거운 단계(양식 변환·rfp-analyst·proposal-writer)를 건너뛰고 **6단계 빌드만** → ~20초. (`fills_total.yaml`은 git 추적되므로 다른 PC에서도 동일 산출.)
+
+## 무인 자동 모드 (옵션)
+검토 지점(✋)을 스킵하고 1→8을 연쇄 실행. 비즈니스 결정은 `decisions.yaml`을 미리 주면 질문도 생략. 전체 ~15~20분(LLM 분석+본문이 대부분). *중간 검토를 못 하므로 새 양식엔 위험* — 검증된 양식·반복 작업에 권장.
+
+## 검토 응답: `진행`/`다음`/`ok` · `수정: <내용>` · `중단`
 
 ## 에러 처리
-
 | 상황 | 대응 |
 |---|---|
-| 파일 못 읽음 | 경로·형식 재확인 요청 |
-| 사업명 추출 실패 | 사용자에게 직접 입력 요청 |
-| KB 검색 결과 빈약 (3건 미만) | 사용자에게 알림, 진행 여부 확인 |
-| docx/pptx skill 호출 실패 | 오류 메시지 그대로 보고, 재시도 여부 확인 |
-| 사용자 검토 단계에서 *중단* 응답 | 현재까지 산출물만 저장하고 종료 |
+| 양식 파일 없음 | 자유 서술 `.docx` 모드로 전환 (rfp-analyst → proposal-writer → docx skill → pptx) |
+| 한컴 변환/PDF 실패 | 한컴 프로세스 정리 후 1회 재시도, 그래도 실패 시 오류 보고 |
+| 비즈니스 결정 미입력 | 가정 금지 — 해당 셀 `(확인 필요)` + 사용자에게 재질의 |
+| KB 검색 빈약 | 사용자 알림, 진행 여부 확인 |
+| 검토 단계 *중단* | 현재까지 산출물만 저장하고 종료 |
 
-## 진행 상황 로그
-
-각 단계 시작·완료 시 한 줄 로그 출력:
-
+## 출력 폴더
 ```
-[1/6] RFP 분석 중... (파일: <경로>)
-[1/6] 분석 완료. ✋ 검토 요청.
-[2/6] 본문 작성 중... (KB 검색: kb/company/<회사>/)
-[2/6] 본문 작성 완료. ✋ 검토 요청.
-[3/6] .docx 생성 중...
-[3/6] .docx 생성 완료: output/20260513/제안서_공항IT_v1.docx
-[4/6] 슬라이드 구성 중...
-[4/6] 슬라이드 구성 완료. ✋ 검토 요청.
-[5/6] .pptx 생성 중...
-[5/6] .pptx 생성 완료: output/20260513/발표자료_공항IT_v1.pptx
-[6/6] 완료.
+output/<YYYYMMDD>/
+├── decisions.yaml          # 비즈니스 결정 (재현·무인용)
+├── rfp_analysis.yaml       # rfp-analyst 결과
+├── 통합양식.form.yaml      # 양식 분석
+├── fills_total.yaml        # 채움 명세 (git 추적 — 재현 핵심)
+├── <사업명>_채움.hwpx
+└── 별지_<본체>.pdf
 ```
-
-## 사용자 응답 약속
-
-각 검토 지점에서 사용자가 입력할 수 있는 응답:
-
-- `진행` / `다음` / `ok` — 다음 단계로
-- `수정: <내용>` — 현재 단계 결과를 수정 요청
-- `중단` / `종료` — 현재까지 결과만 저장하고 종료
