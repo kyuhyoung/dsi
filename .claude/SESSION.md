@@ -20,9 +20,16 @@
 - **과제 추가 = `webapp/projects.yaml` 한 항목**(name·rfp·form). 코드 수정 0. 현재 등록: 농식품AI·민군규격표준화(둘 다 rfp+양식 pair). F16PBU·피지컬AI·방산은 양식 불명확으로 제외.
 - 로고: `kb/company/<회사>/images/logo.*`(규칙 파일명) → 우측 상단 헤더 이미지(배경 워터마크는 사용자가 "으스스"하다고 반려).
 
-**실행 (사용자가 직접)**: `python -m streamlit run webapp/app.py` (streamlit 명령 PATH 없음 → `python -m`). pipeline.py 수정 후엔 Ctrl+C 후 재실행(모듈 캐시). 한컴 COM(Windows) 필요.
+**실행**: 루트 **`제안서_웹앱_실행.bat` 더블클릭**(권장) 또는 `python -m streamlit run webapp/app.py`(streamlit 명령 PATH 없음 → `python -m`). pipeline.py 수정 후엔 Ctrl+C 후 재실행(모듈 캐시). 한컴 COM(Windows) 필요. UI: DSI(남색 그라데이션) 타이틀 · 과제 선택 · 신청 정보(직접 입력 항목) · 우측 상단 로고. README(루트·webapp 둘 다)에 스크린샷.
 
-**미완/다음 후보**: ① 한컴 PDF 변환 ~14분(제일 느림) 단축 ② 과제 더 추가(양식 확보 시) ③ 진행률 UI 개선. **B 비목 배치 엔진**(다른 R&D 양식 확보 후)은 여전히 대기.
+**🏠 다른 PC(집)에서 이어가기**:
+1. `git pull github main` (아래 푸시 리모트 주의)
+2. `pip install -r webapp/requirements.txt` — **`claude-agent-sdk` 신규 의존성**(+ streamlit·pyyaml·PyMuPDF). 집 PC엔 아직 없을 것.
+3. `claude` 로그인(Max 구독) 확인 — Agent SDK가 이 로그인을 씀(API 키 불필요).
+4. `제안서_웹앱_실행.bat` 더블클릭 → localhost:8501.
+- **⚠️ 푸시/풀 리모트 = `github`(kyuhyoung/dsi)**, `origin`(사내 dabeeo git.dabeeo.net:3022) 아님. `git push github main` / `git pull github main`. origin은 SSH 키 인증이 환경따라 막힘.
+
+**미완/다음 후보**: ① 한컴 PDF 변환 ~14분(제일 느림) 단축 ② 과제 더 추가(양식 확보 시) ③ 진행률 UI 개선 ④ 비즈니스 결정 폼 검증(필수값 미입력 가드). **B 비목 배치 엔진**(다른 R&D 양식 확보 후)은 여전히 대기.
 
 ---
 
