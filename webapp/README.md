@@ -4,6 +4,8 @@
 Claude Code 의 `/rfp` 흐름(rfp-analyst → proposal-writer → 양식 채움 → 빌드)을
 **Claude Max 구독**(`claude-agent-sdk`)으로 옮긴 것. 회사·RFP·양식은 전부 변수 — 특정 사업 키워드 하드코딩 없음.
 
+![DSI 웹앱 화면](screenshot.png)
+
 ## 구성
 
 | 파일 | 역할 |
