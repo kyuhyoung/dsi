@@ -54,7 +54,7 @@ def _render_header(company: str) -> None:
             .dsi-title .cap {
                 font-family: 'Audiowide', system-ui, sans-serif;
                 font-size: 5rem;
-                background: linear-gradient(95deg, #FF6A00 0%, #EE0979 55%, #7A1FA2 100%);
+                background: linear-gradient(95deg, #2E6BFF 0%, #1B3FB0 55%, #0B1E6B 100%);
                 -webkit-background-clip: text; background-clip: text;
                 -webkit-text-fill-color: transparent;
                 text-shadow: 0 1px 0 rgba(0,0,0,0.04);
