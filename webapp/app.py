@@ -205,12 +205,36 @@ with tab_gen:
     if go:
         rfp_path = P.SAMPLES / _proj["rfp"]
         form_path = P.SAMPLES / _proj["form"]
+        # 단계별 진행률 — log 메시지 키워드로 현재 단계 추정 (정상·resume 문구 모두 인식).
+        # 가중치는 실측 비중(proposal-writer·LLM·PDF 가 대부분). 키워드 list = OR 매칭.
+        _STAGES = [
+            (["RFP 본문"], 0.05, "RFP 본문 추출"),
+            (["변환", "양식 준비"], 0.10, "양식 변환"),
+            (["form", "양식 분석"], 0.15, "양식 구조 분석"),
+            (["rfp-analyst"], 0.30, "RFP 분석 (LLM)"),
+            (["회사메타"], 0.34, "회사정보 자동채움"),
+            (["재무"], 0.37, "재무 자동채움"),
+            (["사업비"], 0.40, "사업비 자동채움"),
+            (["proposal-writer", "범위 한정"], 0.80, "본문 작성 (LLM · 보통 ~11분)"),
+            (["빌드"], 0.85, "문서 빌드"),
+            (["분할"], 0.90, "별지 분할"),
+            (["PDF"], 0.96, "PDF 변환"),
+            (["완료", "DONE"], 1.0, "완료"),
+        ]
+        import time as _time
+        _t0 = _time.time()
+        prog = st.progress(0.0, text="준비 중…")
         logbox = st.empty()
         logs: list[str] = []
 
         def log(msg: str) -> None:
             logs.append(msg)
             logbox.code("\n".join(logs[-30:]), language="text")
+            for _kws, _pct, _label in _STAGES:
+                if any(k in msg for k in _kws):
+                    _el = (_time.time() - _t0) / 60.0
+                    prog.progress(_pct, text=f"[{int(_pct * 100)}%] {_label}  ·  {_el:.1f}분 경과")
+                    break
 
         with st.status("생성 중… (RFP 분석·본문 작성이 대부분 — 약 13~20분)", expanded=True):
             try:
