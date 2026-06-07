@@ -182,7 +182,26 @@ with tab_gen:
             "PII": "실명" if pii == "실명" else "OOO",
         }
 
-    go = st.button("🚀 제안서 생성", type="primary", disabled=not has_key, key="g_go")
+    # 입력 검증 가드 — 22분 생성 전 누락·오류 사전 차단/경고 (양식 무관 일반 규칙).
+    _warns: list[str] = []
+    _errs: list[str] = []
+    if not product.strip():
+        _warns.append("제품·솔루션 공식명 미입력 — 제안서 식별이 '(확인 필요)'로 남습니다.")
+    if not (gov_eok and gov_eok > 0):
+        _warns.append("국고 신청액 0(미지정) — 사업비 표가 있으면 '(확인 필요)' (RFP에 비율 명시 시 비율은 자동).")
+    if (gov_pct or self_pct) and (gov_pct + self_pct) != 100:
+        _errs.append(f"국고%({gov_pct}) + 자부담%({self_pct}) = {gov_pct + self_pct} ≠ 100 (합이 100이어야 함).")
+    if (cash_pct or in_kind_pct) and (cash_pct + in_kind_pct) != 100:
+        _errs.append(f"현금%({cash_pct}) + 현물%({in_kind_pct}) = {cash_pct + in_kind_pct} ≠ 100 (합이 100이어야 함).")
+    if (gov_pct or self_pct or cash_pct or in_kind_pct) and not (gov_eok and gov_eok > 0):
+        _warns.append("비율을 입력했으나 국고 신청액이 0 — 사업비 표가 채워지지 않습니다.")
+    for _m in _warns:
+        st.warning(_m)
+    for _m in _errs:
+        st.error(f"🚫 {_m}")
+
+    go = st.button("🚀 제안서 생성", type="primary",
+                   disabled=not has_key or bool(_errs), key="g_go")
     if go:
         rfp_path = P.SAMPLES / _proj["rfp"]
         form_path = P.SAMPLES / _proj["form"]
