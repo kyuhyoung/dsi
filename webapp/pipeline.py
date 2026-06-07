@@ -384,6 +384,13 @@ def run_proposal_writer(form_yaml: str, rfp_analysis: str, company: str,
 # ── fills 병합 ─────────────────────────────────────────────────────────────
 def merge_fills(sources: list[Path], out_path: Path, company: str) -> Path:
     """여러 fills.yaml 을 id 중복 제거해 병합. 뒤 소스가 우선(결정적 채움이 본체보다 우선)."""
+    # 병합 캐시 — fills_total 이 모든 소스보다 최신이면 재작성 생략(mtime 유지).
+    # 매번 재작성하면 fills_total mtime 이 갱신돼 하류 빌드 캐시가 무효화되므로,
+    # 소스 변경 없을 때 fills_total 을 그대로 둬 빌드·분할·PDF 캐시 연쇄를 보존.
+    _srcs = [s for s in sources if s.exists()]
+    if (out_path.exists() and out_path.stat().st_size > 0 and _srcs
+            and out_path.stat().st_mtime >= max(s.stat().st_mtime for s in _srcs)):
+        return out_path
     merged: dict[str, dict] = {}  # id → entry
     for src in sources:
         if not src.exists():
@@ -514,19 +521,28 @@ def run_generate(company: str, rfp_path: Path, form_path: Path, decisions: dict,
                  submit: bool = False, log: ProgressFn = _noop) -> GenResult:
     """회사 + RFP(공고) + 양식 + 결정 → 제안서 생성 (전 과정)."""
     rfp_path, form_path = Path(rfp_path), Path(form_path)
-    date = datetime.date.today().strftime("%Y%m%d")
     stem = re.sub(r"[^\w가-힣]+", "_", rfp_path.stem)[:40] or "rfp"
-    outdir = OUTPUT / date / f"{company}_{stem}"
+    # outdir 은 *날짜 무관*(과제명 기반) — 날짜 경계(자정)를 넘어도 같은 폴더라서
+    # resume·캐시가 그대로 작동한다. (날짜 폴더면 자정 후 새 폴더 → 전체 재실행.)
+    # webapp 생성물은 output/_gen/ 아래로 모아 수동 날짜 산출물과 분리.
+    outdir = OUTPUT / "_gen" / f"{company}_{stem}"
     outdir.mkdir(parents=True, exist_ok=True)
     usage_total = {"input": 0, "output": 0, "cache_read": 0, "cache_write": 0, "cost_usd": 0.0}
     notes: list[str] = []
 
-    # 0) 결정 기록 (재현·무인용)
-    (outdir / "decisions.yaml").write_text(
-        yaml.safe_dump(decisions, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    # 0) 결정 기록 + *변경 감지* — 비즈니스 결정(단독/유형/사업비 등)이 직전과 다르면
+    #    결정 의존 산출물(사업비·본문·병합)을 무효화해 옛 결정 재사용을 막는다.
+    #    (회사메타·재무·RFP분석·양식추출은 결정 무관 → 유지.)
+    dec_path = outdir / "decisions.yaml"
+    new_dec = yaml.safe_dump(decisions, allow_unicode=True, sort_keys=False)
+    if dec_path.exists() and dec_path.read_text(encoding="utf-8") != new_dec:
+        for _f in ("fills_budget.yaml", "fills_body.yaml", "fills_total.yaml"):
+            (outdir / _f).unlink(missing_ok=True)
+        log("⚠ 비즈니스 결정 변경 감지 — 사업비·본문·병합 재생성 (회사·재무·RFP분석은 유지)")
+    dec_path.write_text(new_dec, encoding="utf-8")
 
     # 이어받기(resume) — 이미 생성된 중간산출은 재사용(특히 비싼 LLM·한컴 단계).
-    # 같은 (날짜·회사·RFP) 재실행은 같은 outdir 라서 실패 지점부터 이어진다.
+    # 같은 (회사·RFP) 재실행은 같은 outdir 라서 실패 지점부터 이어진다 (날짜 무관).
     rfp_analysis_path = outdir / "rfp_analysis.yaml"
     fills_profile = outdir / "fills_profile.yaml"
     fills_finance = outdir / "fills_finance.yaml"
