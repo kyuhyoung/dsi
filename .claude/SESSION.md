@@ -6,7 +6,27 @@
 
 ---
 
-## 마지막 라운드 (2026-06-05) — 풀 생성 웹앱 (webapp/) + Max 구독 인증 + 농식품 end-to-end 실증
+## 마지막 라운드 (2026-06-07, 집 PC) — webapp 셋업 + end-to-end 실측 → 버그 2건 근본수정
+
+**한 줄 결과**: 집 PC webapp 첫 셋업 + 농식품×다비오 end-to-end 실측. 실측이 *버그 2건*을 잡아 근본 수정. **산출물 `output/20260607/.../별지3호.pdf` (27p)** — 이번까지 모든 수정(요약표 채움·비목더미0·단독신청 일괄·오배치0) webapp 자동생성에도 정상 반영 확인.
+
+**셋업 (집 PC)**: `pip install claude-agent-sdk streamlit pyyaml PyMuPDF` (requirements.txt 직접 `-r` 은 한글주석 cp949 에러 → **ASCII화 커밋 `596b72d`** 로 해결). claude CLI Max 구독 로그인됨. streamlit 기동 OK(localhost:8501).
+
+**버그①: rfp-analyst YAML 파싱 실패** (커밋 `4a53f9d`, `webapp/pipeline.py`):
+- 원인: LLM 이 콜론·괄호 든 값을 quote 안 함 (`사업기간: 2026∼2027년 (타입1: 협약일)` → 값 안 콜론을 nested mapping 오인) → `yaml.safe_load` 실패 → 파이프라인 중단(PDF 0).
+- 수정: `_call_llm_yaml()` 자가복구(파싱 실패 시 오류 피드백해 LLM 재생성, 최대 2회) + user 프롬프트 "콜론·특수문자 값 작은따옴표" 예방 지시. rfp-analyst·proposal-writer 공통. 재실측 시 첫 시도 통과(자가복구 0회).
+
+**버그②: PDF 변환 20분 타임아웃 = 한컴 좀비** (이번 커밋, `scripts/hwpx_to_pdf.py`):
+- 원인: 13일·7일 전 시작된 한컴 좀비 프로세스가 새 COM 변환을 hang → 첫 시도가 1200s 타임아웃까지 가서 재시도(무차별 taskkill)에 도달조차 못함. **좀비 정리 후 동일 변환 30초 완료**.
+- 수정: `convert()` 시작 시 `_clear_stale_hwp(3600)` — StartTime 1시간+ 인 Hwp 좀비만 선제 정리(활성 GUI 편집은 임계로 보호). 모든 PDF 변환 공통.
+
+**검증**: 별지3호.pdf 27p · 추진전략/목표시장/실현가능성 ❍채움 · 비목더미 0 · 협업="해당 없음(단독신청)" · 라벨 오배치 0 · OOO 35 · 확인필요 37(webapp 자동생성 보수적, 제출 전 교체).
+
+**미완/다음 후보**: ① 한컴 PDF 변환 자체 속도(좀비 없어도 분 단위) ② 확인필요 37 축소(webapp 자동생성이 수동본보다 보수적 — KB 보강 or proposal-writer 강화) ③ 과제 추가 ④ 진행률 UI. **B 비목 배치 엔진**(다른 R&D 양식 확보 후) 여전히 대기.
+
+---
+
+## (이전) 라운드 (2026-06-05) — 풀 생성 웹앱 (webapp/) + Max 구독 인증 + 농식품 end-to-end 실증
 
 **한 줄 결과**: RFP 과제 드롭다운 → 제안서 .hwpx/.pdf 생성하는 **Streamlit 웹앱(`webapp/`)** 구축. `/rfp` 흐름을 **Claude Max 구독(claude-agent-sdk)** 으로 옮김 — **API 크레딧 0**. 농식품×다비오 1건 **end-to-end 완주 실증**(22분, 별지3호 PDF 27p).
 
