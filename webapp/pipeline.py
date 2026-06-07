@@ -256,6 +256,33 @@ def _call_llm(system_text: str, user_text: str, log: ProgressFn,
     return text, meta
 
 
+def _call_llm_yaml(system_text: str, user_text: str, log: ProgressFn,
+                   label: str = "", max_repair: int = 2) -> tuple[str, dict]:
+    """YAML 출력 LLM 호출 + 파싱 실패 시 *자가복구* 재호출 (LLM 출력 견고화).
+
+    LLM 이 콜론(:)·괄호·특수문자가 든 값을 따옴표로 감싸지 않으면 YAML 파싱이 실패한다
+    (예: `사업기간: 2026∼2027년 (타입1: 협약일∼1년 …)` — 값 안의 콜론을 nested mapping
+    으로 오인). 파싱 실패 시 *오류를 피드백해 재생성* 한다. 임의 RFP/회사/양식 공통 —
+    특정 값·키 하드코딩 0.
+    """
+    raw, usage = _call_llm(system_text, user_text, log)
+    for attempt in range(max_repair + 1):
+        try:
+            return _extract_yaml(raw), usage
+        except yaml.YAMLError as e:
+            if attempt >= max_repair:
+                raise RuntimeError(
+                    f"{label or 'LLM'} YAML 파싱 {max_repair}회 재시도 실패: {e}")
+            log(f"  ⚠ {label} YAML 파싱 실패 → 자가복구 재시도 {attempt + 1}/{max_repair}")
+            repair_user = user_text + (
+                f"\n\n## 직전 출력이 YAML 파싱에 실패함\n오류: {e}\n"
+                "문자열 값에 콜론(:)·괄호·슬래시·특수문자가 있으면 *작은따옴표로 감싸라* "
+                "(예: `키: '2026∼2027년 (타입1: 협약일)'`). 유효한 YAML 문서 하나만 — "
+                "설명·머리말·코드펜스 없이 YAML 본문만 다시 출력하라."
+            )
+            raw, usage = _call_llm(system_text, repair_user, log)
+
+
 def run_rfp_analyst(rfp_text: str, form_yaml: str, log: ProgressFn = _noop) -> tuple[str, dict]:
     """RFP 본문 + 양식 form.yaml → rfp_analysis.yaml (문자열)."""
     system = _policy_block("rfp-analyst.md", ANALYST_SKILLS)
@@ -264,13 +291,14 @@ def run_rfp_analyst(rfp_text: str, form_yaml: str, log: ProgressFn = _noop) -> t
         "위 정책의 스키마/원칙에 따라 rfp_analysis.yaml 을 작성하라.\n"
         "- B+C 를 cross-reference 로 읽어 B_C_매핑·본체_별지 식별까지 채운다.\n"
         "- RFP 원문에 없는 값은 추측 금지(생략 또는 '확인 필요').\n"
-        "- **출력은 YAML 본문만** — 설명·머리말·코드펜스 없이 YAML 문서 하나만 출력한다.\n\n"
+        "- **출력은 YAML 본문만** — 설명·머리말·코드펜스 없이 YAML 문서 하나만 출력한다.\n"
+        "- 문자열 값에 콜론(:)·괄호·슬래시·특수문자가 있으면 *작은따옴표로 감싸라* "
+        "(예: `사업기간: '2026∼2027년 (타입1: 협약일∼1년)'`) — YAML 파싱 안전.\n\n"
         "## RFP 본문 (B)\n\n" + rfp_text +
         "\n\n## 양식 셀 구조 (C — form.yaml)\n\n```yaml\n" + form_yaml + "\n```\n"
     )
     log("→ rfp-analyst (구독)")
-    raw, usage = _call_llm(system, user, log)
-    return _extract_yaml(raw), usage
+    return _call_llm_yaml(system, user, log, label="rfp-analyst")
 
 
 def _tbl_idx(fill_id: str) -> Optional[int]:
@@ -335,7 +363,8 @@ def run_proposal_writer(form_yaml: str, rfp_analysis: str, company: str,
         "- fill_targets 의 *서술·example_row·이미지* 셀을 채운다 (회사메타·재무·사업비는 제외 — 아래 결정·자동채움 참조).\n"
         "- 비즈니스 결정을 *전 섹션 일관* 반영(단독신청이면 컨소시엄 의미 셀 전부 '해당 없음', PII 처리 등).\n"
         "- KB 검증 사실만. 미확정 수치는 '(확인 필요)', PII 는 결정에 따라 'OOO'.\n"
-        "- **출력은 YAML 본문만** — 설명·코드펜스 없이 fills.yaml 문서 하나만 출력한다.\n\n"
+        "- **출력은 YAML 본문만** — 설명·코드펜스 없이 fills.yaml 문서 하나만 출력한다.\n"
+        "- text 값에 콜론(:)·괄호·특수문자가 있으면 *작은따옴표로 감싸라* — YAML 파싱 안전.\n\n"
         "## 비즈니스 결정 (decisions)\n\n```yaml\n" + yaml.safe_dump(
             decisions, allow_unicode=True, sort_keys=False) + "```\n\n"
         "## RFP 분석 결과 (rfp_analysis.yaml)\n\n```yaml\n" + rfp_analysis + "\n```\n\n"
@@ -343,8 +372,7 @@ def run_proposal_writer(form_yaml: str, rfp_analysis: str, company: str,
         + form_yaml + "\n```" + skip + "\n"
     )
     log("→ proposal-writer (구독)")
-    raw, usage = _call_llm(system, user, log)
-    return _extract_yaml(raw), usage
+    return _call_llm_yaml(system, user, log, label="proposal-writer")
 
 
 # ── fills 병합 ─────────────────────────────────────────────────────────────
