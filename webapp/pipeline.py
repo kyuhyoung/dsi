@@ -452,17 +452,29 @@ def build_from_fills(form_hwpx: Path, fills_total: Path, form_yaml: Path,
                      bonche_name: Optional[str], log: ProgressFn) -> tuple[Path, Optional[Path], Optional[Path]]:
     """fills_total → 채움.hwpx → 분할 → 본체 별지 PDF. (hwpx, pdf, sep_dir)."""
     filled = outdir / f"{stem}_채움.hwpx"
-    log("빌드 → 채움.hwpx")
-    args = [SCRIPTS / "fill_hwpx_form.py", form_hwpx, fills_total, filled, form_yaml]
-    if submit:
-        args.append("--submit")
-    run_script(args, log)
+    # 빌드 캐시 — 입력(fills_total·form.yaml·원본 양식)이 채움.hwpx 보다 새롭지 않으면 재사용.
+    # 한컴 PDF 변환(분 단위)을 살리려면 그 입력인 hwpx 가 안 바뀌어야 PDF 캐시가 hit 한다.
+    # submit(제출본=검정) 은 색이 달라지므로 캐시 안 함(항상 재빌드).
+    _inm = max(fills_total.stat().st_mtime, form_yaml.stat().st_mtime, form_hwpx.stat().st_mtime)
+    if (not submit and filled.exists() and filled.stat().st_size > 0
+            and filled.stat().st_mtime >= _inm):
+        log("빌드 → 채움.hwpx — 기존 재사용 (입력 변경 없음)")
+    else:
+        log("빌드 → 채움.hwpx")
+        args = [SCRIPTS / "fill_hwpx_form.py", form_hwpx, fills_total, filled, form_yaml]
+        if submit:
+            args.append("--submit")
+        run_script(args, log)
 
     sep_dir = outdir / "별지"
     pdf = None
     try:
-        log("별지 분할")
-        run_script([SCRIPTS / "split_hwpx_by_section.py", filled, form_yaml, sep_dir], log)
+        _seps = list(sep_dir.glob("*.hwpx")) if sep_dir.exists() else []
+        if _seps and min(s.stat().st_mtime for s in _seps) >= filled.stat().st_mtime:
+            log("별지 분할 — 기존 재사용 (채움.hwpx 변경 없음)")
+        else:
+            log("별지 분할")
+            run_script([SCRIPTS / "split_hwpx_by_section.py", filled, form_yaml, sep_dir], log)
         target = _pick_bonche(sep_dir, bonche_name)
         if target:
             pdf = outdir / "별지_본체.pdf"

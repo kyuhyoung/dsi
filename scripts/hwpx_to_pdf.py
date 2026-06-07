@@ -41,12 +41,23 @@ def _clear_stale_hwp(max_age_sec: int = STALE_HWP_MAX_AGE_SEC) -> None:
         pass  # 정리 실패해도 변환은 시도 (best-effort)
 
 
-def convert(in_path: str, out_path: str = None, retries: int = 3) -> str:
-    _clear_stale_hwp()  # 첫 시도 hang 방지 — 오래된 좀비 선제 정리
+def convert(in_path: str, out_path: str = None, retries: int = 3, force: bool = False) -> str:
     src = Path(in_path).resolve()
     if out_path is None:
         out_path = src.with_suffix(".pdf")
-    out_abs = str(Path(out_path).resolve())
+    out = Path(out_path).resolve()
+    out_abs = str(out)
+
+    # PDF 캐시 — 출력 PDF 가 이미 있고 *원본 hwpx 보다 최신*이면 재변환 스킵.
+    # 한컴 변환은 본질적으로 느린(분 단위) 단계라, hwpx 가 안 바뀐 재실행·재시도에서
+    # 통째로 건너뛴다. hwpx 가 재빌드되면 mtime 갱신 → 캐시 miss(정상 재변환).
+    # 0byte(이전 실패 잔여)는 무효. --force 로 강제 재변환.
+    if (not force and out.exists() and out.stat().st_size > 0
+            and out.stat().st_mtime >= src.stat().st_mtime):
+        print(f"  PDF 캐시 재사용 (hwpx 변경 없음, 변환 생략): {out_abs}")
+        return out_abs
+
+    _clear_stale_hwp()  # 첫 시도 hang 방지 — 오래된 좀비 선제 정리
 
     fmt = "HWPX" if src.suffix.lower() == ".hwpx" else "HWP"
 
@@ -86,4 +97,5 @@ def convert(in_path: str, out_path: str = None, retries: int = 3) -> str:
 
 
 if __name__ == "__main__":
-    convert(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
+    pos = [a for a in sys.argv[1:] if not a.startswith("--")]
+    convert(pos[0], pos[1] if len(pos) > 1 else None, force="--force" in sys.argv)
