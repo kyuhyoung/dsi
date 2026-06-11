@@ -6,7 +6,50 @@
 
 ---
 
-## 마지막 라운드 (2026-06-05) — 풀 생성 웹앱 (webapp/) + Max 구독 인증 + 농식품 end-to-end 실증
+## 마지막 라운드 (2026-06-08, 집 PC) — webapp 완성도: 확인필요 축소 + UX + 캐시 + 날짜경계
+
+**한 줄 결과**: webapp 품질·UX·속도 마감. **확인필요 38→21**(비율키버그+proposal강화), **폼 검증 가드**, **진행률 UI**, **PDF 캐시 연쇄(재실행 22분→0초)**, **outdir 날짜 무관화**.
+
+**⚠️ 중요 변경 — webapp 산출물 경로**: `output/<날짜>/...` → **`output/_gen/<회사>_<과제>/`** (날짜 제거). 날짜 경계(자정) 넘어도 같은 폴더라 resume·캐시 작동. 다른 PC 재현/검토 시 *이 경로* 봄. (옛 날짜 폴더 20260604/20260607 는 잔존 — 정리 선택사항.)
+
+**커밋 (이번 라운드, 전부 push):**
+- `596b72d` requirements.txt ASCII화 (pip -r cp949 에러 해소).
+- `837e599` **fill_budget 비율 robust** — rfp-analyst `국고_비율` vs fill_budget `국고비율` 키 불일치 버그 → 정규화+어휘 매칭(nested 평탄화) + `_first_pct` 순수숫자 인정. cross-form: 농식품 70/30/10/90, F16PBU 0. 사업비 비율 4건 확인필요 해소.
+- `7494518` **proposal-writer 강화**(pipeline user: KB 수치목표 적극 + PII 헤더 OOO) → 수출목표 10억 채움·PII OOO. 확인필요 21로. 남은 21=정당 미확정(견적전·KB외, 추측 회피).
+- `e608dc1` **폼 검증 가드**(app.py): 비율 합≠100 차단, 제품명·국고0 경고.
+- `61d644a` **진행률 UI**(app.py): log 키워드→단계 progress bar + 경과시간(정상·resume 문구 모두).
+- `a101ef5` **PDF 캐시**(hwpx_to_pdf: 출력≥hwpx면 변환 생략, --force) + 빌드/분할 캐시(pipeline).
+- `16d9705` **outdir 날짜무관**(_gen/) + decisions 변경감지(결정 의존물 무효화) + merge 캐시 → 캐시 연쇄 완성. 재실행 0초 실증.
+
+**재현 (다른 PC, git pull 후)**: webapp 셋업(`pip install claude-agent-sdk streamlit pyyaml PyMuPDF`, claude Max 로그인) → `제안서_웹앱_실행.bat` 또는 `python -m streamlit run webapp/app.py`. CLI 실측: `python webapp/run_once.py` (농식품×다비오, 산출 `output/_gen/dabeeo_농식품.../별지_본체.pdf` 27p). **이미 _gen/ 산출물 있으면 재실행 0초**(캐시).
+
+**남은 미완/다음 후보**: ① 과제 추가(양식 확보 시 projects.yaml) ② 한컴 PDF 첫 변환 자체 속도(캐시 miss 시 분 단위 — 본질) ③ proposal 더 강화 or KB 보강. **B 비목 배치 엔진**(다른 R&D 양식 확보 후) 여전히 대기.
+
+---
+
+## (이전) 라운드 (2026-06-07, 집 PC) — webapp 셋업 + end-to-end 실측 → 버그 2건 근본수정
+
+**한 줄 결과**: 집 PC webapp 첫 셋업 + 농식품×다비오 end-to-end 실측. 실측이 *버그 2건*을 잡아 근본 수정. **산출물 `output/20260607/.../별지3호.pdf` (27p)** — 이번까지 모든 수정(요약표 채움·비목더미0·단독신청 일괄·오배치0) webapp 자동생성에도 정상 반영 확인.
+
+**셋업 (집 PC)**: `pip install claude-agent-sdk streamlit pyyaml PyMuPDF` (requirements.txt 직접 `-r` 은 한글주석 cp949 에러 → **ASCII화 커밋 `596b72d`** 로 해결). claude CLI Max 구독 로그인됨. streamlit 기동 OK(localhost:8501).
+
+**버그①: rfp-analyst YAML 파싱 실패** (커밋 `4a53f9d`, `webapp/pipeline.py`):
+- 원인: LLM 이 콜론·괄호 든 값을 quote 안 함 (`사업기간: 2026∼2027년 (타입1: 협약일)` → 값 안 콜론을 nested mapping 오인) → `yaml.safe_load` 실패 → 파이프라인 중단(PDF 0).
+- 수정: `_call_llm_yaml()` 자가복구(파싱 실패 시 오류 피드백해 LLM 재생성, 최대 2회) + user 프롬프트 "콜론·특수문자 값 작은따옴표" 예방 지시. rfp-analyst·proposal-writer 공통. 재실측 시 첫 시도 통과(자가복구 0회).
+
+**버그②: PDF 변환 20분 타임아웃 = 한컴 좀비** (이번 커밋, `scripts/hwpx_to_pdf.py`):
+- 원인: 13일·7일 전 시작된 한컴 좀비 프로세스가 새 COM 변환을 hang → 첫 시도가 1200s 타임아웃까지 가서 재시도(무차별 taskkill)에 도달조차 못함. **좀비 정리 후 동일 변환 30초 완료**.
+- 수정: `convert()` 시작 시 `_clear_stale_hwp(3600)` — StartTime 1시간+ 인 Hwp 좀비만 선제 정리(활성 GUI 편집은 임계로 보호). 모든 PDF 변환 공통.
+
+**검증**: 별지3호.pdf 27p · 추진전략/목표시장/실현가능성 ❍채움 · 비목더미 0 · 협업="해당 없음(단독신청)" · 라벨 오배치 0 · OOO 35 · 확인필요 37(webapp 자동생성 보수적, 제출 전 교체).
+
+**추가 — 확인필요 축소 (38→21)**: ① **사업비 비율 4건 = rfp-analyst↔fill_budget 키 불일치 버그**(rfp-analyst `국고_비율` vs fill_budget `국고비율`) → `ratios_from_rfp` robust 키 매칭(정규화+어휘, nested 평탄화) + `_first_pct` 순수숫자 인정. cross-form: 농식품 webapp·수동 70/30/10/90, F16PBU 0. 커밋 `837e599`. ② **proposal-writer 강화**(pipeline user: KB 수치목표 적극 + PII 헤더 OOO) → 수출목표 10억 채움·PII OOO 12. 커밋 `7494518`. **남은 21 = 정당 미확정**(견적전 단가·미확정 목표·KB외 인력 — 추측 회피가 정직, 수동본 10은 일부 생성/가정 포함).
+
+**미완/다음 후보**: ① 한컴 PDF 변환 자체 속도(좀비 없어도 분 단위) ② 과제 추가 ③ 진행률 UI ④ 비즈니스 결정 폼 필수값 검증. **B 비목 배치 엔진**(다른 R&D 양식 확보 후) 여전히 대기.
+
+---
+
+## (이전) 라운드 (2026-06-05) — 풀 생성 웹앱 (webapp/) + Max 구독 인증 + 농식품 end-to-end 실증
 
 **한 줄 결과**: RFP 과제 드롭다운 → 제안서 .hwpx/.pdf 생성하는 **Streamlit 웹앱(`webapp/`)** 구축. `/rfp` 흐름을 **Claude Max 구독(claude-agent-sdk)** 으로 옮김 — **API 크레딧 0**. 농식품×다비오 1건 **end-to-end 완주 실증**(22분, 별지3호 PDF 27p).
 

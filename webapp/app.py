@@ -182,16 +182,59 @@ with tab_gen:
             "PII": "실명" if pii == "실명" else "OOO",
         }
 
-    go = st.button("🚀 제안서 생성", type="primary", disabled=not has_key, key="g_go")
+    # 입력 검증 가드 — 22분 생성 전 누락·오류 사전 차단/경고 (양식 무관 일반 규칙).
+    _warns: list[str] = []
+    _errs: list[str] = []
+    if not product.strip():
+        _warns.append("제품·솔루션 공식명 미입력 — 제안서 식별이 '(확인 필요)'로 남습니다.")
+    if not (gov_eok and gov_eok > 0):
+        _warns.append("국고 신청액 0(미지정) — 사업비 표가 있으면 '(확인 필요)' (RFP에 비율 명시 시 비율은 자동).")
+    if (gov_pct or self_pct) and (gov_pct + self_pct) != 100:
+        _errs.append(f"국고%({gov_pct}) + 자부담%({self_pct}) = {gov_pct + self_pct} ≠ 100 (합이 100이어야 함).")
+    if (cash_pct or in_kind_pct) and (cash_pct + in_kind_pct) != 100:
+        _errs.append(f"현금%({cash_pct}) + 현물%({in_kind_pct}) = {cash_pct + in_kind_pct} ≠ 100 (합이 100이어야 함).")
+    if (gov_pct or self_pct or cash_pct or in_kind_pct) and not (gov_eok and gov_eok > 0):
+        _warns.append("비율을 입력했으나 국고 신청액이 0 — 사업비 표가 채워지지 않습니다.")
+    for _m in _warns:
+        st.warning(_m)
+    for _m in _errs:
+        st.error(f"🚫 {_m}")
+
+    go = st.button("🚀 제안서 생성", type="primary",
+                   disabled=not has_key or bool(_errs), key="g_go")
     if go:
         rfp_path = P.SAMPLES / _proj["rfp"]
         form_path = P.SAMPLES / _proj["form"]
+        # 단계별 진행률 — log 메시지 키워드로 현재 단계 추정 (정상·resume 문구 모두 인식).
+        # 가중치는 실측 비중(proposal-writer·LLM·PDF 가 대부분). 키워드 list = OR 매칭.
+        _STAGES = [
+            (["RFP 본문"], 0.05, "RFP 본문 추출"),
+            (["변환", "양식 준비"], 0.10, "양식 변환"),
+            (["form", "양식 분석"], 0.15, "양식 구조 분석"),
+            (["rfp-analyst"], 0.30, "RFP 분석 (LLM)"),
+            (["회사메타"], 0.34, "회사정보 자동채움"),
+            (["재무"], 0.37, "재무 자동채움"),
+            (["사업비"], 0.40, "사업비 자동채움"),
+            (["proposal-writer", "범위 한정"], 0.80, "본문 작성 (LLM · 보통 ~11분)"),
+            (["빌드"], 0.85, "문서 빌드"),
+            (["분할"], 0.90, "별지 분할"),
+            (["PDF"], 0.96, "PDF 변환"),
+            (["완료", "DONE"], 1.0, "완료"),
+        ]
+        import time as _time
+        _t0 = _time.time()
+        prog = st.progress(0.0, text="준비 중…")
         logbox = st.empty()
         logs: list[str] = []
 
         def log(msg: str) -> None:
             logs.append(msg)
             logbox.code("\n".join(logs[-30:]), language="text")
+            for _kws, _pct, _label in _STAGES:
+                if any(k in msg for k in _kws):
+                    _el = (_time.time() - _t0) / 60.0
+                    prog.progress(_pct, text=f"[{int(_pct * 100)}%] {_label}  ·  {_el:.1f}분 경과")
+                    break
 
         with st.status("생성 중… (RFP 분석·본문 작성이 대부분 — 약 13~20분)", expanded=True):
             try:

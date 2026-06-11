@@ -39,9 +39,21 @@ def normalize(text, strip_chars):
 
 
 def _first_pct(text):
-    """'70%' / '자기부담금 총액의 10% 이상' → 70 / 10."""
-    m = re.search(r"(\d+(?:\.\d+)?)\s*%", str(text or ""))
-    return float(m.group(1)) if m else None
+    """'70%' / '자기부담금 총액의 10% 이상' → 70 / 10. % 없는 순수 숫자(예: 70)도 비율로.
+
+    rfp-analyst 가 비율을 `국고_비율: 70` 처럼 % 없는 정수로 낼 수 있어, % 없는
+    *순수 숫자 0~100* 도 비율값으로 인정. '20억원' 같은 비-비율 텍스트는 None.
+    """
+    s = str(text or "")
+    m = re.search(r"(\d+(?:\.\d+)?)\s*%", s)
+    if m:
+        return float(m.group(1))
+    m = re.fullmatch(r"\s*(\d+(?:\.\d+)?)\s*", s)
+    if m:
+        f = float(m.group(1))
+        if 0 <= f <= 100:
+            return f
+    return None
 
 
 def _first_eok(text):
@@ -60,15 +72,31 @@ def ratios_from_rfp(rfp: dict, vocab: dict, cli: dict = None) -> dict:
     out = {"gov_pct": None, "self_pct": None, "cash_pct": None, "in_kind_pct": None}
     go = (rfp.get("사업개요") or {})
     budget = (go.get("예산") or {})
-    if _first_pct(budget.get("국고비율")) is not None:
-        out["gov_pct"] = _first_pct(budget.get("국고비율"))
-    if _first_pct(budget.get("자기부담금비율")) is not None:
-        out["self_pct"] = _first_pct(budget.get("자기부담금비율"))
-    sj = (go.get("자기부담금_구성") or {})
-    if _first_pct(sj.get("현금")) is not None:
-        out["cash_pct"] = _first_pct(sj.get("현금"))
-    if _first_pct(sj.get("현물")) is not None:
-        out["in_kind_pct"] = _first_pct(sj.get("현물"))
+    # 예산 dict 키를 *정규화(언더스코어·공백 제거)* 후 어휘로 비율 역할 식별.
+    # rfp-analyst LLM 의 키 표기가 가변(국고_비율/국고비율/정부지원비율, 자부담_비율/
+    # 자기부담금비율, 자부담_현금_최소비율/자기부담금_구성.현금 등)이라 고정 키 lookup 은
+    # 깨진다. nested 'XX_구성' dict 도 평탄화해 함께 스캔. 키워드·셀ID 하드코딩 0.
+    def _nk(k):
+        return re.sub(r"[\s_]", "", str(k))
+    flat = {}
+    for k, v in budget.items():
+        if isinstance(v, dict):
+            for k2, v2 in v.items():
+                flat[_nk(k) + _nk(k2)] = v2
+        else:
+            flat[_nk(k)] = v
+    for k, v in flat.items():
+        pct = _first_pct(v)
+        if pct is None:
+            continue
+        if "현금" in k:
+            out["cash_pct"] = pct
+        elif "현물" in k:
+            out["in_kind_pct"] = pct
+        elif ("국고" in k or "정부" in k or "보조" in k) and "비율" in k:
+            out["gov_pct"] = pct
+        elif ("자부담" in k or "자기부담" in k) and "비율" in k:
+            out["self_pct"] = pct
     # CLI 명시 override (사용자 결정 — RFP 미명시 비율의 명시적 입력 경로)
     for k in out:
         if cli and cli.get(k) is not None:

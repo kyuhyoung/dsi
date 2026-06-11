@@ -256,6 +256,33 @@ def _call_llm(system_text: str, user_text: str, log: ProgressFn,
     return text, meta
 
 
+def _call_llm_yaml(system_text: str, user_text: str, log: ProgressFn,
+                   label: str = "", max_repair: int = 2) -> tuple[str, dict]:
+    """YAML 출력 LLM 호출 + 파싱 실패 시 *자가복구* 재호출 (LLM 출력 견고화).
+
+    LLM 이 콜론(:)·괄호·특수문자가 든 값을 따옴표로 감싸지 않으면 YAML 파싱이 실패한다
+    (예: `사업기간: 2026∼2027년 (타입1: 협약일∼1년 …)` — 값 안의 콜론을 nested mapping
+    으로 오인). 파싱 실패 시 *오류를 피드백해 재생성* 한다. 임의 RFP/회사/양식 공통 —
+    특정 값·키 하드코딩 0.
+    """
+    raw, usage = _call_llm(system_text, user_text, log)
+    for attempt in range(max_repair + 1):
+        try:
+            return _extract_yaml(raw), usage
+        except yaml.YAMLError as e:
+            if attempt >= max_repair:
+                raise RuntimeError(
+                    f"{label or 'LLM'} YAML 파싱 {max_repair}회 재시도 실패: {e}")
+            log(f"  ⚠ {label} YAML 파싱 실패 → 자가복구 재시도 {attempt + 1}/{max_repair}")
+            repair_user = user_text + (
+                f"\n\n## 직전 출력이 YAML 파싱에 실패함\n오류: {e}\n"
+                "문자열 값에 콜론(:)·괄호·슬래시·특수문자가 있으면 *작은따옴표로 감싸라* "
+                "(예: `키: '2026∼2027년 (타입1: 협약일)'`). 유효한 YAML 문서 하나만 — "
+                "설명·머리말·코드펜스 없이 YAML 본문만 다시 출력하라."
+            )
+            raw, usage = _call_llm(system_text, repair_user, log)
+
+
 def run_rfp_analyst(rfp_text: str, form_yaml: str, log: ProgressFn = _noop) -> tuple[str, dict]:
     """RFP 본문 + 양식 form.yaml → rfp_analysis.yaml (문자열)."""
     system = _policy_block("rfp-analyst.md", ANALYST_SKILLS)
@@ -264,13 +291,14 @@ def run_rfp_analyst(rfp_text: str, form_yaml: str, log: ProgressFn = _noop) -> t
         "위 정책의 스키마/원칙에 따라 rfp_analysis.yaml 을 작성하라.\n"
         "- B+C 를 cross-reference 로 읽어 B_C_매핑·본체_별지 식별까지 채운다.\n"
         "- RFP 원문에 없는 값은 추측 금지(생략 또는 '확인 필요').\n"
-        "- **출력은 YAML 본문만** — 설명·머리말·코드펜스 없이 YAML 문서 하나만 출력한다.\n\n"
+        "- **출력은 YAML 본문만** — 설명·머리말·코드펜스 없이 YAML 문서 하나만 출력한다.\n"
+        "- 문자열 값에 콜론(:)·괄호·슬래시·특수문자가 있으면 *작은따옴표로 감싸라* "
+        "(예: `사업기간: '2026∼2027년 (타입1: 협약일∼1년)'`) — YAML 파싱 안전.\n\n"
         "## RFP 본문 (B)\n\n" + rfp_text +
         "\n\n## 양식 셀 구조 (C — form.yaml)\n\n```yaml\n" + form_yaml + "\n```\n"
     )
     log("→ rfp-analyst (구독)")
-    raw, usage = _call_llm(system, user, log)
-    return _extract_yaml(raw), usage
+    return _call_llm_yaml(system, user, log, label="rfp-analyst")
 
 
 def _tbl_idx(fill_id: str) -> Optional[int]:
@@ -335,7 +363,14 @@ def run_proposal_writer(form_yaml: str, rfp_analysis: str, company: str,
         "- fill_targets 의 *서술·example_row·이미지* 셀을 채운다 (회사메타·재무·사업비는 제외 — 아래 결정·자동채움 참조).\n"
         "- 비즈니스 결정을 *전 섹션 일관* 반영(단독신청이면 컨소시엄 의미 셀 전부 '해당 없음', PII 처리 등).\n"
         "- KB 검증 사실만. 미확정 수치는 '(확인 필요)', PII 는 결정에 따라 'OOO'.\n"
-        "- **출력은 YAML 본문만** — 설명·코드펜스 없이 fills.yaml 문서 하나만 출력한다.\n\n"
+        "- **(확인 필요) 최소화 — KB 재검색 우선**: 수치 목표·실적이 KB에 *명시*돼 있으면 "
+        "(확인 필요) 대신 그 값을 쓴다 (예: KB '수출 매출 목표 10억원' → 수출 목표 셀 = 10억). "
+        "추측이 필요한 것만 (확인 필요).\n"
+        "- **인력 PII 헤더는 OOO**: 성명·성별·생년월일·학교 등 *개인식별* 헤더의 데이터 셀은 "
+        "(확인 필요)가 아니라 'OOO' (§5-1 익명 — '값을 모름'이 아니라 '가린 것'). "
+        "직위·학위·담당·참여율·경력 등 직무·역량 셀은 KB 기반으로 채운다.\n"
+        "- **출력은 YAML 본문만** — 설명·코드펜스 없이 fills.yaml 문서 하나만 출력한다.\n"
+        "- text 값에 콜론(:)·괄호·특수문자가 있으면 *작은따옴표로 감싸라* — YAML 파싱 안전.\n\n"
         "## 비즈니스 결정 (decisions)\n\n```yaml\n" + yaml.safe_dump(
             decisions, allow_unicode=True, sort_keys=False) + "```\n\n"
         "## RFP 분석 결과 (rfp_analysis.yaml)\n\n```yaml\n" + rfp_analysis + "\n```\n\n"
@@ -343,13 +378,19 @@ def run_proposal_writer(form_yaml: str, rfp_analysis: str, company: str,
         + form_yaml + "\n```" + skip + "\n"
     )
     log("→ proposal-writer (구독)")
-    raw, usage = _call_llm(system, user, log)
-    return _extract_yaml(raw), usage
+    return _call_llm_yaml(system, user, log, label="proposal-writer")
 
 
 # ── fills 병합 ─────────────────────────────────────────────────────────────
 def merge_fills(sources: list[Path], out_path: Path, company: str) -> Path:
     """여러 fills.yaml 을 id 중복 제거해 병합. 뒤 소스가 우선(결정적 채움이 본체보다 우선)."""
+    # 병합 캐시 — fills_total 이 모든 소스보다 최신이면 재작성 생략(mtime 유지).
+    # 매번 재작성하면 fills_total mtime 이 갱신돼 하류 빌드 캐시가 무효화되므로,
+    # 소스 변경 없을 때 fills_total 을 그대로 둬 빌드·분할·PDF 캐시 연쇄를 보존.
+    _srcs = [s for s in sources if s.exists()]
+    if (out_path.exists() and out_path.stat().st_size > 0 and _srcs
+            and out_path.stat().st_mtime >= max(s.stat().st_mtime for s in _srcs)):
+        return out_path
     merged: dict[str, dict] = {}  # id → entry
     for src in sources:
         if not src.exists():
@@ -418,17 +459,29 @@ def build_from_fills(form_hwpx: Path, fills_total: Path, form_yaml: Path,
                      bonche_name: Optional[str], log: ProgressFn) -> tuple[Path, Optional[Path], Optional[Path]]:
     """fills_total → 채움.hwpx → 분할 → 본체 별지 PDF. (hwpx, pdf, sep_dir)."""
     filled = outdir / f"{stem}_채움.hwpx"
-    log("빌드 → 채움.hwpx")
-    args = [SCRIPTS / "fill_hwpx_form.py", form_hwpx, fills_total, filled, form_yaml]
-    if submit:
-        args.append("--submit")
-    run_script(args, log)
+    # 빌드 캐시 — 입력(fills_total·form.yaml·원본 양식)이 채움.hwpx 보다 새롭지 않으면 재사용.
+    # 한컴 PDF 변환(분 단위)을 살리려면 그 입력인 hwpx 가 안 바뀌어야 PDF 캐시가 hit 한다.
+    # submit(제출본=검정) 은 색이 달라지므로 캐시 안 함(항상 재빌드).
+    _inm = max(fills_total.stat().st_mtime, form_yaml.stat().st_mtime, form_hwpx.stat().st_mtime)
+    if (not submit and filled.exists() and filled.stat().st_size > 0
+            and filled.stat().st_mtime >= _inm):
+        log("빌드 → 채움.hwpx — 기존 재사용 (입력 변경 없음)")
+    else:
+        log("빌드 → 채움.hwpx")
+        args = [SCRIPTS / "fill_hwpx_form.py", form_hwpx, fills_total, filled, form_yaml]
+        if submit:
+            args.append("--submit")
+        run_script(args, log)
 
     sep_dir = outdir / "별지"
     pdf = None
     try:
-        log("별지 분할")
-        run_script([SCRIPTS / "split_hwpx_by_section.py", filled, form_yaml, sep_dir], log)
+        _seps = list(sep_dir.glob("*.hwpx")) if sep_dir.exists() else []
+        if _seps and min(s.stat().st_mtime for s in _seps) >= filled.stat().st_mtime:
+            log("별지 분할 — 기존 재사용 (채움.hwpx 변경 없음)")
+        else:
+            log("별지 분할")
+            run_script([SCRIPTS / "split_hwpx_by_section.py", filled, form_yaml, sep_dir], log)
         target = _pick_bonche(sep_dir, bonche_name)
         if target:
             pdf = outdir / "별지_본체.pdf"
@@ -468,19 +521,28 @@ def run_generate(company: str, rfp_path: Path, form_path: Path, decisions: dict,
                  submit: bool = False, log: ProgressFn = _noop) -> GenResult:
     """회사 + RFP(공고) + 양식 + 결정 → 제안서 생성 (전 과정)."""
     rfp_path, form_path = Path(rfp_path), Path(form_path)
-    date = datetime.date.today().strftime("%Y%m%d")
     stem = re.sub(r"[^\w가-힣]+", "_", rfp_path.stem)[:40] or "rfp"
-    outdir = OUTPUT / date / f"{company}_{stem}"
+    # outdir 은 *날짜 무관*(과제명 기반) — 날짜 경계(자정)를 넘어도 같은 폴더라서
+    # resume·캐시가 그대로 작동한다. (날짜 폴더면 자정 후 새 폴더 → 전체 재실행.)
+    # webapp 생성물은 output/_gen/ 아래로 모아 수동 날짜 산출물과 분리.
+    outdir = OUTPUT / "_gen" / f"{company}_{stem}"
     outdir.mkdir(parents=True, exist_ok=True)
     usage_total = {"input": 0, "output": 0, "cache_read": 0, "cache_write": 0, "cost_usd": 0.0}
     notes: list[str] = []
 
-    # 0) 결정 기록 (재현·무인용)
-    (outdir / "decisions.yaml").write_text(
-        yaml.safe_dump(decisions, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    # 0) 결정 기록 + *변경 감지* — 비즈니스 결정(단독/유형/사업비 등)이 직전과 다르면
+    #    결정 의존 산출물(사업비·본문·병합)을 무효화해 옛 결정 재사용을 막는다.
+    #    (회사메타·재무·RFP분석·양식추출은 결정 무관 → 유지.)
+    dec_path = outdir / "decisions.yaml"
+    new_dec = yaml.safe_dump(decisions, allow_unicode=True, sort_keys=False)
+    if dec_path.exists() and dec_path.read_text(encoding="utf-8") != new_dec:
+        for _f in ("fills_budget.yaml", "fills_body.yaml", "fills_total.yaml"):
+            (outdir / _f).unlink(missing_ok=True)
+        log("⚠ 비즈니스 결정 변경 감지 — 사업비·본문·병합 재생성 (회사·재무·RFP분석은 유지)")
+    dec_path.write_text(new_dec, encoding="utf-8")
 
     # 이어받기(resume) — 이미 생성된 중간산출은 재사용(특히 비싼 LLM·한컴 단계).
-    # 같은 (날짜·회사·RFP) 재실행은 같은 outdir 라서 실패 지점부터 이어진다.
+    # 같은 (회사·RFP) 재실행은 같은 outdir 라서 실패 지점부터 이어진다 (날짜 무관).
     rfp_analysis_path = outdir / "rfp_analysis.yaml"
     fills_profile = outdir / "fills_profile.yaml"
     fills_finance = outdir / "fills_finance.yaml"
