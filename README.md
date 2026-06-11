@@ -9,7 +9,7 @@
 
 ![DSI 웹앱 화면](webapp/screenshot.png)
 
-- **실행**: 루트의 **`제안서_웹앱_실행.bat`** 더블클릭 (또는 `python -m streamlit run webapp\app.py`)
+- **실행**: 루트의 **`run_webapp.bat`** 더블클릭 (또는 `python -m streamlit run webapp\app.py`)
 - **과제 선택** → **신청 정보**(단독/컨소·신청유형·사업비·제품명·PII) 입력 → **[제안서 생성]**
 - 양식은 건드리지 않고 빈 셀만 채움(검토용 녹색). 본체 별지 `.hwpx`/`.pdf` 산출.
 - 자세히: [`webapp/README.md`](webapp/README.md)

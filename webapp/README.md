@@ -14,7 +14,7 @@ Claude Code 의 `/rfp` 흐름(rfp-analyst → proposal-writer → 양식 채움 
 | `pipeline.py` | 백엔드 — 두 LLM 호출(구독) + 결정적 스크립트 오케스트레이션 |
 | `projects.yaml` | **과제 정의**(name·rfp·form). 사용자는 name 만 고름 |
 | `run_once.py` | CLI 실측 러너(웹 없이 1건 생성·시간 측정) |
-| `../제안서_웹앱_실행.bat` | **더블클릭 실행기**(프로젝트 루트) |
+| `../run_webapp.bat` | **더블클릭 실행기**(프로젝트 루트) |
 
 - **정책 정본은 그대로 재사용**: 시스템 지침 = `.claude/agents/rfp-analyst.md` ·
   `proposal-writer.md` + 참조 skill(`korean-public-rfp` · `proposal-korean-style` · `dabeeo-profile`).
@@ -44,7 +44,7 @@ claude   # 최초 1회 로그인 (브라우저 인증)
 
 ## 실행
 
-**가장 쉬움 — 더블클릭**: 프로젝트 루트의 **`제안서_웹앱_실행.bat`** 더블클릭 → 잠시 뒤 브라우저가
+**가장 쉬움 — 더블클릭**: 프로젝트 루트의 **`run_webapp.bat`** 더블클릭 → 잠시 뒤 브라우저가
 `http://localhost:8501` 자동 오픈. (같이 뜨는 검은 창 = 웹 서버. 끄려면 그 창에서 `Ctrl+C` 또는 창 닫기.)
 
 **또는 명령으로**:
